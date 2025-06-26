@@ -13,8 +13,6 @@ public abstract class GameDefines
 #endregion
 
 
-
-
 #region 枚举
 
 /// <summary>
@@ -40,6 +38,7 @@ public enum EUIType
     EUIGuide = 5,
     EUINotice = 6,
     EUIEffect = 7,
+    EUIFuncPopup = 8
 }
 
 public enum ESceneType : byte
@@ -91,4 +90,15 @@ public enum ELanguageType : int
 
     LengthTest = 99,
 }
+
+/// <summary>
+/// 下三功能
+/// </summary>
+public enum EFuncType : int
+{ 
+    Tip,
+    Refush,
+    Remove
+}
+
 #endregion

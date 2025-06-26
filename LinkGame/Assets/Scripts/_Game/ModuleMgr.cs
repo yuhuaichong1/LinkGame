@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
 
 namespace XrCode
 {
@@ -17,6 +14,8 @@ namespace XrCode
         private TDAnalyticsManager tDAnalyticsManager;
         private LanguageModule languageMod;
         private GuideModule guideModule;
+        private GamePlayModule gamePlayModule;
+        private AdModule adModule;
         public List<BaseModule> updateModList;
 
         public SceneMod SceneMod { get { return sceneMod; } }
@@ -30,6 +29,7 @@ namespace XrCode
         public TDAnalyticsManager TDAnalyticsManager { get { return tDAnalyticsManager; } }
         public LanguageModule LanguageMod { get { return languageMod; } }
         public GuideModule GuideModule { get { return guideModule; } }
+        public AdModule AdModule { get { return adModule; } }
 
         private bool isLoaded = false;
         public void Load()
@@ -45,6 +45,7 @@ namespace XrCode
             audioMod = new AudioModule();
             tDAnalyticsManager = new TDAnalyticsManager();
             guideModule = new GuideModule();
+            adModule = new AdModule();
         }
         public void Dispose()
         {
@@ -58,6 +59,7 @@ namespace XrCode
             audioMod.Dispose();
             tDAnalyticsManager.Dispose();
             guideModule.Dispose();
+            adModule.Dispose();
         }
 
         public void Start()
@@ -73,6 +75,7 @@ namespace XrCode
             guideModule.Load();
             tDAnalyticsManager.Load();
             sceneMod.Load();
+            adModule.Load();
             sceneMod.LoadScene(ESceneType.MainScene);
         }
 

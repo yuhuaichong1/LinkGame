@@ -24,6 +24,7 @@ namespace cfg
 		public TbLanguage TbLanguage {get; private set;}
 		public TBAudio TBAudio {get; private set;}
 		public TBGuides TBGuides {get; private set;}
+		public TBLevel TBLevel {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -45,6 +46,8 @@ namespace cfg
 			tables.Add("TBAudio", TBAudio);
 			TBGuides = new TBGuides(loader("tbguides")); 
 			tables.Add("TBGuides", TBGuides);
+			TBLevel = new TBLevel(loader("tblevel")); 
+			tables.Add("TBLevel", TBLevel);
 	
 			PostInit();
 			ResolveAllTable();
@@ -65,6 +68,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBAudioDataFinish);
 			configNames.Enqueue("tbguides");
             configCbFuncs.Enqueue(OnTBGuidesDataFinish);
+			configNames.Enqueue("tblevel");
+            configCbFuncs.Enqueue(OnTBLevelDataFinish);
 
             LoadAllConfig();
         }
@@ -111,6 +116,7 @@ namespace cfg
 			TbLanguage.TranslateText(translator); 
 			TBAudio.TranslateText(translator); 
 			TBGuides.TranslateText(translator); 
+			TBLevel.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -122,6 +128,7 @@ namespace cfg
 			TbLanguage.Resolve(tables);
 			TBAudio.Resolve(tables);
 			TBGuides.Resolve(tables);
+			TBLevel.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -144,6 +151,9 @@ namespace cfg
 					break;
 				case "TBGuides":
 					TBGuides.Reload(_loader("TBGuides"));
+					break;
+				case "TBLevel":
+					TBLevel.Reload(_loader("TBLevel"));
 					break;
 			}
 	
@@ -183,6 +193,11 @@ namespace cfg
 		{
 			TBGuides = new TBGuides(buf);
 			tables.Add("TBGuides", TBGuides);
+		}
+		public void OnTBLevelDataFinish(ByteBuf buf)
+		{
+			TBLevel = new TBLevel(buf);
+			tables.Add("TBLevel", TBLevel);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

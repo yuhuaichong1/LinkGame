@@ -166,6 +166,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIgnoreAttribute.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\Extension\GameObjectExtension.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\Swipe.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\GamePlayDefines.cs" />
     <Compile Include="Assets\Gen\Code\ConfGuides.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IExecute.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\EditorResourceLoader.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\ListView\LoopListView2.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ArrayDecorator.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoContractAttribute.cs" />
+    <Compile Include="Assets\Scripts\PlayerPref\PlayerPrefDefines.cs" />
     <Compile Include="Assets\Scripts\UI\Common\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IFixedUpdate.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoEnumAttribute.cs" />
@@ -285,6 +287,7 @@
     <Compile Include="Assets\Scripts\Framework\_Interface\IUpdate.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\MultiFinger\MutliFingersScreenTouch.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\Button-Event-Input\ButtonUIEvent.cs" />
+    <Compile Include="Assets\Gen\Code\TBLevel.cs" />
     <Compile Include="Assets\Gen\Code\TbLanguage.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\DoubleTapMe.cs" />
     <Compile Include="Assets\Scripts\Scene\MainScene.cs" />
@@ -301,6 +304,7 @@
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridView.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\GoodDefine.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IObject.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
@@ -323,6 +327,7 @@
     <Compile Include="Assets\Scripts\_Game\EarthRotation.cs" />
     <Compile Include="Assets\Scripts\UI\Base\Entity.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\ArabicSupport.cs" />
+    <Compile Include="Assets\Scripts\Ad\AdModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\AttributeMap.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\ECamera.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeScene.cs" />
@@ -339,16 +344,20 @@
     <Compile Include="Assets\Scripts\Tools\Pool\ClassObjectPool.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TimeSpanSerializer.cs" />
     <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
+    <Compile Include="Assets\Scripts\UI\FuncPopup\UITemplate\UIFuncPopup_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt32Serializer.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectManager.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt16Serializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\CalcUtil.cs" />
     <Compile Include="Assets\Scripts\SUIAnimLine\SUIACItem.cs" />
+    <Compile Include="Assets\Gen\Code\ConfLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SystemTypeSerializer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCArea.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\ProtobufUtil.cs" />
     <Compile Include="Assets\Scripts\Reddot\RedDotModule.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UICompatibility\UIWindow.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\GoodItem.cs" />
+    <Compile Include="Assets\Scripts\UI\FuncPopup\UIFuncPopup.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IDispose.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadePlayers.cs" />
