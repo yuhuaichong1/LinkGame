@@ -7,14 +7,12 @@ namespace XrCode
     public partial class UIFuncPopup : BaseUI
     {
         private EFuncType eFuncType;
-        private GamePlayModule GamePlayModule;
-        private AdModule AdModule;
         private Action btnAction;
+        private AdModule AdModule;
 
         protected override void OnAwake() 
         {
-            GamePlayModule = ModuleMgr.Instance.GamePlayMod;
-            AdModule = ModuleMgr.Instance.AdModule;
+
         }
         
         protected override void OnSetParam(params object[] args)
@@ -48,8 +46,8 @@ namespace XrCode
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayModule.TipCount += 3;
-                    GamePlayDefines.ChangeFuncTipCount?.Invoke();
+                    GamePlayDefines.ChangeTipCount(3);
+                    GamePlayDefines.ChangeTipCountShow?.Invoke();
                 });
             };
         }
@@ -61,8 +59,8 @@ namespace XrCode
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayModule.RefushCount += 1;
-                    GamePlayDefines.ChangeFuncRefushCount?.Invoke();
+                    GamePlayDefines.ChangeRefushCount(1);
+                    GamePlayDefines.ChangeRefushCountShow?.Invoke();
                 });
             };
         }
@@ -74,8 +72,8 @@ namespace XrCode
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayModule.RemoveCount += 1;
-                    GamePlayDefines.ChangeFuncRemoveCount?.Invoke();
+                    GamePlayDefines.ChangeRemoveCount(1);
+                    GamePlayDefines.ChangeRemoveCountShow?.Invoke();
                 });
             };
         }

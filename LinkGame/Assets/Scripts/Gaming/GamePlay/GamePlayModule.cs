@@ -6,10 +6,10 @@ namespace XrCode
     public class GamePlayModule : BaseModule
     {
         private Dictionary<Vector2, GoodItem> levelData; //当前关卡的数据
-        public int CurLevel;//当前关卡
-        public int TipCount;//提示次数
-        public int RefushCount;//刷新次数
-        public int RemoveCount;//移除次数
+        private int curLevel;//当前关卡
+        private int tipCount;//提示次数
+        private int refushCount;//刷新次数
+        private int removeCount;//移除次数
 
         private int selectedGood;//被选中的物体
 
@@ -23,6 +23,12 @@ namespace XrCode
             GamePlayDefines.TipFunc += TipFunc;
             GamePlayDefines.RefushFunc += RefushFunc;
             GamePlayDefines.RemoveFunc += RemoveFunc;
+            GamePlayDefines.ChangeTipCount += ChangeTipCount;
+            GamePlayDefines.ChangeRefushCount += ChangeRefushCount;
+            GamePlayDefines.ChangeRemoveCount += ChangeRemoveCount;
+            GamePlayDefines.GetTipCount += GetTipCount;
+            GamePlayDefines.GetRefushCount += GetRefushCount;
+            GamePlayDefines.GetRemoveCount += GetRemoveCount;
 
             LoadData();
 
@@ -31,10 +37,10 @@ namespace XrCode
         //加载数据
         private void LoadData()
         {
-            CurLevel = PlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
-            TipCount = PlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
-            RefushCount = PlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
-            RemoveCount = PlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
+            curLevel = PlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
+            tipCount = PlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
+            refushCount = PlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
+            removeCount = PlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
         }
 
         //创建关卡
@@ -163,6 +169,37 @@ namespace XrCode
 
         }
 
+        private void ChangeTipCount(int num)
+        {
+            tipCount += num;
+            PlayerPrefs.SetInt(PlayerPrefDefines.tipCount, tipCount);
+        }
+
+        private void ChangeRefushCount(int num)
+        {
+            refushCount += num;
+            PlayerPrefs.SetInt(PlayerPrefDefines.refushCount, refushCount);
+        }
+
+        private void ChangeRemoveCount(int num)
+        {
+            removeCount += num;
+            PlayerPrefs.SetInt(PlayerPrefDefines.removeCount, removeCount);
+        }
+
+        private int GetTipCount()
+        {
+            return tipCount;
+        }
+        private int GetRefushCount() 
+        { 
+            return refushCount;
+        }
+        private int GetRemoveCount() 
+        { 
+            return removeCount;
+        }
         #endregion
+
     }
 }

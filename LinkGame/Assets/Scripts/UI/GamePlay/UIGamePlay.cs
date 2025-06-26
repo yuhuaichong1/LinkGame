@@ -8,17 +8,15 @@ namespace XrCode
 
     public partial class UIGamePlay : BaseUI
     {
-        private GamePlayModule GamePlayModule;
         
 
         protected override void OnAwake() 
         {
-            GamePlayModule = ModuleMgr.Instance.GamePlayMod;
             LanguageModule languageMod = ModuleMgr.Instance.LanguageMod;
 
-            GamePlayDefines.ChangeFuncTipCount += ChangeFuncTipCount;
-            GamePlayDefines.ChangeFuncRefushCount += ChangeFuncRefushCount;
-            GamePlayDefines.ChangeFuncRemoveCount += ChangeFuncRemoveCount;
+            GamePlayDefines.ChangeTipCountShow += ChangeFuncTipCount;
+            GamePlayDefines.ChangeRefushCountShow += ChangeFuncRefushCount;
+            GamePlayDefines.ChangeRemoveCountShow += ChangeFuncRemoveCount;
 
             //mTipText.text = languageMod.GetText("");
             //mRefushText.text = languageMod.GetText("");
@@ -29,17 +27,17 @@ namespace XrCode
             ChangeFuncRemoveCount();
         }
         protected override void OnEnable() 
-        { 
-            
+        {
+            GamePlayDefines.CreateLevel?.Invoke();
         }
         	    private void OnSettingBtnClickHandle()        {
             //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
         }
         private void OnTipBtnClickHandle()        {
-            if(GamePlayModule.TipCount > 0)
+            if(GamePlayDefines.GetTipCount?.Invoke() > 0)
             {
-                GamePlayDefines.TipFunc();
-                GamePlayModule.TipCount -= 1;
+                GamePlayDefines.TipFunc?.Invoke();
+                GamePlayDefines.ChangeTipCount?.Invoke(-1);
                 ChangeFuncTipCount();
             }
             else
@@ -47,10 +45,10 @@ namespace XrCode
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Tip);
             }
                     }	    private void OnRefushBtnClickHandle()        {
-            if(GamePlayModule.RefushCount > 0)
+            if(GamePlayDefines.GetRefushCount?.Invoke() > 0)
             {
-                GamePlayDefines.RefushFunc();
-                GamePlayModule.RefushCount -= 1;
+                GamePlayDefines.RefushFunc?.Invoke();
+                GamePlayDefines.ChangeTipCount?.Invoke(-1);
                 ChangeFuncRefushCount();
             }
             else
@@ -58,10 +56,10 @@ namespace XrCode
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Refush);
             }        }	    private void OnRemoveBtnClickHandle()
         {
-            if( GamePlayModule.RemoveCount > 0) 
+            if(GamePlayDefines.GetRemoveCount?.Invoke() > 0) 
             {
-                GamePlayDefines.RemoveFunc();
-                GamePlayModule.RemoveCount -= 1;
+                GamePlayDefines.RemoveFunc?.Invoke();
+                GamePlayDefines.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
             }
             else
@@ -77,15 +75,15 @@ namespace XrCode
 
         private void ChangeFuncTipCount()
         {
-            mTipCountText.text = GetCountText(GamePlayModule.TipCount);
+            mTipCountText.text = GetCountText(GamePlayDefines.GetTipCount.Invoke()) ;
         }
         private void ChangeFuncRefushCount()
         {
-            mRefushCountText.text = GetCountText(GamePlayModule.RefushCount);
+            mRefushCountText.text = GetCountText(GamePlayDefines.GetRefushCount.Invoke());
         }
         private void ChangeFuncRemoveCount()
         {
-            mRemoveCountText.text = GetCountText(GamePlayModule.RemoveCount);
+            mRemoveCountText.text = GetCountText(GamePlayDefines.GetRemoveCount.Invoke());
         }
 
         protected override void OnDisable()
