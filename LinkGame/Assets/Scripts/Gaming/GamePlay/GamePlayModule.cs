@@ -18,17 +18,17 @@ namespace XrCode
             base.OnLoad();
             levelData = new Dictionary<Vector2, GoodItem>();
 
-            GamePlayDefines.CreateLevel += CreateLevel;
-            GamePlayDefines.CheckIfLink += CheckIfLink;
-            GamePlayDefines.TipFunc += TipFunc;
-            GamePlayDefines.RefushFunc += RefushFunc;
-            GamePlayDefines.RemoveFunc += RemoveFunc;
-            GamePlayDefines.ChangeTipCount += ChangeTipCount;
-            GamePlayDefines.ChangeRefushCount += ChangeRefushCount;
-            GamePlayDefines.ChangeRemoveCount += ChangeRemoveCount;
-            GamePlayDefines.GetTipCount += GetTipCount;
-            GamePlayDefines.GetRefushCount += GetRefushCount;
-            GamePlayDefines.GetRemoveCount += GetRemoveCount;
+            GamePlayFacade.CreateLevel += CreateLevel;
+            GamePlayFacade.CheckIfLink += CheckIfLink;
+            GamePlayFacade.TipFunc += TipFunc;
+            GamePlayFacade.RefushFunc += RefushFunc;
+            GamePlayFacade.RemoveFunc += RemoveFunc;
+            GamePlayFacade.ChangeTipCount += ChangeTipCount;
+            GamePlayFacade.ChangeRefushCount += ChangeRefushCount;
+            GamePlayFacade.ChangeRemoveCount += ChangeRemoveCount;
+            GamePlayFacade.GetTipCount += GetTipCount;
+            GamePlayFacade.GetRefushCount += GetRefushCount;
+            GamePlayFacade.GetRemoveCount += GetRemoveCount;
 
             LoadData();
 

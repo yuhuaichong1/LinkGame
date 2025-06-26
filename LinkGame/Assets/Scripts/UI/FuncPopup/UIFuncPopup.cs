@@ -46,8 +46,8 @@ namespace XrCode
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayDefines.ChangeTipCount(3);
-                    GamePlayDefines.ChangeTipCountShow?.Invoke();
+                    GamePlayFacade.ChangeTipCount(3);
+                    GamePlayFacade.ChangeTipCountShow?.Invoke();
                 });
             };
         }
@@ -59,8 +59,8 @@ namespace XrCode
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayDefines.ChangeRefushCount(1);
-                    GamePlayDefines.ChangeRefushCountShow?.Invoke();
+                    GamePlayFacade.ChangeRefushCount(1);
+                    GamePlayFacade.ChangeRefushCountShow?.Invoke();
                 });
             };
         }
@@ -72,8 +72,8 @@ namespace XrCode
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayDefines.ChangeRemoveCount(1);
-                    GamePlayDefines.ChangeRemoveCountShow?.Invoke();
+                    GamePlayFacade.ChangeRemoveCount(1);
+                    GamePlayFacade.ChangeRemoveCountShow?.Invoke();
                 });
             };
         }

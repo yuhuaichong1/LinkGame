@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Framework\_Interface\IGame.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\ValueMember.cs" />
     <Compile Include="Assets\Scripts\_Game\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\GamePlayFacade.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\MetaType.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\PropertyDecorator.cs" />
     <Compile Include="Assets\Scripts\MiniComponent\AutoHandSwing.cs" />
@@ -166,7 +167,6 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIgnoreAttribute.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\Extension\GameObjectExtension.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\Swipe.cs" />
-    <Compile Include="Assets\Scripts\Gaming\GamePlay\GamePlayDefines.cs" />
     <Compile Include="Assets\Gen\Code\ConfGuides.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IExecute.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\EditorResourceLoader.cs" />

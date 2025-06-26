@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GamePlayDefines
+public static class GamePlayFacade
 {
     public static Action ChangeTipCountShow;          //改变提示功能的次数显示
     public static Action ChangeRefushCountShow;       //改变刷新功能的次数显示
