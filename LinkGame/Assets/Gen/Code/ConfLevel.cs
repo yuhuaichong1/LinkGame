@@ -19,9 +19,14 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     public ConfLevel(ByteBuf _buf) 
     {
         Sn = _buf.ReadInt();
-        Count = _buf.ReadInt();
+        LevelSize = _buf.ReadString();
+        GoodKinds = _buf.ReadInt();
         MoveDic = _buf.ReadString();
-        SpecialState = _buf.ReadString();
+        HiddleGoodMove = _buf.ReadString();
+        HiddleGoodStay = _buf.ReadString();
+        ObstacleMove = _buf.ReadString();
+        ObstacleStay = _buf.ReadString();
+        HiddleGoodDelay = _buf.ReadString();
         PostInit();
     }
 
@@ -37,15 +42,35 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// <summary>
     /// 物品总数
     /// </summary>
-    public int Count { get; protected set; }
+    public string LevelSize { get; protected set; }
+    /// <summary>
+    /// 物品种类数量
+    /// </summary>
+    public int GoodKinds { get; protected set; }
     /// <summary>
     /// 物品移动方向
     /// </summary>
     public string MoveDic { get; protected set; }
     /// <summary>
-    /// 特殊状态的物品
+    /// 可移动的隐藏物的位置
     /// </summary>
-    public string SpecialState { get; protected set; }
+    public string HiddleGoodMove { get; protected set; }
+    /// <summary>
+    /// 不移动的隐藏物的位置
+    /// </summary>
+    public string HiddleGoodStay { get; protected set; }
+    /// <summary>
+    /// 可移动的障碍物的位置
+    /// </summary>
+    public string ObstacleMove { get; protected set; }
+    /// <summary>
+    /// 不移动的障碍物的位置
+    /// </summary>
+    public string ObstacleStay { get; protected set; }
+    /// <summary>
+    /// 出现延迟隐藏的时间
+    /// </summary>
+    public string HiddleGoodDelay { get; protected set; }
 
     public const int __ID__ = 1172697760;
     public override int GetTypeId() => __ID__;
@@ -62,18 +87,28 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     public void Reload(ConfLevel reloadData)
     {
         Sn = reloadData.Sn;
-        Count = reloadData.Count;
+        LevelSize = reloadData.LevelSize;
+        GoodKinds = reloadData.GoodKinds;
         MoveDic = reloadData.MoveDic;
-        SpecialState = reloadData.SpecialState;
+        HiddleGoodMove = reloadData.HiddleGoodMove;
+        HiddleGoodStay = reloadData.HiddleGoodStay;
+        ObstacleMove = reloadData.ObstacleMove;
+        ObstacleStay = reloadData.ObstacleStay;
+        HiddleGoodDelay = reloadData.HiddleGoodDelay;
     }
 
     public override string ToString()
     {
         return "{ "
         + "Sn:" + Sn + ","
-        + "Count:" + Count + ","
+        + "LevelSize:" + LevelSize + ","
+        + "GoodKinds:" + GoodKinds + ","
         + "MoveDic:" + MoveDic + ","
-        + "SpecialState:" + SpecialState + ","
+        + "HiddleGoodMove:" + HiddleGoodMove + ","
+        + "HiddleGoodStay:" + HiddleGoodStay + ","
+        + "ObstacleMove:" + ObstacleMove + ","
+        + "ObstacleStay:" + ObstacleStay + ","
+        + "HiddleGoodDelay:" + HiddleGoodDelay + ","
         + "}";
     }
     

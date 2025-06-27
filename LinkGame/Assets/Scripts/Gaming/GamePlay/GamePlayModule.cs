@@ -1,5 +1,13 @@
+using cfg;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Xml.XPath;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace XrCode
 {
@@ -10,13 +18,72 @@ namespace XrCode
         private int tipCount;//提示次数
         private int refushCount;//刷新次数
         private int removeCount;//移除次数
+        private bool isTutorial;//是否通过了新手教程
 
         private int selectedGood;//被选中的物体
+
+        private Good good;
+
+
+
+
+
+
+        private AudioModule AudioModule;
+
+        private GameObject[][] MAP_Goods;//场景中的所有物体（包含障碍物）
+        private int[][] MAP;//场景中的所有物体的id（包含障碍物）
+        private int[][] MAP_FROZEN;//场景中的所有物体是否为冰冻状态（非冰冻状态为-1，否则为97（固定冰块）或96（可移动冰块））
+        private Vec2 POS1;//被选中的第1个物体or提示的第一个物品
+        private Vec2 POS2;//被选中的第2个物体or提示的第二个物品
+        private Vec2 HINT_POS1;//提示的第一个物品
+        private Vec2 HINT_POS2;//提示的第二个物品
+        private Vector3[][] POS;//所有位置的坐标集合
+        private static int MIN_X;//长最下角（起始位置的X）
+        private static int MIN_Y;//高最下角（起始位置的Y）
+        private static int CELL_WIDH = 28;//单个物体的宽
+        private static int CELL_HEIGHT = 28;//单个物体的高
+        private static int MAP_HEIGHT = 28;//整体排布的高
+        private static int MAP_WIDTH = 28;//整体排布的宽
+
+        private int col = 18;//布局长度（包含左右空位）
+        private int row = 10;//布局高度（包含上下空位）
+        private ArrayList LPath;//画线用的
+        private ArrayList keyLPath;//画线用的
+
+        private GameObject goodPrefab;//物体预制体
+        private GameObject autoGenPrefab;//自动冰冻管理器预制体（后续可能改为Module）
+
+        private LevelData curLevelData;//当前关卡的数据
+        private EMapState curMapState;//关卡当前的状态
+        
+
+        private ArrayList list_block_frozen;//关卡中不可移动的物体的集合？
+        private ArrayList list_block_frozen_normal;//关卡中不可移动？
+        private ArrayList list_block_frozen_special;//关卡中不可移动的？
+        private ArrayList listAutoGens;//自动冰冻完毕的物品集合
+        public int numberPokemonRemain = 0;
+        private ArrayList list_pokemon_can_eat1 = new ArrayList();
+        private ArrayList list_pokemon_can_eat2 = new ArrayList();
+
+        private Transform mapTrans;//生成物体的父亲对象
+
+        private bool checkingPaire;//当前关卡是否在检测配对
+
+        private bool isGameOver;//是否GaneOver
+        private bool isReseting;//是否重置关卡？（待验证）
+
+        private int _numberResetMap;//重排关卡的次数？（待验证）
+
+        private bool _isCheckWrong;//是否检测了错误？
+
+        private ArrayList check_id;
+
+        public bool checking_paire;
 
         protected override void OnLoad()
         {
             base.OnLoad();
-            levelData = new Dictionary<Vector2, GoodItem>();
 
             GamePlayFacade.CreateLevel += CreateLevel;
             GamePlayFacade.CheckIfLink += CheckIfLink;
@@ -29,9 +96,27 @@ namespace XrCode
             GamePlayFacade.GetTipCount += GetTipCount;
             GamePlayFacade.GetRefushCount += GetRefushCount;
             GamePlayFacade.GetRemoveCount += GetRemoveCount;
+            GamePlayFacade.ChangeMapState += ChangeMapState;
+            GamePlayFacade.GetMapState += GetMapState;
+            GamePlayFacade.UpdateHiddleState += UpdateHiddleState;
+            GamePlayFacade.RemoveHidden += RemoveHidden;
+            GamePlayFacade.RemoveGood += RemoveGood;
+            GamePlayFacade.UpdateMap += UpdateMap;
+            GamePlayFacade.GetRow += GetRow;
+            GamePlayFacade.SetIsCheckWrong += SetIsCheckWrong;
+            GamePlayFacade.CheckIdAdd += CheckIdAdd;
+
+            AudioModule = ModuleMgr.Instance.AudioMod;
+
+            list_block_frozen = new ArrayList();
+            list_block_frozen_normal = new ArrayList();
+            list_block_frozen_special = new ArrayList();
+            listAutoGens = new ArrayList();
+            _numberResetMap = 0;
+            _isCheckWrong = false;
+            check_id = new ArrayList();
 
             LoadData();
-
         }
 
         //加载数据
@@ -41,15 +126,394 @@ namespace XrCode
             tipCount = PlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
             refushCount = PlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
             removeCount = PlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
+            isTutorial = PlayerPrefs.GetInt(PlayerPrefDefines.isTutorial) == 1;
         }
 
-        //创建关卡
+        #region 创建关卡
         private void CreateLevel()
         {
+            curLevelData = new LevelData(curLevel);
+            row = curLevelData.LevelXCount;
+            col = curLevelData.LevelYCount;
 
+            goodPrefab = ResourceMod.Instance.SyncLoad<GameObject>("Good/item.prefab");
+
+            LMap(row, col);
+
+            //if (isTutorial)
+            //{
+                
+                
+            //}
+            //else
+            //{
+                
+            //}
+            curMapState = EMapState.Playing;
+
+            mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
+
+            _randomMap();
         }
 
+        /// <summary>
+        /// 添加物体排布表格数据
+        /// </summary>
+        /// <param name="row">横列数量</param>
+        /// <param name="col">纵列数量</param>
+        public void LMap(int row, int col)
+        {
+            float camHalfHeight = Camera.main.orthographicSize;
+            float camHalfWidth = Camera.main.aspect * camHalfHeight;
+            MAP_WIDTH = (int)camHalfWidth * 2;
+            MAP_HEIGHT = (int)camHalfHeight * 2;
+            CELL_WIDH = (int)(MAP_WIDTH / (col - 2));
+            CELL_HEIGHT = (int)((MAP_HEIGHT - 48) / (row - 2));
+
+            if (CELL_WIDH < CELL_HEIGHT)
+            {
+                CELL_HEIGHT = CELL_WIDH;
+            }
+            else
+            {
+                CELL_WIDH = CELL_HEIGHT;
+            }
+
+            Debug.Log($"Screen_width : {camHalfWidth}");
+            Debug.Log($"Screen_height : {camHalfHeight}");
+            Debug.Log($"Cell_width : {CELL_WIDH}");
+            Debug.Log($"Cell_height : {CELL_HEIGHT}");
+
+            MAP = new int[row][];
+            MAP_FROZEN = new int[row][];
+            MAP_Goods = new GameObject[row][];
+            POS = new Vector3[row][];
+
+            MIN_X = -col * CELL_WIDH / 2;
+            MIN_Y = -(int)camHalfHeight - CELL_HEIGHT / 2 + GameDefines.map_margin_bottom;
+
+
+            for (int i = 0; i < row; i++)
+            {
+                MAP[i] = new int[col];
+                MAP_FROZEN[i] = new int[col];
+                MAP_Goods[i] = new GameObject[col];
+                POS[i] = new Vector3[col];
+                for (int j = 0; j < col; j++)
+                {
+                    MAP[i][j] = -1;
+                    MAP_FROZEN[i][j] = -1;
+                    MAP_Goods[i][j] = null;
+                    POS[i][j] = new Vector3(0, 0, 0);
+                    POS[i][j].x = MIN_X + j * CELL_WIDH + CELL_WIDH / 2;
+                    POS[i][j].y = MIN_Y + i * CELL_HEIGHT;
+                    POS[i][j].z = i / 10.0f;
+                }
+            }
+            Debug.Log("khoi tao map");
+        }
+
+        private void _randomMap()
+        {
+            Debug.Log("::::Random MAP::::");
+            curMapState = EMapState.None;
+
+            ArrayList list_good_fixed = curLevelData.list_block_good_fixed;
+            ArrayList list_obs_fixed = curLevelData.list_block_stone_fixed;
+            ArrayList list_obs_moving = curLevelData.list_block_stone_moving;
+            list_block_frozen = curLevelData.list_block_frozen_fixed;
+
+            int total_good = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_good_fixed.Count;
+            int total_good_type = curLevelData.GoodKinds;
+            int number_good_4 = (total_good - 2 * total_good_type) / 2;
+            int number_good_2 = total_good_type - number_good_4;
+
+            ArrayList list_good = new ArrayList();
+            for (int i = 0; i < number_good_4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    list_good.Add(i);
+                }
+            }
+            for (int i = number_good_4; i < number_good_4 + number_good_2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    list_good.Add(i);
+                }
+            }
+            int list_pk_count = list_good.Count;
+            int temp2 = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_pk_count - list_good_fixed.Count;
+            if (temp2 % 2 != 0)
+            {
+                Debug.Log("Amount of good must be even");
+                return;
+            }
+            int max_id = (int)list_good[list_pk_count - 1];
+            for (int i = 0; i < temp2; i++)
+            {
+                list_good.Add(max_id + 1);
+            }
+            list_pk_count = list_good.Count;
+            for (int i = 0; i < list_obs_fixed.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_obs_fixed[i];
+                AddSpecialItem(GameDefines.OBS_FIXED_ID, pos.R, pos.C);
+                MAP[pos.R][pos.C] = GameDefines.OBS_FIXED_ID;
+            }
+
+            for (int i = 0; i < list_obs_moving.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_obs_moving[i];
+                AddSpecialItem(GameDefines.OBS_MOVING_ID, pos.R, pos.C);
+                MAP[pos.R][pos.C] = GameDefines.OBS_MOVING_ID;
+            }
+
+            for (int i = 0; i < list_good_fixed.Count; i++)
+            {
+                Vector3 good = (Vector3)list_good_fixed[i];
+                int p_row = (int)good.x;
+                int p_col = (int)good.y;
+                int p_id = (int)good.z;
+                AddGood(p_id, p_row, p_col);
+                MAP[p_row][p_col] = p_id;
+            }
+
+            for (int i = row - 2; i > 0; i--)
+            {
+                for (int j = 1; j < col - 1; j++)
+                {
+                    if (MAP[i][j] == -1)
+                    {
+                        int r = (int)(UnityEngine.Random.value * list_pk_count);
+                        int type = (int)list_good[r];
+                        AddGood(type, i, j);
+                        MAP[i][j] = type;
+                        list_good.RemoveAt(r);
+                        list_pk_count--;
+                    }
+                    GetGoodClass(i, j).setOrder();
+                }
+            }
+
+            for (int i = 0; i < list_block_frozen.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_block_frozen[i];
+                AddSpecialItem(GameDefines.HID_FIXED_ID, "hid_", pos.R, pos.C);
+            }
+
+            for (int i = 0; i < curLevelData.list_auto_gen.Count; i++)
+            {
+                AutoGenData auto_gen_data = (AutoGenData)curLevelData.list_auto_gen[i];
+                GenAutoGen(auto_gen_data);
+            }
+
+            UpdateListHiddle();
+
+            int numbergoodCanEat = GetNumberGoodCanEat();
+            if (numbergoodCanEat == 0)
+            {
+                _resetMap();
+            }
+            else
+            {
+                ChangeMapState(EMapState.Playing);
+            }
+        }
+
+        //向场景中添加一个物品预制体
+        private void AddGood(int type, int row, int col, int online_id = 0)
+        {
+            if (type == -1)
+                return;
+            MAP[row][col] = type;
+            GameObject obj = GameObject.Instantiate(goodPrefab);
+            Good good = obj.GetComponent<Good>();
+            good.setOnlineId(online_id);
+            good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
+            MAP_Goods[row][col] = obj;
+        }
+
+        //得到场景中的某物体上的Pokemon类
+        public Good GetGoodClass(int row, int col)
+        {
+            GameObject obj = GetGood(row, col);
+            if (obj)
+            {
+                return obj.GetComponent<Good>();
+            }
+            return null;
+        }
+
+        //得到场景中的某物体（MAP_Goods队列中的物体)
+        public GameObject GetGood(int row, int col)
+        {
+            return MAP_Goods == null ? null : MAP_Goods[row][col];
+        }
+
+        //向场景中添加一个特殊的物品预制体（障碍物、冰冻物品）
+        public void AddSpecialItem(int type, int row, int col)
+        {
+            if (type == -1)
+                return;
+            GameObject obj = GameObject.Instantiate(goodPrefab);
+            Good goodComp = obj.GetComponent<Good>();
+            goodComp.setSpecialInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
+            MAP_Goods[row][col] = obj;
+        }
+        //向场景中添加一个特殊的物品预制体（障碍物、冰冻物品）（带返回值版本）
+        public Good AddSpecialItem(int type, string name, int row, int col)
+        {
+            if (type == -1)
+                return null;
+            GameObject obj = GameObject.Instantiate(goodPrefab);
+            Good good = obj.GetComponent<Good>();
+            good.setSpecialInfo(type, name, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
+            good.setFrozen(true);
+            MAP_FROZEN[row][col] = GameDefines.HID_FIXED_ID;
+            return good;
+        }
+
+        /// <summary>
+        /// 创建自动冰冻的管理器
+        /// </summary>
+        /// <param name="auto_gen_data"></param>
+        public void GenAutoGen(AutoGenData auto_gen_data)
+        {
+            GameObject obj = GameObject.Instantiate(autoGenPrefab);
+            AutoGenController autoGenController = obj.GetComponent<AutoGenController>();
+            autoGenController.setAutoGenData(auto_gen_data);
+            listAutoGens.Add(autoGenController);
+        }
+
+        // 重新生成地图
+        public void _resetMap()
+        {
+            if (CheckGameOverByAllHiddle())
+            {
+                isGameOver = true;
+                Game.Instance.StartCoroutine(ShowRecoverLifePopupDelay());
+                //似乎是保存数据（持久化）用的
+                //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
+                return;
+            }
+            _numberResetMap++;
+            if (_numberResetMap > 500)
+                return;
+            RemoveHint();
+            Debug.Log(":::::Reset MAP::::");
+            //get list pokemon and stone in map
+            ArrayList list_pokemon = new ArrayList();
+            ArrayList list_stone_moving = new ArrayList();
+            ArrayList list_slot_no_frozen = new ArrayList();
+            ArrayList list_slot_has_frozen = new ArrayList();
+            for (int i = 1; i < row - 1; i++)
+            {
+                for (int j = 1; j < col - 1; j++)
+                {
+                    if (MAP[i][j] != -1 && MAP[i][j] != GameDefines.OBS_FIXED_ID)
+                    {
+                        if (MAP[i][j] == GameDefines.OBS_MOVING_ID)
+                        {
+                            list_stone_moving.Add(GetGood(i, j));
+                        }
+                        else
+                        {
+                            list_pokemon.Add(GetGood(i, j));
+                        }
+                    }
+                }
+            }
+            //get list slot avaiable
+            for (int i = 1; i < row - 1; i++)
+            {
+                for (int j = 1; j < col - 1; j++)
+                {
+                    if (MAP[i][j] != -1 && MAP[i][j] != GameDefines.OBS_FIXED_ID)
+                    {
+                        if (MAP_FROZEN[i][j] == -1)
+                        {
+                            list_slot_no_frozen.Add(new Vec2(i, j));
+                        }
+                        else
+                        {
+                            list_slot_has_frozen.Add(new Vec2(i, j));
+                        }
+                    }
+                }
+            }
+            list_slot_no_frozen = GetRandomList(list_slot_no_frozen);
+            list_slot_has_frozen = GetRandomList(list_slot_has_frozen);
+            //random list stone moving
+            for (int i = 0; i < list_stone_moving.Count; i++)
+            {
+                GameObject obj = (GameObject)list_stone_moving[i];
+                Good pokemon = obj.GetComponent<Good>();
+                int type = pokemon.id;
+                Vec2 pos = (Vec2)list_slot_no_frozen[0];
+                ChangeGood(pokemon, type, pos);
+                MAP_Goods[pos.R][pos.C] = obj;
+                MAP[pos.R][pos.C] = type;
+                list_slot_no_frozen.RemoveAt(0);
+                pokemon.setFrozen(false);
+            }
+
+            ArrayList list_slot = new ArrayList();
+            list_slot.AddRange(list_slot_no_frozen);
+            list_slot.AddRange(list_slot_has_frozen);
+            for (int i = 0; i < list_pokemon.Count; i++)
+            {
+                GameObject obj = (GameObject)list_pokemon[i];
+                Good pokemon = obj.GetComponent<Good>();
+                int type = pokemon.id;
+                Vec2 pos = (Vec2)list_slot[i];
+                if (MAP_FROZEN[pos.R][pos.C] == -1)
+                {
+                    pokemon.setFrozen(false);
+                }
+                else
+                {
+                    pokemon.setFrozen(true);
+                }
+                ChangeGood(pokemon, type, pos);
+                MAP_Goods[pos.R][pos.C] = obj;
+                MAP[pos.R][pos.C] = type;
+            }
+            int numberPokemonCanEat = GetNumberGoodCanEat();
+            if (numberPokemonCanEat == 0)
+            {
+                _resetMap();
+            }
+            else
+            {
+                //reloadUI();
+                _numberResetMap = 0;
+                isReseting = false;
+            }
+        }
+
+        IEnumerator ShowRecoverLifePopupDelay()
+        {
+            yield return new WaitForFixedUpdate();
+            ShowRecoverLifePopup();
+        }
+
+        //显示复活窗口
+        void ShowRecoverLifePopup()
+        {
+            if (curMapState != EMapState.Dialog_recover)
+            {
+                UIManager.Instance.OpenWindowAsync<UIRecover>(EUIType.EUIFuncPopup);
+                curMapState = EMapState.Dialog_recover;
+            }
+        }
+
+        #endregion
+
         #region 连接判断
+
+        #region old
         //是否能够连接
         private void CheckIfLink(Vector2 startP, Vector2 endP)
         {
@@ -109,7 +573,684 @@ namespace XrCode
         }
         #endregion
 
+        #region new
+        bool checkPaire(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (POS1 == null)
+                return false;
+            if (POS2 == null)
+            {
+                return false;
+            }
+            if (POS1.C == POS2.C)
+            {
+                if (check_vertical(POS1, POS2, showPath))
+                {
+                    return true;
+                }
+            }
+            else if (POS1.R == POS2.R)
+            {
+                if (check_horizontal(POS1, POS2, showPath))
+                {
+                    return true;
+                }
+            }
+            else if (checkL(POS1, POS2, showPath))
+            {
+                return true;
+            }
+            else if (checkZ(POS1, POS2, showPath))
+            {
+                return true;
+            }
+
+            if (checkU(POS1, POS2, showPath))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //检测两位置的竖列间是否有物体
+        bool check_vertical(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (get_pos_between_vertical(POS1, POS2) == POS2.R)
+            {
+                if (showPath)
+                {
+                    add_path_vertical(POS1, POS2);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //检测两位置的横列间是否有物体
+        bool check_horizontal(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (get_pos_between_horizontal(POS1, POS2) == POS2.C)
+            {
+                if (showPath)
+                {
+                    add_path_horizontal(POS1, POS2);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //检测两位置是否能三线相连（Z型）
+        bool checkZ(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            int ph1 = get_pos_between_horizontal(POS1, POS2);
+            int ph2 = get_pos_between_horizontal(POS2, POS1);
+            int pv1 = get_pos_between_vertical(POS1, POS2);
+            int pv2 = get_pos_between_vertical(POS2, POS1);
+
+            if (ph1 > POS1.C)
+            {
+                if (ph1 > POS2.C)
+                {
+                    ph1 = POS2.C;
+                }
+                if (ph2 < ph1 - 1)
+                {
+                    for (int i = ph2 + 1; i < ph1; i++)
+                    {
+                        if (Mathf.Abs(POS1.R - POS2.R) < 2)
+                        {
+                            if (MAP[POS1.R][i] == -1 && MAP[POS2.R][i] == -1)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_horizontal(POS1, new Vec2(POS1.R, i));
+                                    add_path_horizontal(new Vec2(POS2.R, i), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            int pv = get_pos_between_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                            if (pv == POS2.R)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_horizontal(POS1, new Vec2(POS1.R, i));
+                                    add_path_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                                    add_path_horizontal(new Vec2(POS2.R, i), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (ph1 < POS1.C)
+            {
+                if (ph1 < POS2.C)
+                {
+                    ph1 = POS2.C;
+                }
+                if (ph2 > ph1 + 1)
+                {
+                    for (int i = ph1 + 1; i < ph2; i++)
+                    {
+                        if (Mathf.Abs(POS1.R - POS2.R) < 2)
+                        {
+                            if (MAP[POS1.R][i] == -1 && MAP[POS2.R][i] == -1)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_horizontal(POS1, new Vec2(POS1.R, i));
+                                    add_path_horizontal(new Vec2(POS2.R, i), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            int pv = get_pos_between_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                            if (pv == POS2.R)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_horizontal(POS1, new Vec2(POS1.R, i));
+                                    add_path_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                                    add_path_horizontal(new Vec2(POS2.R, i), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (pv1 > POS1.R)
+            {
+                if (pv1 > POS2.R)
+                {
+                    pv1 = POS2.R;
+                }
+                if (pv2 < pv1 - 1)
+                {
+                    for (int i = pv2 + 1; i < pv1; i++)
+                    {
+                        if (Mathf.Abs(POS1.C - POS2.C) < 2)
+                        {
+                            if (MAP[i][POS1.C] == -1 && MAP[i][POS2.C] == -1)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_vertical(POS1, new Vec2(i, POS1.C));
+                                    add_path_vertical(new Vec2(i, POS2.C), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            int ph = get_pos_between_horizontal(new Vec2(i, POS1.C), new Vec2(i, POS2.C));
+                            if (ph == POS2.C)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_vertical(POS1, new Vec2(i, POS1.C));
+                                    add_path_horizontal(new Vec2(i, POS1.C), new Vec2(i, POS2.C));
+                                    add_path_vertical(new Vec2(i, POS2.C), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (pv1 < POS1.R)
+            {
+                if (pv1 < POS2.R)
+                {
+                    pv1 = POS2.R;
+                }
+                if (pv2 > pv1 + 1)
+                {
+                    for (int i = pv1 + 1; i < pv2; i++)
+                    {
+                        if (pv1 == pv2 && Mathf.Abs(POS1.C - POS2.C) < 2)
+                        {
+                            if (MAP[i][POS1.C] == -1 && MAP[i][POS2.C] == -1)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_vertical(POS1, new Vec2(i, POS1.C));
+                                    add_path_vertical(new Vec2(i, POS2.C), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            int ph = get_pos_between_horizontal(new Vec2(i, POS1.C), new Vec2(i, POS2.C));
+                            if (ph == POS2.C)
+                            {
+                                if (showPath)
+                                {
+                                    add_path_vertical(POS1, new Vec2(i, POS1.C));
+                                    add_path_horizontal(new Vec2(i, POS1.C), new Vec2(i, POS2.C));
+                                    add_path_vertical(new Vec2(i, POS2.C), POS2);
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        //检测两列是否能二线相连（L型）
+        bool checkL(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            int ph1 = get_pos_between_horizontal(POS1, POS2);
+            int pv1 = get_pos_between_vertical(POS1, POS2);
+            int ph2 = get_pos_between_horizontal(POS2, POS1);
+            int pv2 = get_pos_between_vertical(POS2, POS1);
+
+            if (ph1 == POS2.C && pv2 == POS1.R && MAP[pv2][ph1] == -1)
+            {
+                if (showPath)
+                {
+                    add_path_horizontal(POS1, new Vec2(POS1.R, POS2.C));
+                    add_path_vertical(new Vec2(POS1.R, POS2.C), POS2);
+                }
+                return true;
+            }
+            else if (pv1 == POS2.R && ph2 == POS1.C && MAP[pv1][ph2] == -1)
+            {
+                if (showPath)
+                {
+                    add_path_vertical(POS1, new Vec2(POS2.R, POS1.C));
+                    add_path_horizontal(new Vec2(POS2.R, POS1.C), POS2);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        //检测两物体是否能三线相连（U型）
+        bool checkU(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (checkU_Left(POS1, POS2, showPath))
+            {
+                return true;
+            }
+            if (checkU_Right(POS1, POS2, showPath))
+            {
+                return true;
+            }
+            if (checkU_Up(POS1, POS2, showPath))
+            {
+                return true;
+            }
+            if (checkU_Down(POS1, POS2, showPath))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //左U型
+        bool checkU_Left(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (POS1.R == POS2.R)
+            {
+                return false;
+            }
+            int ph1 = get_pos_between_horizontal(POS1, new Vec2(POS1.R, 0));
+            int ph2 = get_pos_between_horizontal(POS2, new Vec2(POS2.R, 0));
+            if (POS1.C < POS2.C && ph2 > POS1.C)
+            {
+                if (ph1 == 0 && ph2 == 0)
+                {
+                    if (showPath)
+                    {
+                        add_path_horizontal(POS1, new Vec2(POS1.R, 0));
+                        add_path_vertical(new Vec2(POS1.R, 0), new Vec2(POS2.R, 0));
+                        add_path_horizontal(new Vec2(POS2.R, 0), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else if (POS1.C > POS2.C && ph1 > POS2.C)
+            {
+                if (ph1 == 0 && ph2 == 0)
+                {
+                    if (showPath)
+                    {
+                        add_path_horizontal(POS1, new Vec2(POS1.R, 0));
+                        add_path_vertical(new Vec2(POS1.R, 0), new Vec2(POS2.R, 0));
+                        add_path_horizontal(new Vec2(POS2.R, 0), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            int start = POS1.C > POS2.C ? POS2.C : POS1.C;
+            int end = ph1 > ph2 ? ph1 : ph2;
+            for (int i = start - 1; i > end; i--)
+            {
+                int pv = get_pos_between_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                if (pv == POS2.R)
+                {
+                    if (showPath)
+                    {
+                        add_path_horizontal(POS1, new Vec2(POS1.R, i));
+                        add_path_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                        add_path_horizontal(new Vec2(POS2.R, i), POS2);
+                    }
+                    return true;
+                }
+            }
+            if (ph1 == 0 && ph2 == 0)
+            {
+                if (showPath)
+                {
+                    add_path_horizontal(POS1, new Vec2(POS1.R, 0));
+                    add_path_vertical(new Vec2(POS1.R, 0), new Vec2(POS2.R, 0));
+                    add_path_horizontal(new Vec2(POS2.R, 0), POS2);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        //右U型
+        bool checkU_Right(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (POS1.R == POS2.R)
+            {
+                return false;
+            }
+            int ph1 = get_pos_between_horizontal(POS1, new Vec2(POS1.R, col - 1));
+            int ph2 = get_pos_between_horizontal(POS2, new Vec2(POS2.R, col - 1));
+            if (POS1.C < POS2.C && ph1 < POS2.C)
+            {
+                if (ph1 == col - 1 && ph2 == col - 1)
+                {
+                    if (showPath)
+                    {
+                        add_path_horizontal(POS1, new Vec2(POS1.R, col - 1));
+                        add_path_vertical(new Vec2(POS1.R, col - 1), new Vec2(POS2.R, col - 1));
+                        add_path_horizontal(new Vec2(POS2.R, col - 1), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else if (POS1.C > POS2.C && ph2 < POS1.C)
+            {
+                if (ph1 == col - 1 && ph2 == col - 1)
+                {
+                    if (showPath)
+                    {
+                        add_path_horizontal(POS1, new Vec2(POS1.R, col - 1));
+                        add_path_vertical(new Vec2(POS1.R, col - 1), new Vec2(POS2.R, col - 1));
+                        add_path_horizontal(new Vec2(POS2.R, col - 1), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            int start = POS1.C > POS2.C ? POS1.C : POS2.C;
+            int end = ph1 > ph2 ? ph2 : ph1;
+            for (int i = start + 1; i < end; i++)
+            {
+                int pv = get_pos_between_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                if (pv == POS2.R)
+                {
+                    if (showPath)
+                    {
+                        add_path_horizontal(POS1, new Vec2(POS1.R, i));
+                        add_path_vertical(new Vec2(POS1.R, i), new Vec2(POS2.R, i));
+                        add_path_horizontal(new Vec2(POS2.R, i), POS2);
+                    }
+                    return true;
+                }
+            }
+            if (ph1 == col - 1 && ph2 == col - 1)
+            {
+                if (showPath)
+                {
+                    add_path_horizontal(POS1, new Vec2(POS1.R, col - 1));
+                    add_path_vertical(new Vec2(POS1.R, col - 1), new Vec2(POS2.R, col - 1));
+                    add_path_horizontal(new Vec2(POS2.R, col - 1), POS2);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        //上U型
+        bool checkU_Up(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (POS1.C == POS2.C)
+            {
+                return false;
+            }
+            int pv1 = get_pos_between_vertical(POS1, new Vec2(row - 1, POS1.C));
+            int pv2 = get_pos_between_vertical(POS2, new Vec2(row - 1, POS2.C));
+
+            if (POS1.R < POS2.R && pv1 < POS2.R)
+            {
+                if (pv1 == row - 1 && pv2 == row - 1)
+                {
+                    if (showPath)
+                    {
+                        add_path_vertical(POS1, new Vec2(row - 1, POS1.C));
+                        add_path_horizontal(new Vec2(row - 1, POS1.C), new Vec2(row - 1, POS2.C));
+                        add_path_vertical(new Vec2(row - 1, POS2.C), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else if (POS1.R > POS2.R && pv2 < POS1.R)
+            {
+                if (pv1 == row - 1 && pv2 == row - 1)
+                {
+                    if (showPath)
+                    {
+                        add_path_vertical(POS1, new Vec2(row - 1, POS1.C));
+                        add_path_horizontal(new Vec2(row - 1, POS1.C), new Vec2(row - 1, POS2.C));
+                        add_path_vertical(new Vec2(row - 1, POS2.C), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            int start = POS1.R > POS2.R ? POS1.R : POS2.R;
+            int end = pv1 > pv2 ? pv2 : pv1;
+            for (int i = start + 1; i < end; i++)
+            {
+                int ph = get_pos_between_horizontal(new Vec2(i, POS1.C), new Vec2(i, POS2.C));
+                if (ph == POS2.C)
+                {
+                    if (showPath)
+                    {
+                        add_path_vertical(POS1, new Vec2(i, POS1.C));
+                        add_path_horizontal(new Vec2(i, POS1.C), new Vec2(row - 1, POS2.C));
+                        add_path_vertical(new Vec2(i, POS2.C), POS2);
+                    }
+                    return true;
+                }
+            }
+            if (pv1 == row - 1 && pv2 == row - 1)
+            {
+                if (showPath)
+                {
+                    add_path_vertical(POS1, new Vec2(row - 1, POS1.C));
+                    add_path_horizontal(new Vec2(row - 1, POS1.C), new Vec2(row - 1, POS2.C));
+                    add_path_vertical(new Vec2(row - 1, POS2.C), POS2);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        //下U型
+        bool checkU_Down(Vec2 POS1, Vec2 POS2, bool showPath)
+        {
+            if (POS1.C == POS2.C)
+            {
+                return false;
+            }
+            int pv1 = get_pos_between_vertical(POS1, new Vec2(0, POS1.C));
+            int pv2 = get_pos_between_vertical(POS2, new Vec2(0, POS2.C));
+
+            if (POS1.R < POS2.R && pv2 > POS1.R)
+            {
+                if (pv1 == 0 && pv2 == 0)
+                {
+                    if (showPath)
+                    {
+                        add_path_vertical(POS1, new Vec2(0, POS1.C));
+                        add_path_horizontal(new Vec2(0, POS1.C), new Vec2(0, POS2.C));
+                        add_path_vertical(new Vec2(0, POS2.C), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+            else if (POS1.R > POS2.R && pv1 > POS2.R)
+            {
+                if (pv1 == 0 && pv2 == 0)
+                {
+                    if (showPath)
+                    {
+                        add_path_vertical(POS1, new Vec2(0, POS1.C));
+                        add_path_horizontal(new Vec2(0, POS1.C), new Vec2(0, POS2.C));
+                        add_path_vertical(new Vec2(0, POS2.C), POS2);
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            int start = POS1.R > POS2.R ? POS2.R : POS1.R;
+            int end = pv1 > pv2 ? pv1 : pv2;
+            for (int i = start - 1; i > end; i--)
+            {
+                int ph = get_pos_between_horizontal(new Vec2(i, POS1.C), new Vec2(i, POS2.C));
+                if (ph == POS2.C)
+                {
+                    if (showPath)
+                    {
+                        add_path_vertical(POS1, new Vec2(i, POS1.C));
+                        add_path_horizontal(new Vec2(i, POS1.C), new Vec2(row - 1, POS2.C));
+                        add_path_vertical(new Vec2(i, POS2.C), POS2);
+                    }
+                    return true;
+                }
+            }
+            if (pv1 == 0 && pv2 == 0)
+            {
+                if (showPath)
+                {
+                    add_path_vertical(POS1, new Vec2(0, POS1.C));
+                    add_path_horizontal(new Vec2(0, POS1.C), new Vec2(0, POS2.C));
+                    add_path_vertical(new Vec2(0, POS2.C), POS2);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        //得到两物体横列间第一个遇到的物体
+        int get_pos_between_horizontal(Vec2 POS1, Vec2 POS2)
+        {
+            if (POS1.C >= POS2.C)
+            {
+                for (int i = POS1.C - 1; i > POS2.C; i--)
+                {
+                    if (MAP[POS1.R][i] != -1)
+                    {
+                        return i;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = POS1.C + 1; i < POS2.C; i++)
+                {
+                    if (MAP[POS1.R][i] != -1)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return POS2.C;
+        }
+
+        //得到两物体竖列间第一个遇到的物体
+        int get_pos_between_vertical(Vec2 POS1, Vec2 POS2)
+        {
+            if (POS1.R >= POS2.R)
+            {
+                for (int i = POS1.R - 1; i > POS2.R; i--)
+                {
+                    if (MAP[i][POS1.C] != -1)
+                    {
+                        return i;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = POS1.R + 1; i < POS2.R; i++)
+                {
+                    if (MAP[i][POS1.C] != -1)
+                    {
+                        return i;
+                    }
+                }
+            }
+            return POS2.R;
+        }
+
+        //添加横向路径
+        void add_path_horizontal(Vec2 POS1, Vec2 POS2)
+        {
+            if (POS1.C >= POS2.C)
+            {
+                for (int i = POS1.C; i >= POS2.C; i--)
+                {
+                    Vec2 pos = new Vec2(POS1.R, i);
+                    if (!keyLPath.Contains(POS1.R + "_" + i))
+                    {
+                        LPath.Add(pos);
+                        keyLPath.Add(POS1.R + "_" + i);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = POS1.C; i <= POS2.C; i++)
+                {
+                    Vec2 pos = new Vec2(POS1.R, i);
+                    if (!keyLPath.Contains(POS1.R + "_" + i))
+                    {
+                        LPath.Add(pos);
+                        keyLPath.Add(POS1.R + "_" + i);
+                    }
+                }
+            }
+        }
+
+        //添加竖向路径
+        void add_path_vertical(Vec2 POS1, Vec2 POS2)
+        {
+            if (POS1.R >= POS2.R)
+            {
+                for (int i = POS1.R; i >= POS2.R; i--)
+                {
+                    Vec2 pos = new Vec2(i, POS1.C);
+                    if (!keyLPath.Contains(i + "_" + POS1.C))
+                    {
+                        LPath.Add(pos);
+                        keyLPath.Add(i + "_" + POS1.C);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = POS1.R; i <= POS2.R; i++)
+                {
+                    Vec2 pos = new Vec2(i, POS1.C);
+                    if (!keyLPath.Contains(i + "_" + POS1.C))
+                    {
+                        LPath.Add(pos);
+                        keyLPath.Add(i + "_" + POS1.C);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #endregion
+
         #region 消除周期流程
+        
+        #region old
         //消除目标
         private void LinkAndRemove(Vector2[] linePoint)
         {
@@ -136,6 +1277,171 @@ namespace XrCode
         }
         #endregion
 
+        #region new
+        //检查是否为1对（即是否可消除）
+        void CheckPair(Vec2 pos)
+        {
+            //POS2 = new Vec2(pos.R, pos.C);
+            //if (MAP_FROZEN[pos.R][pos.C] != -1)
+            //{
+            //    return;
+            //}
+            //if (POS1 != null && MAP[POS1.R][POS1.C] != MAP[POS2.R][POS2.C])
+            //{
+            //    AudioModule.PlayEffect(EAudioType.ECantMove);
+            //    DeSelect();
+            //    POS1 = null;
+            //    POS2 = null;
+            //    LPath.Clear();
+            //    keyLPath.Clear();
+            //}
+            //else if (checkPaire(POS1, POS2, true))
+            //{
+            //    logicLevel.updateScore(nextScore);
+            //    pathSystem.draw(LPath, false);
+            //    eat(POS1, POS2, true);
+            //}
+            //else
+            //{
+            //    AudioModule.PlayEffect(EAudioType.ECantMove);
+            //    DeSelect();
+            //    POS1 = null;
+            //    POS2 = null;
+            //    LPath.Clear();
+            //    keyLPath.Clear();
+            //}
+        }
+
+        //消除选中的两个物体
+        public void eat(Vec2 pos1, Vec2 pos2, bool isOffline)
+        {
+            AudioModule.PlayEffect(EAudioType.ElinkRemove);
+            if (!isOffline)
+            {
+                D.Log("eat pos: (" + pos1.R + "," + pos1.C + ")");
+            }
+            ChangeMapState(EMapState.Eating);
+            GetGood(pos1.R, pos1.C).GetComponent<Animator>().SetTrigger("Dissapear");
+            GetGood(pos2.R, pos2.C).GetComponent<Animator>().SetTrigger("Dissapear");
+            if (isOffline)
+            {
+                Game.Instance.StartCoroutine(execute_check_paire(pos1, pos2));
+            }
+            else
+            {
+                Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
+            }
+        }
+
+        //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
+        IEnumerator execute_check_paire(Vec2 pos1, Vec2 pos2)
+        {
+            yield return null;
+            //yield return new WaitForSeconds(0.4f);
+            //RemoveGood(pos1);
+            //RemoveGood(pos2);
+            //UpdateFrozenState(pos1);
+            //UpdateFrozenState(pos2);
+            //updateClockState(pos1);
+            //updateClockState(pos2);
+            //UpdateMap(true);
+        }
+
+        //同步更新一些列检测（Test方法测试用，此处不调用）
+        IEnumerator execute_check_paire_online(Vec2 pos1, Vec2 pos2)
+        {
+            yield return new WaitForSeconds(0.4f);
+            RemoveGood(pos1);
+            RemoveGood(pos2);
+            UpdateMap(false);
+        }
+
+        //更新地图数据（是否进入下一关）
+        public void UpdateMap(bool isOffline)
+        {
+            //if (clearMap())
+            //{
+            //    if (curMapState == EMapState.Result)
+            //    {
+            //        return;
+            //    }
+            //    ChangeMapState(EMapState.Result);
+            //    Debug.Log("+++++++++++++++++++++++++++++++++++++++++clear map+++++++++++++++++++++++++++++++++++++++++++++++++");
+            //    DeSelect();
+            //    LPath.Clear();
+            //    keyLPath.Clear();
+            //    logicLevel.collectReward();
+
+            //    if (GameStatic.currentLevel == GameStatic.maxLevel)
+            //    {
+            //        // final win
+            //        logicLevel.updateScore(logicLevel.getScoreBonus() + GameConfig.bonus_victory);
+            //        resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, true);
+            //        GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
+            //        GameStatic.endGame();
+            //    }
+            //    else
+            //    {
+            //        logicLevel.updateScore(logicLevel.getScoreBonus());
+            //        resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, false);
+            //        GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
+            //        GameStatic.saveGameWithoutMap();
+            //    }
+            //    Save.countLevelPass();
+            //}
+            //else
+            //{
+            //    StartCoroutine(updateLogicLevel(isOffline));
+            //}
+        }
+
+        //更新关卡逻辑数据
+        IEnumerator updateLogicLevel(bool isOffline)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            //logicLevel.list_pos_need_update.Add(POS1);
+            //logicLevel.list_pos_need_update.Add(POS2);
+            //logicLevel.UpdateMap();
+            //StartCoroutine(end_update_map(isOffline));
+        }
+
+        //数据逻辑更新完毕，开始更新关卡视图
+        IEnumerator end_update_map(bool isOffline)
+        {
+            yield return new WaitForSeconds(0.1f);
+            //if (!isTutorial)
+            //{
+            //    GameStatic.saveGame();
+            //}
+            //if (isOffline)
+            //{
+            //    DeSelect();
+            //    LPath.Clear();
+            //    keyLPath.Clear();
+            //}
+            //if (checkGameOver())
+            //{
+            //    isGameOver = true;
+            //    lastTime = currentTime;
+            //    Analytics.CustomEvent("gameOver", new Dictionary<string, object>{
+            //    {"score",GameStatic.currentScore},
+            //    {"level",GameStatic.currentLevel}
+            //});
+            //    GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
+            //}
+            //int numberPokemonCanEat = getNumberPokemonCanEat();
+            //Debug.Log("numberPokemonCanEat : " + numberPokemonCanEat);
+            //if (!isReseting && numberPokemonCanEat == 0 && numberPokemonRemain > 0)
+            //{
+            //    StartCoroutine(StartResetMap());
+            //}
+            //if (curMapState == EMapState.Eating)
+            //        ChangeMapState(EMapState.Playing);
+        }
+        #endregion
+
+        #endregion
+
         #region 点击物体
         //被选中时闪光
         private void SelectLight()
@@ -148,6 +1454,89 @@ namespace XrCode
         {
 
         }
+
+        void Select(Vec2 pos)
+        {
+            if (checking_paire)
+            {
+                return;
+            }
+            if (pos.R < 1 || pos.R > row - 1 || pos.C < 1 || pos.C > col - 1)
+            {
+                return;
+            }
+            if (MAP[pos.R][pos.C] == -1 || MAP[pos.R][pos.C] == GameDefines.OBS_FIXED_ID
+                || MAP[pos.R][pos.C] == GameDefines.OBS_MOVING_ID)
+            {
+                return;
+            }
+            if (MAP_FROZEN[pos.R][pos.C] != -1)
+            {
+                return;
+            }
+            GameObject obj = GetGood(pos.R, pos.C);
+            Good good = obj.GetComponent<Good>();
+            if (good.getState() != GameDefines.STATE_NORMAL)
+            {
+                return;
+            }
+            if (POS1 != null && POS1.C == pos.C && POS1.R == pos.R)
+            {
+                DeSelect();
+                AudioModule.PlayEffect(EAudioType.EDeSelect);
+            }
+            else if (POS1 == null)
+            {
+                POS1 = new Vec2(pos.R, pos.C);
+                if (obj != null)
+                {
+                    obj.GetComponent<Good>().Select();
+                    RemoveHint();
+                }
+                AudioModule.PlayEffect(EAudioType.ESelect);
+            }
+            else if (POS2 == null)
+            {
+                POS2 = new Vec2(pos.R, pos.C);
+                if (obj != null)
+                {
+                    obj.GetComponent<Good>().Select();
+                    RemoveHint();
+                    CheckPair(pos);
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        //取消选中物体
+        void DeSelect()
+        {
+            D.Log("DESELECT :::");
+            GameObject pokemon = null;
+            if (POS1 != null)
+            {
+                pokemon = GetGood(POS1.R, POS1.C);
+            }
+            if (pokemon != null)
+            {
+                pokemon.GetComponent<Good>().DeSelect();
+            }
+            if (POS2 != null)
+            {
+                pokemon = GetGood(POS2.R, POS2.C);
+            }
+            if (pokemon != null)
+            {
+                pokemon.GetComponent<Good>().DeSelect();
+            }
+            POS1 = null;
+            POS2 = null;
+        }
+
+
         #endregion
 
         #region 下三功能
@@ -201,5 +1590,512 @@ namespace XrCode
         }
         #endregion
 
+
+        #region 其他
+        /// <summary>
+        /// 改变当前关卡的状态
+        /// </summary>
+        /// <param name="state">改变状态</param>
+        private void ChangeMapState(EMapState state)
+        {
+            if (curMapState == state)
+                return;
+            curMapState = state;
+            if (curMapState == EMapState.Playing)
+            {
+                checkingPaire = false;
+                for (int i = 0; i < listAutoGens.Count; i++)
+                {
+                    AutoGenController autoGen = (AutoGenController)listAutoGens[i];
+                    autoGen.playClockCountDown();
+                }
+            }
+            else if (curMapState == EMapState.Eating)
+            {
+                checkingPaire = true;
+            }
+            else if (curMapState == EMapState.Pause)
+            {
+                checkingPaire = true;
+                for (int i = 0; i < listAutoGens.Count; i++)
+                {
+                    AutoGenController autoGen = (AutoGenController)listAutoGens[i];
+                    autoGen.pauseClockCountDown();
+                }
+            }
+            else if (curMapState == EMapState.Result)
+            {
+                checkingPaire = true;
+                for (int i = 0; i < listAutoGens.Count; i++)
+                {
+                    AutoGenController autoGen = (AutoGenController)listAutoGens[i];
+                    autoGen.pauseClockCountDown();
+                }
+            }
+            else
+            {
+                checkingPaire = false;
+            }
+        }
+
+        private EMapState GetMapState()
+        {
+            return curMapState;
+        }
+
+        //得到当前场景中可销毁的物体的数量
+        public int GetNumberGoodCanEat()
+        {
+            numberPokemonRemain = 0;
+            int number = 0;
+            list_pokemon_can_eat1.Clear();
+            list_pokemon_can_eat2.Clear();
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID
+                        && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1)
+                    {
+                        for (int i2 = 1; i2 < row - 1; i2++)
+                        {
+                            for (int j2 = 1; j2 < col - 1; j2++)
+                            {
+                                if (i2 <= i1 && j2 <= j1) continue;
+                                if (MAP_FROZEN[i2][j2] != -1) continue;
+                                if (MAP[i2][j2] == MAP[i1][j1])
+                                {
+                                    HINT_POS1 = new Vec2(i1, j1);
+                                    HINT_POS2 = new Vec2(i2, j2);
+                                    if (checkPaire(HINT_POS1, HINT_POS2, false))
+                                    {
+                                        list_pokemon_can_eat1.Add(HINT_POS1);
+                                        list_pokemon_can_eat2.Add(HINT_POS2);
+                                        number++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //get number pokemon remain
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID
+                        && MAP[i1][j1] != GameDefines.OBS_MOVING_ID)
+                    {
+                        numberPokemonRemain++;
+                    }
+                }
+            }
+            return number;
+        }
+
+        //更新冰冻物体列表
+        private void UpdateListHiddle()
+        {
+            list_block_frozen_normal.Clear();
+            list_block_frozen_special.Clear();
+            if (list_block_frozen.Count == 0) return;
+            Hashtable list_frozen_multi = new Hashtable();
+            for (int i = 0; i < list_block_frozen.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_block_frozen[i];
+                if (isSingleHid(pos))
+                {
+                    list_block_frozen_normal.Add(pos);
+                }
+                else
+                {
+                    list_frozen_multi.Add(pos.R + "_" + pos.C, pos);
+                }
+            }
+            bool isCreated = false;
+            bool isCalculator = list_frozen_multi.Count > 0 ? true : false;
+            while (isCalculator)
+            {
+                Hashtable list_frozen_special;
+                if (!isCreated)
+                {
+                    isCreated = true;
+                    list_frozen_special = new Hashtable();
+                    list_block_frozen_special.Add(list_frozen_special);
+                }
+                else
+                {
+                    list_frozen_special = (Hashtable)list_block_frozen_special[list_block_frozen_special.Count - 1];
+                }
+                bool check = false;
+                foreach (string key in list_frozen_multi.Keys)
+                {
+                    Vec2 pos = (Vec2)list_frozen_multi[key];
+                    string pos_key = pos.R + "_" + pos.C;
+                    if (list_frozen_special.Count == 0)
+                    {
+                        list_frozen_special.Add(pos_key, pos);
+                        check = true;
+                    }
+                    else
+                    {
+                        ArrayList list_frozen_around = GetHidAround(pos);
+                        bool isAdded = false;
+                        for (int i = 0; i < list_frozen_around.Count; i++)
+                        {
+                            Vec2 pos_around = (Vec2)list_frozen_around[i];
+                            string pos_around_key = pos_around.R + "_" + pos_around.C;
+                            if (list_frozen_special.ContainsKey(pos_around_key) && !list_frozen_special.ContainsKey(pos_key))
+                            {
+                                list_frozen_special.Add(pos_key, pos);
+                                check = true;
+                                isAdded = true;
+                                break;
+                            }
+                        }
+                        if (isAdded)
+                        {
+                            for (int i = 0; i < list_frozen_around.Count; i++)
+                            {
+                                Vec2 pos_around = (Vec2)list_frozen_around[i];
+                                string pos_around_key = pos_around.R + "_" + pos_around.C;
+                                if (!list_frozen_special.ContainsKey(pos_around_key))
+                                {
+                                    list_frozen_special.Add(pos_around_key, pos_around);
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach (string key in list_frozen_special.Keys)
+                {
+                    Vec2 pos = (Vec2)list_frozen_special[key];
+                    list_frozen_multi.Remove(pos.R + "_" + pos.C);
+                }
+                if (!check)
+                {
+                    isCreated = false;
+                }
+                if (list_frozen_multi.Count == 0)
+                {
+                    isCalculator = false;
+                }
+            }
+        }
+
+        //更新冰冻状态(消除的物品周围的状态)
+        public void UpdateHiddleState(Vec2 POS)
+        {
+            if (POS == null) return;
+            bool isRemove = false;
+            if (POS.R > 1)
+            {
+                if (MAP_FROZEN[POS.R - 1][POS.C] != -1)
+                {
+                    MAP_FROZEN[POS.R - 1][POS.C] = -1;
+                    RemoveHidden(POS.R - 1, POS.C, true);
+                    UpdateDataHiddle(POS.R - 1, POS.C);
+                    //logicLevel.list_pos_need_update.Add(new Vec2(POS.R - 1, POS.C));
+                    isRemove = true;
+                }
+            }
+            if (POS.R < row - 2)
+            {
+                if (MAP_FROZEN[POS.R + 1][POS.C] != -1)
+                {
+                    MAP_FROZEN[POS.R + 1][POS.C] = -1;
+                    RemoveHidden(POS.R + 1, POS.C, true);
+                    UpdateDataHiddle(POS.R + 1, POS.C);
+                    //logicLevel.list_pos_need_update.Add(new Vec2(POS.R + 1, POS.C));
+                    isRemove = true;
+                }
+            }
+            if (POS.C > 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C - 1] != -1)
+                {
+                    MAP_FROZEN[POS.R][POS.C - 1] = -1;
+                    RemoveHidden(POS.R, POS.C - 1, true);
+                    UpdateDataHiddle(POS.R, POS.C - 1);
+                    //logicLevel.list_pos_need_update.Add(new Vec2(POS.R, POS.C - 1));
+                    isRemove = true;
+                }
+            }
+            if (POS.C < col - 2)
+            {
+                if (MAP_FROZEN[POS.R][POS.C + 1] != -1)
+                {
+                    MAP_FROZEN[POS.R][POS.C + 1] = -1;
+                    RemoveHidden(POS.R, POS.C + 1, true);
+                    UpdateDataHiddle(POS.R, POS.C + 1);
+                    //logicLevel.list_pos_need_update.Add(new Vec2(POS.R, POS.C + 1));
+                    isRemove = true;
+                }
+            }
+            if (isRemove)
+            {
+                UpdateListHiddle();
+            }
+        }
+
+        //移除场景中某行某列的冰冻特效
+        public void RemoveHidden(int row, int col, bool showParticle)
+        {
+            GameObject frozen = getFrozen(row, col);
+            if (frozen != null)
+            {
+                UnityEngine.Object.DestroyImmediate(frozen);
+                if (showParticle)
+                {
+                    GameObject obj = null;
+                    obj = GameObject.Instantiate(Resources.Load("Prefab/IceBreakParticle", typeof(GameObject))) as GameObject;
+                    obj.transform.position = POS[row][col];
+                    obj.transform.SetParent(mapTrans);
+                    obj.GetComponent<PathItem>().live(2);
+                    AudioModule.PlayEffect(EAudioType.EReleaseHiddle);
+                }
+            }
+            GameObject good = GetGood(row, col);
+            if (good != null)
+            {
+                ((Good)good.GetComponent<Good>()).setFrozen(false);
+            }
+            MAP_FROZEN[row][col] = -1;
+            for (int i = 0; i < list_block_frozen.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_block_frozen[i];
+                if (pos.R == row && pos.C == col)
+                {
+                    list_block_frozen.RemoveAt(i);
+                }
+            }
+        }
+
+        //检测目标周围的是否存在隐藏物体（存在返回false）
+        bool isSingleHid(Vec2 POS)
+        {
+            if (POS.R > 1)
+            {
+                if (MAP_FROZEN[POS.R - 1][POS.C] != -1)
+                {
+                    return false;
+                }
+            }
+            if (POS.R < row - 1)
+            {
+                if (MAP_FROZEN[POS.R + 1][POS.C] != -1)
+                {
+                    return false;
+                }
+            }
+            if (POS.C > 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C - 1] != -1)
+                {
+                    return false;
+                }
+            }
+            if (POS.C < col - 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C + 1] != -1)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //得当场景中某行某列的冰冻特效
+        public GameObject getFrozen(int row, int col)
+        {
+            return GameObject.Find("hidden_" + row + "_" + col);
+        }
+
+        //得到目标周围的冰冻物体
+        ArrayList GetHidAround(Vec2 POS)
+        {
+            ArrayList list_frozen = new ArrayList();
+            if (POS.R > 1)
+            {
+                if (MAP_FROZEN[POS.R - 1][POS.C] != -1)
+                {
+                    list_frozen.Add(new Vec2(POS.R - 1, POS.C));
+                }
+            }
+            if (POS.R < row - 1)
+            {
+                if (MAP_FROZEN[POS.R + 1][POS.C] != -1)
+                {
+                    list_frozen.Add(new Vec2(POS.R + 1, POS.C));
+                }
+            }
+            if (POS.C > 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C - 1] != -1)
+                {
+                    list_frozen.Add(new Vec2(POS.R, POS.C - 1));
+                }
+            }
+            if (POS.C < col - 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C + 1] != -1)
+                {
+                    list_frozen.Add(new Vec2(POS.R, POS.C + 1));
+                }
+            }
+            return list_frozen;
+        }
+
+        //得到一个随机列表（随机冰冻时用）
+        ArrayList GetRandomList(ArrayList listBefore)
+        {
+            ArrayList listAfter = new ArrayList();
+            int count = listBefore.Count;
+            while (count > 0)
+            {
+                int r = UnityEngine.Random.Range(0, count);
+                listAfter.Add(listBefore[r]);
+                listBefore.RemoveAt(r);
+                count--;
+            }
+            return listAfter;
+        }
+
+        //更新冰冻状态的数据
+        void UpdateDataHiddle(int row, int col)
+        {
+            for (int i = 0; i < curLevelData.list_block_stone_and_frozen.Count; i++)
+            {
+                Vec2 pos = (Vec2)curLevelData.list_block_stone_and_frozen[i];
+                if (pos.R == row && pos.C == col)
+                {
+                    curLevelData.list_block_stone_and_frozen.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+        //判断是否因冰冻而导致GameOver
+        bool CheckGameOverByAllHiddle()
+        {
+            int count = 0;
+            for (int i = 1; i < row - 1; i++)
+            {
+                for (int j = 1; j < col - 1; j++)
+                {
+                    if (MAP_FROZEN[i][j] == -1 && MAP[i][j] != GameDefines.OBS_MOVING_ID
+                        && MAP[i][j] != GameDefines.OBS_FIXED_ID && MAP[i][j] != -1)
+                    {
+                        count++;
+                        if (count > 1)
+                        {
+                            break;
+                        }
+                    }
+                }
+                if (count > 1)
+                {
+                    break;
+                }
+            }
+            if (count < 2)
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+
+
+
+
+        //改变场景中的物品的信息1版本
+        public void ChangeGood(Good good, int type, Vec2 next_pos)
+        {
+            if (type == -1)
+            {
+                return;
+            }
+            if (type == GameDefines.OBS_FIXED_ID || type == GameDefines.OBS_MOVING_ID)
+            {
+                good.setSpecialInfo(type, next_pos.R, next_pos.C, POS[next_pos.R][next_pos.C], CELL_WIDH, CELL_HEIGHT, mapTrans);
+                MAP[next_pos.R][next_pos.C] = type;
+            }
+            else
+            {
+                good.setInfo(type, next_pos.R, next_pos.C, POS[next_pos.R][next_pos.C], CELL_WIDH, CELL_HEIGHT, this.mapTrans);
+                MAP[next_pos.R][next_pos.C] = type;
+            }
+        }
+
+        //改变场景中的物品的信息2版本
+        public bool ChangeGood(GameObject obj, Good good, Vec2 next_pos, float time_move)
+        {
+            if (good.POS.R == next_pos.R && good.POS.C == next_pos.C)
+                return false;
+            good.updateInfo(next_pos, POS[next_pos.R][next_pos.C], time_move);
+            MAP[next_pos.R][next_pos.C] = good.id;
+            MAP_Goods[next_pos.R][next_pos.C] = obj;
+            return true;
+        }
+
+        //改变场景中的物品的信息3版本
+        public void ChangeGood(Good good, Vec2 next_pos, float time_move)
+        {
+            good.updateInfo(next_pos, POS[next_pos.R][next_pos.C], time_move);
+            MAP[next_pos.R][next_pos.C] = good.id;
+        }
+
+        //移除场景中的物体
+        public void RemoveGood(Vec2 POS)
+        {
+            if (MAP[POS.R][POS.C] == -1)
+                return;
+            GameObject obj = GetGood(POS.R, POS.C);
+            if (obj != null)
+            {
+                UnityEngine.Object.DestroyImmediate(obj);
+            }
+            MAP_Goods[POS.R][POS.C] = null;
+            MAP[POS.R][POS.C] = -1;
+        }
+
+        //消去摇动（提示）特效
+        void RemoveHint()
+        {
+            GameObject pokemon = null;
+            if (HINT_POS1 != null)
+            {
+                pokemon = GetGood(HINT_POS1.R, HINT_POS1.C);
+            }
+            if (pokemon != null)
+            {
+                pokemon.GetComponent<Good>().RemoveHint();
+            }
+            if (HINT_POS2 != null)
+            {
+                pokemon = GetGood(HINT_POS2.R, HINT_POS2.C);
+            }
+            if (pokemon != null)
+            {
+                pokemon.GetComponent<Good>().RemoveHint();
+            }
+        }
+
+        /// <summary>
+        /// 获取布局高度（包含上下空位）
+        /// </summary>
+        /// <returns>布局高度（包含上下空位）</returns>
+        private int GetRow()
+        {
+            return row;
+        }
+
+        private void SetIsCheckWrong(bool b)
+        {
+            _isCheckWrong = b;
+        }
+
+        private void CheckIdAdd(object target)
+        {
+            check_id.Add(target);
+        }
+
+        #endregion
     }
 }

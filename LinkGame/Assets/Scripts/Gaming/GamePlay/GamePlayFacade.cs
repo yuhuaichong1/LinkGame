@@ -20,6 +20,18 @@ public static class GamePlayFacade
     public static Func<int> GetTipCount;                  //获取提示功能数量
     public static Func<int> GetRefushCount;               //获取刷新功能数量
     public static Func<int> GetRemoveCount;               //获取移除功能数量
+    public static Action<EMapState> ChangeMapState;       //改变关卡状态
+    public static Func<EMapState> GetMapState;            //得到关卡状态
+    public static Action<Vec2> UpdateHiddleState;         //更新冰冻状态(消除的物品周围的状态)
+    public static Action<int, int, bool> RemoveHidden;    //移除场景中某行某列的冰冻特效
+    public static Action<Vec2> RemoveGood;                //移除场景中的物体
+    public static Action<bool> UpdateMap;                 //更新地图数据（是否进入下一关）
+    public static Func<int> GetRow;                       //获取行的数量
+    public static Action<bool> SetIsCheckWrong;           //
+    public static Action<object> CheckIdAdd;              //
+
+
+    public static Func<Transform> GetMapTrans;            //获取生成物体的父对象
 }
 
 

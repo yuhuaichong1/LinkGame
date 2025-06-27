@@ -8,7 +8,18 @@
 
 public abstract class GameDefines
 {
-    public static string URL = "https://www.";
+    public static string URL = "https://www.";//后台网址
+
+    public const int map_margin_bottom = 5;//关卡显示区域下边距
+
+    public const int OBS_FIXED_ID = 99;//不可移动的障碍物
+    public const int OBS_MOVING_ID = 98;//可移动的障碍物
+    public const int HID_FIXED_ID = 97;//不可移动的隐藏物
+    public const int HID_MOVING_ID = 96;//可移动的隐藏物
+
+    public const int STATE_NORMAL = 0;//物体状态——一般
+    public const int STATE_HIDE = 1;//物体状态——隐藏
+    public const int STATE_DISAPPEARING = 2;//物体状态——消失中
 }
 #endregion
 
@@ -38,7 +49,8 @@ public enum EUIType
     EUIGuide = 5,
     EUINotice = 6,
     EUIEffect = 7,
-    EUIFuncPopup = 8
+    EUIFuncPopup = 8,
+    EUIRecover = 9,
 }
 
 public enum ESceneType : byte
@@ -99,6 +111,17 @@ public enum EFuncType : int
     Tip,
     Refush,
     Remove
+}
+
+public enum EMapState 
+{ 
+    Eating,            //消除中
+    Playing,           //游玩中
+    Moving,            //物体移动中？
+    None,              //无
+    Result,            //结算中
+    Pause,             //暂停中
+    Dialog_recover     //对话框恢复？
 }
 
 #endregion

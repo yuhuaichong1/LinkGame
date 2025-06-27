@@ -13,4 +13,9 @@ public enum EAudioType : int
 { 
     EBgm = 1,
     EButton,
+    EReleaseHiddle,
+    ECantMove,
+    ESelect,
+    EDeSelect,
+    ElinkRemove,
 }

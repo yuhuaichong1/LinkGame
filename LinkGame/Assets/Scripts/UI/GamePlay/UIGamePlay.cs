@@ -17,7 +17,7 @@ namespace XrCode
             GamePlayFacade.ChangeTipCountShow += ChangeFuncTipCount;
             GamePlayFacade.ChangeRefushCountShow += ChangeFuncRefushCount;
             GamePlayFacade.ChangeRemoveCountShow += ChangeFuncRemoveCount;
-
+            GamePlayFacade.GetMapTrans += GetMapTrans;
             //mTipText.text = languageMod.GetText("");
             //mRefushText.text = languageMod.GetText("");
             //mRemoveText.text = languageMod.GetText("");
@@ -85,6 +85,11 @@ namespace XrCode
         {
             mRemoveCountText.text = GetCountText(GamePlayFacade.GetRemoveCount.Invoke());
         }
+        private Transform GetMapTrans()
+        {
+            return mMap.transform;
+        }
+
 
         protected override void OnDisable()
         { 

@@ -23,7 +23,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>UNITY_2022_3_52;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_ANDROID;TEXTCORE_1_0_OR_NEWER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;ENABLE_ETC_COMPRESSION;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2022_3_52;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_ANDROID;TEXTCORE_1_0_OR_NEWER;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;ENABLE_ETC_COMPRESSION;PLATFORM_EXTENDS_VULKAN_DEVICE;PLATFORM_HAS_MULTIPLE_SWAPCHAINS;UNITY_ANDROID_SUPPORTS_SHADOWFILES;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;DOTWEEN;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;USG0001</NoWarn>
@@ -70,6 +70,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializer.cs" />
     <Compile Include="Assets\Scripts\UI\Guide\UIGuide.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\CallbackSet.cs" />
+    <Compile Include="Assets\Scripts\UI\Recover\UITemplate\UIRecover_Temp.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoDragMe.cs" />
     <Compile Include="Assets\Scripts\User\UserModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DefaultValueDecorator.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoWriter.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SurrogateSerializer.cs" />
     <Compile Include="Assets\Scripts\_Game\BaseModule.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Data\Vec2.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoMemberAttribute.cs" />
     <Compile Include="Assets\Tools\SafeArea\SUISafeArea.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeGuide.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIgnoreAttribute.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\Extension\GameObjectExtension.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\Swipe.cs" />
+    <Compile Include="Assets\Scripts\GameSystem\PathItem.cs" />
     <Compile Include="Assets\Gen\Code\ConfGuides.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IExecute.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\EditorResourceLoader.cs" />
@@ -195,9 +198,11 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\NetObjectCache.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\TapMe.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IEntity.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\Good.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\XmlProtoSerializer.cs" />
     <Compile Include="Assets\Scripts\Guide\GiudeItem.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\TouchPad-Event-Input\TouchPadUIEvent.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Level\LevelDefines.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ISerializerProxy.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\TypeFormatEventArgs.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoException.cs" />
@@ -215,6 +220,7 @@
     <Compile Include="Assets\Scripts\Scene\SceneMod.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt64Serializer.cs" />
     <Compile Include="Assets\Scripts\UI\Popup\UIPopup.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Level\RewardData.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\EasyTouchInput.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoEndpointBehavior.cs" />
     <Compile Include="Assets\Scripts\Tools\Timer\TimerManager.cs" />
@@ -301,11 +307,13 @@
     <Compile Include="Assets\Scripts\Tools\Utils\ConfigUtil.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\IExtension.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int64Serializer.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenController.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridView.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\GoodDefine.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IObject.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Level\ConstraintData.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UITemplate\UILoading_Temp.cs" />
@@ -323,6 +331,7 @@
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Components\PointerEventListener.cs" />
     <Compile Include="Assets\Gen\Code\ConfAudio.cs" />
     <Compile Include="Assets\Scripts\GameSDK\GameSDKManger.cs" />
+    <Compile Include="Assets\Scripts\UI\Recover\UIRecover.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UITwistPinch\UIPinch.cs" />
     <Compile Include="Assets\Scripts\_Game\EarthRotation.cs" />
     <Compile Include="Assets\Scripts\UI\Base\Entity.cs" />
@@ -360,12 +369,15 @@
     <Compile Include="Assets\Scripts\UI\FuncPopup\UIFuncPopup.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IDispose.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenData.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadePlayers.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ImplicitFields.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\Gesture.cs" />
     <Compile Include="Assets\Scripts\UI\GamePlay\UIGamePlay.cs" />
+    <Compile Include="Assets\API\DLL\SimpleJSON.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\WireType.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoConverterAttribute.cs" />
+    <Compile Include="Assets\Scripts\LinkGood\Level\LevelData.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCButton.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\Common\ClickEventListener.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ComponentExtensions.cs" />
@@ -738,6 +750,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
@@ -1342,6 +1358,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{00592EDB-94A4-AD0C-382C-4D6B454B6851}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
     <ProjectReference Include="spine-unity.csproj">
       <Project>{86209CBC-6D93-7749-D626-D47E5520015D}</Project>
       <Name>spine-unity</Name>
