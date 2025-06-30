@@ -25,6 +25,13 @@ public class Good : MonoBehaviour
     public List<Sprite> _sprites = new List<Sprite>();
 
     private GameObject selectPaticle = null;
+
+    [Space]
+    public RectTransform mRectTrans;
+    public Image mImage;
+    public Button mBtn;
+    public Color selectedColor;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,7 +39,8 @@ public class Good : MonoBehaviour
         if (_sprites.Count > 0)
             sprites = _sprites;
 
-        GetComponent<RectTransform>().localScale = Vector3.one;
+        mRectTrans.localScale = Vector3.one;
+        mBtn.onClick.AddListener(()=>{ GamePlayFacade.Select(POS); });
     }
 
     // Update is called once per frame
@@ -48,8 +56,11 @@ public class Good : MonoBehaviour
     {
         this.id = id;
         this.POS = new Vec2(row, col);
-        transform.position = pos;
+        //transform.position = pos;
         transform.parent = parent;
+        mRectTrans.anchoredPosition = pos;
+        mRectTrans.sizeDelta = new Vector2(GoodDefine.width, GoodDefine.height);
+        mImage.sprite = GamePlayFacade.GetGoodIcon(id);
         backBox.SetActive(false);
         name = "good_clone_" + row + "_" + col;
     }
@@ -153,23 +164,23 @@ public class Good : MonoBehaviour
 
     public void Select()
     {
-        GetComponent<SpriteRenderer>().color = new Color(188 / 255f, 255 / 255f, 196 / 255f);
-        back.GetComponent<SpriteRenderer>().color = new Color(71 / 255f, 39 / 255f, 39 / 255f, 200 / 255f);
-        if (selectPaticle == null)
-        {
-            selectPaticle = Instantiate(Resources.Load("Prefab/Select")) as GameObject;
-            selectPaticle.transform.SetParent(transform);
-            selectPaticle.transform.localPosition = new Vector3(0, 0, 0);
-            selectPaticle.name = "Select";
-        }
+        mImage.color = selectedColor;
+        //back.GetComponent<SpriteRenderer>().color = new Color(71 / 255f, 39 / 255f, 39 / 255f, 200 / 255f);
+        //if (selectPaticle == null)
+        //{
+        //    selectPaticle = Instantiate(Resources.Load("Prefab/Select")) as GameObject;
+        //    selectPaticle.transform.SetParent(transform);
+        //    selectPaticle.transform.localPosition = new Vector3(0, 0, 0);
+        //    selectPaticle.name = "Select";
+        //}
     }
 
     public void DeSelect()
     {
-        GetComponent<Image>().color = Color.white;
-        back.GetComponent<Image>().color = Color.white;
-        if (selectPaticle != null)
-            Destroy(selectPaticle);
+        mImage.color = Color.white;
+        //back.GetComponent<Image>().color = Color.white;
+        //if (selectPaticle != null)
+        //    Destroy(selectPaticle);
     }
 
     public void Eat(bool isOffline)

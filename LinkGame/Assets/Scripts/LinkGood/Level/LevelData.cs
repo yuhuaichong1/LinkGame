@@ -73,8 +73,8 @@ public class LevelData
             string hidGodDey = conf.HiddleGoodDelay;
 
             string[] size = conf.LevelSize.Split(",");
-            LevelXCount = int.Parse(size[1]);
-            LevelYCount = int.Parse(size[0]);
+            LevelXCount = int.Parse(size[1]) + 2;
+            LevelYCount = int.Parse(size[0]) + 2;
             GoodKinds = conf.GoodKinds;
 
             SetDic(dicStr);

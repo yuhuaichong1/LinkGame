@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoodDefine : MonoBehaviour
+public abstract class GoodDefine
 {
-    
+    public static int width = 124;//默认宽
+    public static int height = 124;//默认高
+    public static int correction = 0;//物体边距补正
 }
 
 //物品移动方向枚举

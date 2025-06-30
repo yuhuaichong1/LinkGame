@@ -1,5 +1,7 @@
+using cfg;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace XrCode
@@ -74,6 +76,9 @@ namespace XrCode
 
         public bool checking_paire;
 
+        private Dictionary<int, Sprite> goodIcons;
+        private bool isShowOtherPlane;//是否打开了其他面板
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -98,9 +103,13 @@ namespace XrCode
             GamePlayFacade.GetRow += GetRow;
             GamePlayFacade.SetIsCheckWrong += SetIsCheckWrong;
             GamePlayFacade.CheckIdAdd += CheckIdAdd;
+            GamePlayFacade.GetGoodIcon += GetGoodIcon;
+            GamePlayFacade.Select += Select;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
+            LPath = new ArrayList();
+            keyLPath = new ArrayList();
             list_block_frozen = new ArrayList();
             list_block_frozen_normal = new ArrayList();
             list_block_frozen_special = new ArrayList();
@@ -109,7 +118,41 @@ namespace XrCode
             _isCheckWrong = false;
             check_id = new ArrayList();
 
+            goodIcons = new Dictionary<int, Sprite>();
+            SetGoodIcon();
+
             LoadData();
+
+            //egisetUpdateObj();
+        }
+
+        protected override void OnUpdate()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (isGameOver || isShowOtherPlane || checking_paire)
+                {
+                    return;
+                }
+
+                float x = (Input.mousePosition.x - Screen.width / 2) / Screen.width * (Screen.width * 1.0f / Screen.height);
+                float y = ((Input.mousePosition.y - Screen.height / 2) / Screen.height);
+
+                Debug.LogError(Input.mousePosition.x + " , " + Input.mousePosition.y);
+
+                x *= 320;
+                y *= 320;
+                int mouse_col = (int)((x - MIN_X) / CELL_WIDH);
+                int mouse_row = (int)((y - MIN_Y + CELL_HEIGHT / 2) / CELL_HEIGHT);
+                //if (isTutorial)
+                //{
+                //    if (!tutorial.onClick(mouse_row, mouse_col))
+                //    {
+                //        return;
+                //    }
+                //}
+                Select(new Vec2(mouse_row, mouse_col));
+            }
         }
 
         //加载数据
@@ -122,12 +165,34 @@ namespace XrCode
             isTutorial = PlayerPrefs.GetInt(PlayerPrefDefines.isTutorial) == 1;
         }
 
+        /// <summary>
+        /// 加载物品图片数据
+        /// </summary>
+        private void SetGoodIcon()
+        {
+            List<ConfGoodIcon> confs = ConfigModule.Instance.Tables.TBGoodIcon.DataList;
+            foreach(ConfGoodIcon conf in confs)
+            {
+                goodIcons.Add(conf.GoodId, ResourceMod.Instance.SyncLoad<Sprite>(conf.GoodPath));
+            }
+        }
+
+        /// <summary>
+        /// 获取物品图片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private Sprite GetGoodIcon(int id)
+        {
+            return goodIcons[id];
+        }
+
         #region 创建关卡
         private void CreateLevel()
         {
             curLevelData = new LevelData(curLevel);
-            row = curLevelData.LevelXCount + 2;
-            col = curLevelData.LevelYCount + 2;
+            row = curLevelData.LevelXCount;
+            col = curLevelData.LevelYCount;
 
             goodPrefab = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Good/item.prefab");
 
@@ -156,12 +221,14 @@ namespace XrCode
         /// <param name="col">纵列数量</param>
         public void LMap(int row, int col)
         {
-            float camHalfHeight = Camera.main.orthographicSize;
-            float camHalfWidth = Camera.main.aspect * camHalfHeight;
+            //float camHalfHeight = Camera.main.orthographicSize;
+            //float camHalfWidth = Camera.main.aspect * camHalfHeight;
+            float camHalfHeight = (GoodDefine.height + GoodDefine.correction) * (curLevelData.LevelXCount - 2) / 2;
+            float camHalfWidth = (GoodDefine.width + GoodDefine.correction) * (curLevelData.LevelYCount - 2) / 2;
             MAP_WIDTH = (int)camHalfWidth * 2;
             MAP_HEIGHT = (int)camHalfHeight * 2;
             CELL_WIDH = (int)(MAP_WIDTH / (col - 2));
-            CELL_HEIGHT = (int)((MAP_HEIGHT - 48) / (row - 2));
+            CELL_HEIGHT = (int)((MAP_HEIGHT) / (row - 2));
 
             if (CELL_WIDH < CELL_HEIGHT)
             {
@@ -217,7 +284,8 @@ namespace XrCode
             list_block_frozen = curLevelData.list_block_frozen_fixed;
 
             int total_good = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_good_fixed.Count;
-            int total_good_type = curLevelData.GoodKinds;
+            //int total_good_type = curLevelData.GoodKinds;
+            int total_good_type = 42;
             int number_good_4 = (total_good - 2 * total_good_type) / 2;
             int number_good_2 = total_good_type - number_good_4;
 

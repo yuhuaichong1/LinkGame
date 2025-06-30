@@ -29,7 +29,8 @@ public static class GamePlayFacade
     public static Func<int> GetRow;                       //获取行的数量
     public static Action<bool> SetIsCheckWrong;           //
     public static Action<object> CheckIdAdd;              //
-
+    public static Func<int, Sprite> GetGoodIcon;          //获取物品图片
+    public static Action<Vec2> Select;                    //选中（GamePlayModule中的Select）
 
     public static Func<Transform> GetMapTrans;            //获取生成物体的父对象
 }

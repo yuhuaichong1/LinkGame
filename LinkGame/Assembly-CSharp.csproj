@@ -157,6 +157,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TagDecorator.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILoad.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoLongTapMe.cs" />
+    <Compile Include="Assets\Gen\Code\TBGoodIcon.cs" />
     <Compile Include="Assets\Scripts\UI\Effect\UIEffect.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleMod.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\TwoFingerGesture.cs" />
@@ -358,6 +359,7 @@
     <Compile Include="Assets\Scripts\Pool\GameObjectManager.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt16Serializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\CalcUtil.cs" />
+    <Compile Include="Assets\Gen\Code\ConfGoodIcon.cs" />
     <Compile Include="Assets\Scripts\SUIAnimLine\SUIACItem.cs" />
     <Compile Include="Assets\Gen\Code\ConfLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SystemTypeSerializer.cs" />

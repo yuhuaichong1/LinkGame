@@ -25,6 +25,7 @@ namespace cfg
 		public TBAudio TBAudio {get; private set;}
 		public TBGuides TBGuides {get; private set;}
 		public TBLevel TBLevel {get; private set;}
+		public TBGoodIcon TBGoodIcon {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -48,6 +49,8 @@ namespace cfg
 			tables.Add("TBGuides", TBGuides);
 			TBLevel = new TBLevel(loader("tblevel")); 
 			tables.Add("TBLevel", TBLevel);
+			TBGoodIcon = new TBGoodIcon(loader("tbgoodicon")); 
+			tables.Add("TBGoodIcon", TBGoodIcon);
 	
 			PostInit();
 			ResolveAllTable();
@@ -70,6 +73,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBGuidesDataFinish);
 			configNames.Enqueue("tblevel");
             configCbFuncs.Enqueue(OnTBLevelDataFinish);
+			configNames.Enqueue("tbgoodicon");
+            configCbFuncs.Enqueue(OnTBGoodIconDataFinish);
 
             LoadAllConfig();
         }
@@ -117,6 +122,7 @@ namespace cfg
 			TBAudio.TranslateText(translator); 
 			TBGuides.TranslateText(translator); 
 			TBLevel.TranslateText(translator); 
+			TBGoodIcon.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -129,6 +135,7 @@ namespace cfg
 			TBAudio.Resolve(tables);
 			TBGuides.Resolve(tables);
 			TBLevel.Resolve(tables);
+			TBGoodIcon.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -154,6 +161,9 @@ namespace cfg
 					break;
 				case "TBLevel":
 					TBLevel.Reload(_loader("TBLevel"));
+					break;
+				case "TBGoodIcon":
+					TBGoodIcon.Reload(_loader("TBGoodIcon"));
 					break;
 			}
 	
@@ -198,6 +208,11 @@ namespace cfg
 		{
 			TBLevel = new TBLevel(buf);
 			tables.Add("TBLevel", TBLevel);
+		}
+		public void OnTBGoodIconDataFinish(ByteBuf buf)
+		{
+			TBGoodIcon = new TBGoodIcon(buf);
+			tables.Add("TBGoodIcon", TBGoodIcon);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()
