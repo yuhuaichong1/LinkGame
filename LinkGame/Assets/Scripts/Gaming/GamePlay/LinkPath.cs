@@ -7,7 +7,7 @@ public class LinkPath : MonoBehaviour
     
     void Start()
     {
-        STimerManager.Instance.CreateSTimer(2, 0, true, true, () =>
+        STimerManager.Instance.CreateSTimer(0.5f, 0, true, true, () =>
         {
             Destroy(gameObject);
         });

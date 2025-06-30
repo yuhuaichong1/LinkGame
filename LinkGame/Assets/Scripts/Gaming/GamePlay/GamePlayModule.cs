@@ -128,35 +128,18 @@ namespace XrCode
 
             LoadData();
 
-            //egisetUpdateObj();
+            RegisetUpdateObj();
         }
 
         protected override void OnUpdate()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (isGameOver || isShowOtherPlane || checking_paire)
-                {
-                    return;
-                }
-
-                float x = (Input.mousePosition.x - Screen.width / 2) / Screen.width * (Screen.width * 1.0f / Screen.height);
-                float y = ((Input.mousePosition.y - Screen.height / 2) / Screen.height);
-
-                Debug.LogError(Input.mousePosition.x + " , " + Input.mousePosition.y);
-
-                x *= 320;
-                y *= 320;
-                int mouse_col = (int)((x - MIN_X) / CELL_WIDH);
-                int mouse_row = (int)((y - MIN_Y + CELL_HEIGHT / 2) / CELL_HEIGHT);
-                //if (isTutorial)
-                //{
-                //    if (!tutorial.onClick(mouse_row, mouse_col))
-                //    {
-                //        return;
-                //    }
-                //}
-                Select(new Vec2(mouse_row, mouse_col));
+                GameObject a = GameObject.Instantiate(pathObj[1]);
+                a.transform.parent = mapTrans;
+                a.GetComponent<LinkPath>().enabled = false;
+                a.GetComponent<RectTransform>().localScale = Vector3.one;
+                
             }
         }
 
@@ -1388,13 +1371,10 @@ namespace XrCode
         //生成连线物体
         private void CreateLine(Vector3 pos, EPathType type)
         {
-            GameObject instance = pathObj[(int)type];
-
-            Debug.LogError(instance.activeSelf);
-            instance.GetComponent<RectTransform>().localScale = Vector3.one;
-            Debug.LogError(instance.activeSelf + "=====" + instance.GetComponent<RectTransform>().localScale + "=====" +instance.name);
-            instance.GetComponent<RectTransform>().anchoredPosition = pos;
+            GameObject instance = GameObject.Instantiate(pathObj[(int)type]);
             instance.transform.SetParent(mapTrans);
+            instance.GetComponent<RectTransform>().localScale = Vector3.one;
+            instance.GetComponent<RectTransform>().anchoredPosition = pos;
         }
 
         public Vec2 getSameRow(Vec2 cur, Vec2 v1, Vec2 v2)
@@ -1420,11 +1400,13 @@ namespace XrCode
         {
             GameObject instance = null;
             if (isEnemy)
-                instance = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Effect/ItemExploreEnemy.prefab");
+                instance = GameObject.Instantiate(ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Effect/ItemExploreEnemy.prefab"));
             else
-                instance = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Effect/ItemExplore.prefab");
-            instance.transform.position = pos;
+                instance = GameObject.Instantiate(ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Effect/ItemExplore.prefab"));
             instance.transform.SetParent(mapTrans);
+            instance.GetComponent<RectTransform>().localScale = Vector3.one;
+            instance.GetComponent<RectTransform>().anchoredPosition = pos;
+            
         }
         #endregion
 
