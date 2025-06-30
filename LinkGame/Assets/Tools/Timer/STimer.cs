@@ -10,14 +10,23 @@ public class STimer
     public Action endAction;//计时结束事件
     public Action<float> updateAction;//计时更新事件
     public List<timingActions> timingActions;//计时节点事件集合
-    public List<timingActions> onceActions = new List<timingActions>();//执行过的一次性计时节点事件集合
+    public List<timingActions> onceActions;//执行过的一次性计时节点事件集合
 
     public bool iftiming;//是否在计时
-    public int loopCount;//循环次数，0代表不循环，-1（小于0）代表无限循环，其他大于0的的数代表有限次循环
+    public int loopCount;//循环次数，0代表不循环，-1（小于0）代表无限循环，其他大于0的的数代表有限次循环（比如1代表循环1次）
     public int currentlc;//当前的循环次数
     public bool ifscale;//是否收时间缩放影响
 
-    public STimerState sTimerState;//当前计时器状态
+    private STimerState sTimerState;//当前计时器状态
+    public STimerState STimerState {get { return sTimerState;}}
+
+    private bool ifClose;//是否关闭
+
+    public STimer()
+    {
+        timingActions = new List<timingActions>();
+        onceActions = new List<timingActions>();
+    }
 
     /// <summary>
     /// 设置计时器信息
@@ -27,45 +36,49 @@ public class STimer
     /// <param name="endAction">计时结束事件</param>
     /// <param name="updateAction">计时更新事件</param>
     /// <param name="timingActions">计时节点事件集合</param>
-    public void SetSTimeInfo(float targetTime, int loopCount = 0, bool ifscale = false, Action endAction = null, Action<float> updateAction = null, List<timingActions> timingActions = null)
+    public void SetSTimeInfo(float targetTime, int loopCount = 0, bool ifscale = false, Action endAction = null, Action<float> updateAction = null, params timingActions[] timingActions)
     {
+        ifClose = false;
         nowTime = 0;
         this.targetTime = targetTime;
         this.loopCount = loopCount;
         this.ifscale = ifscale;
         this.endAction = endAction;
         this.updateAction = updateAction;
-        this.timingActions = timingActions;
+        foreach (timingActions tAction in timingActions) 
+        {
+            this.timingActions.Add(tAction);
+        }
         onceActions.Clear();
         currentlc = loopCount;
 
-        if (timingActions != null)
+        if (this.timingActions != null)
         {
             this.updateAction += (nowTime) =>
             {
                 for (int i = this.timingActions.Count - 1; i >= 0; i--)
                 {
-                    var ca = this.timingActions[i];
-                    switch (ca.clickActionType)
+                    timingActions ca = this.timingActions[i];
+                    switch (ca.clockActionType)
                     {
-                        case ClickActionType.Once: 
+                        case ClockActionType.Once: 
                             if(nowTime >= ca.timing)
                             {
-                                ca.clickAction?.Invoke(ca.timing);
+                                ca.clockAction?.Invoke(ca.timing);
                                 onceActions.Add(ca);
                                 this.timingActions.Remove(ca);
                             }
                             break;
-                        case ClickActionType.Before: 
+                        case ClockActionType.Before: 
                             if(nowTime <= ca.timing)
                             {
-                                ca.clickAction?.Invoke(nowTime);
+                                ca.clockAction?.Invoke(nowTime);
                             }
                             break;
-                        case ClickActionType.After: 
+                        case ClockActionType.After: 
                             if(nowTime >= ca.timing)
                             {
-                                ca.clickAction?.Invoke(nowTime);
+                                ca.clockAction?.Invoke(nowTime);
                             }
                             break;
                     }
@@ -79,11 +92,14 @@ public class STimer
     /// </summary>
     public void Start()
     {
-        if(sTimerState != STimerState.Running)
+        if (CheckClose()) return;
+
+        if (sTimerState != STimerState.Running)
         {
-            STimerManager.runingSTimer.AddLast(this);
-            STimerManager.pauseSTimer.Remove(this);
+            STimerManager.Instance.runingSTimer.AddLast(this);
+            STimerManager.Instance.pauseSTimer.Remove(this);
         }
+
         iftiming = true;
         sTimerState = STimerState.Running;
     }
@@ -93,6 +109,8 @@ public class STimer
     /// </summary>
     public void Pause()
     {
+        if (CheckClose()) return;
+
         iftiming = false;
         sTimerState = STimerState.Pause;     
     }
@@ -102,9 +120,10 @@ public class STimer
     /// </summary>
     public void Stop()
     {
+        if (CheckClose()) return;
+
         ReStart();
         iftiming = false;
-        sTimerState = STimerState.Standby;
     }
 
     /// <summary>
@@ -112,10 +131,24 @@ public class STimer
     /// </summary>
     public void ReStart()
     {
+        if (CheckClose()) return;
+
         nowTime = 0;
         currentlc = loopCount;
         timingActions?.AddRange(onceActions);
         onceActions.Clear();
+    }
+
+    /// <summary>
+    /// 关闭计时器
+    /// </summary>
+    public void Close()
+    {
+        ifClose = true;
+        iftiming = false;
+        timingActions.Clear();
+        onceActions.Clear();
+        sTimerState = STimerState.Standby;
     }
 
     /// <summary>
@@ -129,11 +162,12 @@ public class STimer
             {
                 nowTime = targetTime;
                 updateAction?.Invoke(nowTime);
+
                 if (currentlc == 0)
-                    Stop();
+                    Close();
                 else if(currentlc > 0)
                     currentlc -= 1;
-                else if(currentlc < 0)
+                else if (currentlc < 0)
                     ReStart();
                 endAction?.Invoke();
             }
@@ -143,5 +177,16 @@ public class STimer
                 nowTime += ifscale ? Time.deltaTime : Time.unscaledDeltaTime;
             }
         }
+    }
+
+    /// <summary>
+    /// 检测该计时器是否已经被关闭
+    /// </summary>
+    /// <returns>该计时器是否已经被关闭</returns>
+    private bool CheckClose()
+    {
+        if (ifClose)
+            Debug.LogError("This STimer has been closed, please create a new one");
+        return ifClose;
     }
 }

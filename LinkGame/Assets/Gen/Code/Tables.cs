@@ -26,6 +26,7 @@ namespace cfg
 		public TBGuides TBGuides {get; private set;}
 		public TBLevel TBLevel {get; private set;}
 		public TBGoodIcon TBGoodIcon {get; private set;}
+		public TBLinkLine TBLinkLine {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -51,6 +52,8 @@ namespace cfg
 			tables.Add("TBLevel", TBLevel);
 			TBGoodIcon = new TBGoodIcon(loader("tbgoodicon")); 
 			tables.Add("TBGoodIcon", TBGoodIcon);
+			TBLinkLine = new TBLinkLine(loader("tblinkline")); 
+			tables.Add("TBLinkLine", TBLinkLine);
 	
 			PostInit();
 			ResolveAllTable();
@@ -75,6 +78,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBLevelDataFinish);
 			configNames.Enqueue("tbgoodicon");
             configCbFuncs.Enqueue(OnTBGoodIconDataFinish);
+			configNames.Enqueue("tblinkline");
+            configCbFuncs.Enqueue(OnTBLinkLineDataFinish);
 
             LoadAllConfig();
         }
@@ -123,6 +128,7 @@ namespace cfg
 			TBGuides.TranslateText(translator); 
 			TBLevel.TranslateText(translator); 
 			TBGoodIcon.TranslateText(translator); 
+			TBLinkLine.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -136,6 +142,7 @@ namespace cfg
 			TBGuides.Resolve(tables);
 			TBLevel.Resolve(tables);
 			TBGoodIcon.Resolve(tables);
+			TBLinkLine.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -164,6 +171,9 @@ namespace cfg
 					break;
 				case "TBGoodIcon":
 					TBGoodIcon.Reload(_loader("TBGoodIcon"));
+					break;
+				case "TBLinkLine":
+					TBLinkLine.Reload(_loader("TBLinkLine"));
 					break;
 			}
 	
@@ -213,6 +223,11 @@ namespace cfg
 		{
 			TBGoodIcon = new TBGoodIcon(buf);
 			tables.Add("TBGoodIcon", TBGoodIcon);
+		}
+		public void OnTBLinkLineDataFinish(ByteBuf buf)
+		{
+			TBLinkLine = new TBLinkLine(buf);
+			tables.Add("TBLinkLine", TBLinkLine);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

@@ -106,13 +106,14 @@ public enum ELanguageType : int
 /// <summary>
 /// 下三功能
 /// </summary>
-public enum EFuncType : int
+public enum EFuncType
 { 
     Tip,
     Refush,
     Remove
 }
 
+//当局游戏状态
 public enum EMapState 
 { 
     Eating,            //消除中
@@ -122,6 +123,19 @@ public enum EMapState
     Result,            //结算中
     Pause,             //暂停中
     Dialog_recover     //对话框恢复？
+}
+
+//连线类型
+public enum EPathType : int
+{
+    Short_V = 1,//竖短
+    Short_H,//横短
+    Long_V,//长竖
+    Long_H,//长横
+    Left_Down,//左而后下
+    Left_Up,//左而后上
+    Right_Down,//右而后下
+    Right_Up//右而后下
 }
 
 #endregion

@@ -1,14 +1,14 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-public static class STimerManager
-{
-    public static LinkedList<STimer> runingSTimer;
-    public static LinkedList<STimer> pauseSTimer;
-    public static Stack<STimer> standbySTimer;
+using XrCode;
 
-    static STimerManager()
+public class STimerManager : Singleton<STimerManager>, ILoad, IDispose
+{
+    public LinkedList<STimer> runingSTimer;//运行中的计时器
+    public LinkedList<STimer> pauseSTimer;//暂停中的计时器
+    public Stack<STimer> standbySTimer;//待机中（对象池中）的计时器
+
+    public void Load()
     {
         runingSTimer = new LinkedList<STimer>();
         pauseSTimer = new LinkedList<STimer>();
@@ -20,26 +20,48 @@ public static class STimerManager
     /// </summary>
     /// <param name="targetTime">目标结束时间</param>
     /// <param name="loopCount">循环次数</param>
+    /// <param name="ifscale">是否被时间缩放影响</param>
+    /// <param name="ifstart">是否在创建后立马开始计时</param>
     /// <param name="endAction">计时结束事件</param>
     /// <param name="updateAction">计时更新事件</param>
     /// <param name="timingActions">计时节点事件集合</param>
-    /// <returns></returns>
-    public static STimer CreateSTimer(float targetTime, int loopCount = 0, bool ifscale = false, Action endAction = null, Action<float> updateAction = null, List<timingActions> timingActions = null)
+    /// <returns>创建完成的计时器</returns>
+    public STimer CreateSTimer(float targetTime, int loopCount = 0, bool ifscale = false, bool ifstart = true, Action endAction = null, Action<float> updateAction = null, params timingActions[] timingActions)
     {
-        //bool b = standbySTimer.Count != 0 && standbySTimer.Peek().sTimerState == STimerState.Standby;
-        //STimer timer = b ? standbySTimer.Pop() : new STimer();
-
-        STimer timer = new STimer();
+        bool b = standbySTimer.Count != 0;
+        STimer timer = b ? standbySTimer.Pop() : new STimer();
         timer.SetSTimeInfo(targetTime, loopCount, ifscale, endAction, updateAction, timingActions);
-        runingSTimer.AddLast(timer);
-        timer.Start();
+        if(ifstart)
+            timer.Start();
         return timer;
+    }
+
+    /// <summary>
+    /// 创建简易的延迟执行计时器
+    /// </summary>
+    /// <param name="targetTime">目标结束时间</param>
+    /// <param name="endAction">计时结束事件</param>
+    /// <returns>创建完成的计时器</returns>
+    public STimer CreateSDelay(float targetTime, Action endAction)
+    {
+        return(CreateSTimer(targetTime, 0, false, true, endAction));
+    }
+
+    /// <summary>
+    /// 创建简易的反复执行计时器
+    /// </summary>
+    /// <param name="targetTime">目标结束时间</param>
+    /// <param name="updateAction">计时更新事件</param>
+    /// <returns>创建完成的计时器</returns>
+    public STimer CreateSUpdate(float targetTime, Action<float> updateAction)
+    {
+        return (CreateSTimer(targetTime, 0, false, true, null, updateAction));
     }
 
     /// <summary>
     /// 清除计时器
     /// </summary>
-    public static void ClaerSTimer()
+    public void ClearSTimer()
     {
         runingSTimer.Clear();
         pauseSTimer.Clear();
@@ -49,61 +71,33 @@ public static class STimerManager
     /// <summary>
     /// 更新计时器
     /// </summary>
-    public static void UpdateSTimer()
+    public void UpdateSTimer()
     {
         LinkedListNode<STimer> current = runingSTimer.Last;
         while (current != null)
         {
             STimer timer = current.Value;
-            switch (timer.sTimerState)
+            switch (timer.STimerState)
             {
                 case STimerState.Running:
                     timer.Update();
-                    current = current.Previous;
                     break;
                 case STimerState.Pause:
-                    LinkedListNode<STimer> previous = current.Previous;
                     pauseSTimer.AddLast(timer);
                     runingSTimer.Remove(current);
-                    current = previous;
                     break;
                 case STimerState.Standby:
-                    previous = current.Previous;
                     standbySTimer.Push(timer);
                     runingSTimer.Remove(current);
-                    current = previous;
                     break;
             }
+            current = current.Previous;
         }
+    }
+
+    public void Dispose()
+    {
+        ClearSTimer();
     }
 }
 
-/// <summary>
-/// 计时器状态枚举
-/// </summary>
-public enum STimerState
-{
-    Standby,//待机中
-    Running,//运行中
-    Pause//暂停中
-}
-
-/// <summary>
-/// 计时节点事件类型枚举
-/// </summary>
-public enum ClickActionType
-{
-    Once,//仅执行一次
-    Before,//在到达时间点前反复执行
-    After,//在到达时间点后反复执行
-}
-
-/// <summary>
-/// 计时节点事件结构图
-/// </summary>
-public struct timingActions
-{
-    public float timing;//目标节点
-    public Action<float> clickAction;//事件
-    public ClickActionType clickActionType;//计时节点事件类型
-}

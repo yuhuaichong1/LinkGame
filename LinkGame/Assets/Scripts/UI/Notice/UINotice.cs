@@ -39,7 +39,7 @@ namespace XrCode
             temp.transform.position = mStartPos.position;
             temp.transform.GetChild(0).GetComponent<Text>().text = info;
 
-            STimerManager.CreateSTimer(time, 0, false, () =>
+            STimerManager.Instance.CreateSTimer(time, 0, false, true, () =>
             {
                 temp.SetActive(false);
                 NItems.Push(temp);

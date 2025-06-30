@@ -31,6 +31,7 @@ public class Good : MonoBehaviour
     public Image mImage;
     public Button mBtn;
     public Color selectedColor;
+    public Image mIcon;
 
     void Start()
     {
@@ -60,7 +61,7 @@ public class Good : MonoBehaviour
         transform.parent = parent;
         mRectTrans.anchoredPosition = pos;
         mRectTrans.sizeDelta = new Vector2(GoodDefine.width, GoodDefine.height);
-        mImage.sprite = GamePlayFacade.GetGoodIcon(id);
+        mIcon.sprite = GamePlayFacade.GetGoodIcon(id);
         backBox.SetActive(false);
         name = "good_clone_" + row + "_" + col;
     }

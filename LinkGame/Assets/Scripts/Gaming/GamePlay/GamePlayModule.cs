@@ -1,4 +1,6 @@
 using cfg;
+using DG.Tweening;
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -76,8 +78,9 @@ namespace XrCode
 
         public bool checking_paire;
 
-        private Dictionary<int, Sprite> goodIcons;
+        private Dictionary<int, Sprite> goodIcons;//物品图片字典
         private bool isShowOtherPlane;//是否打开了其他面板
+        private Dictionary<int, GameObject> pathObj;//线预制体
 
         protected override void OnLoad()
         {
@@ -120,6 +123,8 @@ namespace XrCode
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
+            pathObj = new Dictionary<int, GameObject>();
+            SetPathObj();
 
             LoadData();
 
@@ -185,6 +190,18 @@ namespace XrCode
         private Sprite GetGoodIcon(int id)
         {
             return goodIcons[id];
+        }
+
+        /// <summary>
+        /// 加载连线物体数据
+        /// </summary>
+        private void SetPathObj()
+        {
+            List<ConfLinkLine> confs = ConfigModule.Instance.Tables.TBLinkLine.DataList;
+            foreach (ConfLinkLine conf in confs)
+            {
+                pathObj.Add(conf.PathObjId, ResourceMod.Instance.SyncLoad<GameObject>(conf.PathObjPath));
+            }
         }
 
         #region 创建关卡
@@ -1306,18 +1323,117 @@ namespace XrCode
             }
         }
 
+        #region 画线
         //画线
-        private void DrawLine(ArrayList LPath, bool b)
+        private void DrawLine(ArrayList list, bool isEnemy)
         {
-
+            if (list.Count > 2)
+            {
+                for (int i = 1; i < list.Count - 1; i++)
+                {
+                    Vec2 preObj = (Vec2)list[i - 1];
+                    Vec2 curObj = (Vec2)list[i];
+                    Vec2 nextObj = (Vec2)list[i + 1];
+                    if (curObj.R == preObj.R
+                        && curObj.R == nextObj.R)
+                    {
+                        CreateLine(POS[curObj.R][curObj.C], EPathType.Long_H);
+                    }
+                    if (curObj.C == preObj.C
+                        && curObj.C == nextObj.C)
+                    {
+                        CreateLine(POS[curObj.R][curObj.C], EPathType.Long_V);
+                    }
+                    if (curObj.C == getSameRow(curObj, nextObj, preObj).C + 1
+                        && curObj.R == getSameCol(curObj, nextObj, preObj).R + 1)
+                    {
+                        CreateLine(POS[curObj.R][curObj.C], EPathType.Left_Down);
+                    }
+                    if (curObj.C == getSameRow(curObj, nextObj, preObj).C + 1
+                        && curObj.R == getSameCol(curObj, nextObj, preObj).R - 1)
+                    {
+                        CreateLine(POS[curObj.R][curObj.C], EPathType.Left_Up);
+                    }
+                    if (curObj.C == getSameRow(curObj, nextObj, preObj).C - 1
+                        && curObj.R == getSameCol(curObj, nextObj, preObj).R - 1)
+                    {
+                        CreateLine(POS[curObj.R][curObj.C], EPathType.Right_Up);
+                    }
+                    if (curObj.C == getSameRow(curObj, nextObj, preObj).C - 1
+                        && curObj.R == getSameCol(curObj, nextObj, preObj).R + 1)
+                    {
+                        CreateLine(POS[curObj.R][curObj.C], EPathType.Right_Down);
+                    }
+                }
+            }
+            else if (list.Count == 2)
+            {
+                Vec2 preObj = (Vec2)list[0];
+                Vec2 curObj = (Vec2)list[1];
+                if (curObj.R == preObj.R)
+                {
+                    CreateLine(POS[curObj.R][curObj.C] / 2 + POS[preObj.R][preObj.C] / 2, EPathType.Short_H);
+                }
+                if (curObj.C == preObj.C)
+                {
+                    CreateLine(POS[curObj.R][curObj.C] / 2 + POS[preObj.R][preObj.C] / 2, EPathType.Short_V);
+                }
+            }
+            Vec2 first = (Vec2)list[0];
+            Vec2 last = (Vec2)list[list.Count - 1];
+            drawExplore(POS[first.R][first.C], isEnemy);
+            drawExplore(POS[last.R][last.C], isEnemy);
         }
+
+        //生成连线物体
+        private void CreateLine(Vector3 pos, EPathType type)
+        {
+            GameObject instance = pathObj[(int)type];
+
+            Debug.LogError(instance.activeSelf);
+            instance.GetComponent<RectTransform>().localScale = Vector3.one;
+            Debug.LogError(instance.activeSelf + "=====" + instance.GetComponent<RectTransform>().localScale + "=====" +instance.name);
+            instance.GetComponent<RectTransform>().anchoredPosition = pos;
+            instance.transform.SetParent(mapTrans);
+        }
+
+        public Vec2 getSameRow(Vec2 cur, Vec2 v1, Vec2 v2)
+        {
+            if (cur.R == v1.R)
+                return v1;
+            if (cur.R == v2.R)
+                return v2;
+            return new Vec2(-1000, -1000);
+        }
+
+        public Vec2 getSameCol(Vec2 cur, Vec2 v1, Vec2 v2)
+        {
+            if (cur.C == v1.C)
+                return v1;
+            if (cur.C == v2.C)
+                return v2;
+            return new Vec2(-1000, -1000);
+        }
+
+        //绘制消除爆炸特效
+        void drawExplore(Vector3 pos, bool isEnemy)
+        {
+            GameObject instance = null;
+            if (isEnemy)
+                instance = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Effect/ItemExploreEnemy.prefab");
+            else
+                instance = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Effect/ItemExplore.prefab");
+            instance.transform.position = pos;
+            instance.transform.SetParent(mapTrans);
+        }
+        #endregion
 
         #endregion
 
         #endregion
 
         #region 消除周期流程
-        
+
         #region old
         //消除目标
         private void LinkAndRemove(Vector2[] linePoint)

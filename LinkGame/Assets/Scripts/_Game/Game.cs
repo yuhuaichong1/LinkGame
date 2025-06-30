@@ -104,7 +104,7 @@ namespace XrCode
         public void Update()
         {
             TimerManager.Instance.Update();
-            STimerManager.UpdateSTimer();
+            STimerManager.Instance.UpdateSTimer();
             if (gameState != EGameState.Run) return;
             ModuleMgr.Instance.Update();
         }

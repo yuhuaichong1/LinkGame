@@ -78,7 +78,7 @@ namespace XrCode
                     GameObject obj = pointerEventData.pointerPressRaycast.gameObject;
                     if (obj.transform.tag != "Good" && obj.transform.tag != "NoUpDownAnim")
                     {
-                        STimerManager.CreateSTimer(0.2f, 0, false, null, (detalTime) =>
+                        STimerManager.Instance.CreateSTimer(0.2f, 0, false, true, null, (detalTime) =>
                         {
                             float s = curve.Evaluate(1 - 0.1f * (detalTime / 0.2f));
                             if (obj != null)
@@ -101,7 +101,7 @@ namespace XrCode
 
                     if (obj.transform.tag != "Good" && obj.transform.tag != "NoUpDownAnim")
                     {
-                        STimerManager.CreateSTimer(0.2f, 0, false, null, (detalTime) =>
+                        STimerManager.Instance.CreateSTimer(0.2f, 0, false, true, null, (detalTime) =>
                         {
                             float s = curve.Evaluate(0.9f + 0.1f * (detalTime / 0.2f));
                             if (obj != null)
