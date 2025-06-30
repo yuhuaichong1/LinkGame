@@ -15,7 +15,7 @@ public class LevelData
 	public float time_star3;
 
 	public ArrayList list_auto_gen 				 = new ArrayList();//延迟冰冻的物体
-	public ArrayList list_block_good_fixed	 = new ArrayList();//不可移动的一般物体
+	public ArrayList list_block_good_fixed	     = new ArrayList();//不可移动的一般物体
 	public ArrayList list_block_stone_fixed 	 = new ArrayList();//不可移动的石块障碍物
 	public ArrayList list_block_stone_moving 	 = new ArrayList();//可移动的石块障碍物
 	public ArrayList list_block_frozen_fixed 	 = new ArrayList();//不可移动的冰冻物体
@@ -73,8 +73,8 @@ public class LevelData
             string hidGodDey = conf.HiddleGoodDelay;
 
             string[] size = conf.LevelSize.Split(",");
-            LevelXCount = int.Parse(size[0]);
-            LevelYCount = int.Parse(size[1]);
+            LevelXCount = int.Parse(size[1]);
+            LevelYCount = int.Parse(size[0]);
             GoodKinds = conf.GoodKinds;
 
             SetDic(dicStr);
@@ -198,7 +198,7 @@ public class LevelData
     /// <param name="dicStr">表格得到的string数据</param>
     private void SetDic(string dicStr)
     {
-        if(dicStr != null || dicStr != "") 
+        if(dicStr != null && dicStr != "") 
         {
             string[] dics = dicStr.Split('/');
             for (int i = 0; i < dics.Length; i++) 
@@ -219,7 +219,7 @@ public class LevelData
     /// <param name="hidGodMovs">表格得到的string数据</param>
     private void SetHiddleGood_Moves(string hidGodMovs)
     {
-        if (hidGodMovs != null || hidGodMovs != "")
+        if (hidGodMovs != null && hidGodMovs != "")
         {
             string[] hidGodMovsStr = hidGodMovs.Split('/');
             for (int i = 0; i < hidGodMovsStr.Length; i++)
@@ -238,7 +238,7 @@ public class LevelData
     /// <param name="hidGodStys">表格得到的string数据</param>
     private void SetHiddleGood_Stays(string hidGodStys) 
     {
-        if (hidGodStys != null || hidGodStys != "")
+        if (hidGodStys != null && hidGodStys != "")
         {
             string[] hidGodStysStr = hidGodStys.Split('/');
             for (int i = 0; i < hidGodStysStr.Length; i++)
@@ -259,7 +259,7 @@ public class LevelData
     /// <param name="hidGodMovs">表格得到的string数据</param>
     private void SetObstacle_Moves(string obsMovs)
     {
-        if (obsMovs != null || obsMovs != "")
+        if (obsMovs != null && obsMovs != "")
         {
             string[] obsMovsStr = obsMovs.Split('/');
             for(int i = 0; i < obsMovsStr.Length; i++)
@@ -278,7 +278,7 @@ public class LevelData
     /// <param name="obsStys">表格得到的string数据</param>
     private void SetObstacle_Stays(string obsStys)
     {
-        if (obsStys != null || obsStys != "")
+        if (obsStys != null && obsStys != "")
         {
             string[] obsStysStr = obsStys.Split('/');
             for (int i = 0; i < obsStysStr.Length; i++)
@@ -299,7 +299,7 @@ public class LevelData
     /// <param name="hidGodDey">表格得到的string数据</param>
     private void SetHiddleGood_Delays(string hidGodDey)
     {
-        if (hidGodDey != null || hidGodDey != "")
+        if (hidGodDey != null && hidGodDey != "")
         {
             string[] hidGodDeyStr = hidGodDey.Split('/');
 

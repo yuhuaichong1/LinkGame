@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AutoGenController : MonoBehaviour
 {
+    public Vec2 pos;
+
     public void pauseClockCountDown()
     {
         
@@ -16,6 +18,11 @@ public class AutoGenController : MonoBehaviour
     }
 
     public void setAutoGenData(AutoGenData auto_gen_data)
+    {
+        
+    }
+
+    public void lockAutoGen()
     {
         
     }

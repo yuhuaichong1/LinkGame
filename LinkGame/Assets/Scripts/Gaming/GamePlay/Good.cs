@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XrCode;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Good : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class Good : MonoBehaviour
         state = GameDefines.STATE_NORMAL;
         if (_sprites.Count > 0)
             sprites = _sprites;
+
+        GetComponent<RectTransform>().localScale = Vector3.one;
     }
 
     // Update is called once per frame
@@ -48,7 +51,7 @@ public class Good : MonoBehaviour
         transform.position = pos;
         transform.parent = parent;
         backBox.SetActive(false);
-        name = "pokemon_clone_" + row + "_" + col;
+        name = "good_clone_" + row + "_" + col;
     }
 
     public void setSpecialInfo(int id, int row, int col, Vector3 pos, int width, int height, Transform parent)
@@ -78,7 +81,7 @@ public class Good : MonoBehaviour
             SetSpecialOrder();
         }
         Sprite sprite = GetSprite(item_name);
-        GetComponent<SpriteRenderer>().sprite = sprite;
+        GetComponent<Image>().sprite = sprite;
         localScale = new Vector3(Mathf.Abs(width * 1.0f / sprite.bounds.size.x), Mathf.Abs(-height * 1.0f / sprite.bounds.size.y), 1);
         if (id == GameDefines.OBS_FIXED_ID)
         {
@@ -116,7 +119,7 @@ public class Good : MonoBehaviour
         }
 
         Sprite sprite = GetSprite(item_name);
-        GetComponent<SpriteRenderer>().sprite = sprite;
+        GetComponent<Image>().sprite = sprite;
         localScale = new Vector3(Mathf.Abs(width * 1.0f / sprite.bounds.size.x), Mathf.Abs(-height * 1.0f / sprite.bounds.size.y), 1);
         if (id == GameDefines.OBS_FIXED_ID)
         {
@@ -163,8 +166,8 @@ public class Good : MonoBehaviour
 
     public void DeSelect()
     {
-        GetComponent<SpriteRenderer>().color = Color.white;
-        back.GetComponent<SpriteRenderer>().color = Color.white;
+        GetComponent<Image>().color = Color.white;
+        back.GetComponent<Image>().color = Color.white;
         if (selectPaticle != null)
             Destroy(selectPaticle);
     }
@@ -189,6 +192,7 @@ public class Good : MonoBehaviour
 
     public void setOrder()
     {
+        return;
         int order = ((GamePlayFacade.GetRow() - 2 - POS.R) * (GamePlayFacade.GetRow() - 2) + POS.C) * 2;
         back.GetComponent<SpriteRenderer>().sortingOrder = order;
         GetComponent<SpriteRenderer>().sortingOrder = order + 1;
@@ -211,7 +215,8 @@ public class Good : MonoBehaviour
 
     public void SetSpecialOrder()
     {
-        GetComponent<SpriteRenderer>().sortingOrder = 1000;
+        return;
+        //GetComponent<SpriteRenderer>().sortingOrder = 1000;
     }
 
     public Sprite GetSprite(string spriteName)

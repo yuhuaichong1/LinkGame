@@ -18,4 +18,5 @@ public enum EAudioType : int
     ESelect,
     EDeSelect,
     ElinkRemove,
+    EGoodshuffle,
 }

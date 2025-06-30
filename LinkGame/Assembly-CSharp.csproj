@@ -306,8 +306,8 @@
     <Compile Include="Assets\Scripts\_Game\MonoInst.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\ConfigUtil.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\IExtension.cs" />
-    <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int64Serializer.cs" />
     <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenController.cs" />
+    <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int64Serializer.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridView.cs" />
@@ -744,16 +744,16 @@
       <HintPath>Assets\Tools\SqlLite\Plugins\Mono.Data.Sqlite.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DOTween">
+      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">

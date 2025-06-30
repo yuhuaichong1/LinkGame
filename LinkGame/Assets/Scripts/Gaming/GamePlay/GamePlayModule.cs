@@ -1,13 +1,6 @@
-using cfg;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Xml.XPath;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.Analytics;
 
 namespace XrCode
 {
@@ -46,7 +39,7 @@ namespace XrCode
         private static int MAP_HEIGHT = 28;//整体排布的高
         private static int MAP_WIDTH = 28;//整体排布的宽
 
-        private int col = 18;//布局长度（包含左右空位）
+        private int col = 8;//布局长度（包含左右空位）
         private int row = 10;//布局高度（包含上下空位）
         private ArrayList LPath;//画线用的
         private ArrayList keyLPath;//画线用的
@@ -133,10 +126,10 @@ namespace XrCode
         private void CreateLevel()
         {
             curLevelData = new LevelData(curLevel);
-            row = curLevelData.LevelXCount;
-            col = curLevelData.LevelYCount;
+            row = curLevelData.LevelXCount + 2;
+            col = curLevelData.LevelYCount + 2;
 
-            goodPrefab = ResourceMod.Instance.SyncLoad<GameObject>("Good/item.prefab");
+            goodPrefab = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Good/item.prefab");
 
             LMap(row, col);
 
@@ -1244,6 +1237,13 @@ namespace XrCode
                 }
             }
         }
+
+        //画线
+        private void DrawLine(ArrayList LPath, bool b)
+        {
+
+        }
+
         #endregion
 
         #endregion
@@ -1281,39 +1281,39 @@ namespace XrCode
         //检查是否为1对（即是否可消除）
         void CheckPair(Vec2 pos)
         {
-            //POS2 = new Vec2(pos.R, pos.C);
-            //if (MAP_FROZEN[pos.R][pos.C] != -1)
-            //{
-            //    return;
-            //}
-            //if (POS1 != null && MAP[POS1.R][POS1.C] != MAP[POS2.R][POS2.C])
-            //{
-            //    AudioModule.PlayEffect(EAudioType.ECantMove);
-            //    DeSelect();
-            //    POS1 = null;
-            //    POS2 = null;
-            //    LPath.Clear();
-            //    keyLPath.Clear();
-            //}
-            //else if (checkPaire(POS1, POS2, true))
-            //{
-            //    logicLevel.updateScore(nextScore);
-            //    pathSystem.draw(LPath, false);
-            //    eat(POS1, POS2, true);
-            //}
-            //else
-            //{
-            //    AudioModule.PlayEffect(EAudioType.ECantMove);
-            //    DeSelect();
-            //    POS1 = null;
-            //    POS2 = null;
-            //    LPath.Clear();
-            //    keyLPath.Clear();
-            //}
+            POS2 = new Vec2(pos.R, pos.C);
+            if (MAP_FROZEN[pos.R][pos.C] != -1)
+            {
+                return;
+            }
+            if (POS1 != null && MAP[POS1.R][POS1.C] != MAP[POS2.R][POS2.C])
+            {
+                AudioModule.PlayEffect(EAudioType.ECantMove);
+                DeSelect();
+                POS1 = null;
+                POS2 = null;
+                LPath.Clear();
+                keyLPath.Clear();
+            }
+            else if (checkPaire(POS1, POS2, true))
+            {
+                //logicLevel.updateScore(nextScore);
+                DrawLine(LPath, false);
+                Eat(POS1, POS2, true);
+            }
+            else
+            {
+                AudioModule.PlayEffect(EAudioType.ECantMove);
+                DeSelect();
+                POS1 = null;
+                POS2 = null;
+                LPath.Clear();
+                keyLPath.Clear();
+            }
         }
 
         //消除选中的两个物体
-        public void eat(Vec2 pos1, Vec2 pos2, bool isOffline)
+        public void Eat(Vec2 pos1, Vec2 pos2, bool isOffline)
         {
             AudioModule.PlayEffect(EAudioType.ElinkRemove);
             if (!isOffline)
@@ -1336,15 +1336,14 @@ namespace XrCode
         //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
         IEnumerator execute_check_paire(Vec2 pos1, Vec2 pos2)
         {
-            yield return null;
-            //yield return new WaitForSeconds(0.4f);
-            //RemoveGood(pos1);
-            //RemoveGood(pos2);
-            //UpdateFrozenState(pos1);
-            //UpdateFrozenState(pos2);
-            //updateClockState(pos1);
-            //updateClockState(pos2);
-            //UpdateMap(true);
+            yield return new WaitForSeconds(0.4f);
+            RemoveGood(pos1);
+            RemoveGood(pos2);
+            UpdateHiddleState(pos1);
+            UpdateHiddleState(pos2);
+            UpdateClockState(pos1);
+            UpdateClockState(pos2);
+            UpdateMap(true);
         }
 
         //同步更新一些列检测（Test方法测试用，此处不调用）
@@ -1359,40 +1358,56 @@ namespace XrCode
         //更新地图数据（是否进入下一关）
         public void UpdateMap(bool isOffline)
         {
-            //if (clearMap())
-            //{
-            //    if (curMapState == EMapState.Result)
-            //    {
-            //        return;
-            //    }
-            //    ChangeMapState(EMapState.Result);
-            //    Debug.Log("+++++++++++++++++++++++++++++++++++++++++clear map+++++++++++++++++++++++++++++++++++++++++++++++++");
-            //    DeSelect();
-            //    LPath.Clear();
-            //    keyLPath.Clear();
-            //    logicLevel.collectReward();
+            if (ClearMap())
+            {
+                if (curMapState == EMapState.Result)
+                {
+                    return;
+                }
+                ChangeMapState(EMapState.Result);
+                Debug.Log("+++++++++++++++++++++++++++++++++++++++++clear map+++++++++++++++++++++++++++++++++++++++++++++++++");
+                DeSelect();
+                LPath.Clear();
+                keyLPath.Clear();
+                //logicLevel.collectReward();
 
-            //    if (GameStatic.currentLevel == GameStatic.maxLevel)
-            //    {
-            //        // final win
-            //        logicLevel.updateScore(logicLevel.getScoreBonus() + GameConfig.bonus_victory);
-            //        resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, true);
-            //        GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
-            //        GameStatic.endGame();
-            //    }
-            //    else
-            //    {
-            //        logicLevel.updateScore(logicLevel.getScoreBonus());
-            //        resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, false);
-            //        GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
-            //        GameStatic.saveGameWithoutMap();
-            //    }
-            //    Save.countLevelPass();
-            //}
-            //else
-            //{
-            //    StartCoroutine(updateLogicLevel(isOffline));
-            //}
+                if (curLevel == LevelDefines.maxLevel)
+                {
+                    // final win
+                    //logicLevel.updateScore(logicLevel.getScoreBonus() + GameConfig.bonus_victory);
+                    //resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, true);
+                    //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
+                    //GameStatic.endGame();
+                }
+                else
+                {
+                    //logicLevel.updateScore(logicLevel.getScoreBonus());
+                    //resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, false);
+                    //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
+                    //GameStatic.saveGameWithoutMap();
+                }
+                //Save.countLevelPass();
+            }
+            else
+            {
+                Game.Instance.StartCoroutine(updateLogicLevel(isOffline));
+            }
+        }
+
+        //是否清除场景（当场景中是否还存在可消除物（排除障碍物和“外围空位置（Id为-1的物体）”）存在，若存在则返回false，不进行清除）
+        private bool ClearMap()
+        {
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         //更新关卡逻辑数据
@@ -1402,41 +1417,52 @@ namespace XrCode
             //logicLevel.list_pos_need_update.Add(POS1);
             //logicLevel.list_pos_need_update.Add(POS2);
             //logicLevel.UpdateMap();
-            //StartCoroutine(end_update_map(isOffline));
+            Game.Instance.StartCoroutine(end_update_map(isOffline));
         }
 
         //数据逻辑更新完毕，开始更新关卡视图
         IEnumerator end_update_map(bool isOffline)
         {
             yield return new WaitForSeconds(0.1f);
-            //if (!isTutorial)
-            //{
-            //    GameStatic.saveGame();
-            //}
-            //if (isOffline)
-            //{
-            //    DeSelect();
-            //    LPath.Clear();
-            //    keyLPath.Clear();
-            //}
-            //if (checkGameOver())
-            //{
-            //    isGameOver = true;
-            //    lastTime = currentTime;
-            //    Analytics.CustomEvent("gameOver", new Dictionary<string, object>{
-            //    {"score",GameStatic.currentScore},
-            //    {"level",GameStatic.currentLevel}
-            //});
-            //    GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
-            //}
-            //int numberPokemonCanEat = getNumberPokemonCanEat();
-            //Debug.Log("numberPokemonCanEat : " + numberPokemonCanEat);
-            //if (!isReseting && numberPokemonCanEat == 0 && numberPokemonRemain > 0)
-            //{
-            //    StartCoroutine(StartResetMap());
-            //}
-            //if (curMapState == EMapState.Eating)
-            //        ChangeMapState(EMapState.Playing);
+            if (!isTutorial)
+            {
+                //GameStatic.saveGame();
+            }
+            if (isOffline)
+            {
+                DeSelect();
+                LPath.Clear();
+                keyLPath.Clear();
+            }
+            if (CheckGameOver())
+            {
+                isGameOver = true;
+                //lastTime = currentTime;
+                //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
+            }
+            int numberPokemonCanEat = GetNumberGoodCanEat();
+            Debug.Log("numberPokemonCanEat : " + numberPokemonCanEat);
+            if (!isReseting && numberPokemonCanEat == 0 && numberPokemonRemain > 0)
+            {
+                Game.Instance.StartCoroutine(StartResetMap());
+            }
+            if (curMapState == EMapState.Eating)
+                ChangeMapState(EMapState.Playing);
+        }
+
+        //开始重置地图
+        IEnumerator StartResetMap()
+        {
+            AudioModule.PlayEffect(EAudioType.EGoodshuffle);
+            isReseting = true;
+            yield return new WaitForSeconds(Time.deltaTime + 0.05f);
+            RandomMap();
+        }
+
+        // 重新生成地图（接口？）
+        public void RandomMap()
+        {
+            _resetMap();
         }
         #endregion
 
@@ -1589,7 +1615,6 @@ namespace XrCode
             return removeCount;
         }
         #endregion
-
 
         #region 其他
         /// <summary>
@@ -1900,6 +1925,49 @@ namespace XrCode
             return true;
         }
 
+        //是否能去除冰冻（非冰冻、非空，非不移动障碍物时返回true）（游戏GameOver时用）
+        bool CanDestroyFrozen(Vec2 POS)
+        {
+            if (POS == null) return true;
+            if (POS.R > 1)
+            {
+                if (MAP_FROZEN[POS.R - 1][POS.C] == -1 && MAP[POS.R - 1][POS.C] != -1
+                    && MAP[POS.R - 1][POS.C] != GameDefines.OBS_FIXED_ID
+                    )
+                {
+                    return true;
+                }
+            }
+            if (POS.R < row - 1)
+            {
+                if (MAP_FROZEN[POS.R + 1][POS.C] == -1 && MAP[POS.R + 1][POS.C] != -1
+                    && MAP[POS.R + 1][POS.C] != GameDefines.OBS_FIXED_ID
+                    )
+                {
+                    return true;
+                }
+            }
+            if (POS.C > 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C - 1] == -1 && MAP[POS.R][POS.C - 1] != -1
+                    && MAP[POS.R][POS.C - 1] != GameDefines.OBS_FIXED_ID
+                    )
+                {
+                    return true;
+                }
+            }
+            if (POS.C < col - 1)
+            {
+                if (MAP_FROZEN[POS.R][POS.C + 1] == -1 && MAP[POS.R][POS.C + 1] != -1
+                    && MAP[POS.R][POS.C + 1] != GameDefines.OBS_FIXED_ID
+                    )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //得当场景中某行某列的冰冻特效
         public GameObject getFrozen(int row, int col)
         {
@@ -1969,8 +2037,77 @@ namespace XrCode
                 }
             }
         }
+
+        //去除自动冰冻的上的倒计时时钟
+        private void UpdateClockState(Vec2 pos)
+        {
+            if (pos == null) return;
+            for (int i = 0; i < listAutoGens.Count; i++)
+            {
+                AutoGenController autoGenControl = (AutoGenController)listAutoGens[i];
+                Vec2 pos_clock = autoGenControl.pos;
+                if (pos_clock == null)
+                {
+                    continue;
+                }
+                if (pos_clock.R == pos.R && pos_clock.C == pos.C
+                    || pos_clock.R - 1 == pos.R && pos_clock.C == pos.C
+                    || pos_clock.R + 1 == pos.R && pos_clock.C == pos.C
+                    || pos_clock.R == pos.R && pos_clock.C - 1 == pos.C
+                    || pos_clock.R == pos.R && pos_clock.C + 1 == pos.C)
+                {
+                    autoGenControl.lockAutoGen();
+                }
+            }
+        }
+
+        //检测是否游戏结束
+        private bool CheckGameOver()
+        {
+            if (CheckGameOverByAllHiddle())
+            {
+                return true;
+            }
+            for (int i = 0; i < list_block_frozen_normal.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_block_frozen_normal[i];
+                if (!CanDestroyFrozen(pos))
+                {
+                    ZoomToFrozenWhenGameOver(pos);
+                    return true;
+                }
+            }
+            if (list_block_frozen_special.Count == 0) return false;
+            for (int i = 0; i < list_block_frozen_special.Count; i++)
+            {
+                Hashtable list_frozen_special = (Hashtable)list_block_frozen_special[i];
+                bool check = true;
+                Vec2 posFrozen = new Vec2();
+                foreach (string key in list_frozen_special.Keys)
+                {
+                    Vec2 pos = (Vec2)list_frozen_special[key];
+                    if (CanDestroyFrozen(pos))
+                    {
+                        check = false;
+                        break;
+                    }
+                    else
+                    {
+                        posFrozen = pos;
+                    }
+                }
+                if (check)
+                {
+                    ZoomToFrozenWhenGameOver(posFrozen);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         //判断是否因冰冻而导致GameOver
-        bool CheckGameOverByAllHiddle()
+        private bool CheckGameOverByAllHiddle()
         {
             int count = 0;
             for (int i = 1; i < row - 1; i++)
@@ -1999,7 +2136,11 @@ namespace XrCode
             return false;
         }
 
-
+        //因冰冻而导致的GameOver时，移动摄像机到冰冻位置
+        void ZoomToFrozenWhenGameOver(Vec2 pos)
+        {
+            return;
+        }
 
 
 
