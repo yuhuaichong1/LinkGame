@@ -143,7 +143,6 @@ public class Good : MonoBehaviour
 
     public void Hint()
     {
-        Debug.LogError(this.name);
         animator.SetTrigger("ifShake");
         isHint = true;
     }
@@ -216,9 +215,7 @@ public class Good : MonoBehaviour
         this.POS = POS;
         setOrder();
         name = "good_clone_" + POS.R + "_" + POS.C;
-        gameObject.transform.DOMove(pos, time_move);
-
-
+        gameObject.GetComponent<RectTransform>().DOLocalMove(pos, time_move);
     }
 
     public void setFrozen(bool isFrozen)

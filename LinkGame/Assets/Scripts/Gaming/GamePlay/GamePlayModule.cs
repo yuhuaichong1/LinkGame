@@ -84,6 +84,8 @@ namespace XrCode
         private bool isShowOtherPlane;//是否打开了其他面板
         private Dictionary<int, GameObject> pathObj;//线预制体
 
+        private ArrayList list_pos_need_update;//需要更新（可位移的物品）
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -122,6 +124,7 @@ namespace XrCode
             _numberResetMap = 0;
             _isCheckWrong = false;
             check_id = new ArrayList();
+            list_pos_need_update = new ArrayList();
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -149,6 +152,7 @@ namespace XrCode
         private void LoadData()
         {
             curLevel = PlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
+            curLevel = 2;
             tipCount = PlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
             refushCount = PlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
             removeCount = PlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
@@ -1585,8 +1589,289 @@ namespace XrCode
             //logicLevel.list_pos_need_update.Add(POS1);
             //logicLevel.list_pos_need_update.Add(POS2);
             //logicLevel.UpdateMap();
+            list_pos_need_update.Add(POS1);
+            list_pos_need_update.Add(POS2);
+            UpdateMap();
             Game.Instance.StartCoroutine(end_update_map(isOffline));
         }
+
+        #region 让地图物块移动
+        //让地图物块移动
+        private void UpdateMap()
+        {
+            for (int j = 0; j < list_pos_need_update.Count; j++)
+            {
+                for (int i = 0; i < curLevelData.list_constraint.Count; i++)
+                {
+                    Vec2 POS = (Vec2)list_pos_need_update[j];
+                    ConstraintData constraint = (ConstraintData)curLevelData.list_constraint[i];
+                    HandleMove(POS, constraint.cell1, constraint.cell2, constraint.direction, curLevelData.list_block_stone_and_frozen);
+                }
+            }
+            list_pos_need_update.Clear();
+        }
+
+        //确认移动目标点并移动
+        void HandleMove(Vec2 POS, Vec2 cell1, Vec2 cell2, int direction, ArrayList list_block_stone_and_frozen)
+        {
+            Debug.LogError(direction + "   " + (EGoodMoveDic)direction);
+            if (isInBound(POS, cell1, cell2))
+            {
+                if (direction == (int)EGoodMoveDic.Left)
+                {
+                    Vec2 boundLeft = getBoundLeft(list_block_stone_and_frozen, POS, cell1, cell2);
+                    Vec2 boundRight = getBoundRight(list_block_stone_and_frozen, POS, cell1, cell2);
+                    MoveLeft(boundLeft, boundLeft.C, boundRight.C);
+                }
+                else if (direction == (int)EGoodMoveDic.Right)
+                {
+                    Vec2 boundLeft = getBoundLeft(list_block_stone_and_frozen, POS, cell1, cell2);
+                    Vec2 boundRight = getBoundRight(list_block_stone_and_frozen, POS, cell1, cell2);
+                    MoveRight(boundRight, boundLeft.C, boundRight.C);
+                }
+                else if (direction == (int)EGoodMoveDic.Up)
+                {
+                    Vec2 boundBottom = getBoundBottom(list_block_stone_and_frozen, POS, cell1, cell2);
+                    Vec2 boundTop = getBoundTop(list_block_stone_and_frozen, POS, cell1, cell2);
+                    MoveUp(boundTop, boundBottom.R, boundTop.R);
+                }
+                else if (direction == (int)EGoodMoveDic.Down)
+                {
+                    Vec2 boundBottom = getBoundBottom(list_block_stone_and_frozen, POS, cell1, cell2);
+                    Vec2 boundTop = getBoundTop(list_block_stone_and_frozen, POS, cell1, cell2);
+                    MoveDown(boundBottom, boundBottom.R, boundTop.R);
+                }
+            }
+        }
+
+        //判断目标物体是否位于由另外范围cell1和cell2所界定的矩形区域内
+        bool isInBound(Vec2 POS, Vec2 cell1, Vec2 cell2)
+        {
+            if (POS == null)
+            {
+                return false;
+            }
+            if (Mathf.Min(cell1.C, cell2.C) <= POS.C && POS.C <= Mathf.Max(cell1.C, cell2.C)
+                && Mathf.Min(cell1.R, cell2.R) <= POS.R && POS.R <= Mathf.Max(cell1.R, cell2.R))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //得到目标左边界位置
+        private Vec2 getBoundLeft(ArrayList list_pos, Vec2 POS, Vec2 cell1, Vec2 cell2)
+        {
+            int temp = Mathf.Min(cell1.C, cell2.C) - 1;
+            for (int i = 0; i < list_pos.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_pos[i];
+                if (pos.R == POS.R && pos.C < POS.C && pos.C > temp)
+                {
+                    temp = pos.C;
+                }
+            }
+            return new Vec2(POS.R, temp + 1);
+        }
+
+        //得到目标右边界位置
+        private Vec2 getBoundRight(ArrayList list_pos, Vec2 POS, Vec2 cell1, Vec2 cell2)
+        {
+            int temp = Mathf.Max(cell1.C, cell2.C) + 1;
+
+            for (int i = 0; i < list_pos.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_pos[i];
+                if (pos.R == POS.R && pos.C > POS.C && pos.C < temp)
+                {
+                    temp = pos.C;
+                }
+            }
+            return new Vec2(POS.R, temp - 1);
+        }
+
+        //得到目标上边界位置
+        private Vec2 getBoundTop(ArrayList list_pos, Vec2 POS, Vec2 cell1, Vec2 cell2)
+        {
+            int temp = Mathf.Max(cell1.R, cell2.R) + 1;
+
+            for (int i = 0; i < list_pos.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_pos[i];
+                if (pos.C == POS.C && pos.R > POS.R && pos.R < temp)
+                {
+                    temp = pos.R;
+                }
+            }
+            return new Vec2(temp - 1, POS.C);
+        }
+
+        //得到目标下边界位置
+        private Vec2 getBoundBottom(ArrayList list_pos, Vec2 POS, Vec2 cell1, Vec2 cell2)
+        {
+            int temp = Mathf.Min(cell1.R, cell2.R) - 1;
+
+            for (int i = 0; i < list_pos.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_pos[i];
+                if (pos.C == POS.C && pos.R < POS.R && pos.R > temp)
+                {
+                    temp = pos.R;
+                }
+            }
+            return new Vec2(temp + 1, POS.C);
+        }
+
+        //向上移动
+        private void MoveUp(Vec2 POS, int row_down, int row_up)
+        {
+            ArrayList list_good_col1 = new ArrayList();
+            for (int i = POS.R; i >= row_down; i--)
+            {
+                if (MAP[i][POS.C] != -1 && MAP[i][POS.C] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[i][POS.C] == -1)
+                {
+                    list_good_col1.Add(GetGood(i, POS.C));
+                }
+            }
+            int size1 = list_good_col1.Count;
+            int count1 = list_good_col1.Count;
+            bool hasDrop = false;
+            for (int i = POS.R; i >= row_down; i--)
+            {
+                int type = -1;
+                if (count1 > 0)
+                {
+                    GameObject obj = (GameObject)list_good_col1[size1 - count1];
+                    Good good = obj.GetComponent<Good>();
+                    type = good.id;
+                    if (ChangeGood(obj, good, new Vec2(i, POS.C), GoodDefine.moveTime))
+                        hasDrop = true;
+                    count1--;
+                }
+                MAP[i][POS.C] = type;
+            }
+            if (hasDrop)
+            {
+                STimerManager.Instance.CreateSTimer(GoodDefine.moveTime, 0, false, true, () =>
+                {
+                    AudioModule.PlayEffect(EAudioType.EGoodMove);
+                });
+            }
+        }
+
+        //向下移动
+        private void MoveDown(Vec2 POS, int row_down, int row_up)
+        {
+            ArrayList list_good_col1 = new ArrayList();
+            for (int i = POS.R; i <= row_up; i++)
+            {
+                if (MAP[i][POS.C] != -1 && MAP[i][POS.C] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[i][POS.C] == -1)
+                {
+                    list_good_col1.Add(GetGood(i, POS.C));
+                }
+            }
+            int size1 = list_good_col1.Count;
+            int count1 = list_good_col1.Count;
+            bool hasDrop = false;
+            for (int i = POS.R; i <= row_up; i++)
+            {
+                int type = -1;
+                if (count1 > 0)
+                {
+                    GameObject obj = (GameObject)list_good_col1[size1 - count1];
+                    Good good = obj.GetComponent<Good>();
+                    type = good.id;
+                    if (ChangeGood(obj, good, new Vec2(i, POS.C), GoodDefine.moveTime))
+                    {
+                        hasDrop = true;
+                    }
+                    count1--;
+                }
+                MAP[i][POS.C] = type;
+            }
+            if (hasDrop)
+            {
+                STimerManager.Instance.CreateSTimer(GoodDefine.moveTime, 0, false, true, () =>
+                {
+                    AudioModule.PlayEffect(EAudioType.EGoodMove);
+                });
+            }
+        }
+
+        //向左移动
+        private void MoveLeft(Vec2 POS, int col_left, int col_right)
+        {
+            ArrayList list_good_row1 = new ArrayList();
+            for (int i = POS.C; i <= col_right; i++)
+            {
+                if (MAP[POS.R][i] != -1 && MAP[POS.R][i] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[POS.R][i] == -1)
+                {
+                    list_good_row1.Add(GetGood(POS.R, i));
+                }
+            }
+            int size1 = list_good_row1.Count;
+            int count1 = list_good_row1.Count;
+            bool hasDrop = false;
+            for (int i = POS.C; i <= col_right; i++)
+            {
+                int type = -1;
+                if (count1 > 0)
+                {
+                    GameObject obj = (GameObject)list_good_row1[size1 - count1];
+                    Good good = obj.GetComponent<Good>();
+                    type = good.id;
+                    if (ChangeGood(obj, good, new Vec2(POS.R, i), GoodDefine.moveTime))
+                        hasDrop = true;
+                    count1--;
+                }
+                MAP[POS.R][i] = type;
+            }
+            if (hasDrop)
+            {
+                STimerManager.Instance.CreateSTimer(GoodDefine.moveTime, 0, false, true, () =>
+                {
+                    AudioModule.PlayEffect(EAudioType.EGoodMove);
+                });
+            }
+        }
+
+        //向右移动
+        private void MoveRight(Vec2 POS, int col_left, int col_right)
+        {
+            ArrayList list_good_row1 = new ArrayList();
+            for (int i = POS.C; i >= col_left; i--)
+            {
+                if (MAP[POS.R][i] != -1 && MAP[POS.R][i] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[POS.R][i] == -1)
+                {
+                    list_good_row1.Add(GetGood(POS.R, i));
+                }
+            }
+            int size1 = list_good_row1.Count;
+            int count1 = list_good_row1.Count;
+            bool hasDrop = false;
+            for (int i = POS.C; i >= col_left; i--)
+            {
+                int type = -1;
+                if (count1 > 0)
+                {
+                    GameObject obj = (GameObject)list_good_row1[size1 - count1];
+                    Good good = obj.GetComponent<Good>();
+                    type = good.id;
+                    if (ChangeGood(obj, good, new Vec2(POS.R, i), GoodDefine.moveTime))
+                        hasDrop = true;
+                    count1--;
+                }
+                MAP[POS.R][i] = type;
+            }
+            if (hasDrop)
+            {
+                STimerManager.Instance.CreateSTimer(GoodDefine.moveTime, 0, false, true, () =>
+                {
+                    AudioModule.PlayEffect(EAudioType.EGoodMove);
+                });
+            }
+        }
+        #endregion
 
         //数据逻辑更新完毕，开始更新关卡视图
         IEnumerator end_update_map(bool isOffline)
@@ -2010,6 +2295,7 @@ namespace XrCode
                     RemoveHidden(POS.R - 1, POS.C, true);
                     UpdateDataHiddle(POS.R - 1, POS.C);
                     //logicLevel.list_pos_need_update.Add(new Vec2(POS.R - 1, POS.C));
+                    list_pos_need_update.Add(new Vec2(POS.R - 1, POS.C));
                     isRemove = true;
                 }
             }
@@ -2021,6 +2307,7 @@ namespace XrCode
                     RemoveHidden(POS.R + 1, POS.C, true);
                     UpdateDataHiddle(POS.R + 1, POS.C);
                     //logicLevel.list_pos_need_update.Add(new Vec2(POS.R + 1, POS.C));
+                    list_pos_need_update.Add(new Vec2(POS.R + 1, POS.C));
                     isRemove = true;
                 }
             }
@@ -2032,6 +2319,7 @@ namespace XrCode
                     RemoveHidden(POS.R, POS.C - 1, true);
                     UpdateDataHiddle(POS.R, POS.C - 1);
                     //logicLevel.list_pos_need_update.Add(new Vec2(POS.R, POS.C - 1));
+                    list_pos_need_update.Add(new Vec2(POS.R, POS.C - 1));
                     isRemove = true;
                 }
             }
@@ -2043,6 +2331,7 @@ namespace XrCode
                     RemoveHidden(POS.R, POS.C + 1, true);
                     UpdateDataHiddle(POS.R, POS.C + 1);
                     //logicLevel.list_pos_need_update.Add(new Vec2(POS.R, POS.C + 1));
+                    list_pos_need_update.Add(new Vec2(POS.R, POS.C + 1));
                     isRemove = true;
                 }
             }

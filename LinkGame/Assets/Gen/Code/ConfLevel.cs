@@ -21,7 +21,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         Sn = _buf.ReadInt();
         LevelSize = _buf.ReadString();
         GoodKinds = _buf.ReadInt();
-        MoveDic = _buf.ReadString();
+        MoveDic = _buf.ReadInt();
         HiddleGoodMove = _buf.ReadString();
         HiddleGoodStay = _buf.ReadString();
         ObstacleMove = _buf.ReadString();
@@ -50,7 +50,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// <summary>
     /// 物品移动方向
     /// </summary>
-    public string MoveDic { get; protected set; }
+    public int MoveDic { get; protected set; }
     /// <summary>
     /// 可移动的隐藏物的位置
     /// </summary>
