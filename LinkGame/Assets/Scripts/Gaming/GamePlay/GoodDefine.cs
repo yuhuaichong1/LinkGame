@@ -15,7 +15,7 @@ public abstract class GoodDefine
 //物品移动方向枚举
 public enum EGoodMoveDic
 {
-    None,//不移动
+    None = 0,//不移动
     Up,//朝上移动
     Down,//朝下移动
     Left,//朝左移动

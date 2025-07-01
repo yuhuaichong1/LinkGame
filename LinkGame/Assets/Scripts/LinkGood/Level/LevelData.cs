@@ -24,11 +24,12 @@ public class LevelData
 	public ArrayList list_constraint 			 = new ArrayList();//关卡物体移动方向
 	public ArrayList list_reward 				 = new ArrayList();//关卡奖励
 
-    public int LevelXCount;
-    public int LevelYCount;
-    public int GoodKinds;
+    public int LevelXCount;//关卡横轴的数量
+    public int LevelYCount;//关卡竖轴的数量
+    public int GoodKinds;//关卡物品的种类
+    public int levelDirEnum;//关卡移动方向
 
-	public LevelData(int level, ELevelMode mode = ELevelMode.Normal) 
+    public LevelData(int level, ELevelMode mode = ELevelMode.Normal) 
     {
         _makeLevelData(level, mode);
 	}
@@ -76,8 +77,9 @@ public class LevelData
             LevelXCount = int.Parse(size[1]) + 2;
             LevelYCount = int.Parse(size[0]) + 2;
             GoodKinds = conf.GoodKinds;
+            levelDirEnum = dicStr;
 
-            SetDic(dicStr);
+            list_constraint = SetDic(dicStr);
             SetHiddleGood_Moves(hidGodMovs);
             SetHiddleGood_Stays(hidGodStys);
             SetObstacle_Moves(obsMovs);
@@ -196,17 +198,20 @@ public class LevelData
     /// 设置关卡移动方向
     /// </summary>
     /// <param name="dicStr">表格得到的string数据</param>
-    private void SetDic(int dicStr)
+    public ArrayList SetDic(int dicStr)
     {
-        int halfH = (LevelXCount - 2) / 2; //6
-        int halfV = (LevelYCount - 2) / 2; //4
+        int halfH = (LevelXCount - 2) / 2; //6 ----> 12
+        int halfV = (LevelYCount - 2) / 2; //4 ----> 8
 
-        Debug.LogError(halfH + "   " + halfV);
+        Debug.LogError(halfH + "  " + halfV);
 
         Vec2 startPos;
         Vec2 endPos;
         Vec2 startPos2;
         Vec2 endPos2;
+
+        ArrayList constraint_temp = new ArrayList();
+
         if (dicStr != 0)
         {
             switch ((EGoodMoveDic)dicStr)
@@ -217,42 +222,43 @@ public class LevelData
                 case EGoodMoveDic.Right:
                     startPos = new Vec2(1, 1);
                     endPos = new Vec2(halfH * 2, halfV * 2);
-                    list_constraint.Add(new ConstraintData(dicStr, startPos, endPos));
+                    constraint_temp.Add(new ConstraintData(dicStr, startPos, endPos));
                     break;
                 case EGoodMoveDic.UpDown_Away:
                     startPos = new Vec2(1, 1);
                     endPos = new Vec2(halfH, halfV * 2);
-                    list_constraint.Add(new ConstraintData(2, startPos, endPos));
-                    startPos2 = new Vec2(halfV + 1, 1);
+                    constraint_temp.Add(new ConstraintData(2, startPos, endPos));
+                    startPos2 = new Vec2(halfH + 1, 1);
                     endPos2 = new Vec2(halfH * 2, halfV * 2);
-                    list_constraint.Add(new ConstraintData(1, startPos, endPos));
+                    constraint_temp.Add(new ConstraintData(1, startPos2, endPos2));
                     break;
                 case EGoodMoveDic.UpDown_Closer:
                     startPos = new Vec2(1, 1);
                     endPos = new Vec2(halfH, halfV * 2);
-                    list_constraint.Add(new ConstraintData(1, startPos, endPos));
-                    startPos2 = new Vec2(halfV + 1, 1);
+                    constraint_temp.Add(new ConstraintData(1, startPos, endPos));
+                    startPos2 = new Vec2(halfH + 1, 1);
                     endPos2 = new Vec2(halfH * 2, halfV * 2);
-                    list_constraint.Add(new ConstraintData(2, startPos, endPos));
+                    constraint_temp.Add(new ConstraintData(2, startPos2, endPos2));
                     break;
                 case EGoodMoveDic.LeftRight_Away:
                     startPos = new Vec2(1, 1);
                     endPos = new Vec2(halfH * 2, halfV);
-                    list_constraint.Add(new ConstraintData(3, startPos, endPos));
-                    startPos2 = new Vec2(halfV + 1, 1);
+                    constraint_temp.Add(new ConstraintData(3, startPos, endPos));
+                    startPos2 = new Vec2(1, halfV + 1);
                     endPos2 = new Vec2(halfH * 2, halfV * 2);
-                    list_constraint.Add(new ConstraintData(4, startPos, endPos));
+                    constraint_temp.Add(new ConstraintData(4, startPos2, endPos2));
                     break;
                 case EGoodMoveDic.LeftRight_Closer:
                     startPos = new Vec2(1, 1);
                     endPos = new Vec2(halfH * 2, halfV);
-                    list_constraint.Add(new ConstraintData(4, startPos, endPos));
+                    constraint_temp.Add(new ConstraintData(4, startPos, endPos));
                     startPos2 = new Vec2(1, halfV + 1);
                     endPos2 = new Vec2(halfH * 2, halfV * 2);
-                    list_constraint.Add(new ConstraintData(3, startPos, endPos));
+                    constraint_temp.Add(new ConstraintData(3, startPos2, endPos2));
+                    break;
+                default: 
                     break;
             }
-
             //string[] dics = dicStr.Split('/');
             //for (int i = 0; i < dics.Length; i++) 
             //{
@@ -264,6 +270,7 @@ public class LevelData
             //    list_constraint.Add(new ConstraintData(int.Parse(values[0]), startPos, endPos));
             //}
         }
+        return constraint_temp;
     }
 
     /// <summary>

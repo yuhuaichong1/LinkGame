@@ -58,7 +58,8 @@ namespace XrCode
         {
             if(GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
             {
-                GamePlayFacade.RemoveFunc?.Invoke();
+                //GamePlayFacade.RemoveFunc?.Invoke();
+                GamePlayFacade.ChangeDirection?.Invoke();
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
             }

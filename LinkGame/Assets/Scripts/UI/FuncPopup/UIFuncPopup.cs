@@ -67,7 +67,7 @@ namespace XrCode
             };
         }
 
-        //显示移除相关UI
+        //显示移除相关UI（现为改变方向功能)
         private void AddRemovePlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>("UI/FuncIcon/FuncIcon_Remove.png");

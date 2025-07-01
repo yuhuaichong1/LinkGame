@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace XrCode
 {
@@ -85,6 +86,7 @@ namespace XrCode
         private Dictionary<int, GameObject> pathObj;//线预制体
 
         private ArrayList list_pos_need_update;//需要更新（可位移的物品）
+        private ArrayList curLevelDirection;//移动方向
 
         protected override void OnLoad()
         {
@@ -98,6 +100,7 @@ namespace XrCode
             GamePlayFacade.ChangeTipCount += ChangeTipCount;
             GamePlayFacade.ChangeRefushCount += ChangeRefushCount;
             GamePlayFacade.ChangeRemoveCount += ChangeRemoveCount;
+            GamePlayFacade.ChangeDirection += ChangeDirection;
             GamePlayFacade.GetTipCount += GetTipCount;
             GamePlayFacade.GetRefushCount += GetRefushCount;
             GamePlayFacade.GetRemoveCount += GetRemoveCount;
@@ -124,7 +127,9 @@ namespace XrCode
             _numberResetMap = 0;
             _isCheckWrong = false;
             check_id = new ArrayList();
-            list_pos_need_update = new ArrayList();
+            list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
+            curLevelDirection = new ArrayList();//当前关卡的方向
+
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -133,19 +138,12 @@ namespace XrCode
 
             LoadData();
 
-            RegisetUpdateObj();
+            
         }
 
         protected override void OnUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                GameObject a = GameObject.Instantiate(pathObj[1]);
-                a.transform.parent = mapTrans;
-                a.GetComponent<LinkPath>().enabled = false;
-                a.GetComponent<RectTransform>().localScale = Vector3.one;
-                
-            }
+
         }
 
         //加载数据
@@ -199,6 +197,7 @@ namespace XrCode
             curLevelData = new LevelData(curLevel);
             row = curLevelData.LevelXCount;
             col = curLevelData.LevelYCount;
+            curLevelDirection = curLevelData.list_constraint;
 
             goodPrefab = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Good/item.prefab");
 
@@ -1599,12 +1598,13 @@ namespace XrCode
         //让地图物块移动
         private void UpdateMap()
         {
+            Debug.LogError(list_pos_need_update.Count);
             for (int j = 0; j < list_pos_need_update.Count; j++)
             {
-                for (int i = 0; i < curLevelData.list_constraint.Count; i++)
+                for (int i = 0; i < curLevelDirection.Count; i++)
                 {
                     Vec2 POS = (Vec2)list_pos_need_update[j];
-                    ConstraintData constraint = (ConstraintData)curLevelData.list_constraint[i];
+                    ConstraintData constraint = (ConstraintData)curLevelDirection[i];
                     HandleMove(POS, constraint.cell1, constraint.cell2, constraint.direction, curLevelData.list_block_stone_and_frozen);
                 }
             }
@@ -1614,32 +1614,64 @@ namespace XrCode
         //确认移动目标点并移动
         void HandleMove(Vec2 POS, Vec2 cell1, Vec2 cell2, int direction, ArrayList list_block_stone_and_frozen)
         {
-            Debug.LogError(direction + "   " + (EGoodMoveDic)direction);
+            //Debug.LogError((EGoodMoveDic)direction + "   " + cell1.C + "," + cell1.R + "   " + cell2.C + "," + cell2.R);
+
             if (isInBound(POS, cell1, cell2))
             {
+                Vec2 boundLeft;
+                Vec2 boundRight;
+                Vec2 boundBottom;
+                Vec2 boundTop;
+                switch ((EGoodMoveDic)direction)
+                {
+                    case EGoodMoveDic.Left:
+                        boundLeft = getBoundLeft(list_block_stone_and_frozen, POS, cell1, cell2);
+                        boundRight = getBoundRight(list_block_stone_and_frozen, POS, cell1, cell2);
+                        MoveLeft(boundLeft, boundLeft.C, boundRight.C);
+                        break;
+                    case EGoodMoveDic.Right:
+                        boundLeft = getBoundLeft(list_block_stone_and_frozen, POS, cell1, cell2);
+                        boundRight = getBoundRight(list_block_stone_and_frozen, POS, cell1, cell2);
+                        MoveRight(boundRight, boundLeft.C, boundRight.C);
+                        break;
+                    case EGoodMoveDic.Up:
+                        boundBottom = getBoundBottom(list_block_stone_and_frozen, POS, cell1, cell2);
+                        boundTop = getBoundTop(list_block_stone_and_frozen, POS, cell1, cell2);
+                        MoveUp(boundTop, boundBottom.R, boundTop.R);
+                        break;
+                    case EGoodMoveDic.Down:
+                        boundBottom = getBoundBottom(list_block_stone_and_frozen, POS, cell1, cell2);
+                        boundTop = getBoundTop(list_block_stone_and_frozen, POS, cell1, cell2);
+                        MoveDown(boundBottom, boundBottom.R, boundTop.R);
+                        break;
+                    case EGoodMoveDic.UpDown_Away:
+                        break;
+                    case EGoodMoveDic.UpDown_Closer:
+                        break;
+                    case EGoodMoveDic.LeftRight_Away:
+                        
+                        break;
+                    case EGoodMoveDic.LeftRight_Closer: 
+                        break;
+                    default: 
+                        break;
+                }
+
                 if (direction == (int)EGoodMoveDic.Left)
                 {
-                    Vec2 boundLeft = getBoundLeft(list_block_stone_and_frozen, POS, cell1, cell2);
-                    Vec2 boundRight = getBoundRight(list_block_stone_and_frozen, POS, cell1, cell2);
-                    MoveLeft(boundLeft, boundLeft.C, boundRight.C);
+                    
                 }
                 else if (direction == (int)EGoodMoveDic.Right)
                 {
-                    Vec2 boundLeft = getBoundLeft(list_block_stone_and_frozen, POS, cell1, cell2);
-                    Vec2 boundRight = getBoundRight(list_block_stone_and_frozen, POS, cell1, cell2);
-                    MoveRight(boundRight, boundLeft.C, boundRight.C);
+
                 }
                 else if (direction == (int)EGoodMoveDic.Up)
                 {
-                    Vec2 boundBottom = getBoundBottom(list_block_stone_and_frozen, POS, cell1, cell2);
-                    Vec2 boundTop = getBoundTop(list_block_stone_and_frozen, POS, cell1, cell2);
-                    MoveUp(boundTop, boundBottom.R, boundTop.R);
+                    
                 }
                 else if (direction == (int)EGoodMoveDic.Down)
                 {
-                    Vec2 boundBottom = getBoundBottom(list_block_stone_and_frozen, POS, cell1, cell2);
-                    Vec2 boundTop = getBoundTop(list_block_stone_and_frozen, POS, cell1, cell2);
-                    MoveDown(boundBottom, boundBottom.R, boundTop.R);
+                    
                 }
             }
         }
@@ -2052,6 +2084,85 @@ namespace XrCode
         private void RemoveFunc()
         {
 
+        }
+
+        //改变当前关卡方向功能
+        private void ChangeDirection()
+        {
+            curLevelDirection.Clear();
+
+            int newDir;
+            while (true)
+            {
+                newDir = UnityEngine.Random.Range(1, 9);
+                if (newDir != curLevelData.levelDirEnum)
+                    break;
+            }
+            curLevelDirection = curLevelData.SetDic(newDir);
+
+            int XGoodCount = curLevelData.LevelXCount - 2; //12
+            int YGoodCount = curLevelData.LevelYCount - 2; //8
+
+            EGoodMoveDic EGMD = (EGoodMoveDic)newDir;
+
+            Debug.LogError("现在的方向是：" + EGMD);
+
+            //上&上下离去的情况
+            if (EGMD == EGoodMoveDic.Up || EGMD == EGoodMoveDic.UpDown_Away)
+            {
+                for(int i = 1; i <= YGoodCount; i++)
+                {
+                    list_pos_need_update.Add(new Vec2(XGoodCount, i));
+                }
+            }
+            //下&上下离去的情况
+            if (EGMD == EGoodMoveDic.Down || EGMD == EGoodMoveDic.UpDown_Away)
+            {
+                for (int i = 1; i <= YGoodCount; i++)
+                {
+                    list_pos_need_update.Add(new Vec2(1, i));
+                }
+            }
+            //上下聚拢的情况
+            if(EGMD == EGoodMoveDic.UpDown_Closer)
+            {
+                int temp = XGoodCount / 2;
+                for(int i = 1;i <= YGoodCount;i++)
+                {
+                    list_pos_need_update.Add(new Vec2(temp, i));
+                    list_pos_need_update.Add(new Vec2(temp + 1, i));
+                }    
+            }
+            //左&左右离去的情况
+            if (EGMD == EGoodMoveDic.Left || EGMD == EGoodMoveDic.LeftRight_Away)
+            {
+                for (int i = 1; i <= XGoodCount; i++)
+                {
+                    list_pos_need_update.Add(new Vec2(i, 1));
+                }
+            }
+            //右&左右离去的情况
+            if (EGMD == EGoodMoveDic.Right || EGMD == EGoodMoveDic.LeftRight_Away)
+            {
+                for (int i = 1; i <= XGoodCount; i++)
+                {
+                    list_pos_need_update.Add(new Vec2(i, YGoodCount));
+                }
+            }
+            //左右聚拢的情况
+            if (EGMD == EGoodMoveDic.LeftRight_Closer)
+            {
+                int temp = YGoodCount / 2;
+                for (int i = 1; i <= XGoodCount; i++)
+                {
+                    list_pos_need_update.Add(new Vec2(i, temp));
+                    list_pos_need_update.Add(new Vec2(i, temp + 1));
+                }
+            }
+            list_pos_need_update.Clear();
+            UpdateMap();
+
+            Debug.LogError("目前会和“提示功能”有冲突，当方向改变后，第一次提示会显示错误的位置");
         }
 
         //刷新功能
