@@ -48,7 +48,7 @@ namespace XrCode
             if(GamePlayFacade.GetRefushCount?.Invoke() > 0)
             {
                 GamePlayFacade.RefushFunc?.Invoke();
-                GamePlayFacade.ChangeTipCount?.Invoke(-1);
+                GamePlayFacade.ChangeRefushCount?.Invoke(-1);
                 ChangeFuncRefushCount();
             }
             else

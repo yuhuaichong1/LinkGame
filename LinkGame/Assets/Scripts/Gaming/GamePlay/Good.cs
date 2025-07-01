@@ -47,7 +47,7 @@ public class Good : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isHint && animator.GetCurrentAnimatorStateInfo(0).IsName("ItemDefault"))
+        if (isHint)
         {
             Hint();
         }
@@ -143,7 +143,8 @@ public class Good : MonoBehaviour
 
     public void Hint()
     {
-        animator.SetTrigger("Hint");
+        Debug.LogError(this.name);
+        animator.SetTrigger("ifShake");
         isHint = true;
     }
     public void RemoveHint()
@@ -153,7 +154,7 @@ public class Good : MonoBehaviour
             if (!isActiveAndEnabled)
                 return;
             if (animator != null)
-                animator.SetTrigger("RemoveHint");
+                animator.SetTrigger("endShake");
             isHint = false;
         }
         catch (Exception e)

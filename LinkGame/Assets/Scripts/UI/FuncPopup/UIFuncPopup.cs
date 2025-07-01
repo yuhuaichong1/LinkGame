@@ -12,7 +12,7 @@ namespace XrCode
 
         protected override void OnAwake() 
         {
-
+            AdModule = ModuleMgr.Instance.AdModule;
         }
         
         protected override void OnSetParam(params object[] args)
@@ -48,6 +48,7 @@ namespace XrCode
                 {
                     GamePlayFacade.ChangeTipCount(3);
                     GamePlayFacade.ChangeTipCountShow?.Invoke();
+                    UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
                 });
             };
         }
@@ -61,6 +62,7 @@ namespace XrCode
                 {
                     GamePlayFacade.ChangeRefushCount(1);
                     GamePlayFacade.ChangeRefushCountShow?.Invoke();
+                    UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
                 });
             };
         }
@@ -74,6 +76,7 @@ namespace XrCode
                 {
                     GamePlayFacade.ChangeRemoveCount(1);
                     GamePlayFacade.ChangeRemoveCountShow?.Invoke();
+                    UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
                 });
             };
         }

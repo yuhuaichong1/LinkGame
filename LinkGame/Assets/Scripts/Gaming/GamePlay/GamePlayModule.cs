@@ -3,6 +3,8 @@ using DG.Tweening;
 using Spine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -59,9 +61,9 @@ namespace XrCode
         private ArrayList list_block_frozen_normal;//关卡中不可移动？
         private ArrayList list_block_frozen_special;//关卡中不可移动的？
         private ArrayList listAutoGens;//自动冰冻完毕的物品集合
-        public int numberPokemonRemain = 0;
-        private ArrayList list_pokemon_can_eat1 = new ArrayList();
-        private ArrayList list_pokemon_can_eat2 = new ArrayList();
+        public int numberGoodRemain = 0;
+        private ArrayList list_good_can_eat1 = new ArrayList();
+        private ArrayList list_good_can_eat2 = new ArrayList();
 
         private Transform mapTrans;//生成物体的父亲对象
 
@@ -223,21 +225,21 @@ namespace XrCode
         {
             //float camHalfHeight = Camera.main.orthographicSize;
             //float camHalfWidth = Camera.main.aspect * camHalfHeight;
-            float camHalfHeight = (GoodDefine.height + GoodDefine.correction) * (curLevelData.LevelXCount - 2) / 2;
-            float camHalfWidth = (GoodDefine.width + GoodDefine.correction) * (curLevelData.LevelYCount - 2) / 2;
-            MAP_WIDTH = (int)camHalfWidth * 2;
-            MAP_HEIGHT = (int)camHalfHeight * 2;
+            float camHalfHeight = (GoodDefine.height) * (curLevelData.LevelXCount - 2) / 2;
+            float camHalfWidth = (GoodDefine.width) * (curLevelData.LevelYCount - 2) / 2;
+            MAP_WIDTH = (int)(camHalfWidth) * 2;
+            MAP_HEIGHT = (int)(camHalfHeight) * 2;
             CELL_WIDH = (int)(MAP_WIDTH / (col - 2));
             CELL_HEIGHT = (int)((MAP_HEIGHT) / (row - 2));
 
-            if (CELL_WIDH < CELL_HEIGHT)
-            {
-                CELL_HEIGHT = CELL_WIDH;
-            }
-            else
-            {
-                CELL_WIDH = CELL_HEIGHT;
-            }
+            //if (CELL_WIDH < CELL_HEIGHT)
+            //{
+            //    CELL_HEIGHT = CELL_WIDH;
+            //}
+            //else
+            //{
+            //    CELL_WIDH = CELL_HEIGHT;
+            //}
 
             Debug.Log($"Screen_width : {camHalfWidth}");
             Debug.Log($"Screen_height : {camHalfHeight}");
@@ -265,8 +267,8 @@ namespace XrCode
                     MAP_FROZEN[i][j] = -1;
                     MAP_Goods[i][j] = null;
                     POS[i][j] = new Vector3(0, 0, 0);
-                    POS[i][j].x = MIN_X + j * CELL_WIDH + CELL_WIDH / 2;
-                    POS[i][j].y = MIN_Y + i * CELL_HEIGHT;
+                    POS[i][j].x = (MIN_X + j * CELL_WIDH + CELL_WIDH / 2);
+                    POS[i][j].y = (MIN_Y + i * CELL_HEIGHT);
                     POS[i][j].z = i / 10.0f;
                 }
             }
@@ -1606,9 +1608,9 @@ namespace XrCode
                 //lastTime = currentTime;
                 //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
             }
-            int numberPokemonCanEat = GetNumberGoodCanEat();
-            Debug.Log("numberPokemonCanEat : " + numberPokemonCanEat);
-            if (!isReseting && numberPokemonCanEat == 0 && numberPokemonRemain > 0)
+            int numberGoodCanEat = GetNumberGoodCanEat();
+            Debug.Log("numberGoodCanEat : " + numberGoodCanEat);
+            if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
                 Game.Instance.StartCoroutine(StartResetMap());
             }
@@ -1619,7 +1621,7 @@ namespace XrCode
         //开始重置地图
         IEnumerator StartResetMap()
         {
-            AudioModule.PlayEffect(EAudioType.EGoodshuffle);
+            AudioModule.PlayEffect(EAudioType.EGoodShuffle);
             isReseting = true;
             yield return new WaitForSeconds(Time.deltaTime + 0.05f);
             RandomMap();
@@ -1635,19 +1637,14 @@ namespace XrCode
         #endregion
 
         #region 点击物体
-        //被选中时闪光
-        private void SelectLight()
-        {
-
-        }
-
         //双击抖动
         private void SameKindShake(int kind)
         {
 
         }
 
-        void Select(Vec2 pos)
+        //被选中
+        private void Select(Vec2 pos)
         {
             if (checking_paire)
             {
@@ -1704,7 +1701,7 @@ namespace XrCode
         }
 
         //取消选中物体
-        void DeSelect()
+        private void DeSelect()
         {
             D.Log("DESELECT :::");
             GameObject pokemon = null;
@@ -1735,7 +1732,35 @@ namespace XrCode
         //提示可消除功能
         private void TipFunc()
         {
-
+            int count = list_good_can_eat1.Count;
+            if (count == 0)
+            {
+                return;
+            }
+            int r = Random.Range(0, count);
+            if (r == count)
+            {
+                r = count - 1;
+            }
+            HINT_POS1 = (Vec2)list_good_can_eat1[r];
+            HINT_POS2 = (Vec2)list_good_can_eat2[r];
+            GameObject good = null;
+            if (HINT_POS1 != null)
+            {
+                good = GetGood(HINT_POS1.R, HINT_POS1.C);
+            }
+            if (good != null)
+            {
+                good.GetComponent<Good>().Hint();
+            }
+            if (HINT_POS2 != null)
+            {
+                good = GetGood(HINT_POS2.R, HINT_POS2.C);
+            }
+            if (good != null)
+            {
+                good.GetComponent<Good>().Hint();
+            }
         }
 
         //随机消除功能
@@ -1747,7 +1772,10 @@ namespace XrCode
         //刷新功能
         private void RefushFunc()
         {
-
+            if (curMapState == EMapState.Eating)
+                return;
+            AudioModule.PlayEffect(EAudioType.EGoodShuffle);
+            _resetMap();
         }
 
         private void ChangeTipCount(int num)
@@ -1837,10 +1865,10 @@ namespace XrCode
         //得到当前场景中可销毁的物体的数量
         public int GetNumberGoodCanEat()
         {
-            numberPokemonRemain = 0;
+            numberGoodRemain = 0;
             int number = 0;
-            list_pokemon_can_eat1.Clear();
-            list_pokemon_can_eat2.Clear();
+            list_good_can_eat1.Clear();
+            list_good_can_eat2.Clear();
             for (int i1 = 1; i1 < row - 1; i1++)
             {
                 for (int j1 = 1; j1 < col - 1; j1++)
@@ -1860,8 +1888,8 @@ namespace XrCode
                                     HINT_POS2 = new Vec2(i2, j2);
                                     if (checkPaire(HINT_POS1, HINT_POS2, false))
                                     {
-                                        list_pokemon_can_eat1.Add(HINT_POS1);
-                                        list_pokemon_can_eat2.Add(HINT_POS2);
+                                        list_good_can_eat1.Add(HINT_POS1);
+                                        list_good_can_eat2.Add(HINT_POS2);
                                         number++;
                                     }
                                 }
@@ -1872,7 +1900,7 @@ namespace XrCode
                     if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID
                         && MAP[i1][j1] != GameDefines.OBS_MOVING_ID)
                     {
-                        numberPokemonRemain++;
+                        numberGoodRemain++;
                     }
                 }
             }
@@ -2365,22 +2393,22 @@ namespace XrCode
         //消去摇动（提示）特效
         void RemoveHint()
         {
-            GameObject pokemon = null;
+            GameObject good = null;
             if (HINT_POS1 != null)
             {
-                pokemon = GetGood(HINT_POS1.R, HINT_POS1.C);
+                good = GetGood(HINT_POS1.R, HINT_POS1.C);
             }
-            if (pokemon != null)
+            if (good != null)
             {
-                pokemon.GetComponent<Good>().RemoveHint();
+                good.GetComponent<Good>().RemoveHint();
             }
             if (HINT_POS2 != null)
             {
-                pokemon = GetGood(HINT_POS2.R, HINT_POS2.C);
+                good = GetGood(HINT_POS2.R, HINT_POS2.C);
             }
-            if (pokemon != null)
+            if (good != null)
             {
-                pokemon.GetComponent<Good>().RemoveHint();
+                good.GetComponent<Good>().RemoveHint();
             }
         }
 

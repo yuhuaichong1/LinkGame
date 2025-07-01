@@ -4,9 +4,10 @@ using UnityEngine;
 
 public abstract class GoodDefine
 {
-    public static int width = 124;//默认宽
-    public static int height = 124;//默认高
-    public static int correction = 0;//物体边距补正
+    public static int width = 90;//默认宽
+    public static int height = 120;//默认高
+    public static int width_correction = 0;//物体宽间距补正
+    public static int height_correction = 100;//物体高间距补正
 }
 
 //物品移动方向枚举
