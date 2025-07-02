@@ -11,4 +11,6 @@ public abstract class PlayerPrefDefines
     public const string isTutorial = "LinkGame_isTutorial";                  //GamePlayModule_是否完成了新手教程
 
     public const string starCount = "LinkGame_starCount";                    //PlayerModule_玩家星数
+
+    public const string taskStatus = "LinkGame_taskStatus";                  //TaskModule_所有任务的状态
 }

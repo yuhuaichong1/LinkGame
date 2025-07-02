@@ -16,6 +16,7 @@ namespace XrCode
         private GuideModule guideModule;
         private GamePlayModule gamePlayModule;
         private AdModule adModule;
+        private TaskModule taskModule;
         public List<BaseModule> updateModList;
 
         public SceneMod SceneMod { get { return sceneMod; } }
@@ -30,6 +31,7 @@ namespace XrCode
         public LanguageModule LanguageMod { get { return languageMod; } }
         public GuideModule GuideModule { get { return guideModule; } }
         public AdModule AdModule { get { return adModule; } }
+        public TaskModule TaskModule { get { return taskModule; } }
 
         private bool isLoaded = false;
         public void Load()
@@ -46,6 +48,7 @@ namespace XrCode
             tDAnalyticsManager = new TDAnalyticsManager();
             guideModule = new GuideModule();
             adModule = new AdModule();
+            taskModule = new TaskModule();
         }
         public void Dispose()
         {
@@ -60,6 +63,7 @@ namespace XrCode
             tDAnalyticsManager.Dispose();
             guideModule.Dispose();
             adModule.Dispose();
+            taskModule.Dispose();
         }
 
         public void Start()
@@ -76,6 +80,7 @@ namespace XrCode
             tDAnalyticsManager.Load();
             sceneMod.Load();
             adModule.Load();
+            taskModule.Load();
             sceneMod.LoadScene(ESceneType.MainScene);
         }
 

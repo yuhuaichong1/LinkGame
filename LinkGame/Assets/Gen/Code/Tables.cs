@@ -27,6 +27,8 @@ namespace cfg
 		public TBLevel TBLevel {get; private set;}
 		public TBGoodIcon TBGoodIcon {get; private set;}
 		public TBLinkLine TBLinkLine {get; private set;}
+		public TBTask TBTask {get; private set;}
+		public TBPayRegion TBPayRegion {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -54,6 +56,10 @@ namespace cfg
 			tables.Add("TBGoodIcon", TBGoodIcon);
 			TBLinkLine = new TBLinkLine(loader("tblinkline")); 
 			tables.Add("TBLinkLine", TBLinkLine);
+			TBTask = new TBTask(loader("tbtask")); 
+			tables.Add("TBTask", TBTask);
+			TBPayRegion = new TBPayRegion(loader("tbpayregion")); 
+			tables.Add("TBPayRegion", TBPayRegion);
 	
 			PostInit();
 			ResolveAllTable();
@@ -80,6 +86,10 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBGoodIconDataFinish);
 			configNames.Enqueue("tblinkline");
             configCbFuncs.Enqueue(OnTBLinkLineDataFinish);
+			configNames.Enqueue("tbtask");
+            configCbFuncs.Enqueue(OnTBTaskDataFinish);
+			configNames.Enqueue("tbpayregion");
+            configCbFuncs.Enqueue(OnTBPayRegionDataFinish);
 
             LoadAllConfig();
         }
@@ -129,6 +139,8 @@ namespace cfg
 			TBLevel.TranslateText(translator); 
 			TBGoodIcon.TranslateText(translator); 
 			TBLinkLine.TranslateText(translator); 
+			TBTask.TranslateText(translator); 
+			TBPayRegion.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -143,6 +155,8 @@ namespace cfg
 			TBLevel.Resolve(tables);
 			TBGoodIcon.Resolve(tables);
 			TBLinkLine.Resolve(tables);
+			TBTask.Resolve(tables);
+			TBPayRegion.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -174,6 +188,12 @@ namespace cfg
 					break;
 				case "TBLinkLine":
 					TBLinkLine.Reload(_loader("TBLinkLine"));
+					break;
+				case "TBTask":
+					TBTask.Reload(_loader("TBTask"));
+					break;
+				case "TBPayRegion":
+					TBPayRegion.Reload(_loader("TBPayRegion"));
 					break;
 			}
 	
@@ -228,6 +248,16 @@ namespace cfg
 		{
 			TBLinkLine = new TBLinkLine(buf);
 			tables.Add("TBLinkLine", TBLinkLine);
+		}
+		public void OnTBTaskDataFinish(ByteBuf buf)
+		{
+			TBTask = new TBTask(buf);
+			tables.Add("TBTask", TBTask);
+		}
+		public void OnTBPayRegionDataFinish(ByteBuf buf)
+		{
+			TBPayRegion = new TBPayRegion(buf);
+			tables.Add("TBPayRegion", TBPayRegion);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

@@ -51,6 +51,10 @@ public enum EUIType
     EUIEffect = 7,
     EUIFuncPopup = 8,
     EUIRecover = 9,
+    EUIEnterInfo = 10,
+    EUIWithdrawalChannel = 11,
+    EUITask = 12,
+    EUISetting= 13,
 }
 
 public enum ESceneType : byte
