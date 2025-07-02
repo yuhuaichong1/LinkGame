@@ -168,12 +168,14 @@
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Components\DragEventListener.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\SerializationContext.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCAxis.cs" />
+    <Compile Include="Assets\Scripts\UI\LuckMoment\UILuckMoment.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMask.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoadRequest.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\_Medias\SliderText.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIgnoreAttribute.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\Extension\GameObjectExtension.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\Swipe.cs" />
+    <Compile Include="Assets\Scripts\UI\LuckMoment\UITemplate\UILuckMoment_Temp.cs" />
     <Compile Include="Assets\Scripts\GameSystem\PathItem.cs" />
     <Compile Include="Assets\Gen\Code\ConfGuides.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IExecute.cs" />

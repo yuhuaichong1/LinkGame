@@ -188,6 +188,10 @@ l
 z
 5Assets/AssetBundleLocal/Prefabs/UI/Task/UITask.prefabAassets/assetbundlelocal/prefabs/ui/task/uitask.prefab.assetbundle
 †
+;Assets/AssetBundleLocal/Prefabs/UI/Setting/UISetting.prefabGassets/assetbundlelocal/prefabs/ui/setting/uisetting.prefab.assetbundle
+b
+)Assets/Tools/HoleMask/Sprite/Circular.png5assets/tools/holemask/sprite/circular.png.assetbundle
+†
 ;Assets/AssetBundleLocal/Prefabs/UI/Recover/UIRecover.prefabGassets/assetbundlelocal/prefabs/ui/recover/uirecover.prefab.assetbundle
 ~
 7Assets/AssetBundleLocal/Prefabs/UI/Popup/UIPopup.prefabCassets/assetbundlelocal/prefabs/ui/popup/uipopup.prefab.assetbundle
@@ -209,6 +213,8 @@ h
 Assets/UI/Notive/noticeBg.pngGassets/assetbundlelocal/prefabs/ui/notice/noticeitem.prefab.assetbundle
 ‚
 9Assets/AssetBundleLocal/Prefabs/UI/Notice/UINotice.prefabEassets/assetbundlelocal/prefabs/ui/notice/uinotice.prefab.assetbundle
+’
+AAssets/AssetBundleLocal/Prefabs/UI/LuckMoment/UILuckMoment.prefabMassets/assetbundlelocal/prefabs/ui/luckmoment/uiluckmoment.prefab.assetbundle
 ~
 7Assets/AssetBundleLocal/Prefabs/UI/Guide/UIGuide.prefabCassets/assetbundlelocal/prefabs/ui/guide/uiguide.prefab.assetbundle
 e
@@ -221,8 +227,6 @@ n
 'Assets/Tools/HoleMask/Material/Mask.matCassets/assetbundlelocal/prefabs/ui/guide/uiguide.prefab.assetbundle
 n
 'Assets/Tools/HoleMask/Sprite/Square.pngCassets/assetbundlelocal/prefabs/ui/guide/uiguide.prefab.assetbundle
-p
-)Assets/Tools/HoleMask/Sprite/Circular.pngCassets/assetbundlelocal/prefabs/ui/guide/uiguide.prefab.assetbundle
 v
 3Assets/AssetBundleLocal/Prefabs/UI/Good/Good.prefab?assets/assetbundlelocal/prefabs/ui/good/good.prefab.assetbundle
 Š

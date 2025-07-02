@@ -54,7 +54,8 @@ public enum EUIType
     EUIEnterInfo = 10,
     EUIWithdrawalChannel = 11,
     EUITask = 12,
-    EUISetting= 13,
+    EUISetting = 13,
+    EUILuckMoment = 14,
 }
 
 public enum ESceneType : byte
