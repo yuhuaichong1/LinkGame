@@ -362,6 +362,7 @@
     <Compile Include="Assets\Scripts\UI\FuncPopup\UITemplate\UIFuncPopup_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt32Serializer.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectManager.cs" />
+    <Compile Include="Assets\Scripts\UI\GamePlay\UICurLevelItem.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt16Serializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\CalcUtil.cs" />
     <Compile Include="Assets\Gen\Code\ConfGoodIcon.cs" />

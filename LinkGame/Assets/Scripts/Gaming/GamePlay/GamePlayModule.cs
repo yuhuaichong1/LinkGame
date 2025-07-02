@@ -1,33 +1,17 @@
 using cfg;
-using DG.Tweening;
-using Spine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace XrCode
 {
     public class GamePlayModule : BaseModule
     {
-        private Dictionary<Vector2, GoodItem> levelData; //当前关卡的数据
         private int curLevel;//当前关卡
         private int tipCount;//提示次数
         private int refushCount;//刷新次数
         private int removeCount;//移除次数
         private bool isTutorial;//是否通过了新手教程
-
-        private int selectedGood;//被选中的物体
-
-        private Good good;
-
-
-
-
-
 
         private AudioModule AudioModule;
 

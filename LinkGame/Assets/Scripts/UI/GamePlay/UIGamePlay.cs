@@ -25,12 +25,28 @@ namespace XrCode
             ChangeFuncTipCount();
             ChangeFuncRefushCount();
             ChangeFuncRemoveCount();
+
+            //根据屏幕宽高比控制物体缩放大小
+            float screenScale = Screen.width * 1f / Screen.height;
+            float mapScale = -3.3507f * screenScale + 2.8858f;
+            mMap.localScale = new Vector3(mapScale, mapScale, mapScale);
         }
         protected override void OnEnable() 
         {
             GamePlayFacade.CreateLevel?.Invoke();
         }
-        	    private void OnSettingBtnClickHandle()        {
+
+        private void OnWithdrawalBtnClickHandle()        {
+            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+        }
+        private void OnPrizeDrawBtnClickHandle()        {
+            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+        }
+        private void OnTaskBtnClickHandle()        {
+            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+        }
+
+        private void OnSettingBtnClickHandle()        {
             //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
         }
         private void OnTipBtnClickHandle()        {

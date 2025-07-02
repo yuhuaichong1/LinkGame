@@ -203,8 +203,6 @@ public class LevelData
         int halfH = (LevelXCount - 2) / 2; //6 ----> 12
         int halfV = (LevelYCount - 2) / 2; //4 ----> 8
 
-        Debug.LogError(halfH + "  " + halfV);
-
         Vec2 startPos;
         Vec2 endPos;
         Vec2 startPos2;
