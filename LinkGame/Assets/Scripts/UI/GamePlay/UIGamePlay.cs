@@ -37,17 +37,26 @@ namespace XrCode
         }
 
         private void OnWithdrawalBtnClickHandle()        {
-            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+            if(PlayerFacade.GetWName() == "")
+            {
+                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+            }
+            else
+            {
+                UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);
+            }
+            
+            
         }
         private void OnPrizeDrawBtnClickHandle()        {
-            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+            UIManager.Instance.OpenWindowAsync<UILuckMoment>(EUIType.EUILuckMoment);
         }
         private void OnTaskBtnClickHandle()        {
-            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+            UIManager.Instance.OpenWindowAsync<UITask>(EUIType.EUITask);
         }
 
         private void OnSettingBtnClickHandle()        {
-            //UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
+            UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
         }
         private void OnTipBtnClickHandle()        {
             if(GamePlayFacade.GetTipCount?.Invoke() > 0)

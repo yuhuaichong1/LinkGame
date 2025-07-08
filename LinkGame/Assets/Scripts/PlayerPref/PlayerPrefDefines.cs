@@ -10,7 +10,10 @@ public abstract class PlayerPrefDefines
     public const string removeCount = "LinkGame_removeCount";                //GamePlayModule_剩余移除次数
     public const string isTutorial = "LinkGame_isTutorial";                  //GamePlayModule_是否完成了新手教程
 
-    public const string starCount = "LinkGame_starCount";                    //PlayerModule_玩家星数
+    public const string moneyCount = "LinkGame_moneyCount";                  //PlayerModule_玩家货币数
+    public const string wName = "LinkGame_wName";                            //PlayerModule_玩家兑现姓名
+    public const string wPhone = "LinkGame_wPhone";                          //PlayerModule_玩家兑现电话
+    public const string wEmail = "LinkGame_wEmail";                          //PlayerModule_玩家兑现邮箱
 
     public const string taskStatus = "LinkGame_taskStatus";                  //TaskModule_所有任务的状态
 }

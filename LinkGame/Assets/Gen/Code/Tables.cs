@@ -29,6 +29,7 @@ namespace cfg
 		public TBLinkLine TBLinkLine {get; private set;}
 		public TBTask TBTask {get; private set;}
 		public TBPayRegion TBPayRegion {get; private set;}
+		public TBPayChannel TBPayChannel {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -60,6 +61,8 @@ namespace cfg
 			tables.Add("TBTask", TBTask);
 			TBPayRegion = new TBPayRegion(loader("tbpayregion")); 
 			tables.Add("TBPayRegion", TBPayRegion);
+			TBPayChannel = new TBPayChannel(loader("tbpaychannel")); 
+			tables.Add("TBPayChannel", TBPayChannel);
 	
 			PostInit();
 			ResolveAllTable();
@@ -90,6 +93,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBTaskDataFinish);
 			configNames.Enqueue("tbpayregion");
             configCbFuncs.Enqueue(OnTBPayRegionDataFinish);
+			configNames.Enqueue("tbpaychannel");
+            configCbFuncs.Enqueue(OnTBPayChannelDataFinish);
 
             LoadAllConfig();
         }
@@ -141,6 +146,7 @@ namespace cfg
 			TBLinkLine.TranslateText(translator); 
 			TBTask.TranslateText(translator); 
 			TBPayRegion.TranslateText(translator); 
+			TBPayChannel.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -157,6 +163,7 @@ namespace cfg
 			TBLinkLine.Resolve(tables);
 			TBTask.Resolve(tables);
 			TBPayRegion.Resolve(tables);
+			TBPayChannel.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -194,6 +201,9 @@ namespace cfg
 					break;
 				case "TBPayRegion":
 					TBPayRegion.Reload(_loader("TBPayRegion"));
+					break;
+				case "TBPayChannel":
+					TBPayChannel.Reload(_loader("TBPayChannel"));
 					break;
 			}
 	
@@ -258,6 +268,11 @@ namespace cfg
 		{
 			TBPayRegion = new TBPayRegion(buf);
 			tables.Add("TBPayRegion", TBPayRegion);
+		}
+		public void OnTBPayChannelDataFinish(ByteBuf buf)
+		{
+			TBPayChannel = new TBPayChannel(buf);
+			tables.Add("TBPayChannel", TBPayChannel);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

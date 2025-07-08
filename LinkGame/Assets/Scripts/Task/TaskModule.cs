@@ -21,7 +21,7 @@ namespace XrCode
 
         private void GetTaskData()
         {
-            taskStatus = SPlayerPref.GetDictionary<int, int>(PlayerPrefDefines.taskStatus);
+            //taskStatus = SPlayerPref.GetDictionary<int, int>(PlayerPrefDefines.taskStatus);
         }
 
         protected override void OnDispose()

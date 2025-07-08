@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public static class SPlayerPref

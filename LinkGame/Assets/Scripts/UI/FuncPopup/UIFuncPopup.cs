@@ -1,6 +1,7 @@
 ﻿
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace XrCode
 {
@@ -13,6 +14,8 @@ namespace XrCode
         protected override void OnAwake() 
         {
             AdModule = ModuleMgr.Instance.AdModule;
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
         }
         
         protected override void OnSetParam(params object[] args)
@@ -42,7 +45,7 @@ namespace XrCode
         //显示提示相关UI
         private void AddTipPlane()
         {
-            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>("UI/FuncIcon/FuncIcon_Tip.png");
+            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>("UI/FuncIcon/FuncIcon_Hint.png");
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {

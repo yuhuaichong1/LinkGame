@@ -56,6 +56,15 @@ public enum EUIType
     EUITask = 12,
     EUISetting = 13,
     EUILuckMoment = 14,
+    EUIWithdrawalInformation = 15,
+    EUIWithdrawableSingle = 16,
+    EUIWithdrawableMultiple = 17,
+    EUIRate= 18,
+    EUIAwesome = 19,
+    EUIUserLevel = 20,
+    EUIGamePlayNotice = 21,
+    EUIChallengeSuccessful = 22,
+    EUIChallengeFailed = 23,
 }
 
 public enum ESceneType : byte
