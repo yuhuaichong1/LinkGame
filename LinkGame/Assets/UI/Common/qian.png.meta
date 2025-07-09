@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b362da7d4c96f1f418a0be8329af9c84
+guid: 79f419b8013cc3f468dc01e69f7042fe
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -121,14 +121,14 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 51
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: assets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
+  assetBundleName: assets/ui/common/qian.png.assetbundle
   assetBundleVariant: 

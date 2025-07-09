@@ -8,9 +8,34 @@ namespace XrCode
 
     public partial class UISetting : BaseUI
     {
-        protected override void OnAwake() { }
+        private LanguageModule LanguageModule;
+        private AudioModule AudioModule;
+
+        protected override void OnAwake() 
+        {
+            LanguageModule = ModuleMgr.Instance.LanguageMod;
+            AudioModule = ModuleMgr.Instance.AudioMod;
+        }
         protected override void OnEnable() { }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUISetting);        }	    private void OnUserLvDetailsBtnClickHandle(){}
+        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUISetting);        }	    private void OnUserLvDetailsBtnClickHandle()
+        {
+            UIManager.Instance.OpenWindowAsync<UIUserLevel>(EUIType.EUIUserLevel);
+        }
+        private void OnMusicSMTChange(bool b)
+        {
+            mMSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
+            //mMSMTLabel.text = LanguageModule.GetText(b ? "On" : "Off");
+            AudioModule.SetMusicVolume(b? 1 : 0);
+            AudioModule.SetEffectsVolume(b? 1 : 0);
+        }
+
+        private void OnVibrationSMTChange(bool b)
+        {
+            mVSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
+            //mVSMTLabel.text = LanguageModule.GetText(b ? "On" : "Off");
+        }
+
+
         protected override void OnDisable() { }
         protected override void OnDispose() { }
     }

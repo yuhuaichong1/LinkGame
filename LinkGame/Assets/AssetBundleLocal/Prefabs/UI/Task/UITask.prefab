@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Content: {fileID: 3877096856179106226}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -1188,9 +1188,11 @@ MonoBehaviour:
   - m_Target: {fileID: 701676001556906076}
     m_ComponentList:
     - {fileID: 3907321337741114272}
+    - {fileID: 5313533689832846845}
   - m_Target: {fileID: 5506988126761142018}
     m_ComponentList:
     - {fileID: 6631729433290078105}
+    - {fileID: 5949653317907334485}
 --- !u!225 &238806779600711233
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1683,7 +1685,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -45, y: -45}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 124, y: 124}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &5054882378186704596
 CanvasRenderer:
@@ -1713,7 +1715,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8df023b8c4094a34885ba31d193b8c2d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2350,7 +2352,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -36}
-  m_SizeDelta: {x: 480, y: 140}
+  m_SizeDelta: {x: 492, y: 140}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &848603611237833156
 CanvasRenderer:
@@ -2380,7 +2382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 44c60efdeecc50341b580512320ba0a5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2566,7 +2568,7 @@ MonoBehaviour:
   m_Content: {fileID: 8958074273044041553}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -3106,8 +3108,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: 8}
-  m_SizeDelta: {x: 105, y: 100}
+  m_AnchoredPosition: {x: 37, y: 8}
+  m_SizeDelta: {x: 105, y: 97}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7237513444383144331
 CanvasRenderer:
@@ -3137,7 +3139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 7596964b746df1f40aef6cafc5cabea1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3386,6 +3388,7 @@ GameObject:
   - component: {fileID: 2824656405481764801}
   - component: {fileID: 6559042564022017313}
   - component: {fileID: 5885872372724371446}
+  - component: {fileID: 17871025989784602}
   m_Layer: 5
   m_Name: CurMoneyText
   m_TagString: Untagged
@@ -3409,8 +3412,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 76.99997, y: 0}
-  m_SizeDelta: {x: -154.00006, y: 0}
+  m_AnchoredPosition: {x: 62, y: 0}
+  m_SizeDelta: {x: -184, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6559042564022017313
 CanvasRenderer:
@@ -3433,7 +3436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3454,6 +3457,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: $160.56
+--- !u!114 &17871025989784602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7419702064576186709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 2, y: -2}
+  m_UseGraphicAlpha: 1
 --- !u!1 &7439231697663054544
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,14 +39,12 @@ namespace XrCode
         private void OnWithdrawalBtnClickHandle()        {
             if(PlayerFacade.GetWName() == "")
             {
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
             }
             else
             {
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);
+                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
             }
-            
-            
         }
         private void OnPrizeDrawBtnClickHandle()        {
             UIManager.Instance.OpenWindowAsync<UILuckMoment>(EUIType.EUILuckMoment);
@@ -92,6 +90,11 @@ namespace XrCode
             {
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Remove);
             }
+        }
+
+        private void OnCurMoneyBtnClickHandle()
+        {
+            UIManager.Instance.OpenWindowAsync<UIWithdrawableMultiple>(EUIType.EUIWithdrawableMultiple);
         }
 
         private string GetCountText(int count)

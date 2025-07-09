@@ -7,10 +7,11 @@ namespace XrCode
 {
     public class PlayerModule : BaseModule
     {
-        public float wMoney;//玩家当前的金钱数
-        public string wName;//玩家兑现界面所填名称
-        public int wPhone;//玩家兑现界面所填电话
-        public string wEmail;//玩家兑现界面所填邮箱（或电话）
+        private float wMoney;//玩家当前的金钱数
+        private string wName;//玩家兑现界面所填名称
+        private string wPhoneOrEmail;//玩家兑现界面所填邮箱（或电话）
+        private int userLevel;//玩家等级
+        private int curUserExp;//玩家经验
 
         protected override void OnLoad()
         {
@@ -18,16 +19,22 @@ namespace XrCode
 
             PlayerFacade.GetWMoney += GetWMoney;
             PlayerFacade.GetWName += GetWName;
-            PlayerFacade.GetWPhone += GetWPhone;
-            PlayerFacade.GetEmail += GetEmail;
-            PlayerFacade.SetNameAndPhone += SetNameAndPhone;
-            PlayerFacade.SetNameAndEmail += SetNameAndEmail;
-            PlayerFacade.SetEmail += SetEmail;
+            PlayerFacade.GetWEmailOrPhone += GetWEmailOrPhone;
+            PlayerFacade.GetUserLevel += GetUserLevel;
+            PlayerFacade.GetCurUserExp += GetCurUserExp;
+            PlayerFacade.SetWMoney += SetWMoney;
+            PlayerFacade.SetNameAndWEmailOrPhone += SetNameAndPhoneOrEmail;
+            PlayerFacade.SetUserLevel += SetUserLevel;
+            PlayerFacade.SetCurUserExp += SetCurUserExp;
 
             wMoney = SPlayerPref.GetFloat(PlayerPrefDefines.moneyCount);
             wName = SPlayerPref.GetString(PlayerPrefDefines.wName);
-            wPhone = SPlayerPref.GetInt(PlayerPrefDefines.wPhone);
-            wEmail = SPlayerPref.GetString(PlayerPrefDefines.wEmail);
+            wPhoneOrEmail = SPlayerPref.GetString(PlayerPrefDefines.wPhoneOrEmail);
+            userLevel = SPlayerPref.GetInt(PlayerPrefDefines.userLevel);
+            curUserExp = SPlayerPref.GetInt(PlayerPrefDefines.curUserExp);
+
+            if (userLevel == 0)
+                SetUserLevel(1);
         }
 
         protected override void OnDispose()
@@ -42,39 +49,50 @@ namespace XrCode
 
         private string GetWName() 
         {
+            Debug.LogError("wName  " + wName);
             return wName;
         }
 
-        private int GetWPhone() 
+        private string GetWEmailOrPhone()
         {
-            return wPhone;
+            Debug.LogError("wPhoneOrEmail  " + wPhoneOrEmail);
+            return wPhoneOrEmail;
+        }
+        
+        private int GetUserLevel()
+        {
+            return userLevel;
         }
 
-        private string GetEmail()
+        private int GetCurUserExp()
         {
-            return wEmail;
+            return curUserExp;
         }
 
-        private void SetNameAndPhone(string name, int phone)
+        private void SetWMoney(float value) 
+        { 
+            wMoney = value;
+            SPlayerPref.SetFloat(PlayerPrefDefines.moneyCount, value);
+        }
+
+        private void SetNameAndPhoneOrEmail(string name, string PhoneOrEmail)
         {
             wName = name;
-            wPhone = phone;
+            wPhoneOrEmail = PhoneOrEmail;
             SPlayerPref.SetString(PlayerPrefDefines.wName, name);
-            SPlayerPref.SetInt(PlayerPrefDefines.wPhone, phone);
+            SPlayerPref.SetString(PlayerPrefDefines.wPhoneOrEmail, PhoneOrEmail);
         }
 
-        private void SetNameAndEmail(string name, string email)
-        {
-            wName = name;
-            wEmail = email;
-            SPlayerPref.SetString(PlayerPrefDefines.wName, name);
-            SPlayerPref.SetString(PlayerPrefDefines.wEmail, email);
+        private void SetUserLevel(int level) 
+        { 
+            userLevel = level;
+            SPlayerPref.SetInt(PlayerPrefDefines.userLevel, level);
         }
 
-        private void SetEmail(string email)
+        private void SetCurUserExp(int exp)
         {
-            wEmail = email;
-            SPlayerPref.SetString(PlayerPrefDefines.wEmail, email);
+            curUserExp = exp;
+            SPlayerPref.SetInt(PlayerPrefDefines.curUserExp, exp);
         }
 
     }

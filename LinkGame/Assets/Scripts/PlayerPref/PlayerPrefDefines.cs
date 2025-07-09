@@ -12,8 +12,12 @@ public abstract class PlayerPrefDefines
 
     public const string moneyCount = "LinkGame_moneyCount";                  //PlayerModule_玩家货币数
     public const string wName = "LinkGame_wName";                            //PlayerModule_玩家兑现姓名
-    public const string wPhone = "LinkGame_wPhone";                          //PlayerModule_玩家兑现电话
-    public const string wEmail = "LinkGame_wEmail";                          //PlayerModule_玩家兑现邮箱
+    public const string wPhoneOrEmail = "LinkGame_wPhoneOrEmail";            //PlayerModule_玩家兑现电话/邮箱
+    public const string userLevel = "LinkGame_userLevel";                    //PlayerModule_玩家等级
+    public const string curUserExp = "LinkGame_curUserExp";                  //PlayerModule_玩家经验
 
     public const string taskStatus = "LinkGame_taskStatus";                  //TaskModule_所有任务的状态
+
+    public const string musicToggle = "LinkGame_musicToggle";                //AudioModule_音乐开关
+    public const string vibrateToggle = "LinkGame_vibrateToggle";            //AudioModule_震动开关
 }

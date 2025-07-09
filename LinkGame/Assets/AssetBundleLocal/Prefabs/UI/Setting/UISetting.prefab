@@ -107,10 +107,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7480884962639714785}
-  - {fileID: 1960264337080075564}
   - {fileID: 7002190714324024175}
   - {fileID: 7978784942231509355}
   - {fileID: 4221741631191230782}
+  - {fileID: 1960264337080075564}
   m_Father: {fileID: 8565700699537644031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1495,12 +1495,14 @@ MonoBehaviour:
     m_ComponentList:
     - {fileID: 4584123859172507235}
   - m_Target: {fileID: 8202768005503798389}
-    m_ComponentList: []
+    m_ComponentList:
+    - {fileID: 5282853222593749413}
   - m_Target: {fileID: 2744494726048210663}
     m_ComponentList:
     - {fileID: 4181375664318428156}
   - m_Target: {fileID: 5984919698174255563}
-    m_ComponentList: []
+    m_ComponentList:
+    - {fileID: 2717727372306740240}
 --- !u!225 &1823776993078261556
 CanvasGroup:
   m_ObjectHideFlags: 0

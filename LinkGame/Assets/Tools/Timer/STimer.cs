@@ -162,7 +162,7 @@ public class STimer
             {
                 nowTime = targetTime;
                 updateAction?.Invoke(nowTime);
-
+                
                 if (currentlc == 0)
                     Close();
                 else if(currentlc > 0)
@@ -170,6 +170,8 @@ public class STimer
                 else if (currentlc < 0)
                     ReStart();
                 endAction?.Invoke();
+
+                nowTime = 0;
             }
             else
             {

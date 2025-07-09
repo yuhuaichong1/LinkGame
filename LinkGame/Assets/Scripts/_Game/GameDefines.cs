@@ -6,6 +6,8 @@
 
 #region 常量
 
+using System.Collections.Generic;
+
 public abstract class GameDefines
 {
     public static string URL = "https://www.";//后台网址
@@ -20,6 +22,23 @@ public abstract class GameDefines
     public const int STATE_NORMAL = 0;//物体状态——一般
     public const int STATE_HIDE = 1;//物体状态——隐藏
     public const int STATE_DISAPPEARING = 2;//物体状态——消失中
+
+    public static bool ifWithdrawal = true;//是否提现
+
+    public const string Default_Channels = "0";//默认支付方式
+    public const string Default_Mark = "$";//默认货币符号
+    public const int Default_Decimal = 2;//默认小数点位
+    public const int Default_ExchangeRate = 1;//默认汇率
+    public const ELanguageType Default_Language = ELanguageType.English;//默认语言
+
+    public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";//老虎机未激活块背景路径
+    public const string LuckMomentActivatedBg = "UI/LuckMoment/LMABg.png";//老虎机激活块背景路径
+    public const float Default_LM_Accelerate_Speed = 0.25f;//老虎机加速起始间隔
+    public const float Default_LM_Uniform_Speed = 0.03f;//老虎机匀速间隔
+    public const float Default_LM_Moderate_Speed = 0.33f;//老虎机减速最终间隔
+    public const int Default_LM_Accelerate_Times = 3;//老虎机加速起始间隔
+    public const int Default_LM_Uniform_Times = 40;//老虎机匀速间隔
+    public const int Default_LM_Moderate_Times = 5;//老虎机减速最终间隔
 }
 #endregion
 
@@ -150,6 +169,28 @@ public enum EPathType : int
     Left_Up,//左而后上
     Right_Down,//右而后下
     Right_Up//右而后下
+}
+
+/// <summary>
+/// 支付类型
+/// </summary>
+public enum EPayType : int
+{
+    None = 0,
+    PayPal = 1,
+    Venmo = 2,
+    Zelle = 3,
+    E_Transfer = 4,
+    Mercado = 5,
+    BBVA = 6,
+    Pix = 7,
+    PicPay = 8,
+    Skrill = 9,
+    Revolut = 10,
+    Sofort = 11,
+    Paylib = 12,
+    PayPay = 13,
+    Other = 14,
 }
 
 #endregion

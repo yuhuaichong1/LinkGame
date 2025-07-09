@@ -17,6 +17,8 @@ namespace XrCode
         private GamePlayModule gamePlayModule;
         private AdModule adModule;
         private TaskModule taskModule;
+        private PlayerModule playerModule;
+        private PayTypeModule payTypeModule;
         public List<BaseModule> updateModList;
 
         public SceneMod SceneMod { get { return sceneMod; } }
@@ -32,6 +34,8 @@ namespace XrCode
         public GuideModule GuideModule { get { return guideModule; } }
         public AdModule AdModule { get { return adModule; } }
         public TaskModule TaskModule { get { return taskModule; } }
+        public PlayerModule PlayerModule { get { return playerModule; } }
+        public PayTypeModule PayTypeModule { get { return payTypeModule; } }
 
         private bool isLoaded = false;
         public void Load()
@@ -49,6 +53,8 @@ namespace XrCode
             guideModule = new GuideModule();
             adModule = new AdModule();
             taskModule = new TaskModule();
+            playerModule = new PlayerModule();
+            payTypeModule = new PayTypeModule();
         }
         public void Dispose()
         {
@@ -64,6 +70,8 @@ namespace XrCode
             guideModule.Dispose();
             adModule.Dispose();
             taskModule.Dispose();
+            playerModule.Dispose();
+            payTypeModule.Dispose();
         }
 
         public void Start()
@@ -81,6 +89,8 @@ namespace XrCode
             sceneMod.Load();
             adModule.Load();
             taskModule.Load();
+            playerModule.Load();
+            payTypeModule.Load();
             sceneMod.LoadScene(ESceneType.MainScene);
         }
 

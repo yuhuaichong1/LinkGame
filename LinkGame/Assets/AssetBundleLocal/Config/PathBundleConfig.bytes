@@ -59,6 +59,12 @@ v
 3Assets/AssetBundleLocal/UI/PayType/Icon/venmo_s.png?assets/assetbundlelocal/ui/paytype/icon/venmo_s.png.assetbundle
 v
 3Assets/AssetBundleLocal/UI/PayType/Icon/zelle_s.png?assets/assetbundlelocal/ui/paytype/icon/zelle_s.png.assetbundle
+n
+/Assets/AssetBundleLocal/UI/LuckMoment/LMABg.png;assets/assetbundlelocal/ui/luckmoment/lmabg.png.assetbundle
+
+0Assets/AssetBundleLocal/UI/LuckMoment/LMNABg.pngMassets/assetbundlelocal/prefabs/ui/luckmoment/uiluckmoment.prefab.assetbundle
+u
+(Assets/AssetBundleLocal/UI/Logo/logo.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
 ‚
 9Assets/AssetBundleLocal/UI/LinkLine/line_Left_Down.prefabEassets/assetbundlelocal/ui/linkline/line_left_down.prefab.assetbundle
 P
@@ -177,6 +183,22 @@ n
 /Assets/AssetBundleLocal/UI/FuncIcon/icon_re.png;assets/assetbundlelocal/ui/funcicon/icon_re.png.assetbundle
 
 2Assets/AssetBundleLocal/UI/FuncIcon/icon_shift.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+Š
+=Assets/AssetBundleLocal/UI/Direction/jiantou - å‰¯æœ¬ (2).pngIassets/assetbundlelocal/ui/direction/jiantou - å‰¯æœ¬ (2).png.assetbundle
+Š
+=Assets/AssetBundleLocal/UI/Direction/jiantou - å‰¯æœ¬ (3).pngIassets/assetbundlelocal/ui/direction/jiantou - å‰¯æœ¬ (3).png.assetbundle
+‚
+9Assets/AssetBundleLocal/UI/Direction/jiantou - å‰¯æœ¬.pngEassets/assetbundlelocal/ui/direction/jiantou - å‰¯æœ¬.png.assetbundle
+
+2Assets/AssetBundleLocal/UI/Direction/jiantou-5.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+t
+2Assets/AssetBundleLocal/UI/Direction/jiantou-6.png>assets/assetbundlelocal/ui/direction/jiantou-6.png.assetbundle
+t
+2Assets/AssetBundleLocal/UI/Direction/jiantou-7.png>assets/assetbundlelocal/ui/direction/jiantou-7.png.assetbundle
+t
+2Assets/AssetBundleLocal/UI/Direction/jiantou-8.png>assets/assetbundlelocal/ui/direction/jiantou-8.png.assetbundle
+p
+0Assets/AssetBundleLocal/UI/Direction/jiantou.png<assets/assetbundlelocal/ui/direction/jiantou.png.assetbundle
 †
 ;Assets/AssetBundleLocal/ScriptableObject/SUIAnimCurve.assetGassets/assetbundlelocal/scriptableobject/suianimcurve.asset.assetbundle
 ¾
@@ -203,16 +225,20 @@ UAssets/AssetBundleLocal/Prefabs/UI/WithdrawableMultiple/UIWithdrawableMultiple.
 ?Assets/AssetBundleLocal/Prefabs/UI/UserLevel/UIUserLevel.prefabKassets/assetbundlelocal/prefabs/ui/userlevel/uiuserlevel.prefab.assetbundle
 Š
 =Assets/AssetBundleLocal/Prefabs/UI/UILoading/UILoading.prefabIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
-o
-"Assets/UI/Loading/loadingTitle.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
-s
-&Assets/UI/Loading/loadingSlider_bg.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
-v
-)Assets/UI/Loading/loadingSlider_hover.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
+h
+Assets/UI/Loading/pic_1.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
+n
+!Assets/UI/Loading/jindutiao_1.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
+n
+!Assets/UI/Loading/jindutiao_2.pngIassets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
 B
 Assets/UI/GamePlay/bg.png%assets/ui/gameplay/bg.png.assetbundle
 z
 5Assets/AssetBundleLocal/Prefabs/UI/Task/UITask.prefabAassets/assetbundlelocal/prefabs/ui/task/uitask.prefab.assetbundle
+L
+Assets/UI/Common/icon_qian.png*assets/ui/common/icon_qian.png.assetbundle
+H
+Assets/UI/Common/btn_big.png(assets/ui/common/btn_big.png.assetbundle
 †
 ;Assets/AssetBundleLocal/Prefabs/UI/Setting/UISetting.prefabGassets/assetbundlelocal/prefabs/ui/setting/uisetting.prefab.assetbundle
 h
@@ -273,36 +299,38 @@ IAssets/AssetBundleLocal/Prefabs/UI/GamePlayNotice/UIGamePlayNotice.prefabUasse
 =Assets/AssetBundleLocal/Prefabs/UI/GamePlay/UIGamePlay.prefabIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 p
 #Assets/UI/GamePlay/tishikuang_2.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
-L
-Assets/UI/Common/icon_qian.png*assets/ui/common/icon_qian.png.assetbundle
 i
 Assets/UI/GamePlay/btn_1.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
-o
-"Assets/UI/GamePlay/btn_qinadao.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+p
+#Assets/UI/GamePlay/tishikuang_1.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 p
 #Assets/UI/GamePlay/jindutiaio_2.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 o
 "Assets/UI/GamePlay/btn_qianbao.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+o
+"Assets/UI/GamePlay/btn_qinadao.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 k
 Assets/UI/GamePlay/tips_bg.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 o
 "Assets/UI/GamePlay/btn_dibu_bg.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 j
 Assets/UI/Common/yuandian.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
-i
-Assets/UI/Common/btn_big.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+r
+%Assets/UI/GamePlay/icon_huangguan.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 h
 Assets/UI/GamePlay/bg 1.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 p
 #Assets/UI/GamePlay/jindutiaio_1.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 o
 "Assets/UI/GamePlay/btn_youxiji.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
-n
-!Assets/UI/GamePlay/btn_shezhi.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+i
+Assets/UI/GamePlay/guang.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 i
 Assets/UI/GamePlay/tishi.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 i
 Assets/UI/GamePlay/btn_2.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+n
+!Assets/UI/GamePlay/btn_shezhi.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 Ž
 ?Assets/AssetBundleLocal/Prefabs/UI/FuncPopup/UIFuncPopup.prefabKassets/assetbundlelocal/prefabs/ui/funcpopup/uifuncpopup.prefab.assetbundle
 P
@@ -315,14 +343,24 @@ l
 9Assets/AssetBundleLocal/Prefabs/UI/Effect/UIEffect.prefabEassets/assetbundlelocal/prefabs/ui/effect/uieffect.prefab.assetbundle
 ¶
 SAssets/AssetBundleLocal/Prefabs/UI/ChallengeSuccessful/UIChallengeSuccessful.prefab_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
+‡
+$Assets/UI/ChallengeSuccessful/bg.png_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
+J
+Assets/UI/Common/title_bg.png)assets/ui/common/title_bg.png.assetbundle
+B
+Assets/UI/Common/qian.png%assets/ui/common/qian.png.assetbundle
 ¦
 KAssets/AssetBundleLocal/Prefabs/UI/ChallengeFailed/UIChallengeFailed.prefabWassets/assetbundlelocal/prefabs/ui/challengefailed/uichallengefailed.prefab.assetbundle
 †
 ;Assets/AssetBundleLocal/Prefabs/UI/Awesome/UIAwesome.prefabGassets/assetbundlelocal/prefabs/ui/awesome/uiawesome.prefab.assetbundle
+e
+Assets/UI/Common/guang.pngGassets/assetbundlelocal/prefabs/ui/awesome/uiawesome.prefab.assetbundle
 p
 0Assets/AssetBundleLocal/Prefabs/Good/item.prefab<assets/assetbundlelocal/prefabs/good/item.prefab.assetbundle
 V
 Assets/Anim/Shake.anim<assets/assetbundlelocal/prefabs/good/item.prefab.assetbundle
+Y
+Assets/UI/GoodItem/Bg.png<assets/assetbundlelocal/prefabs/good/item.prefab.assetbundle
 W
 Assets/Anim/Standy.anim<assets/assetbundlelocal/prefabs/good/item.prefab.assetbundle
 i

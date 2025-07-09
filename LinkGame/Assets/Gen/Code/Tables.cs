@@ -30,6 +30,8 @@ namespace cfg
 		public TBTask TBTask {get; private set;}
 		public TBPayRegion TBPayRegion {get; private set;}
 		public TBPayChannel TBPayChannel {get; private set;}
+		public TBUserLevel TBUserLevel {get; private set;}
+		public TBLoadingTitleSprite TBLoadingTitleSprite {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -63,6 +65,10 @@ namespace cfg
 			tables.Add("TBPayRegion", TBPayRegion);
 			TBPayChannel = new TBPayChannel(loader("tbpaychannel")); 
 			tables.Add("TBPayChannel", TBPayChannel);
+			TBUserLevel = new TBUserLevel(loader("tbuserlevel")); 
+			tables.Add("TBUserLevel", TBUserLevel);
+			TBLoadingTitleSprite = new TBLoadingTitleSprite(loader("tbloadingtitlesprite")); 
+			tables.Add("TBLoadingTitleSprite", TBLoadingTitleSprite);
 	
 			PostInit();
 			ResolveAllTable();
@@ -95,6 +101,10 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBPayRegionDataFinish);
 			configNames.Enqueue("tbpaychannel");
             configCbFuncs.Enqueue(OnTBPayChannelDataFinish);
+			configNames.Enqueue("tbuserlevel");
+            configCbFuncs.Enqueue(OnTBUserLevelDataFinish);
+			configNames.Enqueue("tbloadingtitlesprite");
+            configCbFuncs.Enqueue(OnTBLoadingTitleSpriteDataFinish);
 
             LoadAllConfig();
         }
@@ -147,6 +157,8 @@ namespace cfg
 			TBTask.TranslateText(translator); 
 			TBPayRegion.TranslateText(translator); 
 			TBPayChannel.TranslateText(translator); 
+			TBUserLevel.TranslateText(translator); 
+			TBLoadingTitleSprite.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -164,6 +176,8 @@ namespace cfg
 			TBTask.Resolve(tables);
 			TBPayRegion.Resolve(tables);
 			TBPayChannel.Resolve(tables);
+			TBUserLevel.Resolve(tables);
+			TBLoadingTitleSprite.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -204,6 +218,12 @@ namespace cfg
 					break;
 				case "TBPayChannel":
 					TBPayChannel.Reload(_loader("TBPayChannel"));
+					break;
+				case "TBUserLevel":
+					TBUserLevel.Reload(_loader("TBUserLevel"));
+					break;
+				case "TBLoadingTitleSprite":
+					TBLoadingTitleSprite.Reload(_loader("TBLoadingTitleSprite"));
 					break;
 			}
 	
@@ -273,6 +293,16 @@ namespace cfg
 		{
 			TBPayChannel = new TBPayChannel(buf);
 			tables.Add("TBPayChannel", TBPayChannel);
+		}
+		public void OnTBUserLevelDataFinish(ByteBuf buf)
+		{
+			TBUserLevel = new TBUserLevel(buf);
+			tables.Add("TBUserLevel", TBUserLevel);
+		}
+		public void OnTBLoadingTitleSpriteDataFinish(ByteBuf buf)
+		{
+			TBLoadingTitleSprite = new TBLoadingTitleSprite(buf);
+			tables.Add("TBLoadingTitleSprite", TBLoadingTitleSprite);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

@@ -19,6 +19,8 @@ namespace XrCode
         private float mCoolDownDur = 0.05f;                                // 控制按钮点击频率
         private bool enableBtn = true;                                    // 控制按钮是否激活
 
+        private bool ifVibrate = true;                                    //是否震动
+
         private AnimationCurve curve;
 
         protected override void OnLoad()
@@ -33,7 +35,25 @@ namespace XrCode
             RedirectButton();
 
             curve = UIManager.Instance.GetAnimCurve("UniformMotion");
+
+            LoadMusicData();
+            LoadVibrateData();
         }
+
+        //获取音频数据
+        private void LoadMusicData()
+        {
+            float value = SPlayerPref.GetFloat(PlayerPrefDefines.musicToggle);
+            musicVolume = value;
+            effectsVolume = value;
+        }
+        //获取震动数据
+        private void LoadVibrateData()
+        {
+            bool value = SPlayerPref.GetBool(PlayerPrefDefines.musicToggle);
+            ifVibrate = value;
+        }
+
         // 统一处理按钮事件
         private void RedirectButton()
         {
@@ -200,6 +220,8 @@ namespace XrCode
         {
             musicVolume = Mathf.Clamp01(volume);
             musicSource.volume = musicVolume;
+
+            SPlayerPref.SetFloat(PlayerPrefDefines.musicToggle, volume);
         }
 
         // 设置音效音量
@@ -210,6 +232,27 @@ namespace XrCode
             {
                 source.volume = effectsVolume;
             }
+        }
+
+
+        public void PlayVibrate()
+        {
+            if(ifVibrate)
+            {
+#if UNITY_ANDROID
+                if(SystemInfo.supportsVibration)
+                    Handheld.Vibrate();
+#elif UNITY_IOS
+                if(SystemInfo.supportsVibration)
+                    Handheld.Vibrate();
+#endif
+            }
+        }
+
+        public void SetVibrate(bool b)
+        {
+            ifVibrate = b;
+            SPlayerPref.SetBool(PlayerPrefDefines.vibrateToggle, b);
         }
 
     }
