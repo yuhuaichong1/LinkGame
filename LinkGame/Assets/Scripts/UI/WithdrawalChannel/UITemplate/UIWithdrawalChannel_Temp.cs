@@ -9,7 +9,7 @@ namespace XrCode
         protected override void LoadPanel()
         {
             base.LoadPanel();
-            		mExitBtn = mTransform.Find("ExitBtn").GetComponent<Button>();		mAddressOrPhoneInput = mTransform.Find("Plane/AddressOrPhoneInput").GetComponent<InputField>();		mAddressOrPhonePlaceholder = mTransform.Find("Plane/AddressOrPhoneInput/AddressOrPhonePlaceholder").GetComponent<Text>();		mConfirmBtn = mTransform.Find("Plane/ConfirmBtn").GetComponent<Button>();
+            		mExitBtn = mTransform.Find("Plane/ExitBtn").GetComponent<Button>();		mAddressOrPhoneInput = mTransform.Find("Plane/ContentBg/AddressOrPhoneInput").GetComponent<InputField>();		mAddressOrPhonePlaceholder = mTransform.Find("Plane/ContentBg/AddressOrPhoneInput/AddressOrPhonePlaceholder").GetComponent<Text>();		mConfirmBtn = mTransform.Find("Plane/ConfirmBtn").GetComponent<Button>();
         }
     
         protected override void BindButtonEvent() 

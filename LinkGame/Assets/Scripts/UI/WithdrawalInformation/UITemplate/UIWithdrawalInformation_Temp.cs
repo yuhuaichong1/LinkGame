@@ -9,7 +9,7 @@ namespace XrCode
         protected override void LoadPanel()
         {
             base.LoadPanel();
-            		mExitBtn = mTransform.Find("ExitBtn").GetComponent<Button>();		mCurPayIcon = mTransform.Find("Plane/CurPayIcon").GetComponent<Image>();		mInfoText = mTransform.Find("Plane/InfoBg/InfoText").GetComponent<Text>();		mReEnterBtn = mTransform.Find("Plane/InfoBg/ReEnterBtn").GetComponent<Button>();
+            		mExitBtn = mTransform.Find("Plane/ExitBtn").GetComponent<Button>();		mCurPayIcon = mTransform.Find("Plane/CurPayIcon").GetComponent<Image>();		mInfoText = mTransform.Find("Plane/InfoBg/InfoText").GetComponent<Text>();		mReEnterBtn = mTransform.Find("Plane/InfoBg/ReEnterBtn").GetComponent<Button>();
         }
     
         protected override void BindButtonEvent() 

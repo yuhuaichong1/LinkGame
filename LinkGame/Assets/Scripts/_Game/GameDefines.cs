@@ -39,6 +39,9 @@ public abstract class GameDefines
     public const int Default_LM_Accelerate_Times = 3;//老虎机加速起始间隔
     public const int Default_LM_Uniform_Times = 40;//老虎机匀速间隔
     public const int Default_LM_Moderate_Times = 5;//老虎机减速最终间隔
+
+    public const int Default_FuncShowTipDelay = 5;
+    public const int Default_FuncLoopTipDelay = 3;
 }
 #endregion
 

@@ -10,23 +10,18 @@ namespace XrCode
         protected override void LoadPanel()
         {
             base.LoadPanel();
-            		    mExitBtn = mTransform.Find("ExitBtn").GetComponent<Button>();		    mCurMoneyText = mTransform.Find("CurMoneyBtn/CurMoneyText").GetComponent<Text>();		    mDailyTasksToggle = mTransform.Find("Content/ToggleGroup/DailyTasksToggle").GetComponent<Toggle>();		    mDTRd = mTransform.Find("Content/ToggleGroup/DailyTasksToggle/DTRd").GetComponent<RectTransform>();		    mChallengeTaskToggle = mTransform.Find("Content/ToggleGroup/ChallengeTaskToggle").GetComponent<Toggle>();		    mCTRd = mTransform.Find("Content/ToggleGroup/ChallengeTaskToggle/CTRd").GetComponent<RectTransform>();		    mDailyScroll = mTransform.Find("Content/Tasks/DailyScroll").GetComponent<LoopGridView>();		    mDailyScrollSR = mTransform.Find("Content/Tasks/DailyScroll").GetComponent<ScrollRect>();		    mChallengeScroll = mTransform.Find("Content/Tasks/ChallengeScroll").GetComponent<LoopGridView>();
-            mChallengeScrollSR = mTransform.Find("Content/Tasks/ChallengeScroll").GetComponent<ScrollRect>();
+            		mExitBtn = mTransform.Find("ExitBtn").GetComponent<Button>();		mCurMoneyText = mTransform.Find("CurMoneyBtn/CurMoneyText").GetComponent<Text>();		mDailyTasksToggle = mTransform.Find("Content/ToggleGroup/DailyTasksToggle").GetComponent<Toggle>();		mDTRd = mTransform.Find("Content/ToggleGroup/DailyTasksToggle/DTRd").GetComponent<RectTransform>();		mChallengeTaskToggle = mTransform.Find("Content/ToggleGroup/ChallengeTaskToggle").GetComponent<Toggle>();		mCTRd = mTransform.Find("Content/ToggleGroup/ChallengeTaskToggle/CTRd").GetComponent<RectTransform>();		mDailyScroll = mTransform.Find("Content/Tasks/DailyScroll").GetComponent<LoopGridView>();		mDailyScrollSR = mTransform.Find("Content/Tasks/DailyScroll").GetComponent<ScrollRect>();		mChallengeScroll = mTransform.Find("Content/Tasks/ChallengeScroll").GetComponent<LoopGridView>();		mChallengeScrollSR = mTransform.Find("Content/Tasks/ChallengeScroll").GetComponent<ScrollRect>();
         }
-
-        protected override void BindButtonEvent()
+    
+        protected override void BindButtonEvent() 
         {
-            mExitBtn.onClick.AddListener(OnExitBtnClickHandle);
-            mDailyTasksToggle.onValueChanged.AddListener(OnDailyTasksTogChangeHandle);
-            mChallengeTaskToggle.onValueChanged.AddListener(OnChallengeTasksTogChangeHandle);
+            		mExitBtn.onClick.AddListener( OnExitBtnClickHandle);
         }
-
-        protected override void UnBindButtonEvent()
+    
+        protected override void UnBindButtonEvent() 
         {
-            mExitBtn.onClick.RemoveAllListeners();
-            mDailyTasksToggle.onValueChanged.RemoveAllListeners();
-            mChallengeTaskToggle.onValueChanged.RemoveAllListeners();
+            		mExitBtn.onClick.RemoveAllListeners();
         }
-
+    
     }
 }

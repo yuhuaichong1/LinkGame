@@ -21,8 +21,13 @@ namespace XrCode
             SetToggle(payTypes);
 
             //LayoutRebuilder.ForceRebuildLayoutImmediate(mPayType1Toggle.GetComponent<RectTransform>());
-            mTick.transform.position = mPayType1Toggle.transform.position;
-            PayInputShow(mPayType1Toggle.transform.position, PayTypeDic[1]);
+            //mTick.transform.position = mPayType1Toggle.transform.position;
+
+            STimerManager.Instance.CreateSDelay(0.1f, () => 
+            {
+                PayInputShow(mPayType1Toggle.transform.position, PayTypeDic[1]);
+            });
+            
         }
         protected override void OnEnable() 
         {

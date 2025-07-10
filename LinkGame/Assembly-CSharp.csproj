@@ -110,6 +110,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int16Serializer.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\UIWithdrawableMultiple.cs" />
     <Compile Include="Assets\Gen\Code\item\EQuality.cs" />
+    <Compile Include="Assets\Scripts\MiniComponent\DoTween\ShakeRotateLeftRight.cs" />
     <Compile Include="Assets\Tools\LubanLib\BeanBase.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\DataFormat.cs" />
     <Compile Include="Assets\Gen\Code\ConfLoadingTitleSprite.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Assets\Scripts\Tools\Utils\UtilityTool.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoDoubleTapMe.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DoubleSerializer.cs" />
+    <Compile Include="Assets\Scripts\MiniComponent\DoTween\LoopMoveUpDown.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Behaviours\UIViewBehaviour.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\Scripts\NetWork\NetModule.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Assets\Scripts\Guide\GiudeItem.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\TouchPad-Event-Input\TouchPadUIEvent.cs" />
     <Compile Include="Assets\Scripts\LinkGood\Level\LevelDefines.cs" />
+    <Compile Include="Assets\Scripts\MiniComponent\DoTween\ReStartLeftRight.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ISerializerProxy.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\TypeFormatEventArgs.cs" />
     <Compile Include="Assets\Tools\Timer\Data\timingActions.cs" />
@@ -460,6 +463,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Shader\Fade.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\Resources\MissionsList.txt" />
