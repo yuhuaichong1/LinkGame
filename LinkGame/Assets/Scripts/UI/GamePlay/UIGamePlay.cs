@@ -51,7 +51,7 @@ namespace XrCode
         }
         //兑现按钮点击
         private void OnWithdrawalBtnClickHandle()        {
-            if(PlayerFacade.GetWName() == "")
+            if(PlayerFacade.GetPayType() == 0)
             {
                 UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
             }

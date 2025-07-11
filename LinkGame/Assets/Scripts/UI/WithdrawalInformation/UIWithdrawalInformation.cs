@@ -15,8 +15,8 @@ namespace XrCode
         protected override void OnEnable() 
         {
             //mCurPayIcon.sprite = PlayerFacade.GetWName
-            Debug.LogError(PlayerFacade.GetWName + "   " + PlayerFacade.GetWEmailOrPhone);
-            mInfoText.text = $"{PlayerFacade.GetWName}\n{PlayerFacade.GetWEmailOrPhone}";
+            string ifn = PlayerFacade.GetWName?.Invoke() == "" ? "" : "\n";
+            mInfoText.text = $"{PlayerFacade.GetWName?.Invoke()}{ifn}{PlayerFacade.GetWEmailOrPhone?.Invoke()}";
         }
 
         private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);        }	    private void OnReEnterBtnClickHandle()

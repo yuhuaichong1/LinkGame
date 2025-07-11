@@ -14,7 +14,7 @@ namespace XrCode
         {
             if (mAddressOrPhoneInput.text != "")
             {
-                PlayerFacade.SetEmail(mAddressOrPhoneInput.text);
+                PlayerFacade.SetNameAndWEmailOrPhone("", mAddressOrPhoneInput.text);
                 UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);
                 UIManager.Instance.CloseUI(EUIType.EUIWithdrawalChannel);
                 UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);

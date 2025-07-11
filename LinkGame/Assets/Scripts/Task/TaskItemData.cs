@@ -1,3 +1,4 @@
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,8 @@ public class TaskItemData : MonoBehaviour
     public Text ProgressText;             //任务进度文字
     public Button ReceiveBtn;             //领取按钮
     public GameObject InProgress;         //未完成图样
-                                          
+
+    public int TaskType;                  //任务类型
     public int TaskId;                    //任务Id
 
     private string errMsg;                //错误信息
@@ -37,6 +39,9 @@ public class TaskItemData : MonoBehaviour
 
         curValue = curValue > targetValue ? targetValue : curValue;
         ProgressText.text = $"{curValue}/{targetValue}";
+
+        ReceiveBtn.gameObject.SetActive(progress == 1);
+        InProgress.gameObject.SetActive(progress != 1);
     }
 
     /// <summary>
@@ -44,14 +49,15 @@ public class TaskItemData : MonoBehaviour
     /// </summary>
     /// <param name="desc">任务介绍</param>
     /// <param name="taskId">任务Id</param>
-    public void SetMsg(string desc, int taskId)
+    public void SetMsg(string desc, int taskId, int taskType)
     {
         Desc.text = desc;
         TaskId = taskId;
+        TaskType = taskType;
     }
 
     private void OnReceiveBtnClick()
     {
-        ModuleMgr.Instance.TaskModule.Receive(TaskId);
+        FacadeTask.Receive(TaskId, TaskType);
     }
 }

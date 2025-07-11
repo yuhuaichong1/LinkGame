@@ -79,6 +79,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\BallRunPlayer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\ThirdPersonCamera.cs" />
+    <Compile Include="Assets\Gen\Code\TBLuckMoment.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BufferExtension.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoBehaviorExtensionElement.cs" />
     <Compile Include="Assets\Scripts\UI\Base\BaseUI.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Assets\Tools\SafeArea\SUISafeArea.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeGuide.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCInput.cs" />
+    <Compile Include="Assets\Scripts\Facade\FacadeEffect.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\PinchMe.cs" />
     <Compile Include="Assets\Gen\Code\ConfTask.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILateUpdate.cs" />
@@ -354,6 +356,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\IExtension.cs" />
     <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenController.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int64Serializer.cs" />
+    <Compile Include="Assets\Scripts\UI\LuckMoment\LuckMomentItem.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridView.cs" />
@@ -388,6 +391,7 @@
     <Compile Include="Assets\Scripts\UI\Base\Entity.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\ArabicSupport.cs" />
     <Compile Include="Assets\Scripts\UI\Setting\UISetting.cs" />
+    <Compile Include="Assets\Gen\Code\ConfLuckMoment.cs" />
     <Compile Include="Assets\Scripts\Ad\AdModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\AttributeMap.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\ECamera.cs" />

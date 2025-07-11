@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Enter Address or Phone...
 --- !u!1 &1070755496431887845
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +971,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Enter Phone...
 --- !u!1 &2732345079675882793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,7 +1774,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Enter Address...
 --- !u!1 &4550343443064286265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,7 +2963,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter text...
+  m_Text: Enter Name...
 --- !u!1 &7566796085876134951
 GameObject:
   m_ObjectHideFlags: 0

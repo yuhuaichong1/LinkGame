@@ -10,7 +10,7 @@ namespace XrCode
         {
             ModuleMgr.Instance.SceneMod.LoadingValue += ChangeValue;
             ModuleMgr.Instance.SceneMod.OnLoadChanged += ChangeValue2;
-            //GetTitle();
+            GetTitle();
         }
         protected override void OnEnable() 
         {

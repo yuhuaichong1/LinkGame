@@ -11,6 +11,7 @@ public abstract class PlayerPrefDefines
     public const string isTutorial = "LinkGame_isTutorial";                  //GamePlayModule_是否完成了新手教程
 
     public const string moneyCount = "LinkGame_moneyCount";                  //PlayerModule_玩家货币数
+    public const string wPayType = "LinkGame_wPayType";                      //PlayerModule_玩家支付方式
     public const string wName = "LinkGame_wName";                            //PlayerModule_玩家兑现姓名
     public const string wPhoneOrEmail = "LinkGame_wPhoneOrEmail";            //PlayerModule_玩家兑现电话/邮箱
     public const string userLevel = "LinkGame_userLevel";                    //PlayerModule_玩家等级

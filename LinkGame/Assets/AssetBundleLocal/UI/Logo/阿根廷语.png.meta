@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8d9d3b6c2cb9b074da50f6c6e9f9001c
+guid: 5093e7f20b22b3b49a3e74ee0cf96147
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: assets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
+  assetBundleName: "assets/assetbundlelocal/ui/logo/\u963F\u6839\u5EF7\u8BED.png.assetbundle"
   assetBundleVariant: 

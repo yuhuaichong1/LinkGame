@@ -1,8 +1,6 @@
-﻿
+﻿using cfg;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +9,11 @@ namespace XrCode
 
     public partial class UILuckMoment : BaseUI
     {
+        private LanguageModule LanguageModule;
+
         private STimer sTimer;
 
-        private Dictionary<int, Image> wheelDic;
+        private Dictionary<int, LuckMomentItem> wheelDic;
         private Dictionary<int, float> wheelStayTime;
         private Image curImage;
 
@@ -25,7 +25,9 @@ namespace XrCode
 
         protected override void OnAwake() 
         {
-            wheelDic = new Dictionary<int, Image>()
+            LanguageModule = ModuleMgr.Instance.LanguageMod;
+
+            wheelDic = new Dictionary<int, LuckMomentItem>()
             {
                 {0, mSMItem2},
                 {1, mSMItem3},
@@ -44,9 +46,39 @@ namespace XrCode
 
             if(curImage != null)
                 curImage.sprite = NotActivatedBg;
+
+            List<ConfLuckMoment> LMdata = ConfigModule.Instance.Tables.TBLuckMoment.DataList;
+            foreach(ConfLuckMoment LM in LMdata)
+            {
+                wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
+                wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
+                wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Reward);
+
+            }
         }
-        protected override void OnEnable() { }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUILuckMoment);        }	    private void OnSpinBtnClickHandle()
+        protected override void OnEnable() 
+        { 
+        
+        }
+                private string GetLMDesc(int type, int reward)
+        {
+            
+            switch (type)
+            {
+                case 1:
+                    return FacadePayType.RegionalChange(reward);
+                case 2:
+                    return $"Func {reward}";
+                    return LanguageModule.GetText(((EFuncType)reward).ToString()); 
+                case 3:
+                    return "Withdraw";
+                //return LanguageModule.GetText("Withdraw");
+                default:
+                    return "";
+            }
+        }
+
+        private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUILuckMoment);        }	    private void OnSpinBtnClickHandle()
         {
             DisableSpinBtn();
 
@@ -78,7 +110,7 @@ namespace XrCode
                 }
             }
 
-            curImage = mSMItem2;
+            curImage = mSMItem2.Bg;
             curImage.sprite = ActivatedBg;
 
             curTime = 0;
@@ -90,7 +122,7 @@ namespace XrCode
                 curIcon += 1;
                 if (curIcon >= 8)
                     curIcon = 0;
-                curImage = wheelDic[curIcon];
+                curImage = wheelDic[curIcon].Bg;
                 curImage.sprite = ActivatedBg;
 
                 if(wheelStayTime.ContainsKey(curTime))
@@ -107,8 +139,11 @@ namespace XrCode
 
         private void DisableSpinBtn()
         {
-
+            mSpinBtn.enabled = false;
+            mSpinImg.material = ResourceMod.Instance.SyncLoad<Material>(GameDefines.FadeMaterials);
         }
+
+        
 
         protected override void OnDisable() { }
         protected override void OnDispose() { }

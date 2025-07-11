@@ -40,8 +40,10 @@ public abstract class GameDefines
     public const int Default_LM_Uniform_Times = 40;//老虎机匀速间隔
     public const int Default_LM_Moderate_Times = 5;//老虎机减速最终间隔
 
-    public const int Default_FuncShowTipDelay = 5;
-    public const int Default_FuncLoopTipDelay = 3;
+    public const int Default_FuncShowTipDelay = 5;//主界面下三功能提示延迟显示时间
+    public const int Default_FuncLoopTipDelay = 3;//主界面下三功能提示循环间隔时间
+
+    public const string FadeMaterials = "Materials/Fade.mat";//UI褪色材质
 }
 #endregion
 
@@ -194,6 +196,16 @@ public enum EPayType : int
     Paylib = 12,
     PayPay = 13,
     Other = 14,
+}
+
+/// <summary>
+/// 任务状态
+/// </summary>
+public enum ETaskStatus : int
+{
+    Progress = 0,//未完成
+    Receive = 1,//已完成
+    Received = 2,//已领取
 }
 
 #endregion

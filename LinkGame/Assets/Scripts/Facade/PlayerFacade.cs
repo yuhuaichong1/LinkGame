@@ -9,6 +9,7 @@ namespace XrCode
     {                                                                   
         public static Func<float> GetWMoney;                            //得到当前金钱数
 
+        public static Func<EPayType> GetPayType;                        //得到兑现界面选择的支付方式
         public static Func<string> GetWName;                            //得到兑现界面填写的姓名
         public static Func<string> GetWEmailOrPhone;                    //得到兑现界面填写的电话/邮件
 
@@ -19,8 +20,8 @@ namespace XrCode
 
         public static Action<float> SetWMoney;                          //设置当前金钱数
 
-        public static Action<string, string> SetNameAndWEmailOrPhone;    //设置兑现界面的姓名和邮箱
-        public static Action<string> SetEmail;                          //设置兑现界面的邮箱
+        public static Action<EPayType> SetPayType;                      //设置兑现界面选择的支付方式
+        public static Action<string, string> SetNameAndWEmailOrPhone;   //设置兑现界面的姓名和邮箱
 
         public static Action<int> SetUserLevel;                         //设置玩家等级
         public static Action<int> SetCurUserExp;                        //设置玩家经验

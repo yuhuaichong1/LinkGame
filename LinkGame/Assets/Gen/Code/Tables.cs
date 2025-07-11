@@ -32,6 +32,7 @@ namespace cfg
 		public TBPayChannel TBPayChannel {get; private set;}
 		public TBUserLevel TBUserLevel {get; private set;}
 		public TBLoadingTitleSprite TBLoadingTitleSprite {get; private set;}
+		public TBLuckMoment TBLuckMoment {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -69,6 +70,8 @@ namespace cfg
 			tables.Add("TBUserLevel", TBUserLevel);
 			TBLoadingTitleSprite = new TBLoadingTitleSprite(loader("tbloadingtitlesprite")); 
 			tables.Add("TBLoadingTitleSprite", TBLoadingTitleSprite);
+			TBLuckMoment = new TBLuckMoment(loader("tbluckmoment")); 
+			tables.Add("TBLuckMoment", TBLuckMoment);
 	
 			PostInit();
 			ResolveAllTable();
@@ -105,6 +108,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBUserLevelDataFinish);
 			configNames.Enqueue("tbloadingtitlesprite");
             configCbFuncs.Enqueue(OnTBLoadingTitleSpriteDataFinish);
+			configNames.Enqueue("tbluckmoment");
+            configCbFuncs.Enqueue(OnTBLuckMomentDataFinish);
 
             LoadAllConfig();
         }
@@ -159,6 +164,7 @@ namespace cfg
 			TBPayChannel.TranslateText(translator); 
 			TBUserLevel.TranslateText(translator); 
 			TBLoadingTitleSprite.TranslateText(translator); 
+			TBLuckMoment.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -178,6 +184,7 @@ namespace cfg
 			TBPayChannel.Resolve(tables);
 			TBUserLevel.Resolve(tables);
 			TBLoadingTitleSprite.Resolve(tables);
+			TBLuckMoment.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -224,6 +231,9 @@ namespace cfg
 					break;
 				case "TBLoadingTitleSprite":
 					TBLoadingTitleSprite.Reload(_loader("TBLoadingTitleSprite"));
+					break;
+				case "TBLuckMoment":
+					TBLuckMoment.Reload(_loader("TBLuckMoment"));
 					break;
 			}
 	
@@ -303,6 +313,11 @@ namespace cfg
 		{
 			TBLoadingTitleSprite = new TBLoadingTitleSprite(buf);
 			tables.Add("TBLoadingTitleSprite", TBLoadingTitleSprite);
+		}
+		public void OnTBLuckMomentDataFinish(ByteBuf buf)
+		{
+			TBLuckMoment = new TBLuckMoment(buf);
+			tables.Add("TBLuckMoment", TBLuckMoment);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

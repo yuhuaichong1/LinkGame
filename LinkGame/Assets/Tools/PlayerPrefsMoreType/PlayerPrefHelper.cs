@@ -3,6 +3,9 @@ using UnityEngine;
 
 public static class SPlayerPref
 {
+    public static string Separator1 = ",";//·Ö¸ô·û1
+    public static string Separator2 = "/";//·Ö¸ô·û2
+
     #region int float string
     public static void SetInt(string key, int value)
     {
@@ -53,23 +56,31 @@ public static class SPlayerPref
             string str = item.ToString();
             strings.Add(str);
         }
-        string value = string.Join(",", strings.ToArray());
+        string value = string.Join(Separator1, strings.ToArray());
 
         PlayerPrefs.SetString(key, value);
     }
 
     //¶ÁÈ¡±í¸ñ
-    public static List<T> GetList<T>(string key)
+    public static List<T> GetList<T>(string key, bool ifdefault = false)
     {
-        string value = PlayerPrefs.GetString(key);
-        string[] strings = value.Split(',');
-        List<T> list = new List<T>();
-        foreach (string str in strings) 
+        try
         {
-            list.Add((T)(object)str);
-        }
+            string value = PlayerPrefs.GetString(key);
+            string[] strings = value.Split(Separator1);
+            List<T> list = new List<T>();
+            foreach (string str in strings)
+            {
+                list.Add((T)(object)str);
+            }
 
-        return list;
+            return list;
+        }
+        catch
+        {
+            Debug.LogWarning($"List '{key}' parsing failed");
+            return ifdefault ? new List<T>() : null;
+        }
     }
 
     //´æ´¢×Öµä
@@ -87,27 +98,35 @@ public static class SPlayerPref
             string str = valueItem.ToString();
             dicValues.Add(str);
         }
-        string DKStr = string.Join(",", dicKeys.ToArray());
-        string DVStr = string.Join(",", dicValues.ToArray());
-        string value = $"{DKStr}/{DVStr}";
+        string DKStr = string.Join(Separator1, dicKeys.ToArray());
+        string DVStr = string.Join(Separator1, dicValues.ToArray());
+        string value = $"{DKStr}{Separator2}{DVStr}";
 
-        PlayerPrefs.SetString($"{key}_DicKeys", value);
+        PlayerPrefs.SetString(key, value);
     }
 
     //¶ÁÈ¡×Öµä
-    public static Dictionary<T,U> GetDictionary<T, U>(string key)
+    public static Dictionary<T,U> GetDictionary<T, U>(string key, bool ifdefault = false)
     {
-        Dictionary<T,U> dic = new Dictionary<T,U>();
-        string[] KeyValue = PlayerPrefs.GetString(key).Split("/");
-        string[] dicKeys = KeyValue[0].Split(",");
-        string[] dicValues = KeyValue[1].Split(",");
-        for (int i = 0; i < dicKeys.Length;  i++)
+        try
         {
-            T keyItem = (T)(object)dicKeys[i];
-            U valueItem = (U)(object)dicValues[i];
-            dic.Add(keyItem, valueItem);
-        }
+            Dictionary<T, U> dic = new Dictionary<T, U>();
+            string[] KeyValue = PlayerPrefs.GetString(key).Split(Separator2);
+            string[] dicKeys = KeyValue[0].Split(Separator1);
+            string[] dicValues = KeyValue[1].Split(Separator1);
+            for (int i = 0; i < dicKeys.Length; i++)
+            {
+                T keyItem = (T)(object)dicKeys[i];
+                U valueItem = (U)(object)dicValues[i];
+                dic.Add(keyItem, valueItem);
+            }
 
-        return dic;
+            return dic;
+        }
+        catch 
+        {
+            Debug.LogWarning($"Dictionary '{key}' parsing failed");
+            return ifdefault? new Dictionary<T, U>() : null; 
+        }
     }
 }

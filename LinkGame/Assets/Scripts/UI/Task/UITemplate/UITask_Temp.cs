@@ -14,13 +14,15 @@ namespace XrCode
         }
     
         protected override void BindButtonEvent() 
-        {
-            		mExitBtn.onClick.AddListener( OnExitBtnClickHandle);
+        {   			mExitBtn.onClick.AddListener( OnExitBtnClickHandle);
+			mDailyTasksToggle.onValueChanged.AddListener( OnDailyTasksTogChangeHandle);
+			mChallengeTaskToggle.onValueChanged.AddListener(OnChallengeTasksTogChangeHandle);
         }
     
         protected override void UnBindButtonEvent() 
-        {
-            		mExitBtn.onClick.RemoveAllListeners();
+        {			mExitBtn.onClick.RemoveAllListeners();
+			mDailyTasksToggle.onValueChanged.RemoveAllListeners();
+			mChallengeTaskToggle.onValueChanged.RemoveAllListeners();
         }
     
     }
