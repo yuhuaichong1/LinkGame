@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e615cf11be636ac43be0bfa0752f101c
+guid: 1df3bbbfc15dfd24383f82168e0ec3fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: assets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
+  assetBundleName: assets/assetbundlelocal/ui/direction/down.png.assetbundle
   assetBundleVariant: 

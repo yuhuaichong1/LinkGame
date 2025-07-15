@@ -14,10 +14,11 @@ public static class GamePlayFacade
     public static Action TipFunc;                         //提示功能
     public static Action RefushFunc;                      //刷新功能
     public static Action RemoveFunc;                      //移除功能
-    public static Action ChangeDirection;                 //方向变更功能
+    public static Func<EGoodMoveDic> ChangeDirection;     //方向变更功能
     public static Action<int> ChangeTipCount;             //改变提示功能数量
     public static Action<int> ChangeRefushCount;          //改变刷新功能数量
     public static Action<int> ChangeRemoveCount;          //改变移除功能数量（目前作用为“方向变更”的数量）
+    public static Func<int> GetCurLevel;                  //得到当前关卡
     public static Func<int> GetTipCount;                  //获取提示功能数量
     public static Func<int> GetRefushCount;               //获取刷新功能数量
     public static Func<int> GetRemoveCount;               //获取移除功能数量

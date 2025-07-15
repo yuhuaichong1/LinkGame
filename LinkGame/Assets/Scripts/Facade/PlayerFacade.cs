@@ -6,7 +6,7 @@ using UnityEngine;
 namespace XrCode
 {
     public static class PlayerFacade
-    {                                                                   
+    {
         public static Func<float> GetWMoney;                            //得到当前金钱数
 
         public static Func<EPayType> GetPayType;                        //得到兑现界面选择的支付方式
@@ -25,5 +25,8 @@ namespace XrCode
 
         public static Action<int> SetUserLevel;                         //设置玩家等级
         public static Action<int> SetCurUserExp;                        //设置玩家经验
+
+        public static Func<string> GetRandomPlayerName;                 //获取随机玩家姓名
+        public static Func<string[]> GetRandomAttemptAndMoney;          //获取随机尝试次数和随机兑现金额
     }
 }

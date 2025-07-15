@@ -27,6 +27,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         ObstacleMove = _buf.ReadString();
         ObstacleStay = _buf.ReadString();
         HiddleGoodDelay = _buf.ReadString();
+        WithdrawType = _buf.ReadInt();
         PostInit();
     }
 
@@ -71,6 +72,10 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 出现延迟隐藏的时间
     /// </summary>
     public string HiddleGoodDelay { get; protected set; }
+    /// <summary>
+    /// 兑现类型
+    /// </summary>
+    public int WithdrawType { get; protected set; }
 
     public const int __ID__ = 1172697760;
     public override int GetTypeId() => __ID__;
@@ -95,6 +100,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         ObstacleMove = reloadData.ObstacleMove;
         ObstacleStay = reloadData.ObstacleStay;
         HiddleGoodDelay = reloadData.HiddleGoodDelay;
+        WithdrawType = reloadData.WithdrawType;
     }
 
     public override string ToString()
@@ -109,6 +115,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         + "ObstacleMove:" + ObstacleMove + ","
         + "ObstacleStay:" + ObstacleStay + ","
         + "HiddleGoodDelay:" + HiddleGoodDelay + ","
+        + "WithdrawType:" + WithdrawType + ","
         + "}";
     }
     

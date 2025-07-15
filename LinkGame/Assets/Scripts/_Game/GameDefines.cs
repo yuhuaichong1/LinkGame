@@ -10,40 +10,58 @@ using System.Collections.Generic;
 
 public abstract class GameDefines
 {
-    public static string URL = "https://www.";//后台网址
+    public static string URL = "https://www.";                                                              //后台网址
+    public static string nameString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";     //随机名称数组
 
-    public const int map_margin_bottom = 5;//关卡显示区域下边距
+    public const int map_margin_bottom = 5;                                                                 //关卡显示区域下边距
 
-    public const int OBS_FIXED_ID = 99;//不可移动的障碍物
-    public const int OBS_MOVING_ID = 98;//可移动的障碍物
-    public const int HID_FIXED_ID = 97;//不可移动的隐藏物
-    public const int HID_MOVING_ID = 96;//可移动的隐藏物
+    public const int OBS_FIXED_ID = 99;                                                                     //不可移动的障碍物
+    public const int OBS_MOVING_ID = 98;                                                                    //可移动的障碍物
+    public const int HID_FIXED_ID = 97;                                                                     //不可移动的隐藏物
+    public const int HID_MOVING_ID = 96;                                                                    //可移动的隐藏物
 
-    public const int STATE_NORMAL = 0;//物体状态——一般
-    public const int STATE_HIDE = 1;//物体状态——隐藏
-    public const int STATE_DISAPPEARING = 2;//物体状态——消失中
+    public const int STATE_NORMAL = 0;                                                                      //物体状态——一般
+    public const int STATE_HIDE = 1;                                                                        //物体状态——隐藏
+    public const int STATE_DISAPPEARING = 2;                                                                //物体状态——消失中
 
-    public static bool ifWithdrawal = true;//是否提现
+    public static bool ifWithdrawal = true;                                                                 //是否提现
 
-    public const string Default_Channels = "0";//默认支付方式
-    public const string Default_Mark = "$";//默认货币符号
-    public const int Default_Decimal = 2;//默认小数点位
-    public const int Default_ExchangeRate = 1;//默认汇率
-    public const ELanguageType Default_Language = ELanguageType.English;//默认语言
+    public const string Default_Channels = "0";                                                             //默认支付方式
+    public const string Default_Mark = "$";                                                                 //默认货币符号
+    public const int Default_Decimal = 2;                                                                   //默认小数点位
+    public const int Default_ExchangeRate = 1;                                                              //默认汇率
+    public const ELanguageType Default_Language = ELanguageType.English;                                    //默认语言
 
-    public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";//老虎机未激活块背景路径
-    public const string LuckMomentActivatedBg = "UI/LuckMoment/LMABg.png";//老虎机激活块背景路径
-    public const float Default_LM_Accelerate_Speed = 0.25f;//老虎机加速起始间隔
-    public const float Default_LM_Uniform_Speed = 0.03f;//老虎机匀速间隔
-    public const float Default_LM_Moderate_Speed = 0.33f;//老虎机减速最终间隔
-    public const int Default_LM_Accelerate_Times = 3;//老虎机加速起始间隔
-    public const int Default_LM_Uniform_Times = 40;//老虎机匀速间隔
-    public const int Default_LM_Moderate_Times = 5;//老虎机减速最终间隔
+    public const string Func_Hint_IconPath = "UI/FuncIcon/FuncIcon_Hint.png";                                //下三功能_提示_图片
+    public const string Func_Refush_IconPath = "UI/FuncIcon/FuncIcon_Refush.png";                            //下三功能_刷新_图片
+    public const string Func_Remove_IconPath = "UI/FuncIcon/FuncIcon_Remove.png";                            //下三功能_移除_图片
+    public const string Func_Shift_IconPath = "UI/FuncIcon/FuncIcon_Shift.png";                              //下三功能_换向_图片
 
-    public const int Default_FuncShowTipDelay = 5;//主界面下三功能提示延迟显示时间
-    public const int Default_FuncLoopTipDelay = 3;//主界面下三功能提示循环间隔时间
+    public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";                              //老虎机未激活块背景路径
+    public const string LuckMomentActivatedBg = "UI/LuckMoment/LMABg.png";                                  //老虎机激活块背景路径
+    public const float Default_LM_Accelerate_Speed = 0.25f;                                                 //老虎机加速起始间隔
+    public const float Default_LM_Uniform_Speed = 0.03f;                                                    //老虎机匀速间隔
+    public const float Default_LM_Moderate_Speed = 0.33f;                                                   //老虎机减速最终间隔
+    public const int Default_LM_Accelerate_Times = 3;                                                       //老虎机加速起始间隔
+    public const int Default_LM_Uniform_Times = 40;                                                         //老虎机匀速间隔
+    public const int Default_LM_Moderate_Times = 5;                                                         //老虎机减速最终间隔
 
-    public const string FadeMaterials = "Materials/Fade.mat";//UI褪色材质
+    public const int Default_FuncShowTipDelay = 5;                                                          //主界面下三功能提示延迟显示时间
+    public const int Default_FuncLoopTipDelay = 3;                                                          //主界面下三功能提示循环间隔时间
+
+    public const string FadeMaterials = "Materials/Fade.mat";                                               //UI褪色材质
+
+    public const float PRN_Effect_MoveTime = 0.5f;                                                            //“上方随机玩家兑现提示”特效移动时间
+    public const float PRN_Effect_StayTime = 2.5f;                                                            //“上方随机玩家兑现提示”特效滞留时间
+    public const float TL_Effect_XMoveTime = 0.5f;                                                            //“目标关卡提示”特效横向移动时间
+    public const float TL_Effect_StayTime = 1f;                                                               //“目标关卡提示”特效滞留时间
+    public const float TL_Effect_YMoveTime = 1f;                                                              //“目标关卡提示”特效竖向移动时间
+    public const string FlyMoney_ObjPath = "Prefabs/Effect/FlyMoney.prefab";                                 //飞钱特效预制体
+    public const float FlyMoney_ObjTime = 0.25f;                                                             //飞钱特效持续时间
+    public const string FlyFunc_ObjPath = "Prefabs/Effect/FlyFunc.prefab";                                   //飞功能特效预制体
+    public const float FlyFunc_ObjTime = 0.25f;                                                              //飞功能特效持续时间
+    public const float TMDIcon_RoteTime = 1;                                                                 //指明移动方向旋转时间 
+    public const float TMDIcon_MoveTime = 1;                                                                 //指明移动方向移动时间 
 }
 #endregion
 

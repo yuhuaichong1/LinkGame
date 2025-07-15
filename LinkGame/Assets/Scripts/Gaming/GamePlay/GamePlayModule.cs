@@ -85,6 +85,7 @@ namespace XrCode
             GamePlayFacade.ChangeRefushCount += ChangeRefushCount;
             GamePlayFacade.ChangeRemoveCount += ChangeRemoveCount;
             GamePlayFacade.ChangeDirection += ChangeDirection;
+            GamePlayFacade.GetCurLevel += GetCurLevel;
             GamePlayFacade.GetTipCount += GetTipCount;
             GamePlayFacade.GetRefushCount += GetRefushCount;
             GamePlayFacade.GetRemoveCount += GetRemoveCount;
@@ -134,7 +135,7 @@ namespace XrCode
         private void LoadData()
         {
             curLevel = PlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
-            curLevel = 2;
+            curLevel = 3;
             tipCount = PlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
             refushCount = PlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
             removeCount = PlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
@@ -2071,7 +2072,7 @@ namespace XrCode
         }
 
         //改变当前关卡方向功能
-        private void ChangeDirection()
+        private EGoodMoveDic ChangeDirection()
         {
             curLevelDirection.Clear();
 
@@ -2147,6 +2148,8 @@ namespace XrCode
             UpdateMap();
 
             Debug.LogError("目前会和“提示功能”有冲突，当方向改变后，第一次提示会显示错误的位置");
+
+            return EGMD;
         }
 
         //刷新功能
@@ -2174,6 +2177,11 @@ namespace XrCode
         {
             removeCount += num;
             PlayerPrefs.SetInt(PlayerPrefDefines.removeCount, removeCount);
+        }
+
+        private int GetCurLevel()
+        {
+            return curLevel;
         }
 
         private int GetTipCount()

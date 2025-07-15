@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da8fe22cdeb14aa488ec9dffb5346893
+guid: ed0cd22743153064687da99e8c9bb198
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: "assets/assetbundlelocal/ui/direction/jiantou - \u526F\u672C.png.assetbundle"
+  assetBundleName: assets/assetbundlelocal/ui/direction/up.png.assetbundle
   assetBundleVariant: 

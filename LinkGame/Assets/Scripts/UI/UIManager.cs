@@ -6,6 +6,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using cfg;
+using UnityEngine.UI;
+using Unity.VisualScripting;
 
 namespace XrCode
 {
@@ -361,6 +363,13 @@ namespace XrCode
                 Debug.LogError("UIAnims is null!");
                 return null;
             }
+        }
+
+        //得到当前Canvas的CanvasScaler
+        public Vector2 GetCanvasReferenceResolution()
+        {
+            CanvasScaler cs = canvas.GetComponent<CanvasScaler>();
+            return cs.referenceResolution;
         }
 
         public void Update()

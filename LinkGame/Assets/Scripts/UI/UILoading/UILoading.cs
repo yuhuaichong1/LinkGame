@@ -20,7 +20,7 @@ namespace XrCode
         //获取标题图片
         private void GetTitle()
         {
-            int languageId = (int)ModuleMgr.Instance.LanguageMod.GetLanguage() + 1;
+            int languageId = (int)ModuleMgr.Instance.LanguageMod.GetLanguage() - 1;
             string path = ConfigModule.Instance.Tables.TBLoadingTitleSprite.Get(languageId).Path;
             mGameTitle.sprite = ResourceMod.Instance.SyncLoad<Sprite>(path);
         }

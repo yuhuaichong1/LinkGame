@@ -33,6 +33,7 @@ namespace cfg
 		public TBUserLevel TBUserLevel {get; private set;}
 		public TBLoadingTitleSprite TBLoadingTitleSprite {get; private set;}
 		public TBLuckMoment TBLuckMoment {get; private set;}
+		public TBLevelDicIcon TBLevelDicIcon {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -72,6 +73,8 @@ namespace cfg
 			tables.Add("TBLoadingTitleSprite", TBLoadingTitleSprite);
 			TBLuckMoment = new TBLuckMoment(loader("tbluckmoment")); 
 			tables.Add("TBLuckMoment", TBLuckMoment);
+			TBLevelDicIcon = new TBLevelDicIcon(loader("tbleveldicicon")); 
+			tables.Add("TBLevelDicIcon", TBLevelDicIcon);
 	
 			PostInit();
 			ResolveAllTable();
@@ -110,6 +113,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBLoadingTitleSpriteDataFinish);
 			configNames.Enqueue("tbluckmoment");
             configCbFuncs.Enqueue(OnTBLuckMomentDataFinish);
+			configNames.Enqueue("tbleveldicicon");
+            configCbFuncs.Enqueue(OnTBLevelDicIconDataFinish);
 
             LoadAllConfig();
         }
@@ -165,6 +170,7 @@ namespace cfg
 			TBUserLevel.TranslateText(translator); 
 			TBLoadingTitleSprite.TranslateText(translator); 
 			TBLuckMoment.TranslateText(translator); 
+			TBLevelDicIcon.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -185,6 +191,7 @@ namespace cfg
 			TBUserLevel.Resolve(tables);
 			TBLoadingTitleSprite.Resolve(tables);
 			TBLuckMoment.Resolve(tables);
+			TBLevelDicIcon.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -234,6 +241,9 @@ namespace cfg
 					break;
 				case "TBLuckMoment":
 					TBLuckMoment.Reload(_loader("TBLuckMoment"));
+					break;
+				case "TBLevelDicIcon":
+					TBLevelDicIcon.Reload(_loader("TBLevelDicIcon"));
 					break;
 			}
 	
@@ -318,6 +328,11 @@ namespace cfg
 		{
 			TBLuckMoment = new TBLuckMoment(buf);
 			tables.Add("TBLuckMoment", TBLuckMoment);
+		}
+		public void OnTBLevelDicIconDataFinish(ByteBuf buf)
+		{
+			TBLevelDicIcon = new TBLevelDicIcon(buf);
+			tables.Add("TBLevelDicIcon", TBLevelDicIcon);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

@@ -45,7 +45,7 @@ namespace XrCode
         //显示提示相关UI
         private void AddTipPlane()
         {
-            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>("UI/FuncIcon/FuncIcon_Hint.png");
+            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Hint_IconPath);
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
@@ -59,7 +59,7 @@ namespace XrCode
         //显示刷新相关UI
         private void AddRefushPlane()
         {
-            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>("UI/FuncIcon/FuncIcon_Refush.png");
+            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Refush_IconPath);
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
@@ -73,7 +73,7 @@ namespace XrCode
         //显示移除相关UI（现为改变方向功能)
         private void AddRemovePlane()
         {
-            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>("UI/FuncIcon/FuncIcon_Remove.png");
+            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Shift_IconPath);
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {

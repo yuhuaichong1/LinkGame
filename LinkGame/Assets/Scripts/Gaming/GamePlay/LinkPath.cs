@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LinkPath : MonoBehaviour
+namespace SkipConfusion
 {
-    
-    void Start()
+    public class LinkPath : MonoBehaviour
     {
-        STimerManager.Instance.CreateSTimer(0.5f, 0, true, true, () =>
+        void Start()
         {
-            Destroy(gameObject);
-        });
+            STimerManager.Instance.CreateSTimer(0.5f, 0, true, true, () =>
+            {
+                Destroy(gameObject);
+            });
+        }
     }
 }
+
