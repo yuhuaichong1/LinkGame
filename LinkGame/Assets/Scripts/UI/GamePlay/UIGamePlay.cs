@@ -26,6 +26,8 @@ namespace XrCode
 
         private bool ifDicEffectShow;
 
+        private bool loadedEffectUI;
+
         protected override void OnAwake() 
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
@@ -34,9 +36,6 @@ namespace XrCode
             GamePlayFacade.ChangeRefushCountShow += ChangeFuncRefushCount;
             GamePlayFacade.ChangeRemoveCountShow += ChangeFuncRemoveCount;
             GamePlayFacade.GetMapTrans += GetMapTrans;
-            //mTipText.text = languageMod.GetText("");
-            //mRefushText.text = languageMod.GetText("");
-            //mRemoveText.text = languageMod.GetText("");
 
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
@@ -55,7 +54,7 @@ namespace XrCode
             mMap.localScale = new Vector3(mapScale, mapScale, mapScale);
 
             
-            lastLevelId = ConfigModule.Instance.Tables.TBLevel.DataList.Count - 1;
+            lastLevelId = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
             secondLastLevelId = lastLevelId - 1;
             sliderDic = new Dictionary<int, float>() 
             {
@@ -65,7 +64,7 @@ namespace XrCode
                 {lastLevelId, 1f}
             };
 
-            UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
+            //UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
         }
         protected override void OnEnable() 
         {
@@ -79,23 +78,22 @@ namespace XrCode
 
             mWithdrawTip.gameObject.SetActive(false);
             mCurDir.gameObject.SetActive(false);
-            STimerManager.Instance.CreateSDelay(1, () => 
-            {
-                //WithdrawTipShow();
-                TMDTipShow();
-            });          
+
+            //GoodShowOneByOne();
+
+            if (!loadedEffectUI)
+                UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect, (ui) => { WithdrawTipShow(); });
+            else
+                WithdrawTipShow();
         }
 
         //设置当前关卡的可显示信息
         private void SetTipInfo()
         {
-            Debug.LogError("curLevel  " + curLevel);
-
             //兑现所有的目标关卡提示
-            mWithdrawTipText.text = string.Format(LanguageModule.GetText(""), curLevel);
+            mWithdrawTipText.text = string.Format(LanguageModule.GetText(""), lastLevelId - curLevel);
 
             //箭头图片
-            
             int MoveDicId = ConfigModule.Instance.Tables.TBLevel.Get(curLevel).MoveDic;
             ifDicEffectShow = MoveDicId != 0;
             if (ifDicEffectShow)
@@ -105,13 +103,11 @@ namespace XrCode
                 mCurDir.sprite = curLevelDicIcon;
             }
 
-            Dictionary<int, ConfLevel> levelDic = ConfigModule.Instance.Tables.TBLevel.DataMap;
-
+            //关卡进度物体显示
             int[] levels;
-
             if (curLevel == 1 || curLevel == 2)
             {
-                levels = new int[5] { 1, 2, 3, 4, 5 };
+                levels = new int[5] { 1, 2, 3, 4, lastLevelId };
             }
             else if(curLevel == secondLastLevelId || curLevel == lastLevelId)
             {
@@ -119,7 +115,7 @@ namespace XrCode
             }
             else
             {
-                levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, curLevel + 2 };
+                levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, lastLevelId };
             }
             mCurLevelItem1.SetCurLevelInfo(levels[0]);
             mCurLevelItem2.SetCurLevelInfo(levels[1]);
@@ -127,7 +123,8 @@ namespace XrCode
             mCurLevelItem4.SetCurLevelInfo(levels[3]);
             mCurLevelItem5.SetCurLevelInfo(levels[4]);
 
-            if(sliderDic.ContainsKey(curLevel))
+            //关卡进度显示
+            if (sliderDic.ContainsKey(curLevel))
                 mSlider.value = sliderDic[curLevel];
             else
                 mSlider.value = 0.5f;
@@ -284,12 +281,28 @@ namespace XrCode
             });
         }
 
+        //逐个显示物体
+        private void GoodShowOneByOne()
+        {
+            GameObject[][] goods = GamePlayFacade.GetMAPGoods();
+
+            foreach(GameObject[] goodsRow in goods) 
+            { 
+                foreach(GameObject good in goodsRow)
+                {
+                    if(good != null)
+                        good.gameObject.SetActive(false);
+                }
+            }
+        }
+
         //提现目标特效以及UI生成
         private void WithdrawTipShow()
         {
             FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () => 
             {
                 mWithdrawTip.gameObject.SetActive(true);
+                TMDTipShow();
             });
         }
 

@@ -4591,7 +4591,7 @@ MonoBehaviour:
   ItemGreenBg: {fileID: 8325787312668643040}
   finishIcon: {fileID: 6725822769476874595}
   curLevelText: {fileID: 5645304592875610832}
-  wTip: {fileID: 7751681794619493520}
+  wTip: {fileID: 7472233255828392489}
 --- !u!1 &5572660927428079094
 GameObject:
   m_ObjectHideFlags: 0
@@ -6443,7 +6443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9161069603322737080
 RectTransform:
   m_ObjectHideFlags: 0

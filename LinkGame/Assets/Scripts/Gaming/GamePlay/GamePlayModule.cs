@@ -100,6 +100,7 @@ namespace XrCode
             GamePlayFacade.CheckIdAdd += CheckIdAdd;
             GamePlayFacade.GetGoodIcon += GetGoodIcon;
             GamePlayFacade.Select += Select;
+            GamePlayFacade.GetMAPGoods += GetMAPGoods;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -2821,6 +2822,12 @@ namespace XrCode
         private void CheckIdAdd(object target)
         {
             check_id.Add(target);
+        }
+
+        //获取当前关卡的所有物体
+        private GameObject[][] GetMAPGoods()
+        {
+            return MAP_Goods;
         }
 
         #endregion
