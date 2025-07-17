@@ -22,7 +22,8 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
         IfMax = _buf.ReadBool();
         Icon = _buf.ReadString();
         Type = _buf.ReadInt();
-        Reward = _buf.ReadInt();
+        Extra = _buf.ReadInt();
+        Count = _buf.ReadFloat();
         PostInit();
     }
 
@@ -50,7 +51,11 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
     /// <summary>
     /// 奖励
     /// </summary>
-    public int Reward { get; protected set; }
+    public int Extra { get; protected set; }
+    /// <summary>
+    /// 数量
+    /// </summary>
+    public float Count { get; protected set; }
 
     public const int __ID__ = 1147648885;
     public override int GetTypeId() => __ID__;
@@ -70,7 +75,8 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
         IfMax = reloadData.IfMax;
         Icon = reloadData.Icon;
         Type = reloadData.Type;
-        Reward = reloadData.Reward;
+        Extra = reloadData.Extra;
+        Count = reloadData.Count;
     }
 
     public override string ToString()
@@ -80,7 +86,8 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
         + "IfMax:" + IfMax + ","
         + "Icon:" + Icon + ","
         + "Type:" + Type + ","
-        + "Reward:" + Reward + ","
+        + "Extra:" + Extra + ","
+        + "Count:" + Count + ","
         + "}";
     }
     

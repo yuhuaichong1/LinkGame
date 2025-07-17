@@ -23,6 +23,8 @@ namespace XrCode
         private int curIcon;
         private int curTime;
 
+        private int preRewardId;
+
         protected override void OnAwake() 
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
@@ -52,13 +54,19 @@ namespace XrCode
             {
                 wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
                 wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
-                wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Reward);
+                wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra);
 
             }
+
+            preRewardId = -1;
         }
         protected override void OnEnable() 
-        { 
-        
+        {
+            mExitBtn.gameObject.SetActive(true);
+            SpinBtnActive(true);
+
+            if(preRewardId != -1)
+                wheelDic[preRewardId].Bg.sprite = NotActivatedBg;
         }
                 private string GetLMDesc(int type, int reward)
         {
@@ -72,7 +80,7 @@ namespace XrCode
                     return LanguageModule.GetText(((EFuncType)reward).ToString()); 
                 case 3:
                     return "Withdraw";
-                //return LanguageModule.GetText("Withdraw");
+                    //return LanguageModule.GetText("Withdraw");
                 default:
                     return "";
             }
@@ -80,7 +88,8 @@ namespace XrCode
 
         private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUILuckMoment);        }	    private void OnSpinBtnClickHandle()
         {
-            DisableSpinBtn();
+            mExitBtn.gameObject.SetActive(false);
+            SpinBtnActive(false);
 
             wheelStayTime.Clear();
             int random = UnityEngine.Random.Range(0, 8);
@@ -132,17 +141,97 @@ namespace XrCode
                 }
                 else
                 {
-                    Debug.LogError("发放奖励吧：" + random);
-                    wheelDic[random].Bg.sprite = NotActivatedBg;
+                    D.Error($"发放奖励：{random}");
+                    preRewardId = random;
+                    STimerManager.Instance.CreateSDelay(1, () => 
+                    {
+                        UIManager.Instance.CloseUI(EUIType.EUILuckMoment);
+
+                        ConfLuckMoment confLuckMoment = ConfigModule.Instance.Tables.TBLuckMoment.Get(random);
+                        ERewardType type = (ERewardType)confLuckMoment.Type;
+                        switch (type) 
+                        {
+                            case ERewardType.Money:
+                                float Mcount = UnityEngine.Random.Range(1, confLuckMoment.Count);
+                                PlayerFacade.AddWMoney(Mcount);
+                                FacadeEffect.PlayRewardEffect(new List<RewardItem>()
+                                {
+                                    new RewardItem()
+                                    {
+                                        type = ERewardType.Money,
+                                        count = Mcount
+                                    }
+                                }, () => 
+                                {
+                                    GamePlayFacade.ChangeMoneyShow();
+                                });
+                                break;
+                            case ERewardType.Func:
+                                int Fcount = (int)confLuckMoment.Count;
+                                int funcTypeId = confLuckMoment.Extra;
+                                switch ((EFuncType)funcTypeId)
+                                { 
+                                    case EFuncType.Tip:
+                                        GamePlayFacade.ChangeTipCount(Fcount);
+                                        break;
+                                    case EFuncType.Refush:
+                                        GamePlayFacade.ChangeRefushCount(Fcount);
+                                        break;
+                                    case EFuncType.Shift:
+                                        GamePlayFacade.ChangeRemoveCount(Fcount);
+                                        break;
+                                }
+                                FacadeEffect.PlayRewardEffect(new List<RewardItem>()
+                                {
+                                    new RewardItem()
+                                    {
+                                        type = ERewardType.Func,
+                                        count = Fcount,
+                                        extra = funcTypeId
+                                    }
+                                }, () =>
+                                {
+                                    switch ((EFuncType)funcTypeId)
+                                    {
+                                        case EFuncType.Tip:
+                                            GamePlayFacade.ChangeTipCountShow();
+                                            break;
+                                        case EFuncType.Refush:
+                                            GamePlayFacade.ChangeRefushCountShow();
+                                            break;
+                                        case EFuncType.Shift:
+                                            GamePlayFacade.ChangeRemoveCountShow();
+                                            break;
+                                    }
+                                });
+                                break;
+                            case ERewardType.Withdrawable:
+                                if (PlayerFacade.GetPayType() == 0)
+                                {
+                                    UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
+                                }
+                                else
+                                {
+                                    UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                                }
+                                break;
+                        }
+                        //switch()
+                        //{
+
+                        //}
+                    });
                     //ConfigModule.Instance.Tables.TBLuckMoment.Get(random).Type
                 }
             });
         }
 
-        private void DisableSpinBtn()
+        private void SpinBtnActive(bool b)
         {
-            mSpinBtn.enabled = false;
-            mSpinImg.material = ResourceMod.Instance.SyncLoad<Material>(GameDefines.FadeMaterials);
+            mSpinBtn.enabled = b;
+            mAbleBg.gameObject.SetActive(b);
+            mDisAbleBg.gameObject.SetActive(!b);
+
         }
 
         

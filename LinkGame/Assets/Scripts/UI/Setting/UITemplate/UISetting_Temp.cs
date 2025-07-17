@@ -13,13 +13,15 @@ namespace XrCode
         }
     
         protected override void BindButtonEvent() 
-        {
-            		mExitBtn.onClick.AddListener( OnExitBtnClickHandle);		mUserLvDetailsBtn.onClick.AddListener( OnUserLvDetailsBtnClickHandle);
+        {			mExitBtn.onClick.AddListener( OnExitBtnClickHandle);			mUserLvDetailsBtn.onClick.AddListener( OnUserLvDetailsBtnClickHandle);
+			mMusicSMT.onValueChange.AddListener( OnMusicSMTChange);
+			mVibrationSMT.onValueChange.AddListener(OnVibrationSMTChange);
         }
     
         protected override void UnBindButtonEvent() 
-        {
-            		mExitBtn.onClick.RemoveAllListeners();		mUserLvDetailsBtn.onClick.RemoveAllListeners();
+        {			mExitBtn.onClick.RemoveAllListeners();			mUserLvDetailsBtn.onClick.RemoveAllListeners();
+            mMusicSMT.onValueChange.RemoveAllListeners();
+			mVibrationSMT.onValueChange.RemoveAllListeners();
         }
     
     }

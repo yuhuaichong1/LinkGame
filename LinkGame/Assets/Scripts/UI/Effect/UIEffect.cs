@@ -165,7 +165,7 @@ namespace XrCode
                         case ERewardType.Money:
                             urr.Icon.sprite = reward_MoneyIcon;
                             urr.Count.text = FacadePayType.RegionalChange(item.count);
-                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime, () => 
+                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - GameDefines.FlyEffect_Start_Delay, () => 
                             { 
                                 PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_RewardCount, urr.Icon.transform, GamePlayFacade.GetFlyMoneyTarget()); 
                             });
@@ -174,7 +174,7 @@ namespace XrCode
                             EFuncType funcType = (EFuncType)item.extra;
                             urr.Icon.sprite = reward_FuncIconDic[funcType];
                             urr.Count.text = item.count.ToString();
-                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime, () => 
+                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - GameDefines.FlyEffect_Start_Delay, () => 
                             { 
                                 PlayFlyFuncEffect(urr.Icon.transform, GamePlayFacade.GetFuncTarget(funcType), GameDefines.FlyEffect_Start_Delay, funcType); 
                             });

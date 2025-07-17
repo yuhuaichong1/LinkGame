@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +10,16 @@ namespace XrCode
         private LanguageModule LanguageModule;
         private AudioModule AudioModule;
 
+        private string OnText;
+        private string OffText;
+
         protected override void OnAwake() 
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
             AudioModule = ModuleMgr.Instance.AudioMod;
+
+            OnText = LanguageModule.GetText("");
+            OffText = LanguageModule.GetText("");
         }
         protected override void OnEnable() { }
         	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUISetting);        }	    private void OnUserLvDetailsBtnClickHandle()
@@ -24,7 +29,7 @@ namespace XrCode
         private void OnMusicSMTChange(bool b)
         {
             mMSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
-            //mMSMTLabel.text = LanguageModule.GetText(b ? "On" : "Off");
+            mMSMTLabel.text = LanguageModule.GetText(b ? OnText : OffText);
             AudioModule.SetMusicVolume(b? 1 : 0);
             AudioModule.SetEffectsVolume(b? 1 : 0);
         }
@@ -32,7 +37,9 @@ namespace XrCode
         private void OnVibrationSMTChange(bool b)
         {
             mVSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
-            //mVSMTLabel.text = LanguageModule.GetText(b ? "On" : "Off");
+            mVSMTLabel.text = LanguageModule.GetText(b ? OnText : OffText);
+
+            AudioModule.SetVibrate(b);
         }
 
 

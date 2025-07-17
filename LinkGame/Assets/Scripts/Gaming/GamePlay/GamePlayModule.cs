@@ -1501,7 +1501,8 @@ namespace XrCode
                 PlayerFacade.AddWMoney(GameDefines.Single_Link_Money);
                 GamePlayFacade.ChangeMoneyShow();
             });
-            
+
+            AudioModule.PlayVibrate();
         }
 
         //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
