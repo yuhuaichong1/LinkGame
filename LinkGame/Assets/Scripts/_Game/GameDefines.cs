@@ -27,6 +27,8 @@ public abstract class GameDefines
 
     public static bool ifWithdrawal = true;                                                                 //是否提现
 
+    public const float Single_Link_Money = 0.01f;                                                            //单次消除金额
+
     public const string Default_Channels = "0";                                                             //默认支付方式
     public const string Default_Mark = "$";                                                                 //默认货币符号
     public const int Default_Decimal = 2;                                                                   //默认小数点位
@@ -57,6 +59,7 @@ public abstract class GameDefines
 
     public const string FadeMaterials = "Materials/Fade.mat";                                               //UI褪色材质
 
+    public const float FlyEffect_Start_Delay = 1;                                                           //飞行特效开始延迟时间
     public const float PRN_Effect_MoveTime = 0.5f;                                                          //“上方随机玩家兑现提示”特效移动时间
     public const float PRN_Effect_StayTime = 2.5f;                                                          //“上方随机玩家兑现提示”特效滞留时间
     public const float TL_Effect_XMoveTime = 0.5f;                                                          //“目标关卡提示”特效横向移动时间
@@ -74,7 +77,7 @@ public abstract class GameDefines
     public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
     public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
 
-    public const float Reward_StayTime = 3f;                                                                //奖励特效滞留时间
+    public const float Reward_StayTime = 2f;                                                                //奖励特效滞留时间
     public const string RibbonRewardItem_ObjPath = "Prefabs/Effect/RibbonRewardItem.prefab";                //奖励特效上的预制体
     public const string Reward_Money_IconPath = "UI/LuckMoment/icon_qian.png";                              //奖励特效物体三叠钱的图片                    （*）
     public const string Reward_FuncHint_IconPath = "UI/FuncIcon/icon_hint.png";                             //奖励特效消除功能图片                        （*）

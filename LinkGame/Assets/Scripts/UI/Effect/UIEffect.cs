@@ -165,7 +165,7 @@ namespace XrCode
                         case ERewardType.Money:
                             urr.Icon.sprite = reward_MoneyIcon;
                             urr.Count.text = FacadePayType.RegionalChange(item.count);
-                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - 1, () => 
+                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime, () => 
                             { 
                                 PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_RewardCount, urr.Icon.transform, GamePlayFacade.GetFlyMoneyTarget()); 
                             });
@@ -174,9 +174,9 @@ namespace XrCode
                             EFuncType funcType = (EFuncType)item.extra;
                             urr.Icon.sprite = reward_FuncIconDic[funcType];
                             urr.Count.text = item.count.ToString();
-                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - 1, () => 
+                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime, () => 
                             { 
-                                PlayFlyFuncEffect(urr.Icon.transform, GamePlayFacade.GetFuncTarget(funcType), 1, funcType); 
+                                PlayFlyFuncEffect(urr.Icon.transform, GamePlayFacade.GetFuncTarget(funcType), GameDefines.FlyEffect_Start_Delay, funcType); 
                             });
                             break;
                     }
@@ -226,7 +226,7 @@ namespace XrCode
             for (int i = 0; i < count; i ++)
             {
                 Vector2 Opos = orginPos.position + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f), 0);
-                PlayFlyMoneyEffect(Opos, targetPos, 1 + i * GameDefines.FlyMoney_ObjTime);
+                PlayFlyMoneyEffect(Opos, targetPos, GameDefines.FlyEffect_Start_Delay + i * GameDefines.FlyMoney_ObjTime);
             }
         }
 
@@ -270,6 +270,7 @@ namespace XrCode
         /// <summary>
         /// 获取飞钱提示特效
         /// </summary>
+        /// <param name="money">显示金额</param>
         private void PlayGetMoneyTipEffect(float money)
         {
             GameObject obj = flyMoneyTipPool.Count != 0 ? flyMoneyTipPool.Pop() : GameObject.Instantiate(flyMoneyTipObj, mFlyIconParent);

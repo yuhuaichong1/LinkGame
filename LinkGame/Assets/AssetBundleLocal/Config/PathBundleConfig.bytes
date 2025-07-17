@@ -241,24 +241,32 @@ p
 WAssets/AssetBundleLocal/Prefabs/UI/WithdrawalInformation/UIWithdrawalInformation.prefabcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
 n
 /Assets/AssetBundleLocal/Font/HirukoPro_Bold.ttf;assets/assetbundlelocal/font/hirukopro_bold.ttf.assetbundle
+D
+Assets/UI/Common/sidai.png&assets/ui/common/sidai.png.assetbundle
+è
+(Assets/UI/WithdrawalInformation/bg_3.pngcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
+F
+Assets/UI/Common/bg_1 1.png'assets/ui/common/bg_1 1.png.assetbundle
+L
+Assets/UI/Common/btn_close.png*assets/ui/common/btn_close.png.assetbundle
+H
+Assets/UI/Common/btn_big.png(assets/ui/common/btn_big.png.assetbundle
+Æ
+OAssets/AssetBundleLocal/Prefabs/UI/WithdrawalChannel/UIWithdrawalChannel.prefab[assets/assetbundlelocal/prefabs/ui/withdrawalchannel/uiwithdrawalchannel.prefab.assetbundle
 @
 Assets/UI/Common/btn.png$assets/ui/common/btn.png.assetbundle
 D
-Assets/UI/Common/title.png&assets/ui/common/title.png.assetbundle
-L
-Assets/UI/Common/btn_close.png*assets/ui/common/btn_close.png.assetbundle
+Assets/UI/Common/input.png&assets/ui/common/input.png.assetbundle
 B
 Assets/UI/Common/bg_2.png%assets/ui/common/bg_2.png.assetbundle
-B
-Assets/UI/Common/bg_1.png%assets/ui/common/bg_1.png.assetbundle
-Æ
-OAssets/AssetBundleLocal/Prefabs/UI/WithdrawalChannel/UIWithdrawalChannel.prefab[assets/assetbundlelocal/prefabs/ui/withdrawalchannel/uiwithdrawalchannel.prefab.assetbundle
-D
-Assets/UI/Common/input.png&assets/ui/common/input.png.assetbundle
 ≤
 QAssets/AssetBundleLocal/Prefabs/UI/WithdrawableSingle/UIWithdrawableSingle.prefab]assets/assetbundlelocal/prefabs/ui/withdrawablesingle/uiwithdrawablesingle.prefab.assetbundle
 X
 $Assets/UI/Withdrawable/icon_qian.png0assets/ui/withdrawable/icon_qian.png.assetbundle
+D
+Assets/UI/Common/title.png&assets/ui/common/title.png.assetbundle
+B
+Assets/UI/Common/bg_1.png%assets/ui/common/bg_1.png.assetbundle
 P
  Assets/UI/Withdrawable/guang.png,assets/ui/withdrawable/guang.png.assetbundle
 ∫
@@ -305,8 +313,6 @@ g
 "Assets/UI/Task/icon_tianjia_bg.pngAassets/assetbundlelocal/prefabs/ui/task/uitask.prefab.assetbundle
 c
 Assets/UI/Task/btn_bg_list.pngAassets/assetbundlelocal/prefabs/ui/task/uitask.prefab.assetbundle
-H
-Assets/UI/Common/btn_big.png(assets/ui/common/btn_big.png.assetbundle
 b
 Assets/UI/Task/_drawer_bg.pngAassets/assetbundlelocal/prefabs/ui/task/uitask.prefab.assetbundle
 ^

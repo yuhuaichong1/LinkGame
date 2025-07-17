@@ -2,6 +2,7 @@ using cfg;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace XrCode
 {
@@ -1478,8 +1479,10 @@ namespace XrCode
                 D.Log("eat pos: (" + pos1.R + "," + pos1.C + ")");
             }
             ChangeMapState(EMapState.Eating);
-            GetGood(pos1.R, pos1.C).GetComponent<Animator>().SetTrigger("Dissapear");
-            GetGood(pos2.R, pos2.C).GetComponent<Animator>().SetTrigger("Dissapear");
+            GameObject eatGood1 = GetGood(pos1.R, pos1.C);
+            eatGood1.GetComponent<Animator>().SetTrigger("Dissapear");
+            GameObject eatGood2 = GetGood(pos2.R, pos2.C);
+            eatGood2.GetComponent<Animator>().SetTrigger("Dissapear");
             if (isOffline)
             {
                 Game.Instance.StartCoroutine(execute_check_paire(pos1, pos2));
@@ -1488,6 +1491,17 @@ namespace XrCode
             {
                 Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
             }
+
+            //特效部分
+            FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood1.transform, GamePlayFacade.GetFlyMoneyTarget());
+            FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
+            STimerManager.Instance.CreateSDelay(GameDefines.FlyEffect_Start_Delay, () => 
+            {
+                FacadeEffect.PlayGetMoneyTipEffect(GameDefines.Single_Link_Money);
+                PlayerFacade.AddWMoney(GameDefines.Single_Link_Money);
+                GamePlayFacade.ChangeMoneyShow();
+            });
+            
         }
 
         //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
@@ -1584,7 +1598,6 @@ namespace XrCode
         //让地图物块移动
         private void UpdateMap()
         {
-            Debug.LogError(list_pos_need_update.Count);
             for (int j = 0; j < list_pos_need_update.Count; j++)
             {
                 for (int i = 0; i < curLevelDirection.Count; i++)
