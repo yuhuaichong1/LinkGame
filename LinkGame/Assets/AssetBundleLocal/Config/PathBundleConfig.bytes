@@ -93,22 +93,14 @@ n
 /Assets/AssetBundleLocal/UI/Logo/Korean_Logo.png;assets/assetbundlelocal/ui/logo/korean_logo.png.assetbundle
 p
 0Assets/AssetBundleLocal/UI/Logo/Russian_Logo.png<assets/assetbundlelocal/ui/logo/russian_logo.png.assetbundle
+p
+0Assets/AssetBundleLocal/UI/Logo/Spanish_Logo.png<assets/assetbundlelocal/ui/logo/spanish_logo.png.assetbundle
+r
+1Assets/AssetBundleLocal/UI/Logo/Spanish_Logo2.png=assets/assetbundlelocal/ui/logo/spanish_logo2.png.assetbundle
 j
 -Assets/AssetBundleLocal/UI/Logo/Thai_Logo.png9assets/assetbundlelocal/ui/logo/thai_logo.png.assetbundle
 p
 0Assets/AssetBundleLocal/UI/Logo/Turkish_Logo.png<assets/assetbundlelocal/ui/logo/turkish_logo.png.assetbundle
-j
--Assets/AssetBundleLocal/UI/Logo/乌尔都.png9assets/assetbundlelocal/ui/logo/乌尔都.png.assetbundle
-p
-0Assets/AssetBundleLocal/UI/Logo/墨西哥语.png<assets/assetbundlelocal/ui/logo/墨西哥语.png.assetbundle
-p
-0Assets/AssetBundleLocal/UI/Logo/孟加拉语.png<assets/assetbundlelocal/ui/logo/孟加拉语.png.assetbundle
-j
--Assets/AssetBundleLocal/UI/Logo/越南语.png9assets/assetbundlelocal/ui/logo/越南语.png.assetbundle
-p
-0Assets/AssetBundleLocal/UI/Logo/阿根廷语.png<assets/assetbundlelocal/ui/logo/阿根廷语.png.assetbundle
-j
--Assets/AssetBundleLocal/UI/Logo/马来语.png9assets/assetbundlelocal/ui/logo/马来语.png.assetbundle
 �
 9Assets/AssetBundleLocal/UI/LinkLine/line_Left_Down.prefabEassets/assetbundlelocal/ui/linkline/line_left_down.prefab.assetbundle
 P
@@ -383,8 +375,6 @@ n
 'Assets/Tools/HoleMask/Sprite/Square.pngCassets/assetbundlelocal/prefabs/ui/guide/uiguide.prefab.assetbundle
 v
 3Assets/AssetBundleLocal/Prefabs/UI/Good/Good.prefab?assets/assetbundlelocal/prefabs/ui/good/good.prefab.assetbundle
-�
-IAssets/AssetBundleLocal/Prefabs/UI/GamePlayNotice/RibbonRewardItem.prefabUassets/assetbundlelocal/prefabs/ui/gameplaynotice/ribbonrewarditem.prefab.assetbundle
 �
 =Assets/AssetBundleLocal/Prefabs/UI/GamePlay/UIGamePlay.prefabIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 p
@@ -480,11 +470,15 @@ c
 e
 Assets/UI/Effect/FX_Flare_9.TGABassets/assetbundlelocal/prefabs/effect/flymoney.prefab.assetbundle
 �
+9Assets/AssetBundleLocal/Prefabs/Effect/GetMoneyTip.prefabEassets/assetbundlelocal/prefabs/effect/getmoneytip.prefab.assetbundle
+�
 9Assets/AssetBundleLocal/Prefabs/Effect/ItemExplore.prefabEassets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
 D
 Assets/Materials/Flame.mat&assets/materials/flame.mat.assetbundle
 �
 >Assets/AssetBundleLocal/Prefabs/Effect/ItemExploreEnemy.prefabJassets/assetbundlelocal/prefabs/effect/itemexploreenemy.prefab.assetbundle
+�
+>Assets/AssetBundleLocal/Prefabs/Effect/RibbonRewardItem.prefabJassets/assetbundlelocal/prefabs/effect/ribbonrewarditem.prefab.assetbundle
 �
 =Assets/AssetBundleLocal/Materials/SkeletonGraphicDefault2.matIassets/assetbundlelocal/materials/skeletongraphicdefault2.mat.assetbundle
 �

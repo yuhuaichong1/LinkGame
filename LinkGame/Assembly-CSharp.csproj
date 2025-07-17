@@ -244,8 +244,10 @@
     <Compile Include="Assets\UIRibbonRewardItem.cs" />
     <Compile Include="Assets\Scripts\Tools\SqlLite\SqLiteHelper.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadePayType.cs" />
+    <Compile Include="Assets\Scripts\Reward\GetMoneyTipItem.cs" />
     <Compile Include="Assets\Scripts\Task\Task.cs" />
     <Compile Include="Assets\Scripts\UI\Popup\UITemplate\UIPopup_Temp.cs" />
+    <Compile Include="Assets\Scripts\Reward\RewardItem.cs" />
     <Compile Include="Assets\Scripts\UI\GamePlay\UITemplate\UIGamePlay_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoReader.cs" />
     <Compile Include="Assets\Scripts\SUIAnimLine\SUIAnimCurve.cs" />

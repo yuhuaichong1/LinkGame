@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,39 +47,115 @@ namespace XrCode
         private void AddTipPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Hint_IconPath);
-            btnAction = () => {
-                AdModule.PlayRewardAd(() =>
-                {
-                    GamePlayFacade.ChangeTipCount(3);
-                    GamePlayFacade.ChangeTipCountShow?.Invoke();
-                    UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
-                });
-            };
+            AddEffect();
+            //btnAction = () => {
+            //    AdModule.PlayRewardAd(() =>
+            //    {
+            //        GamePlayFacade.ChangeTipCount(1);
+            //        GamePlayFacade.ChangeTipCountShow?.Invoke();
+            //        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
+
+
+            //    });
+            //};
         }
 
         //显示刷新相关UI
         private void AddRefushPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Refush_IconPath);
-            btnAction = () => {
-                AdModule.PlayRewardAd(() =>
-                {
-                    GamePlayFacade.ChangeRefushCount(1);
-                    GamePlayFacade.ChangeRefushCountShow?.Invoke();
-                    UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
-                });
-            };
+            AddEffect();
+            //btnAction = () => {
+            //    AdModule.PlayRewardAd(() =>
+            //    {
+            //        GamePlayFacade.ChangeRefushCount(1);
+            //        GamePlayFacade.ChangeRefushCountShow?.Invoke();
+            //        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
+
+                    
+            //    });
+            //};
         }
 
         //显示移除相关UI（现为改变方向功能)
         private void AddRemovePlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Shift_IconPath);
+            AddEffect();
+            //btnAction = () => {
+            //    AdModule.PlayRewardAd(() =>
+            //    {
+            //        GamePlayFacade.ChangeRemoveCount(1);
+            //        GamePlayFacade.ChangeRemoveCountShow?.Invoke();
+            //        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
+            //    });
+            //};
+        }
+
+        private void AddEffect()
+        {
+            float addMoney = UnityEngine.Random.Range(GameDefines.GetFunc_ExtraMoney_Num.x, GameDefines.GetFunc_ExtraMoney_Num.y);
+            int addFunc = 1;
+            switch (eFuncType)
+            {
+                case EFuncType.Tip:
+                    addFunc = GameDefines.GetFunc_Hint_Num;
+                    break;
+                case EFuncType.Refush:
+                    addFunc = GameDefines.GetFunc_Refresh_Num;
+                    break;
+                case EFuncType.Shift:
+                    addFunc = GameDefines.GetFunc_Shift_Num;
+                    break;
+            }
             btnAction = () => {
                 AdModule.PlayRewardAd(() =>
                 {
-                    GamePlayFacade.ChangeRemoveCount(1);
-                    GamePlayFacade.ChangeRemoveCountShow?.Invoke();
+                    FacadeEffect.PlayRewardEffect(new List<RewardItem>
+                    {
+                        new RewardItem()
+                        {
+                            type = ERewardType.Func,
+                            count = addFunc,
+                            extra = (int)eFuncType,
+                        },
+                        new RewardItem()
+                        {
+                            type = ERewardType.Money,
+                            count = addMoney,
+                        }
+                    }, () =>
+                    {
+                        GamePlayFacade.ChangeTipCountShow.Invoke();
+                        switch (eFuncType)
+                        {
+                            case EFuncType.Tip:
+                                GamePlayFacade.ChangeTipCountShow.Invoke();
+                                break;
+                            case EFuncType.Refush:
+                                GamePlayFacade.ChangeRefushCountShow.Invoke();
+                                break;
+                            case EFuncType.Shift:
+                                GamePlayFacade.ChangeRemoveCountShow?.Invoke();
+                                break;
+                        }
+                        GamePlayFacade.ChangeMoneyShow.Invoke();
+                        FacadeEffect.PlayGetMoneyTipEffect(addMoney);
+                    });
+
+                    switch(eFuncType)
+                    {
+                        case EFuncType.Tip:
+                            GamePlayFacade.ChangeTipCount(addFunc);
+                            break;
+                        case EFuncType.Refush:
+                            GamePlayFacade.ChangeRefushCount(addFunc);
+                            break;
+                        case EFuncType.Shift:
+                            GamePlayFacade.ChangeRemoveCount(addFunc);
+                            break;
+                    }
+                    PlayerFacade.AddWMoney(addMoney);
                     UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
                 });
             };

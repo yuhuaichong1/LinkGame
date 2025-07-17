@@ -7,6 +7,7 @@
 #region 常量
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class GameDefines
 {
@@ -31,11 +32,16 @@ public abstract class GameDefines
     public const int Default_Decimal = 2;                                                                   //默认小数点位
     public const int Default_ExchangeRate = 1;                                                              //默认汇率
     public const ELanguageType Default_Language = ELanguageType.English;                                    //默认语言
+    
+    public const string Func_Hint_IconPath = "UI/FuncIcon/FuncIcon_Hint.png";                               //下三功能“提示”图片                        （*）
+    public const string Func_Refush_IconPath = "UI/FuncIcon/FuncIcon_Refush.png";                           //下三功能“刷新”图片                        （*）
+    public const string Func_Remove_IconPath = "UI/FuncIcon/FuncIcon_Remove.png";                           //下三功能“移除”图片                        （*）
+    public const string Func_Shift_IconPath = "UI/FuncIcon/FuncIcon_Shift.png";                             //下三功能“换向”图片                        （*）
 
-    public const string Func_Hint_IconPath = "UI/FuncIcon/FuncIcon_Hint.png";                                //下三功能_提示_图片
-    public const string Func_Refush_IconPath = "UI/FuncIcon/FuncIcon_Refush.png";                            //下三功能_刷新_图片
-    public const string Func_Remove_IconPath = "UI/FuncIcon/FuncIcon_Remove.png";                            //下三功能_移除_图片
-    public const string Func_Shift_IconPath = "UI/FuncIcon/FuncIcon_Shift.png";                              //下三功能_换向_图片
+    public const int GetFunc_Hint_Num = 3;                                                                  //能获取的“提示”功能的数量
+    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“提示”功能的数量
+    public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“提示”功能的数量
+    public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(1, 10);                                      //获取功能时额外获取的金钱的数量
 
     public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";                              //老虎机未激活块背景路径
     public const string LuckMomentActivatedBg = "UI/LuckMoment/LMABg.png";                                  //老虎机激活块背景路径
@@ -51,17 +57,33 @@ public abstract class GameDefines
 
     public const string FadeMaterials = "Materials/Fade.mat";                                               //UI褪色材质
 
-    public const float PRN_Effect_MoveTime = 0.5f;                                                            //“上方随机玩家兑现提示”特效移动时间
-    public const float PRN_Effect_StayTime = 2.5f;                                                            //“上方随机玩家兑现提示”特效滞留时间
-    public const float TL_Effect_XMoveTime = 0.5f;                                                            //“目标关卡提示”特效横向移动时间
-    public const float TL_Effect_StayTime = 1f;                                                               //“目标关卡提示”特效滞留时间
-    public const float TL_Effect_YMoveTime = 1f;                                                              //“目标关卡提示”特效竖向移动时间
-    public const string FlyMoney_ObjPath = "Prefabs/Effect/FlyMoney.prefab";                                 //飞钱特效预制体
-    public const float FlyMoney_ObjTime = 0.25f;                                                             //飞钱特效持续时间
-    public const string FlyFunc_ObjPath = "Prefabs/Effect/FlyFunc.prefab";                                   //飞功能特效预制体
-    public const float FlyFunc_ObjTime = 0.25f;                                                              //飞功能特效持续时间
-    public const float TMDIcon_RoteTime = 1;                                                                 //指明移动方向旋转时间 
-    public const float TMDIcon_MoveTime = 1;                                                                 //指明移动方向移动时间 
+    public const float PRN_Effect_MoveTime = 0.5f;                                                          //“上方随机玩家兑现提示”特效移动时间
+    public const float PRN_Effect_StayTime = 2.5f;                                                          //“上方随机玩家兑现提示”特效滞留时间
+    public const float TL_Effect_XMoveTime = 0.5f;                                                          //“目标关卡提示”特效横向移动时间
+    public const float TL_Effect_StayTime = 1f;                                                             //“目标关卡提示”特效滞留时间
+    public const float TL_Effect_YMoveTime = 1f;                                                            //“目标关卡提示”特效竖向移动时间
+    public const string FlyMoney_ObjPath = "Prefabs/Effect/FlyMoney.prefab";                                //飞钱特效预制体
+    public const float FlyMoney_ObjTime = 0.12f;                                                            //飞钱特效持续时间（非特殊情况请保持和FlyFunc_ObjTime一致）
+    public const int FlyMoney_Effect_LinkCount = 3;                                                         //消除飞钱特效（总计生成数量 * 2个飞钱）
+    public const int FlyMoney_Effect_RewardCount = 8;                                                       //奖励飞钱特效数量
+    public const string FlyFunc_ObjPath = "Prefabs/Effect/FlyFunc.prefab";                                  //飞功能特效预制体
+    public const float FlyFunc_ObjTime = 0.25f;                                                             //飞功能特效持续时间（非特殊情况请保持和FlyMoney_ObjTime一致）
+    public const string FlyMoneyTip_ObjPath = "Prefabs/Effect/GetMoneyTip.prefab";                          //飞钱奖励提示的预制体
+    public const float FlyMoneyTip_ObjTime = 2f;                                                            //飞钱奖励提示特效持续时间
+
+    public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
+    public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
+
+    public const float Reward_StayTime = 3f;                                                                //奖励特效滞留时间
+    public const string RibbonRewardItem_ObjPath = "Prefabs/Effect/RibbonRewardItem.prefab";                //奖励特效上的预制体
+    public const string Reward_Money_IconPath = "UI/LuckMoment/icon_qian.png";                              //奖励特效物体三叠钱的图片                    （*）
+    public const string Reward_FuncHint_IconPath = "UI/FuncIcon/icon_hint.png";                             //奖励特效消除功能图片                        （*）
+    public const string Reward_FuncRefresh_IconPath = "UI/FuncIcon/icon_re.png";                            //奖励特效刷新功能图片                        （*）
+    public const string Reward_FuncShift_IconPath = "UI/FuncIcon/icon_shift.png";                           //奖励特效换向功能图片                        （*）
+
+
+
+    public const float GoodShowTime = 0.1f;                                                                  //物品显示动画时间间隔
 }
 #endregion
 
@@ -162,10 +184,11 @@ public enum ELanguageType : int
 /// <summary>
 /// 下三功能
 /// </summary>
-public enum EFuncType
+public enum EFuncType : int
 { 
-    Tip,
+    Tip = 1,
     Refush,
+    Shift,
     Remove
 }
 
@@ -224,6 +247,15 @@ public enum ETaskStatus : int
     Progress = 0,//未完成
     Receive = 1,//已完成
     Received = 2,//已领取
+}
+
+/// <summary>
+/// 获取道具类型
+/// </summary>
+public enum ERewardType : int
+{
+    Money = 1,
+    Func,
 }
 
 #endregion

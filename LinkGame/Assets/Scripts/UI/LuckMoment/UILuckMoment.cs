@@ -133,6 +133,8 @@ namespace XrCode
                 else
                 {
                     Debug.LogError("发放奖励吧：" + random);
+                    wheelDic[random].Bg.sprite = NotActivatedBg;
+                    //ConfigModule.Instance.Tables.TBLuckMoment.Get(random).Type
                 }
             });
         }

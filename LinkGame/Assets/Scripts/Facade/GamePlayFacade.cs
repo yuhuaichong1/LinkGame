@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class GamePlayFacade
 {
+    public static Action ChangeMoneyShow;             //改变当前金钱数
     public static Action ChangeTipCountShow;          //改变提示功能的次数显示
     public static Action ChangeRefushCountShow;       //改变刷新功能的次数显示
     public static Action ChangeRemoveCountShow;       //改变移除功能的次数显示
@@ -35,7 +36,10 @@ public static class GamePlayFacade
     public static Action<Vec2> Select;                    //选中（GamePlayModule中的Select）
     public static Func<GameObject[][]> GetMAPGoods;       //获取当前关卡的所有物体
 
-    public static Func<Transform> GetMapTrans;            //获取生成物体的父对象
+    public static Func<Transform> GetMapTrans;              //获取生成物体的父对象
+    public static Func<Transform> GetFlyMoneyTarget;        //得到飞钱移动终点目标
+    public static Func<Transform> GetFlyMoneyTipOrgin;      //得到获得飞钱提示起点
+    public static Func<EFuncType ,Transform> GetFuncTarget; //得到飞功能移动终点目标
 }
 
 

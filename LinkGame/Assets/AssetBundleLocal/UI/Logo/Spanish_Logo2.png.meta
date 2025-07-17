@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 97ebf2d10eb385a4cb7247b15f996853
+guid: 5093e7f20b22b3b49a3e74ee0cf96147
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: "assets/assetbundlelocal/ui/logo/\u5B5F\u52A0\u62C9\u8BED.png.assetbundle"
+  assetBundleName: assets/assetbundlelocal/ui/logo/spanish_logo2.png.assetbundle
   assetBundleVariant: 

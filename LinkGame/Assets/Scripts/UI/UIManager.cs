@@ -368,8 +368,7 @@ namespace XrCode
         //得到当前Canvas的CanvasScaler
         public Vector2 GetCanvasReferenceResolution()
         {
-            CanvasScaler cs = canvas.GetComponent<CanvasScaler>();
-            return cs.referenceResolution;
+            return canvas.GetComponent<RectTransform>().rect.size;
         }
 
         public void Update()

@@ -32,6 +32,7 @@ namespace XrCode
             PlayerFacade.GetUserLevel += GetUserLevel;
             PlayerFacade.GetCurUserExp += GetCurUserExp;
             PlayerFacade.SetWMoney += SetWMoney;
+            PlayerFacade.AddWMoney += AddWMoney;
             PlayerFacade.SetPayType += SetPayType;
             PlayerFacade.SetNameAndWEmailOrPhone += SetNameAndPhoneOrEmail;
             PlayerFacade.SetUserLevel += SetUserLevel;
@@ -95,6 +96,12 @@ namespace XrCode
             SPlayerPref.SetFloat(PlayerPrefDefines.moneyCount, value);
         }
 
+        private void AddWMoney(float value)
+        {
+            wMoney += value;
+            SPlayerPref.SetFloat(PlayerPrefDefines.moneyCount, wMoney);
+        }
+
         private void SetPayType(EPayType payType)
         {
             wPayType = payType;
@@ -144,10 +151,11 @@ namespace XrCode
         /// <returns>随机尝试次数和随机兑现金额</returns>
         private string[] GetRandomAttemptAndMoney()
         {
-            int attempt = UnityEngine.Random.Range(0, 3);
-            float money = attempt * UnityEngine.Random.Range(0f, 3f);
+            int attempt = UnityEngine.Random.Range(1, 4);
+            float money = attempt * UnityEngine.Random.Range(1f, 3f);
             string aText = attempt.ToString();
-            string mText = string.Format(LanguageModule.GetText(""), money);
+            string mText = FacadePayType.RegionalChange(money);
+            //string mText = string.Format(LanguageModule.GetText(""), money);
 
             return new string[2] { aText, mText };
         }

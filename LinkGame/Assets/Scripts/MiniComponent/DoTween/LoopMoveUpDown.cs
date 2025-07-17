@@ -6,14 +6,16 @@ using UnityEngine;
 public class LoopMoveUpDown : MonoBehaviour
 {
     private RectTransform rect;
+    private Vector3 orginPos;
     void Awake()
     {
         rect = GetComponent<RectTransform>();
+        orginPos = rect.anchoredPosition;
     }
 
     void OnEnable()
     {
-        rect.DOLocalMoveY(-125, 2).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+        rect.DOLocalMoveY(-160, 1).From(-155).From(orginPos).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
     }
 
     void OnDisable()

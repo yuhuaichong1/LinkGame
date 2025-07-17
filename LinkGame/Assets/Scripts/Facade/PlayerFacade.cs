@@ -16,9 +16,8 @@ namespace XrCode
         public static Func<int> GetUserLevel;                           //得到玩家等级
         public static Func<int> GetCurUserExp;                          //得到玩家经验
 
-
-
         public static Action<float> SetWMoney;                          //设置当前金钱数
+        public static Action<float> AddWMoney;                          //增加当前金钱数
 
         public static Action<EPayType> SetPayType;                      //设置兑现界面选择的支付方式
         public static Action<string, string> SetNameAndWEmailOrPhone;   //设置兑现界面的姓名和邮箱

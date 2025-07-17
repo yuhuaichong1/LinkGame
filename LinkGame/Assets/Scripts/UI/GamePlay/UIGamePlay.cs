@@ -5,6 +5,7 @@ using UnityEngine.Windows;
 using System.IO;
 using System.Collections.Generic;
 using cfg;
+using DG.Tweening;
 
 namespace XrCode
 {
@@ -32,10 +33,14 @@ namespace XrCode
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
+            GamePlayFacade.ChangeMoneyShow += ChangeMoneyShow;
             GamePlayFacade.ChangeTipCountShow += ChangeFuncTipCount;
             GamePlayFacade.ChangeRefushCountShow += ChangeFuncRefushCount;
             GamePlayFacade.ChangeRemoveCountShow += ChangeFuncRemoveCount;
             GamePlayFacade.GetMapTrans += GetMapTrans;
+            GamePlayFacade.GetFlyMoneyTarget += GetFlyMoneyTarget;
+            GamePlayFacade.GetFlyMoneyTipOrgin += GetFlyMoneyTipOrgin;
+            GamePlayFacade.GetFuncTarget += GetFuncTarget;
 
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
@@ -64,7 +69,7 @@ namespace XrCode
                 {lastLevelId, 1f}
             };
 
-            //UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
+            UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
         }
         protected override void OnEnable() 
         {
@@ -74,17 +79,21 @@ namespace XrCode
 
             SetTipInfo();
 
-            FuncTipShow();
+            if(true)//首次（重开）进入关卡
+            {
+                FuncTipShow();
 
-            mWithdrawTip.gameObject.SetActive(false);
-            mCurDir.gameObject.SetActive(false);
+                mWithdrawTip.gameObject.SetActive(false);
+                mCurDir.gameObject.SetActive(false);
 
-            //GoodShowOneByOne();
-
-            if (!loadedEffectUI)
-                UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect, (ui) => { WithdrawTipShow(); });
+                GoodShowOneByOne();
+            }
             else
-                WithdrawTipShow();
+            {
+                STimerManager.Instance.CreateSDelay(1, ()=> { FacadeEffect.PlayRewardNoticeEffect(); });
+            }
+
+            mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
         }
 
         //设置当前关卡的可显示信息
@@ -201,7 +210,7 @@ namespace XrCode
             }
             else
             {
-                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Remove);
+                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Shift);
             }
         }
         //中心按钮被点击
@@ -234,6 +243,36 @@ namespace XrCode
         private Transform GetMapTrans()
         {
             return mMap.transform;
+        }
+        private Transform GetFlyMoneyTarget()
+        {
+            return mCurMoneyIcon.transform;
+        }
+
+        private Transform GetFlyMoneyTipOrgin()
+        {
+            return mCurMoneyBtnRect.transform;
+        }
+
+        private Transform GetFuncTarget(EFuncType type)
+        {
+            switch (type) 
+            { 
+                case EFuncType.Tip:
+                    return mTipFuncIcon.transform;
+                case EFuncType.Refush:
+                    return mRefushFuncIcon.transform;
+                case EFuncType.Shift:
+                    return mRemoveFuncIcon.transform;
+                default:
+                    return null;
+            }
+        }
+
+        //改变当前金钱的数量
+        private void ChangeMoneyShow()
+        {
+            mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
         }
 
         //随机显示功能按钮提示
@@ -284,16 +323,42 @@ namespace XrCode
         //逐个显示物体
         private void GoodShowOneByOne()
         {
+            mGamePlayMask.gameObject.SetActive(true);
+
             GameObject[][] goods = GamePlayFacade.GetMAPGoods();
 
             foreach(GameObject[] goodsRow in goods) 
             { 
-                foreach(GameObject good in goodsRow)
+                foreach(GameObject obj in goodsRow)
                 {
-                    if(good != null)
-                        good.gameObject.SetActive(false);
+                    if(obj != null)
+                    {
+                        obj.gameObject.SetActive(false);
+                        obj.GetComponent<Good>().mIcon.transform.localScale = Vector3.zero;
+                    }
+                        
                 }
             }
+
+            DG.Tweening.Sequence sequence = DOTween.Sequence();
+            for (int i = 0; i < goods.Length; i++)
+            {
+                int currentIndex = i;
+                sequence.AppendCallback(() => 
+                {
+                    foreach (GameObject obj in goods[currentIndex])
+                    {
+                        if (obj != null)
+                        {
+                            obj.SetActive(true);
+                            obj.GetComponent<Good>().mIcon.transform.DOScale(1, GameDefines.GoodShowTime);
+                        }
+                    }
+                });
+                sequence.AppendInterval(GameDefines.GoodShowTime);
+            }
+
+            sequence.Play().OnComplete(WithdrawTipShow);
         }
 
         //提现目标特效以及UI生成
@@ -314,6 +379,8 @@ namespace XrCode
             FacadeEffect.PlayTMDEffect(mCurDir.transform, curLevelDicIcon, () => 
             { 
                 mCurDir.gameObject.SetActive(true);
+                mGamePlayMask.gameObject.SetActive(false);
+                FacadeEffect.PlayRewardNoticeEffect();
             });
         }
 
