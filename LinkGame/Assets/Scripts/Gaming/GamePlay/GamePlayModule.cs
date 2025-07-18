@@ -73,6 +73,13 @@ namespace XrCode
         private ArrayList list_pos_need_update;//需要更新（可位移的物品）
         private ArrayList curLevelDirection;//移动方向
 
+        
+        private int curTotalLinkCount;//累计消除次数
+        private int curLuckMomentCount;//老虎机计数
+        private int curTopNoticeCount;//顶部消息计数
+        private int curAwesomeCount;//送钱计数
+
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -87,6 +94,7 @@ namespace XrCode
             GamePlayFacade.ChangeRemoveCount += ChangeRemoveCount;
             GamePlayFacade.ChangeDirection += ChangeDirection;
             GamePlayFacade.GetCurLevel += GetCurLevel;
+            GamePlayFacade.NextLevel += NextLevel;
             GamePlayFacade.GetTipCount += GetTipCount;
             GamePlayFacade.GetRefushCount += GetRefushCount;
             GamePlayFacade.GetRemoveCount += GetRemoveCount;
@@ -102,6 +110,9 @@ namespace XrCode
             GamePlayFacade.GetGoodIcon += GetGoodIcon;
             GamePlayFacade.Select += Select;
             GamePlayFacade.GetMAPGoods += GetMAPGoods;
+            GamePlayFacade.GetCurTotalLinkCount += GetCurTotalLinkCount;
+            GamePlayFacade.GetCurLuckMomentCount += GetCurLuckMomentCount;
+            GamePlayFacade.SetCurLuckMomentCount += SetCurLuckMomentCount;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -136,12 +147,17 @@ namespace XrCode
         //加载数据
         private void LoadData()
         {
-            curLevel = PlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
+            curLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
             curLevel = 3;
-            tipCount = PlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
-            refushCount = PlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
-            removeCount = PlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
-            isTutorial = PlayerPrefs.GetInt(PlayerPrefDefines.isTutorial) == 1;
+            tipCount = SPlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
+            refushCount = SPlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
+            removeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
+            isTutorial = SPlayerPrefs.GetBool(PlayerPrefDefines.isTutorial);
+
+            curTotalLinkCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curTotalLinkCount);
+            curLuckMomentCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curLuckMomentCount);
+            //curTopNoticeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curTopNoticeCount);
+            //curAwesomeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curAwesomeCount);
         }
 
         /// <summary>
@@ -1474,10 +1490,9 @@ namespace XrCode
         public void Eat(Vec2 pos1, Vec2 pos2, bool isOffline)
         {
             AudioModule.PlayEffect(EAudioType.ElinkRemove);
-            if (!isOffline)
-            {
-                D.Log("eat pos: (" + pos1.R + "," + pos1.C + ")");
-            }
+
+            D.Log("消去的是: (" + pos1.R + "," + pos1.C + ")");
+
             ChangeMapState(EMapState.Eating);
             GameObject eatGood1 = GetGood(pos1.R, pos1.C);
             eatGood1.GetComponent<Animator>().SetTrigger("Dissapear");
@@ -1492,6 +1507,8 @@ namespace XrCode
                 Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
             }
 
+            EatCountAddAndCallback();
+
             //特效部分
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood1.transform, GamePlayFacade.GetFlyMoneyTarget());
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
@@ -1503,6 +1520,40 @@ namespace XrCode
             });
 
             AudioModule.PlayVibrate();
+        }
+
+        //消除数累计添加及其回调
+        private void EatCountAddAndCallback()
+        {
+            curTotalLinkCount += 1;
+
+            if(curLuckMomentCount == GameDefines.LuckMoment_Count_Max)
+            {
+                UIManager.Instance.OpenWindowAsync<UILuckMoment>(EUIType.EUILuckMoment);
+            }
+            else
+                curLuckMomentCount += 1;
+
+            if(curTopNoticeCount == GameDefines.TopNotice_Count_Max)
+            {
+                curTopNoticeCount = 0;
+                FacadeEffect.PlayRewardNoticeEffect();
+            }
+            else
+                curTopNoticeCount += 1;
+
+            if(curAwesomeCount == GameDefines.Awesome_Count_Max)
+            {
+                curAwesomeCount = 0;
+                UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+            }
+            else
+                curAwesomeCount += 1;
+
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curTotalLinkCount, curTotalLinkCount);
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curLuckMomentCount, curLuckMomentCount);
+            //SPlayerPrefs.SetInt(PlayerPrefDefines.curTopNoticeCount, curTopNoticeCount);
+            //SPlayerPrefs.SetInt(PlayerPrefDefines.curAwesomeCount, curAwesomeCount);
         }
 
         //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
@@ -1537,7 +1588,7 @@ namespace XrCode
                     return;
                 }
                 ChangeMapState(EMapState.Result);
-                Debug.Log("+++++++++++++++++++++++++++++++++++++++++clear map+++++++++++++++++++++++++++++++++++++++++++++++++");
+                D.Log($"+++++++++++++++++++++++++++++++++++++++++关卡 {curLevel} 通过+++++++++++++++++++++++++++++++++++++++++++++++++");
                 DeSelect();
                 LPath.Clear();
                 keyLPath.Clear();
@@ -1553,6 +1604,14 @@ namespace XrCode
                 }
                 else
                 {
+                    float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
+                    STimerManager.Instance.CreateSDelay(delayTime, () => 
+                    {
+                        UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
+                        UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
+                        NextLevel();
+                    });
+
                     //logicLevel.updateScore(logicLevel.getScoreBonus());
                     //resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, false);
                     //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
@@ -1926,7 +1985,7 @@ namespace XrCode
                 //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
             }
             int numberGoodCanEat = GetNumberGoodCanEat();
-            Debug.Log("numberGoodCanEat : " + numberGoodCanEat);
+            Debug.Log("剩余可消除对数 : " + numberGoodCanEat);
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
                 Game.Instance.StartCoroutine(StartResetMap());
@@ -2197,6 +2256,15 @@ namespace XrCode
         private int GetCurLevel()
         {
             return curLevel;
+        }
+
+        /// <summary>
+        /// 前进1关
+        /// </summary>
+        private void NextLevel()
+        {
+            curLevel += 1;
+            PlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
 
         private int GetTipCount()
@@ -2842,6 +2910,24 @@ namespace XrCode
         private GameObject[][] GetMAPGoods()
         {
             return MAP_Goods;
+        }
+
+        //获得累计消除次数
+        private int GetCurTotalLinkCount()
+        {
+            return curTotalLinkCount;
+        }
+
+        //获得老虎机累计消除次数
+        private int GetCurLuckMomentCount()
+        {
+            return curLuckMomentCount;
+        }
+        //设置老虎机累计消除次数
+        private void SetCurLuckMomentCount(int value)
+        {
+            curLuckMomentCount = value;
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curLuckMomentCount, value);
         }
 
         #endregion

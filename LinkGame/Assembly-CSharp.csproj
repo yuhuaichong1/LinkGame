@@ -182,6 +182,7 @@
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UIChallengeSuccessful.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCAxis.cs" />
     <Compile Include="Assets\Scripts\UI\LuckMoment\UILuckMoment.cs" />
+    <Compile Include="Assets\Scripts\Facade\FacadeAd.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMask.cs" />
     <Compile Include="Assets\Scripts\UI\UserLevel\UITemplate\UIUserLevel_Temp.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoadRequest.cs" />

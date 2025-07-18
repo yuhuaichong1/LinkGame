@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class SPlayerPref
+public static class SPlayerPrefs
 {
     public const string Separator1 = ",";//·Ö¸ô·û1
     public const string Separator2 = "/";//·Ö¸ô·û2
@@ -128,5 +129,10 @@ public static class SPlayerPref
             Debug.LogWarning($"Dictionary '{key}' parsing failed");
             return ifdefault? new Dictionary<T, U>() : null; 
         }
+    }
+
+    internal static int GetInt(object curTotalLinkCount)
+    {
+        throw new NotImplementedException();
     }
 }

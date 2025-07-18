@@ -40,12 +40,12 @@ namespace XrCode
             PlayerFacade.GetRandomPlayerName += GetRandomPlayerName;
             PlayerFacade.GetRandomAttemptAndMoney += GetRandomAttemptAndMoney;
 
-            wMoney = SPlayerPref.GetFloat(PlayerPrefDefines.moneyCount);
-            wPayType = (EPayType)SPlayerPref.GetInt(PlayerPrefDefines.wPayType);
-            wName = SPlayerPref.GetString(PlayerPrefDefines.wName);
-            wPhoneOrEmail = SPlayerPref.GetString(PlayerPrefDefines.wPhoneOrEmail);
-            userLevel = SPlayerPref.GetInt(PlayerPrefDefines.userLevel);
-            curUserExp = SPlayerPref.GetInt(PlayerPrefDefines.curUserExp);
+            wMoney = SPlayerPrefs.GetFloat(PlayerPrefDefines.moneyCount);
+            wPayType = (EPayType)SPlayerPrefs.GetInt(PlayerPrefDefines.wPayType);
+            wName = SPlayerPrefs.GetString(PlayerPrefDefines.wName);
+            wPhoneOrEmail = SPlayerPrefs.GetString(PlayerPrefDefines.wPhoneOrEmail);
+            userLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.userLevel);
+            curUserExp = SPlayerPrefs.GetInt(PlayerPrefDefines.curUserExp);
 
             if (userLevel == 0)
                 SetUserLevel(1);
@@ -93,39 +93,39 @@ namespace XrCode
         private void SetWMoney(float value) 
         { 
             wMoney = value;
-            SPlayerPref.SetFloat(PlayerPrefDefines.moneyCount, value);
+            SPlayerPrefs.SetFloat(PlayerPrefDefines.moneyCount, value);
         }
 
         private void AddWMoney(float value)
         {
             wMoney += value;
-            SPlayerPref.SetFloat(PlayerPrefDefines.moneyCount, wMoney);
+            SPlayerPrefs.SetFloat(PlayerPrefDefines.moneyCount, wMoney);
         }
 
         private void SetPayType(EPayType payType)
         {
             wPayType = payType;
-            SPlayerPref.SetInt(PlayerPrefDefines.wPayType, (int)payType);
+            SPlayerPrefs.SetInt(PlayerPrefDefines.wPayType, (int)payType);
         }
 
         private void SetNameAndPhoneOrEmail(string name, string PhoneOrEmail)
         {
             wName = name;
             wPhoneOrEmail = PhoneOrEmail;
-            SPlayerPref.SetString(PlayerPrefDefines.wName, name);
-            SPlayerPref.SetString(PlayerPrefDefines.wPhoneOrEmail, PhoneOrEmail);
+            SPlayerPrefs.SetString(PlayerPrefDefines.wName, name);
+            SPlayerPrefs.SetString(PlayerPrefDefines.wPhoneOrEmail, PhoneOrEmail);
         }
 
         private void SetUserLevel(int level) 
         { 
             userLevel = level;
-            SPlayerPref.SetInt(PlayerPrefDefines.userLevel, level);
+            SPlayerPrefs.SetInt(PlayerPrefDefines.userLevel, level);
         }
 
         private void SetCurUserExp(int exp)
         {
             curUserExp = exp;
-            SPlayerPref.SetInt(PlayerPrefDefines.curUserExp, exp);
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curUserExp, exp);
         }
         #endregion
     

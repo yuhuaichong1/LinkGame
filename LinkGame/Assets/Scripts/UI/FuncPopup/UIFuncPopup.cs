@@ -10,12 +10,9 @@ namespace XrCode
     {
         private EFuncType eFuncType;
         private Action btnAction;
-        private AdModule AdModule;
 
         protected override void OnAwake() 
         {
-            AdModule = ModuleMgr.Instance.AdModule;
-
             LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
         }
         
@@ -48,16 +45,6 @@ namespace XrCode
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Hint_IconPath);
             AddEffect();
-            //btnAction = () => {
-            //    AdModule.PlayRewardAd(() =>
-            //    {
-            //        GamePlayFacade.ChangeTipCount(1);
-            //        GamePlayFacade.ChangeTipCountShow?.Invoke();
-            //        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
-
-
-            //    });
-            //};
         }
 
         //显示刷新相关UI
@@ -65,16 +52,6 @@ namespace XrCode
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Refush_IconPath);
             AddEffect();
-            //btnAction = () => {
-            //    AdModule.PlayRewardAd(() =>
-            //    {
-            //        GamePlayFacade.ChangeRefushCount(1);
-            //        GamePlayFacade.ChangeRefushCountShow?.Invoke();
-            //        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
-
-                    
-            //    });
-            //};
         }
 
         //显示移除相关UI（现为改变方向功能)
@@ -82,14 +59,6 @@ namespace XrCode
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Shift_IconPath);
             AddEffect();
-            //btnAction = () => {
-            //    AdModule.PlayRewardAd(() =>
-            //    {
-            //        GamePlayFacade.ChangeRemoveCount(1);
-            //        GamePlayFacade.ChangeRemoveCountShow?.Invoke();
-            //        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
-            //    });
-            //};
         }
 
         private void AddEffect()
@@ -109,7 +78,7 @@ namespace XrCode
                     break;
             }
             btnAction = () => {
-                AdModule.PlayRewardAd(() =>
+                FacadeAd.PlayRewardAd(() =>
                 {
                     FacadeEffect.PlayRewardEffect(new List<RewardItem>
                     {
@@ -157,7 +126,7 @@ namespace XrCode
                     }
                     PlayerFacade.AddWMoney(addMoney);
                     UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
-                });
+                }, null);
             };
         }
 

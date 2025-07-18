@@ -1,7 +1,8 @@
 fileFormatVersion: 2
-guid: aedec6f8aad347943899ba0a35df0d77
-PrefabImporter:
+guid: 66becd1f59ca34348be9bbd121d4d7d6
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: assets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
   assetBundleVariant: 

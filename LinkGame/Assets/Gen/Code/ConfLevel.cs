@@ -20,6 +20,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     {
         Sn = _buf.ReadInt();
         LevelSize = _buf.ReadString();
+        LevelType = _buf.ReadInt();
         GoodKinds = _buf.ReadInt();
         MoveDic = _buf.ReadInt();
         HiddleGoodMove = _buf.ReadString();
@@ -28,6 +29,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         ObstacleStay = _buf.ReadString();
         HiddleGoodDelay = _buf.ReadString();
         WithdrawType = _buf.ReadInt();
+        Reward = _buf.ReadFloat();
         PostInit();
     }
 
@@ -44,6 +46,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 物品总数
     /// </summary>
     public string LevelSize { get; protected set; }
+    public int LevelType { get; protected set; }
     /// <summary>
     /// 物品种类数量
     /// </summary>
@@ -76,6 +79,10 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 兑现类型
     /// </summary>
     public int WithdrawType { get; protected set; }
+    /// <summary>
+    /// 通关奖励
+    /// </summary>
+    public float Reward { get; protected set; }
 
     public const int __ID__ = 1172697760;
     public override int GetTypeId() => __ID__;
@@ -93,6 +100,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     {
         Sn = reloadData.Sn;
         LevelSize = reloadData.LevelSize;
+        LevelType = reloadData.LevelType;
         GoodKinds = reloadData.GoodKinds;
         MoveDic = reloadData.MoveDic;
         HiddleGoodMove = reloadData.HiddleGoodMove;
@@ -101,6 +109,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         ObstacleStay = reloadData.ObstacleStay;
         HiddleGoodDelay = reloadData.HiddleGoodDelay;
         WithdrawType = reloadData.WithdrawType;
+        Reward = reloadData.Reward;
     }
 
     public override string ToString()
@@ -108,6 +117,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         return "{ "
         + "Sn:" + Sn + ","
         + "LevelSize:" + LevelSize + ","
+        + "LevelType:" + LevelType + ","
         + "GoodKinds:" + GoodKinds + ","
         + "MoveDic:" + MoveDic + ","
         + "HiddleGoodMove:" + HiddleGoodMove + ","
@@ -116,6 +126,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         + "ObstacleStay:" + ObstacleStay + ","
         + "HiddleGoodDelay:" + HiddleGoodDelay + ","
         + "WithdrawType:" + WithdrawType + ","
+        + "Reward:" + Reward + ","
         + "}";
     }
     

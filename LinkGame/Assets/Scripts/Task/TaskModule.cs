@@ -33,7 +33,7 @@ namespace XrCode
 
         private void GetTaskData()
         {
-            taskStatus = SPlayerPref.GetDictionary<int, int>(PlayerPrefDefines.taskStatus);
+            taskStatus = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.taskStatus);
             if (taskStatus != null) 
             {
                 foreach (KeyValuePair<int, int> status in taskStatus)

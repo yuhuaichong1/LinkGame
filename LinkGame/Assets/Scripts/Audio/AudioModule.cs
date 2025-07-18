@@ -43,14 +43,14 @@ namespace XrCode
         //获取音频数据
         private void LoadMusicData()
         {
-            float value = SPlayerPref.GetFloat(PlayerPrefDefines.musicToggle);
+            float value = SPlayerPrefs.GetFloat(PlayerPrefDefines.musicToggle);
             musicVolume = value;
             effectsVolume = value;
         }
         //获取震动数据
         private void LoadVibrateData()
         {
-            bool value = SPlayerPref.GetBool(PlayerPrefDefines.musicToggle);
+            bool value = SPlayerPrefs.GetBool(PlayerPrefDefines.musicToggle);
             ifVibrate = value;
         }
 
@@ -221,7 +221,7 @@ namespace XrCode
             musicVolume = Mathf.Clamp01(volume);
             musicSource.volume = musicVolume;
 
-            SPlayerPref.SetFloat(PlayerPrefDefines.musicToggle, volume);
+            SPlayerPrefs.SetFloat(PlayerPrefDefines.musicToggle, volume);
         }
 
         // 设置音效音量
@@ -252,7 +252,7 @@ namespace XrCode
         public void SetVibrate(bool b)
         {
             ifVibrate = b;
-            SPlayerPref.SetBool(PlayerPrefDefines.vibrateToggle, b);
+            SPlayerPrefs.SetBool(PlayerPrefDefines.vibrateToggle, b);
         }
 
     }

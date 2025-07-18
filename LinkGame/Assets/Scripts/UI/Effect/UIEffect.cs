@@ -138,6 +138,8 @@ namespace XrCode
             sequence.AppendInterval(GameDefines.PRN_Effect_StayTime);
             sequence.Append(mPlayerGetRewardNotice.DOLocalMoveY(PGRNotice_OrginY, GameDefines.PRN_Effect_MoveTime));
             sequence.Play();
+
+            mPGRNParticle.Play();
         }
 
         /// <summary>
@@ -206,6 +208,8 @@ namespace XrCode
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
             //mLevelTargetText.text = string.Format(LanguageModule.GetText(""), GamePlayFacade.GetCurLevel);
+            mLevelTarget.localScale = Vector3.one;
+            mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 
             DG.Tweening.Sequence sequence = DOTween.Sequence();
             sequence.Append(mLevelTarget.DOLocalMoveX(0, GameDefines.TL_Effect_XMoveTime).SetEase(Ease.OutBack));
