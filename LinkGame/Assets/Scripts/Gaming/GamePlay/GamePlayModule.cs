@@ -79,6 +79,8 @@ namespace XrCode
         private int curTopNoticeCount;//顶部消息计数
         private int curAwesomeCount;//送钱计数
 
+        private Dictionary<int, int> randomGoodIcon;//让图样随机的词典
+        private List<int> RGIids;//randomGoodIcon辅助数组
 
         protected override void OnLoad()
         {
@@ -116,6 +118,9 @@ namespace XrCode
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
+            randomGoodIcon = new Dictionary<int, int>();
+            RGIids = new List<int>(ConfigModule.Instance.Tables.TBGoodIcon.DataMap.Keys);
+
             LPath = new ArrayList();
             keyLPath = new ArrayList();
             list_block_frozen = new ArrayList();
@@ -148,7 +153,6 @@ namespace XrCode
         private void LoadData()
         {
             curLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
-            curLevel = 3;
             tipCount = SPlayerPrefs.GetInt(PlayerPrefDefines.tipCount);
             refushCount = SPlayerPrefs.GetInt(PlayerPrefDefines.refushCount);
             removeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.removeCount);
@@ -158,6 +162,12 @@ namespace XrCode
             curLuckMomentCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curLuckMomentCount);
             //curTopNoticeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curTopNoticeCount);
             //curAwesomeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curAwesomeCount);
+
+            if (curLevel == 0)
+            {
+                Debug.LogError("第一次进游戏");
+                curLevel = 1;
+            }
         }
 
         /// <summary>
@@ -179,7 +189,7 @@ namespace XrCode
         /// <returns></returns>
         private Sprite GetGoodIcon(int id)
         {
-            return goodIcons[id];
+            return goodIcons[randomGoodIcon[id]];
         }
 
         /// <summary>
@@ -197,6 +207,8 @@ namespace XrCode
         #region 创建关卡
         private void CreateLevel()
         {
+            SetRandomGoodIcon();
+
             curLevelData = new LevelData(curLevel);
             row = curLevelData.LevelXCount;
             col = curLevelData.LevelYCount;
@@ -292,8 +304,7 @@ namespace XrCode
             list_block_frozen = curLevelData.list_block_frozen_fixed;
 
             int total_good = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_good_fixed.Count;
-            //int total_good_type = curLevelData.GoodKinds;
-            int total_good_type = 42;
+            int total_good_type = curLevelData.GoodKinds;
             int number_good_4 = (total_good - 2 * total_good_type) / 2;
             int number_good_2 = total_good_type - number_good_4;
 
@@ -2928,6 +2939,19 @@ namespace XrCode
         {
             curLuckMomentCount = value;
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLuckMomentCount, value);
+        }
+
+        //设置随机图片
+        private void SetRandomGoodIcon()
+        {
+            randomGoodIcon.Clear();
+
+            List<int> newIds = new List<int>(RGIids);
+            ShuffleHelper.Shuffle(newIds);
+            for (int i = 0; i < RGIids.Count; i++) 
+            {
+                randomGoodIcon.Add(RGIids[i], newIds[i]);
+            }
         }
 
         #endregion
