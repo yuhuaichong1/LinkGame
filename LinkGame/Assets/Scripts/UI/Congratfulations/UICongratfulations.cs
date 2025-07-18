@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace XrCode
 {
 
-    public partial class UIAwesome : BaseUI
+    public partial class UICongratfulations : BaseUI
     {
         private float awesomeMoney;
         private float awesomeMoney_Extra;
@@ -19,27 +19,38 @@ namespace XrCode
 
             LanguageModule = ModuleMgr.Instance.LanguageMod;
         }
+
+        protected override void OnSetParam(params object[] args)
+        {
+            awesomeMoney = (float)args[0];
+        }
+
         protected override void OnEnable() 
         {
-            awesomeMoney = UnityEngine.Random.Range(GameDefines.Awesome_ExtraMoney_Num.x, GameDefines.Awesome_ExtraMoney_Num.y);
             awesomeMoney_Extra = awesomeMoney / 10;
             mMoneyText.text = FacadePayType.RegionalChange(awesomeMoney);
             mOnlyMoney.text = string.Format(LanguageModule.GetText(""), FacadePayType.RegionalChange(awesomeMoney_Extra));
         }
-        	    private void OnClaimBtnClickHandle()        {            FacadeAd.PlayRewardAd(() =>             {
+        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);        }	    private void OnClaimBtnClickHandle()        {
+            FacadeAd.PlayRewardAd(() =>
+            {
                 PlayerFacade.AddWMoney(awesomeMoney);
-                FacadeEffect.PlayRewardEffect(new List<RewardItem>() 
-                { 
+                FacadeEffect.PlayRewardEffect(new List<RewardItem>()
+                {
                     new RewardItem()
                     {
                         type = ERewardType.Money,
                         count = awesomeMoney,
                     }
-                }, () => 
+                }, () =>
                 {
+                    FacadeTask.CurMoneyTextShow();
                     GamePlayFacade.ChangeMoneyShow();
                 });
-                UIManager.Instance.CloseUI(EUIType.EUIAwesome);            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
+
+                FacadeTask.ReceiveDataRemove();
+
+                UIManager.Instance.CloseUI(EUIType.EUICongratfulations);            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
         {
             PlayerFacade.AddWMoney(awesomeMoney_Extra);
             FacadeEffect.PlayRewardEffect(new List<RewardItem>()
@@ -51,9 +62,13 @@ namespace XrCode
                 }
             }, () =>
             {
+                FacadeTask.CurMoneyTextShow();
                 GamePlayFacade.ChangeMoneyShow();
             });
-            UIManager.Instance.CloseUI(EUIType.EUIAwesome);
+
+            FacadeTask.ReceiveDataRemove();
+
+            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);
         }
         protected override void OnDisable() { }
         protected override void OnDispose() { }

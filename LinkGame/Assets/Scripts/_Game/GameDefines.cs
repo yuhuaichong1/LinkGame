@@ -138,6 +138,7 @@ public enum EUIType
     EUIGamePlayNotice = 21,
     EUIChallengeSuccessful = 22,
     EUIChallengeFailed = 23,
+    EUICongratfulations = 24,
 }
 
 public enum ESceneType : byte

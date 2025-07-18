@@ -58,6 +58,9 @@ public class TaskItemData : MonoBehaviour
 
     private void OnReceiveBtnClick()
     {
-        FacadeTask.Receive(TaskId, TaskType);
+        float reward = ConfigModule.Instance.Tables.TBTask.Get(TaskId).Reward;
+        UIManager.Instance.OpenWindowAsync<UICongratfulations>(EUIType.EUICongratfulations, null, reward);
+
+        FacadeTask.SetReceiveInfo(TaskId, TaskType);
     }
 }

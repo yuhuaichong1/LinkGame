@@ -1,6 +1,7 @@
 using cfg;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace XrCode
 {
@@ -13,7 +14,8 @@ namespace XrCode
         private Dictionary<int, Task> DailyTask;
         private Dictionary<int, Task> ChallengeTask;
 
-
+        private int re_taskId;
+        private int re_taskType;
 
         protected override void OnLoad()
         {
@@ -21,7 +23,8 @@ namespace XrCode
 
             FacadeTask.GetDailyTask += GetDailyTask;
             FacadeTask.GetChallageTask += GetChallageTask;
-            FacadeTask.Receive += Receive;
+            FacadeTask.SetReceiveInfo += SetReceiveInfo;
+            FacadeTask.ReceiveDataRemove += ReceiveDataRemove;
 
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
@@ -84,27 +87,42 @@ namespace XrCode
         }
 
         /// <summary>
-        /// 获取奖励
+        /// 设置奖励信息
         /// </summary>
-        /// <param name="taskId">任务Id</param>
-        public void Receive(int taskId, int taskType)
+        /// <param name="taskId"></param>
+        /// <param name="taskType"></param>
+        public void SetReceiveInfo(int taskId, int taskType)
         {
-            taskStatus.Remove(taskId);
+            re_taskId = taskId;
+            re_taskType = taskType;
+        }
 
-            if (taskType == 0)
+        /// <summary>
+        /// 获取奖励后移除
+        /// </summary>
+        public void ReceiveDataRemove()
+        {
+            taskStatus.Remove(re_taskId);
+            SPlayerPrefs.SetDictionary(PlayerPrefDefines.taskStatus, taskStatus);
+
+            if (re_taskType == 0)
             {
-                DailyTask.Remove(taskId);
+                DailyTask.Remove(re_taskId);
+                FacadeTask.RefreshDailyTask();
             }
             else
             {
-                ChallengeTask.Remove(taskId);
+                ChallengeTask.Remove(re_taskId);
+                FacadeTask.RefreshChallageTask();
             }
+
+
         }
 
         /// <summary>
         /// 获取有效的日常任务集合
         /// </summary>
-        /// <returns></returns>
+        /// <returns>有效的日常任务集合</returns>
         public List<Task> GetDailyTask()
         {
             List<Task> tasks = new List<Task>();
@@ -118,7 +136,7 @@ namespace XrCode
         /// <summary>
         /// 获取有效的挑战任务集合
         /// </summary>
-        /// <returns></returns>
+        /// <returns>有效的挑战任务集合</returns>
         public List<Task> GetChallageTask()
         {
             List<Task> tasks = new List<Task>();

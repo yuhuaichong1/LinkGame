@@ -1,6 +1,8 @@
-﻿using SuperScrollView;
+﻿using DG.Tweening;
+using SuperScrollView;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace XrCode
 {
@@ -11,6 +13,10 @@ namespace XrCode
 
         protected override void OnAwake()
         {
+            FacadeTask.RefreshDailyTask += RefreshDailyTask;
+            FacadeTask.RefreshChallageTask += RefreshChallageTask;
+            FacadeTask.CurMoneyTextShow += CurMoneyTextShow;
+
             GetTaskInfo();
         }
 
@@ -49,7 +55,7 @@ namespace XrCode
             LoopGridViewItem item = mDailyScroll.NewListViewItem("DailyTaskItem");
             Task task = DailyTasks[index];
             TaskItemData dataMono = item.GetComponent<TaskItemData>();
-            dataMono.SetProgress(0, task.Target);
+            dataMono.SetProgress(GamePlayFacade.GetCurTotalLinkCount(), task.Target);
             dataMono.SetMsg(task.Content, task.Id, task.Type);
             dataMono.ReceiveBtn.onClick.AddListener(() => 
             {
@@ -64,10 +70,29 @@ namespace XrCode
             LoopGridViewItem item = mChallengeScroll.NewListViewItem("ChallengeTaskItem");
             Task task = ChallageTasks[index];
             TaskItemData dataMono = item.GetComponent<TaskItemData>();
-            dataMono.SetProgress(0, task.Target);
+            dataMono.SetProgress(GamePlayFacade.GetCurLevel(), task.Target);
             dataMono.SetMsg(task.Content, task.Id, task.Type);
 
             return item;
+        }
+
+        private void RefreshDailyTask()
+        {
+            DailyTasks = FacadeTask.GetDailyTask();   
+            mDailyScroll.RefreshAllShownItem();
+        }
+
+        private void RefreshChallageTask()
+        {
+            ChallageTasks = FacadeTask.GetChallageTask();
+            mChallengeScroll.RefreshAllShownItem();
+        }
+
+        //任务钱的弹回动画
+        private void CurMoneyTextShow()
+        {
+            mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
+            mCurMoneyBtn.transform.DOScale(1.25f, GameDefines.FlyMoney_ObjTime / 2).SetLoops(GameDefines.FlyMoney_Effect_RewardCount * 2, LoopType.Yoyo);
         }
 
         protected override void OnDisable() { }

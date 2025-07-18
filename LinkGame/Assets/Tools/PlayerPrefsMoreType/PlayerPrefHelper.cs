@@ -72,7 +72,7 @@ public static class SPlayerPrefs
             List<T> list = new List<T>();
             foreach (string str in strings)
             {
-                list.Add((T)(object)str);
+                list.Add((T)Convert.ChangeType(str, typeof(T)));
             }
 
             return list;
@@ -117,8 +117,8 @@ public static class SPlayerPrefs
             string[] dicValues = KeyValue[1].Split(Separator1);
             for (int i = 0; i < dicKeys.Length; i++)
             {
-                T keyItem = (T)(object)dicKeys[i];
-                U valueItem = (U)(object)dicValues[i];
+                T keyItem = (T)Convert.ChangeType(dicKeys[i], typeof(T));
+                U valueItem = (U)Convert.ChangeType(dicValues[i], typeof(U));
                 dic.Add(keyItem, valueItem);
             }
 
