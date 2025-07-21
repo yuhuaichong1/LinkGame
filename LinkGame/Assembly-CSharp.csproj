@@ -115,6 +115,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\DataFormat.cs" />
     <Compile Include="Assets\Gen\Code\ConfLoadingTitleSprite.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\Button-Event-Input\ButtonInputUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Congratfulations\UITemplate\UICongratfulations_Temp.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\BytesUtils.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\Common\CommonDefine.cs" />
     <Compile Include="Assets\Scripts\GameSDK\TDAnalytics\TDAnalyticsManager.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleConfig.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TagDecorator.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILoad.cs" />
+    <Compile Include="Assets\Scripts\UI\Congratfulations\UICongratfulations.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoLongTapMe.cs" />
     <Compile Include="Assets\Gen\Code\TBGoodIcon.cs" />
     <Compile Include="Assets\Scripts\UI\Effect\UIEffect.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UIChallengeSuccessful.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCAxis.cs" />
     <Compile Include="Assets\Scripts\UI\LuckMoment\UILuckMoment.cs" />
+    <Compile Include="Assets\Scripts\Facade\FacadeAd.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMask.cs" />
     <Compile Include="Assets\Scripts\UI\UserLevel\UITemplate\UIUserLevel_Temp.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoadRequest.cs" />

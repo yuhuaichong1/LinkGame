@@ -12,6 +12,6 @@ public static class FacadeEffect
     public static Action<Transform, Transform, float> PlayFlyMoneyEffect;               //播放飞钱特效特效
     public static Action<Transform, Transform, float, EFuncType> PlayFlyFuncEffect;     //播放飞道具特效特效
     public static Action<Transform, Sprite, Action> PlayTMDEffect;                      //播放方向指明特效特效
-    public static Action<int, Transform, Transform> PlayPluralFlyMoney;             //播放多个飞钱特效特效
+    public static Action<int, Transform, Transform> PlayPluralFlyMoney;                 //播放多个飞钱特效特效
     public static Action<float> PlayGetMoneyTipEffect;                                  //播放获取飞钱提示特效
 }

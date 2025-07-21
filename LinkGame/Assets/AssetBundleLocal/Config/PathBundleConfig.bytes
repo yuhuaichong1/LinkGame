@@ -441,20 +441,26 @@ g
 Assets/UI/Effect/bg_tixian.pngEassets/assetbundlelocal/prefabs/ui/effect/uieffect.prefab.assetbundle
 f
 Assets/UI/Effect/yun_left.pngEassets/assetbundlelocal/prefabs/ui/effect/uieffect.prefab.assetbundle
+R
+!Assets/UI/Effect/T_vfx_caidai.png-assets/ui/effect/t_vfx_caidai.png.assetbundle
 b
 Assets/UI/Effect/bg_1.pngEassets/assetbundlelocal/prefabs/ui/effect/uieffect.prefab.assetbundle
 g
 Assets/UI/Effect/yun_right.pngEassets/assetbundlelocal/prefabs/ui/effect/uieffect.prefab.assetbundle
 `
 Assets/UI/Effect/bg.pngEassets/assetbundlelocal/prefabs/ui/effect/uieffect.prefab.assetbundle
-¶
-SAssets/AssetBundleLocal/Prefabs/UI/ChallengeSuccessful/UIChallengeSuccessful.prefab_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
-‡
-$Assets/UI/ChallengeSuccessful/bg.png_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
+R
+!Assets/Materials/M_VFX_caidai.mat-assets/materials/m_vfx_caidai.mat.assetbundle
+ª
+MAssets/AssetBundleLocal/Prefabs/UI/Congratfulations/UICongratfulations.prefabYassets/assetbundlelocal/prefabs/ui/congratfulations/uicongratfulations.prefab.assetbundle
 D
 Assets/UI/Common/guang.png&assets/ui/common/guang.png.assetbundle
 B
 Assets/UI/Common/qian.png%assets/ui/common/qian.png.assetbundle
+¶
+SAssets/AssetBundleLocal/Prefabs/UI/ChallengeSuccessful/UIChallengeSuccessful.prefab_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
+‡
+$Assets/UI/ChallengeSuccessful/bg.png_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
 ¦
 KAssets/AssetBundleLocal/Prefabs/UI/ChallengeFailed/UIChallengeFailed.prefabWassets/assetbundlelocal/prefabs/ui/challengefailed/uichallengefailed.prefab.assetbundle
 †
@@ -481,6 +487,12 @@ e
 9Assets/AssetBundleLocal/Prefabs/Effect/GetMoneyTip.prefabEassets/assetbundlelocal/prefabs/effect/getmoneytip.prefab.assetbundle
 ‚
 9Assets/AssetBundleLocal/Prefabs/Effect/ItemExplore.prefabEassets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
+j
+!Assets/Materials/M_VFX_Glow01.matEassets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
+h
+Assets/UI/Effect/Glow_030_c.tgaEassets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
+„
+:Assets/AssetBundleLocal/Prefabs/Effect/ItemExplore2.prefabFassets/assetbundlelocal/prefabs/effect/itemexplore2.prefab.assetbundle
 D
 Assets/Materials/Flame.mat&assets/materials/flame.mat.assetbundle
 Œ

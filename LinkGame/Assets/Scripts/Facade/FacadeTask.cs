@@ -9,9 +9,12 @@ namespace XrCode
         public static Action<int> OnDTaskChange;                    //红点相关_当完成的日常任务数量发生改变时
         public static Action<int> OnCTaskChange;                    //红点相关_当完成的挑战任务数量发生改变时
 
-
         public static Func<List<Task>> GetDailyTask;                //获取日常任务数据
         public static Func<List<Task>> GetChallageTask;             //获取挑战任务数据
-        public static Action<int, int> Receive;                     //任务完成按钮点击后领取奖励
+        public static Action<int, int> SetReceiveInfo;              //任务完成按钮点击后设置信息
+        public static Action ReceiveDataRemove;                     //祝贺界面按钮点击后领取奖励
+        public static Action RefreshDailyTask;                      //刷新日常任务数据
+        public static Action RefreshChallageTask;                   //刷新挑战任务数据
+        public static Action CurMoneyTextShow;                      //任务钱的弹回动画
     }
 }

@@ -374,14 +374,23 @@ namespace XrCode
         //指明方向特效以及UI生成
         private void TMDTipShow()
         {
-            if (!ifDicEffectShow) return;
-
-            FacadeEffect.PlayTMDEffect(mCurDir.transform, curLevelDicIcon, () => 
-            { 
-                mCurDir.gameObject.SetActive(true);
-                mGamePlayMask.gameObject.SetActive(false);
-                FacadeEffect.PlayRewardNoticeEffect();
-            });
+            if (!ifDicEffectShow)
+            {
+                TMDTipShow2();
+            }
+            else
+            {
+                FacadeEffect.PlayTMDEffect(mCurDir.transform, curLevelDicIcon, () =>
+                {
+                    TMDTipShow2();
+                });
+            }
+        }
+        private void TMDTipShow2()
+        {
+            mCurDir.gameObject.SetActive(true);
+            mGamePlayMask.gameObject.SetActive(false);
+            FacadeEffect.PlayRewardNoticeEffect();
         }
 
         protected override void OnDisable()

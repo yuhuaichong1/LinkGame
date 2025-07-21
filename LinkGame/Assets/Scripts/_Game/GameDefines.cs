@@ -84,9 +84,15 @@ public abstract class GameDefines
     public const string Reward_FuncRefresh_IconPath = "UI/FuncIcon/icon_re.png";                            //奖励特效刷新功能图片                        （*）
     public const string Reward_FuncShift_IconPath = "UI/FuncIcon/icon_shift.png";                           //奖励特效换向功能图片                        （*）
 
+    public const float GoodShowTime = 0.1f;                                                                 //物品显示动画时间间隔
+
+    public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
+    public const int TopNotice_Count_Max = 12;                                                              //顶部提示展示的最大值
+    public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
+
+    public static Vector2 Awesome_ExtraMoney_Num = new Vector2(10, 50);                                     //Awesome界面随机钱区间
 
 
-    public const float GoodShowTime = 0.1f;                                                                  //物品显示动画时间间隔
 }
 #endregion
 
@@ -132,6 +138,7 @@ public enum EUIType
     EUIGamePlayNotice = 21,
     EUIChallengeSuccessful = 22,
     EUIChallengeFailed = 23,
+    EUICongratfulations = 24,
 }
 
 public enum ESceneType : byte

@@ -20,6 +20,7 @@ public static class GamePlayFacade
     public static Action<int> ChangeRefushCount;          //改变刷新功能数量
     public static Action<int> ChangeRemoveCount;          //改变移除功能数量（目前作用为“方向变更”的数量）
     public static Func<int> GetCurLevel;                  //得到当前关卡
+    public static Action NextLevel;                       //下一关卡（仅数据）
     public static Func<int> GetTipCount;                  //获取提示功能数量
     public static Func<int> GetRefushCount;               //获取刷新功能数量
     public static Func<int> GetRemoveCount;               //获取移除功能数量
@@ -35,6 +36,9 @@ public static class GamePlayFacade
     public static Func<int, Sprite> GetGoodIcon;          //获取物品图片
     public static Action<Vec2> Select;                    //选中（GamePlayModule中的Select）
     public static Func<GameObject[][]> GetMAPGoods;       //获取当前关卡的所有物体
+    public static Func<int> GetCurTotalLinkCount;         //获得总消除次数
+    public static Func<int> GetCurLuckMomentCount;        //获得幸老虎机累计消除次数
+    public static Action<int> SetCurLuckMomentCount;      //设置幸老虎机累计消除次数（一般用作归0）
 
     public static Func<Transform> GetMapTrans;              //获取生成物体的父对象
     public static Func<Transform> GetFlyMoneyTarget;        //得到飞钱移动终点目标

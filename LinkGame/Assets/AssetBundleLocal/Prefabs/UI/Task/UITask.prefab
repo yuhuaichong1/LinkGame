@@ -280,6 +280,7 @@ MonoBehaviour:
   ProgressText: {fileID: 8160230766257612802}
   ReceiveBtn: {fileID: 5330965092606704873}
   InProgress: {fileID: 6003555701448463184}
+  TaskType: 0
   TaskId: 0
 --- !u!1 &407571750157184221
 GameObject:
@@ -1286,6 +1287,9 @@ MonoBehaviour:
     m_ComponentList:
     - {fileID: 6631729433290078105}
     - {fileID: 5949653317907334485}
+  - m_Target: {fileID: 5199173059462682223}
+    m_ComponentList:
+    - {fileID: 8072707561091135118}
 --- !u!225 &238806779600711233
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2632,7 +2636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -36}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 492, y: 140}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &848603611237833156
@@ -3917,7 +3921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: -2}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!1 &7439231697663054544
 GameObject:
@@ -4561,6 +4565,7 @@ MonoBehaviour:
   ProgressText: {fileID: 4283782584748152987}
   ReceiveBtn: {fileID: 2702286758391526258}
   InProgress: {fileID: 6827081185257021120}
+  TaskType: 0
   TaskId: 0
 --- !u!1 &8183767409285407791
 GameObject:

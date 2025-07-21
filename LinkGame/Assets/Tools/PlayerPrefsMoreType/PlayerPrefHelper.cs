@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class SPlayerPref
+public static class SPlayerPrefs
 {
     public const string Separator1 = ",";//·Ö¸ô·û1
     public const string Separator2 = "/";//·Ö¸ô·û2
@@ -71,7 +72,7 @@ public static class SPlayerPref
             List<T> list = new List<T>();
             foreach (string str in strings)
             {
-                list.Add((T)(object)str);
+                list.Add((T)Convert.ChangeType(str, typeof(T)));
             }
 
             return list;
@@ -116,8 +117,8 @@ public static class SPlayerPref
             string[] dicValues = KeyValue[1].Split(Separator1);
             for (int i = 0; i < dicKeys.Length; i++)
             {
-                T keyItem = (T)(object)dicKeys[i];
-                U valueItem = (U)(object)dicValues[i];
+                T keyItem = (T)Convert.ChangeType(dicKeys[i], typeof(T));
+                U valueItem = (U)Convert.ChangeType(dicValues[i], typeof(U));
                 dic.Add(keyItem, valueItem);
             }
 
@@ -128,5 +129,10 @@ public static class SPlayerPref
             Debug.LogWarning($"Dictionary '{key}' parsing failed");
             return ifdefault? new Dictionary<T, U>() : null; 
         }
+    }
+
+    internal static int GetInt(object curTotalLinkCount)
+    {
+        throw new NotImplementedException();
     }
 }

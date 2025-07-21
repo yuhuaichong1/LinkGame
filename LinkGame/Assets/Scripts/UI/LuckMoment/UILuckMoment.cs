@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace XrCode
 {
-
     public partial class UILuckMoment : BaseUI
     {
         private LanguageModule LanguageModule;
@@ -54,7 +53,7 @@ namespace XrCode
             {
                 wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
                 wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
-                wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra);
+                wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
 
             }
 
@@ -63,18 +62,23 @@ namespace XrCode
         protected override void OnEnable() 
         {
             mExitBtn.gameObject.SetActive(true);
-            SpinBtnActive(true);
 
-            if(preRewardId != -1)
+            int remaining = GameDefines.LuckMoment_Count_Max - GamePlayFacade.GetCurLuckMomentCount();
+            bool b = remaining == 0;
+            SpinBtnActive(b);
+            //mBottomText.text = b ? LanguageModule.GetText("") : string.Format(LanguageModule.GetText(""), remaining);
+            mBottomText.text = b ? "可以使用了" : $"再消除{remaining}个后可消使用";
+
+            if (preRewardId != -1)
                 wheelDic[preRewardId].Bg.sprite = NotActivatedBg;
         }
-                private string GetLMDesc(int type, int reward)
+                private string GetLMDesc(int type, int reward, float count)
         {
             
             switch (type)
             {
                 case 1:
-                    return FacadePayType.RegionalChange(reward);
+                    return FacadePayType.RegionalChange(count);
                 case 2:
                     return $"Func {reward}";
                     return LanguageModule.GetText(((EFuncType)reward).ToString()); 
@@ -141,6 +145,7 @@ namespace XrCode
                 }
                 else
                 {
+                    GamePlayFacade.SetCurLuckMomentCount(0);
                     D.Error($"发放奖励：{random}");
                     preRewardId = random;
                     STimerManager.Instance.CreateSDelay(1, () => 
@@ -216,12 +221,7 @@ namespace XrCode
                                 }
                                 break;
                         }
-                        //switch()
-                        //{
-
-                        //}
                     });
-                    //ConfigModule.Instance.Tables.TBLuckMoment.Get(random).Type
                 }
             });
         }
