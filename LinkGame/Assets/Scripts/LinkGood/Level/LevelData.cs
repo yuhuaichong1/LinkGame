@@ -93,7 +93,7 @@ public class LevelData
             levelType = (ELevelType)conf.LevelType;
             if (levelType == ELevelType.Fixed)
             {
-                SetFixedLevel_Good("");
+                SetFixedLevel_Good(conf.FixedGridMap);
             }
 
             #region old
@@ -383,25 +383,22 @@ public class LevelData
         }
     }
 
-    private void SetFixedLevel_Good(string fixedLevGods)
+    private void SetFixedLevel_Good(Dictionary<string, int> fixedLevGods)
     {
-        if (fixedLevGods != null && fixedLevGods != "")
+        foreach(KeyValuePair<string, int> keyValuePair in fixedLevGods)
         {
-            string[] fixedLevGodsStr = fixedLevGods.Split('/');
-            for (int i = 0; i < fixedLevGodsStr.Length; i++)
-            {
-                string[] data = fixedLevGodsStr[i].Split(",");
-                int x = int.Parse(data[0]);
-                int y = int.Parse(data[1]);
-                int id = int.Parse(data[2]);
-                FixedLevelGood fixedLevelGood = new FixedLevelGood();
-                fixedLevelGood.id = id;
-                fixedLevelGood.X = x;
-                fixedLevelGood.Y = y;
-                list_fixedLevel_good.Add(fixedLevelGood);
-            }
-        }
-            
+            string[] PosStr = keyValuePair.Key.Split("_");
+            int goodId = keyValuePair.Value;
+
+            int x = int.Parse(PosStr[0]);
+            int y = int.Parse(PosStr[1]);
+            int id = goodId;
+            FixedLevelGood fixedLevelGood = new FixedLevelGood();
+            fixedLevelGood.id = id;
+            fixedLevelGood.X = x;
+            fixedLevelGood.Y = y;
+            list_fixedLevel_good.Add(fixedLevelGood);
+        }   
     }
 
     //加载不可移动的石块障碍物和冰冻物体（可选择）

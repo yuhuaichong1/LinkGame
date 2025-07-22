@@ -178,7 +178,7 @@ namespace XrCode
             if (curLevel == 0)
             {
                 Debug.LogError("第一次进游戏");
-                curLevel = 10001;
+                curLevel = 1;
             }
         }
 

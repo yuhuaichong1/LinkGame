@@ -25,7 +25,7 @@ public class GuideModule : BaseModule
         foreach (ConfGuides guide in guideData)
         {
             int step = guide.Step;
-            string key = guide.DiglogContent;
+            int key = guide.DiglogContent;
             string DP = guide.DiglogPos;
             string HP = guide.HandPos;
             string TP = guide.TransparentPos;

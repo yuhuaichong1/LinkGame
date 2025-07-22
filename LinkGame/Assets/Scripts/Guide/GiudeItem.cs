@@ -5,7 +5,7 @@ using UnityEngine;
 public class GiudeItem
 {
     public int step;
-    public string contentKey;
+    public int contentKey;
     public string DP;
     public string HP;
     public string TP;

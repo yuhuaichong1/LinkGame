@@ -20,7 +20,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     {
         Sn = _buf.ReadInt();
         Step = _buf.ReadInt();
-        DiglogContent = _buf.ReadString();
+        DiglogContent = _buf.ReadInt();
         DiglogPos = _buf.ReadString();
         HandPos = _buf.ReadString();
         TransparentPos = _buf.ReadString();
@@ -45,9 +45,9 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// <summary>
     /// 教程内容（对应Language表）
     /// </summary>
-    public string DiglogContent { get; protected set; }
+    public int DiglogContent { get; protected set; }
     /// <summary>
-    /// diglogPos
+    /// 提示框位置
     /// </summary>
     public string DiglogPos { get; protected set; }
     /// <summary>

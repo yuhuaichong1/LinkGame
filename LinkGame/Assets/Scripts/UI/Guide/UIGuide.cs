@@ -26,7 +26,7 @@ namespace XrCode
             level1GuideGoodDic = FacadeGuide.GetLevel1GuideGoodDic();
             posTrans = new Dictionary<string, RectTransform>();
 
-            GetAllChildrenRecursive(mPos);
+            //GetAllChildrenRecursive(mPos);
         }
         protected override void OnEnable() 
         {
