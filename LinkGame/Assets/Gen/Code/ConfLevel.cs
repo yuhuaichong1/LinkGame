@@ -23,6 +23,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         LevelType = _buf.ReadInt();
         GoodKinds = _buf.ReadInt();
         MoveDic = _buf.ReadInt();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FixedGridMap = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     FixedGridMap.Add(_k0, _v0);}}
         HiddleGoodMove = _buf.ReadString();
         HiddleGoodStay = _buf.ReadString();
         ObstacleMove = _buf.ReadString();
@@ -55,6 +56,10 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 物品移动方向
     /// </summary>
     public int MoveDic { get; protected set; }
+    /// <summary>
+    /// aa
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, int> FixedGridMap { get; protected set; }
     /// <summary>
     /// 可移动的隐藏物的位置
     /// </summary>
@@ -103,6 +108,29 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         LevelType = reloadData.LevelType;
         GoodKinds = reloadData.GoodKinds;
         MoveDic = reloadData.MoveDic;
+        if(FixedGridMap==null)
+        {
+            FixedGridMap = reloadData.FixedGridMap;
+        }else
+        {
+            foreach (var rawDataKey in FixedGridMap.Keys.ToList())
+            {
+                if(!reloadData.FixedGridMap.ContainsKey(rawDataKey))
+                {
+                    FixedGridMap.Remove(rawDataKey);
+                }
+            }
+            foreach (var reload in reloadData.FixedGridMap)
+            {
+                if(FixedGridMap.ContainsKey(reload.Key))
+                {
+                    FixedGridMap[reload.Key] = reload.Value;
+                }else
+                {
+                    FixedGridMap.Add(reload.Key,reload.Value);
+                }
+            }
+        }
         HiddleGoodMove = reloadData.HiddleGoodMove;
         HiddleGoodStay = reloadData.HiddleGoodStay;
         ObstacleMove = reloadData.ObstacleMove;
@@ -120,6 +148,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         + "LevelType:" + LevelType + ","
         + "GoodKinds:" + GoodKinds + ","
         + "MoveDic:" + MoveDic + ","
+        + "FixedGridMap:" + Bright.Common.StringUtil.CollectionToString(FixedGridMap) + ","
         + "HiddleGoodMove:" + HiddleGoodMove + ","
         + "HiddleGoodStay:" + HiddleGoodStay + ","
         + "ObstacleMove:" + ObstacleMove + ","
