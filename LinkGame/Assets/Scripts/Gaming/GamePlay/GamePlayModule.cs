@@ -172,6 +172,8 @@ namespace XrCode
                 withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(1).Level);
                 curWLevel = 1;
             }
+            else
+                curWLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.curWLevel);
 
             if (curLevel == 0)
             {

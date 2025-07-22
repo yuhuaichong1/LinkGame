@@ -207,7 +207,8 @@ namespace XrCode
         /// <param name="targetAction">移动完成后的回调</param>
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
-            //mLevelTargetText.text = string.Format(LanguageModule.GetText(""), GamePlayFacade.GetCurLevel);
+            int diff = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(GamePlayFacade.GetCurWLevel()).Level - GamePlayFacade.GetCurLevel();
+            mLevelTargetText.text = string.Format(LanguageModule.GetText(""), diff);
             mLevelTarget.localScale = Vector3.one;
             mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 
