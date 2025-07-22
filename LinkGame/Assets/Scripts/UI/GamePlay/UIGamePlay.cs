@@ -142,7 +142,8 @@ namespace XrCode
         }
 
         //兑现按钮点击
-        private void OnWithdrawalBtnClickHandle()        {
+        private void OnWithdrawalBtnClickHandle()
+        {
             if(PlayerFacade.GetPayType() == 0)
             {
                 UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
@@ -153,19 +154,23 @@ namespace XrCode
             }
         }
         //老虎机按钮点击
-        private void OnPrizeDrawBtnClickHandle()        {
+        private void OnPrizeDrawBtnClickHandle()
+        {
             UIManager.Instance.OpenWindowAsync<UILuckMoment>(EUIType.EUILuckMoment);
         }
         //任务按钮点击
-        private void OnTaskBtnClickHandle()        {
+        private void OnTaskBtnClickHandle()
+        {
             UIManager.Instance.OpenWindowAsync<UITask>(EUIType.EUITask);
         }
         //设置按钮点击
-        private void OnSettingBtnClickHandle()        {
+        private void OnSettingBtnClickHandle()
+        {
             UIManager.Instance.OpenWindowAsync<UISetting>(EUIType.EUISetting);
         }
         //提示功能按钮点击
-        private void OnTipBtnClickHandle()        {
+        private void OnTipBtnClickHandle()
+        {
             if(GamePlayFacade.GetTipCount?.Invoke() > 0)
             {
                 GamePlayFacade.TipFunc?.Invoke();
@@ -176,9 +181,11 @@ namespace XrCode
             {
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Tip);
             }
-                    }
+            
+        }
         //刷新功能按钮点击
-        private void OnRefushBtnClickHandle()        {
+        private void OnRefushBtnClickHandle()
+        {
             if(GamePlayFacade.GetRefushCount?.Invoke() > 0)
             {
                 FacadeEffect.PlayCloudEffect(() => 
@@ -191,7 +198,8 @@ namespace XrCode
             else
             {
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Refush);
-            }        }
+            }
+        }
         //移除（现为变向）功能按钮点击
         private void OnRemoveBtnClickHandle()
         {
