@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class SPlayerPrefs
@@ -36,19 +37,32 @@ public static class SPlayerPrefs
     }
     #endregion
 
-    //存储布尔
-    public static void SetBool(string key, bool value)
+    /// <summary>
+    /// 存储Bool
+    /// </summary>
+    /// <param name="key">Key</param>
+    /// <param name="boolean">存储值</param>
+    public static void SetBool(string key, bool boolean)
     {
-        PlayerPrefs.SetInt(key, value? 1 : 0);
+        PlayerPrefs.SetInt(key, boolean ? 1 : 0);
     }
 
-    //读取布尔
+    /// <summary>
+    /// 读取Bool
+    /// </summary>
+    /// <param name="key">Key</param>
+    /// <returns>Bool值</returns>
     public static bool GetBool(string key) 
     {
         return PlayerPrefs.GetInt(key) == 1;
     }
 
-    //存储表格
+    /// <summary>
+    /// 存储List
+    /// </summary>
+    /// <typeparam name="T">List类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="list">存储值</param>
     public static void SetList<T>(string key, List<T> list)
     {
         List<string> strings = new List<string>();
@@ -62,7 +76,13 @@ public static class SPlayerPrefs
         PlayerPrefs.SetString(key, value);
     }
 
-    //读取表格
+    /// <summary>
+    /// 读取List
+    /// </summary>
+    /// <typeparam name="T">List类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="ifdefault">是否自动创建新值</param>
+    /// <returns>List值</returns>
     public static List<T> GetList<T>(string key, bool ifdefault = false)
     {
         try
@@ -84,7 +104,93 @@ public static class SPlayerPrefs
         }
     }
 
-    //存储字典
+    /// <summary>
+    /// 存储Stack
+    /// </summary>
+    /// <typeparam name="T">Stack类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="stack">存储值</param>
+    public static void SetStack<T>(string key, Stack<T> stack)
+    {
+        SetList(key, new List<T>(stack));
+    }
+
+    /// <summary>
+    /// 读取栈
+    /// </summary>
+    /// <typeparam name="T">Stack类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="ifdefault">是否自动创建新值</param>
+    /// <returns>Stack值</returns>
+    public static Stack<T> GetStack<T>(string key, bool ifdefault = false) 
+    {
+        try
+        {
+            string value = PlayerPrefs.GetString(key);
+            string[] strings = value.Split(Separator1);
+            strings.Reverse();
+            Stack<T> stack = new Stack<T>();
+            foreach (string str in strings)
+            {
+                stack.Push((T)Convert.ChangeType(str, typeof(T)));
+            }
+
+            return stack;
+        }
+        catch
+        {
+            Debug.LogWarning($"Stack '{key}' parsing failed");
+            return ifdefault ? new Stack<T>() : null;
+        }
+    }
+
+    /// <summary>
+    /// 存储Queue
+    /// </summary>
+    /// <typeparam name="T">Queue类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="queue">存储值</param>
+    public static void SetQueue<T>(string key, Queue<T> queue)
+    {
+        SetList(key, new List<T>(queue));
+    }
+
+    /// <summary>
+    /// 读取队列
+    /// </summary>
+    /// <typeparam name="T">Queue类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="ifdefault">是否自动创建新值</param>
+    /// <returns>Queue值</returns>
+    public static Queue<T> GetQueue<T>(string key, bool ifdefault = false)
+    {
+        try
+        {
+            string value = PlayerPrefs.GetString(key);
+            string[] strings = value.Split(Separator1);
+            strings.Reverse();
+            Queue<T> queue = new Queue<T>();
+            foreach (string str in strings)
+            {
+                queue.Enqueue((T)Convert.ChangeType(str, typeof(T)));
+            }
+
+            return queue;
+        }
+        catch
+        {
+            Debug.LogWarning($"Stack '{key}' parsing failed");
+            return ifdefault ? new Queue<T>() : null;
+        }
+    }
+
+    /// <summary>
+    /// 存储Dictionary
+    /// </summary>
+    /// <typeparam name="T">Dictionary的Keys的类型</typeparam>
+    /// <typeparam name="U">Dictionary的Values的类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="dictionary">存储值</param>
     public static void SetDictionary<T, U>(string key, Dictionary<T, U> dictionary)
     {
         List<string> dicKeys = new List<string>();
@@ -106,7 +212,14 @@ public static class SPlayerPrefs
         PlayerPrefs.SetString(key, value);
     }
 
-    //读取字典
+    /// <summary>
+    /// 读取Dictionary
+    /// </summary>
+    /// <typeparam name="T">Dictionary的Keys的类型</typeparam>
+    /// <typeparam name="U">Dictionary的Values的类型</typeparam>
+    /// <param name="key">Key</param>
+    /// <param name="ifdefault">是否自动创建新值</param>
+    /// <returns>Dictionary值</returns>
     public static Dictionary<T,U> GetDictionary<T, U>(string key, bool ifdefault = false)
     {
         try
@@ -129,10 +242,5 @@ public static class SPlayerPrefs
             Debug.LogWarning($"Dictionary '{key}' parsing failed");
             return ifdefault? new Dictionary<T, U>() : null; 
         }
-    }
-
-    internal static int GetInt(object curTotalLinkCount)
-    {
-        throw new NotImplementedException();
     }
 }

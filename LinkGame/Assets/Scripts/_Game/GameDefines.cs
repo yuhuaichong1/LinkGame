@@ -59,7 +59,7 @@ public abstract class GameDefines
 
     public const string FadeMaterials = "Materials/Fade.mat";                                               //UI褪色材质
 
-    public const float FlyEffect_Start_Delay = 1;                                                           //飞行特效开始延迟时间
+    public const float FlyEffect_Start_Delay = 0.5f;                                                           //飞行特效开始延迟时间
     public const float PRN_Effect_MoveTime = 0.5f;                                                          //“上方随机玩家兑现提示”特效移动时间
     public const float PRN_Effect_StayTime = 2.5f;                                                          //“上方随机玩家兑现提示”特效滞留时间
     public const float TL_Effect_XMoveTime = 0.5f;                                                          //“目标关卡提示”特效横向移动时间
@@ -89,6 +89,7 @@ public abstract class GameDefines
     public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
     public const int TopNotice_Count_Max = 12;                                                              //顶部提示展示的最大值
     public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
+    public const int Rate_Count_Max = 5;                                                                    //评论UI展示的最大值
 
     public static Vector2 Awesome_ExtraMoney_Num = new Vector2(10, 50);                                     //Awesome界面随机钱区间
 
@@ -267,6 +268,15 @@ public enum ERewardType : int
     Money = 1,//钱
     Func,//道具
     Withdrawable,//兑现机会
+}
+
+/// <summary>
+/// 关卡类型
+/// </summary>
+public enum ELevelType : int
+{
+    Random = 0,
+    Fixed,
 }
 
 #endregion

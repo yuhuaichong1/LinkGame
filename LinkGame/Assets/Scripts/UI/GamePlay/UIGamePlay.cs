@@ -29,6 +29,8 @@ namespace XrCode
 
         private bool loadedEffectUI;
 
+        private float mapScale;
+
         protected override void OnAwake() 
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
@@ -53,10 +55,10 @@ namespace XrCode
             ChangeFuncRefushCount();
             ChangeFuncRemoveCount();
 
-            //根据屏幕宽高比控制物体缩放大小
+            //根据屏幕宽高比以及物体排布数量控制物体缩放大小
             float screenScale = Screen.width * 1f / Screen.height;
-            float mapScale = -3.3507f * screenScale + 2.8858f;
-            mMap.localScale = new Vector3(mapScale, mapScale, mapScale);
+            mapScale = -3.3507f * screenScale + 2.8858f;
+            
 
             
             lastLevelId = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
@@ -73,6 +75,12 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
+            string size = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel()).LevelSize;
+            //float goodsSizeScale = -0.00694f * sss + 1.6666f;
+            float goodsSizeScale = 1;
+            float sizeScale = goodsSizeScale * mapScale;
+            mMap.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
+
             curLevel = GamePlayFacade.GetCurLevel();
 
             GamePlayFacade.CreateLevel?.Invoke();

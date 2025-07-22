@@ -19,6 +19,7 @@ namespace XrCode
         private TaskModule taskModule;
         private PlayerModule playerModule;
         private PayTypeModule payTypeModule;
+        private TimeZoneModule timezoneModule;
         public List<BaseModule> updateModList;
 
         public SceneMod SceneMod { get { return sceneMod; } }
@@ -36,6 +37,7 @@ namespace XrCode
         public TaskModule TaskModule { get { return taskModule; } }
         public PlayerModule PlayerModule { get { return playerModule; } }
         public PayTypeModule PayTypeModule { get { return payTypeModule; } }
+        public TimeZoneModule TimezoneModule {  get { return timezoneModule; } }
 
         private bool isLoaded = false;
         public void Load()
@@ -55,6 +57,7 @@ namespace XrCode
             taskModule = new TaskModule();
             playerModule = new PlayerModule();
             payTypeModule = new PayTypeModule();
+            timezoneModule = new TimeZoneModule();
         }
         public void Dispose()
         {
@@ -72,6 +75,7 @@ namespace XrCode
             taskModule.Dispose();
             playerModule.Dispose();
             payTypeModule.Dispose();
+            timezoneModule.Dispose();
         }
 
         public void Start()
@@ -80,6 +84,7 @@ namespace XrCode
             isLoaded = true;
             notifyMod.Load();
             userMod.Load();
+            timezoneModule.Load();
             gamePlayMod.Load();
             redDotModule.Load();
             //gameSDKManger.Load();

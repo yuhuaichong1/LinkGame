@@ -13,21 +13,9 @@ public class AutoHandSwing : MonoBehaviour
 
         rectTrans = this.GetComponent<RectTransform>();
 
-        //if(sTimer != null)
-        //{
-        //    sTimer.Start();
-        //}
-        //else
-        //{
-        //    sTimer = STimerManager.CreateSTimer(4, -1, false, null, (detalTime) =>
-        //    {
-        //        rectTrans.localRotation = Quaternion.Euler(0, 0, 15 * curve.Evaluate(detalTime / 4));
-        //    });
-        //}
-
-        sTimer = STimerManager.Instance.CreateSTimer(4, -1, false, true, null, (detalTime) =>
+        sTimer = STimerManager.Instance.CreateSTimer(2, -1, false, true, null, (detalTime) =>
         {
-            rectTrans.localRotation = Quaternion.Euler(0, 0, 15 * curve.Evaluate(detalTime / 4));
+            rectTrans.localRotation = Quaternion.Euler(0, 0, 15 * curve.Evaluate(detalTime / 2));
         });
     }
 

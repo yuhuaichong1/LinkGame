@@ -24,11 +24,14 @@ public class LevelData
     public ArrayList list_block_stone_and_frozen = new ArrayList();//冰冻物体和石块物体
 	public ArrayList list_constraint 			 = new ArrayList();//关卡物体移动方向
 	public ArrayList list_reward 				 = new ArrayList();//关卡奖励
+    public ArrayList list_fixedLevel_good        = new ArrayList();//当关卡类型ELevelType为Fixed时，固定显示的物体的位置和类型
 
     public int LevelXCount;//关卡横轴的数量
     public int LevelYCount;//关卡竖轴的数量
     public int GoodKinds;//关卡物品的种类
     public int levelDirEnum;//关卡移动方向
+
+    public ELevelType levelType;
 
     public LevelData(int level, ELevelMode mode = ELevelMode.Normal) 
     {
@@ -86,6 +89,12 @@ public class LevelData
             SetObstacle_Moves(obsMovs);
             SetObstacle_Stays(obsStys);
             SetHiddleGood_Delays(hidGodDey);
+
+            levelType = (ELevelType)conf.LevelType;
+            if (levelType == ELevelType.Fixed)
+            {
+                SetFixedLevel_Good("");
+            }
 
             #region old
             //if(level <= LevelDefines.maxLevel)
@@ -374,7 +383,26 @@ public class LevelData
         }
     }
 
-
+    private void SetFixedLevel_Good(string fixedLevGods)
+    {
+        if (fixedLevGods != null && fixedLevGods != "")
+        {
+            string[] fixedLevGodsStr = fixedLevGods.Split('/');
+            for (int i = 0; i < fixedLevGodsStr.Length; i++)
+            {
+                string[] data = fixedLevGodsStr[i].Split(",");
+                int x = int.Parse(data[0]);
+                int y = int.Parse(data[1]);
+                int id = int.Parse(data[2]);
+                FixedLevelGood fixedLevelGood = new FixedLevelGood();
+                fixedLevelGood.id = id;
+                fixedLevelGood.X = x;
+                fixedLevelGood.Y = y;
+                list_fixedLevel_good.Add(fixedLevelGood);
+            }
+        }
+            
+    }
 
     //加载不可移动的石块障碍物和冰冻物体（可选择）
     public void loadListBlockStoneAndFrozen(bool hasStone = true, bool hasFrozen = true) 

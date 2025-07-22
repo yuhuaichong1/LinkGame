@@ -1,3 +1,4 @@
+using cfg;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,9 +27,39 @@ public class RedDotModule : BaseModule
     {
         RDNodeDic = new Dictionary<string, RDNode>();
 
-        //CreateRDNode("OUT", "");
-        //CreateRDNode("LT", "OUT");
-        //CreateRDNode("ET", "OUT");
+        FacadeRedDot.AddRDNode_ByNode += AddRDNode;
+        FacadeRedDot.AddRDNode_ByName += AddRDNode;
+        FacadeRedDot.ReduceRDNode_ByNode += ReduceRDNode;
+        FacadeRedDot.ReduceRDNode_ByName += ReduceRDNode;
+        FacadeRedDot.SetRDNodeAction_ByNode += SetRDNodeAction;
+        FacadeRedDot.SetRDNodeAction_ByName += SetRDNodeAction;
+        FacadeRedDot.SetRDNodeNum_ByNode += SetRDNodeNum;
+        FacadeRedDot.SetRDNodeNum_ByName += SetRDNodeNum;
+        FacadeRedDot.GetRDNode += GetRDNode;
+        FacadeRedDot.CheckRDNodeStatus_ByNode += CheckRDNodeStatus;
+        FacadeRedDot.CheckRDNodeStatus_ByName += CheckRDNodeStatus;
+        FacadeRedDot.CreateRDNode += CreateRDNode;
+        FacadeRedDot.CreateRDNode_Simple += CreateRDNode;
+        FacadeRedDot.DeleteRDNode_ByNode += DeleteRDNode;
+        FacadeRedDot.DeleteRDNode_ByNode += DeleteRDNode;
+        FacadeRedDot.RefushAllRDNode += RefushRDNode;
+        FacadeRedDot.RefushRDNode_ByNode += RefushRDNode;
+        FacadeRedDot.RefushRDNode_ByName += RefushRDNode;
+
+        Dictionary<int, ConfReddot> reddots = ConfigModule.Instance.Tables.TBReddot.DataMap;
+        foreach (ConfReddot item in reddots.Values)
+        {
+            string keyName = item.KeyName;
+            int father = item.Father;
+            string ui = item.Path;
+            CreateRDNode(keyName, item.Father == 0 ? "" : reddots[father].KeyName, (kind, num) =>
+            {
+                if(num != 0)
+                {
+
+                }
+            });
+        }
     }
 
     //====================================================================================================================================//

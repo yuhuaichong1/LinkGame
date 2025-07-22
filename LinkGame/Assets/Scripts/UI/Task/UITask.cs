@@ -70,7 +70,7 @@ namespace XrCode
             LoopGridViewItem item = mChallengeScroll.NewListViewItem("ChallengeTaskItem");
             Task task = ChallageTasks[index];
             TaskItemData dataMono = item.GetComponent<TaskItemData>();
-            dataMono.SetProgress(GamePlayFacade.GetCurLevel(), task.Target);
+            dataMono.SetProgress(GamePlayFacade.GetCurLevel() - 1, task.Target);
             dataMono.SetMsg(task.Content, task.Id, task.Type);
 
             return item;

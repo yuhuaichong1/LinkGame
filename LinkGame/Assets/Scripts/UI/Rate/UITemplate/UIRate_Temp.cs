@@ -5,16 +5,11 @@ using UnityEngine.UI;
 namespace XrCode
 {
     public partial class UIRate : BaseUI
-    {	protected Button mExitBtn;	protected Button mStar1;	protected Image mStar1Btn;	protected Button mStar2;	protected Image mStar2Btn;	protected Button mStar3;	protected Image mStar3Btn;	protected Button mStar4;	protected Image mStar4Btn;	protected Button mStar5;	protected Image mStar5Btn;	protected Button mRateBtn;
+    {	protected Button mExitBtn;	protected Button mStar1;	protected RectTransform mStar1Light;	protected Button mStar2;	protected RectTransform mStar2Light;	protected Button mStar3;	protected RectTransform mStar3Light;	protected Button mStar4;	protected RectTransform mStar4Light;	protected Button mStar5;	protected RectTransform mStar5Light;	protected Button mRateBtn;	protected RectTransform mGreyRateBtn;
         protected override void LoadPanel()
         {
             base.LoadPanel();
-            			mExitBtn = mTransform.Find("Plane/ExitBtn").GetComponent<Button>();			mStar1 = mTransform.Find("Plane/CenterBg/Stars/Star1").GetComponent<Button>();
-            mStar1Btn = mTransform.Find("Plane/CenterBg/Stars/Star1").GetComponent<Image>();			mStar2 = mTransform.Find("Plane/CenterBg/Stars/Star2").GetComponent<Button>();
-            mStar2Btn = mTransform.Find("Plane/CenterBg/Stars/Star2").GetComponent<Image>();			mStar3 = mTransform.Find("Plane/CenterBg/Stars/Star3").GetComponent<Button>();
-            mStar3Btn = mTransform.Find("Plane/CenterBg/Stars/Star3").GetComponent<Image>();			mStar4 = mTransform.Find("Plane/CenterBg/Stars/Star4").GetComponent<Button>();
-            mStar4Btn = mTransform.Find("Plane/CenterBg/Stars/Star4").GetComponent<Image>();			mStar5 = mTransform.Find("Plane/CenterBg/Stars/Star5").GetComponent<Button>();
-            mStar5Btn = mTransform.Find("Plane/CenterBg/Stars/Star5").GetComponent<Image>();			mRateBtn = mTransform.Find("Plane/RateBtn").GetComponent<Button>();
+            		mExitBtn = mTransform.Find("Plane/ExitBtn").GetComponent<Button>();		mStar1 = mTransform.Find("Plane/CenterBg/Stars/Star1").GetComponent<Button>();		mStar1Light = mTransform.Find("Plane/CenterBg/Stars/Star1/Star1Light").GetComponent<RectTransform>();		mStar2 = mTransform.Find("Plane/CenterBg/Stars/Star2").GetComponent<Button>();		mStar2Light = mTransform.Find("Plane/CenterBg/Stars/Star2/Star2Light").GetComponent<RectTransform>();		mStar3 = mTransform.Find("Plane/CenterBg/Stars/Star3").GetComponent<Button>();		mStar3Light = mTransform.Find("Plane/CenterBg/Stars/Star3/Star3Light").GetComponent<RectTransform>();		mStar4 = mTransform.Find("Plane/CenterBg/Stars/Star4").GetComponent<Button>();		mStar4Light = mTransform.Find("Plane/CenterBg/Stars/Star4/Star4Light").GetComponent<RectTransform>();		mStar5 = mTransform.Find("Plane/CenterBg/Stars/Star5").GetComponent<Button>();		mStar5Light = mTransform.Find("Plane/CenterBg/Stars/Star5/Star5Light").GetComponent<RectTransform>();		mRateBtn = mTransform.Find("Plane/RateBtn").GetComponent<Button>();		mGreyRateBtn = mTransform.Find("Plane/GreyRateBtn").GetComponent<RectTransform>();
         }
     
         protected override void BindButtonEvent() 

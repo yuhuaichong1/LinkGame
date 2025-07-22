@@ -166,6 +166,8 @@ namespace XrCode
         //打开ui
         private void OpenUI(BaseUI ui)
         {
+            if(curUI != null)
+                Debug.LogError(curUI.UIType);
             if (curUI != null && ui.UIType != EUIType.EUIPopup)
             {
                 if (ui.IsFullScreen) curUI.Hide();
@@ -283,7 +285,7 @@ namespace XrCode
             ui.Enable();
             if (!uiDic.ContainsKey((byte)uType))
                 uiDic.Add((byte)uType, ui);
-            if (uType != EUIType.EUIPopup) curUI = ui;
+            //if (uType != EUIType.EUIPopup) curUI = ui;
             return (T)ui;
         }
         #endregion
@@ -319,38 +321,6 @@ namespace XrCode
         {
             uiNotice.HideInfo(notice);
         }
-
-
-        /// <summary>
-        /// 创建特效
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="bornPos"></param>
-        /// <param name="targetPos"></param>
-        //public void CreateEffectUI(EEffectType type, Vector3 bornPos, float showAddValue)
-        //{
-        //    if(uiEffect != null)
-        //    {
-        //        uiEffect.ShowEffect(type, bornPos, showAddValue);
-        //    }
-        //    else
-        //    {
-        //        ConfUIRes conf = ConfigModule.Instance.Tables.TbUIRes.GetOrDefault((int)EUIType.EUIEffect);
-        //        if (conf != null)
-        //        {
-        //            ResourceMod.Instance.AsyncLoad<UnityEngine.Object>(conf.UiPath,
-        //                (obj) =>
-        //                {
-        //                    GameObject uiObj = InitUITransform(obj, conf.UiLevel);
-        //                    uiEffect = LoadWindowUI<UIEffect>(EUIType.EUINotice, uiObj, conf, null);
-        //                    uiEffect.ShowEffect(type, bornPos, showAddValue);
-        //                });
-        //        }
-                    
-        //    }
-        //}
-
-
 
         public AnimationCurve GetAnimCurve(string name)
         {
