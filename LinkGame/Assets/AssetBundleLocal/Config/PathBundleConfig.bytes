@@ -1,14 +1,6 @@
 
 n
 5Assets/AssetBundleLocal/Config/PathBundleConfig.bytes5Assets/AssetBundleLocal/Config/PathBundleConfig.bytes
-t
-/Assets/AssetBundleLocal/UI/Rate/btn_dainzai.pngAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
-z
-5Assets/AssetBundleLocal/UI/Rate/btn_dainzai_huise.pngAassets/assetbundlelocal/ui/rate/btn_dainzai_huise.png.assetbundle
-`
-(Assets/AssetBundleLocal/UI/Rate/star.png4assets/assetbundlelocal/ui/rate/star.png.assetbundle
-q
-,Assets/AssetBundleLocal/UI/Rate/star_hui.pngAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
 z
 5Assets/AssetBundleLocal/UI/PayType/TogglePic/bbva.pngAassets/assetbundlelocal/ui/paytype/togglepic/bbva.png.assetbundle
 „
@@ -335,6 +327,14 @@ b
 ;Assets/AssetBundleLocal/Prefabs/UI/Recover/UIRecover.prefabGassets/assetbundlelocal/prefabs/ui/recover/uirecover.prefab.assetbundle
 z
 5Assets/AssetBundleLocal/Prefabs/UI/Rate/UIRate.prefabAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
+c
+Assets/UI/Rate/btn_dainzai.pngAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
+\
+Assets/UI/Rate/star.pngAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
+`
+Assets/UI/Rate/star_hui.pngAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
+i
+$Assets/UI/Rate/btn_dainzai_huise.pngAassets/assetbundlelocal/prefabs/ui/rate/uirate.prefab.assetbundle
 ~
 7Assets/AssetBundleLocal/Prefabs/UI/Popup/UIPopup.prefabCassets/assetbundlelocal/prefabs/ui/popup/uipopup.prefab.assetbundle
 —
@@ -463,6 +463,8 @@ SAssets/AssetBundleLocal/Prefabs/UI/ChallengeSuccessful/UIChallengeSuccessful.pr
 $Assets/UI/ChallengeSuccessful/bg.png_assets/assetbundlelocal/prefabs/ui/challengesuccessful/uichallengesuccessful.prefab.assetbundle
 ¦
 KAssets/AssetBundleLocal/Prefabs/UI/ChallengeFailed/UIChallengeFailed.prefabWassets/assetbundlelocal/prefabs/ui/challengefailed/uichallengefailed.prefab.assetbundle
+Ž
+?Assets/AssetBundleLocal/Prefabs/UI/Carousel/CarouselItem.prefabKassets/assetbundlelocal/prefabs/ui/carousel/carouselitem.prefab.assetbundle
 †
 ;Assets/AssetBundleLocal/Prefabs/UI/Awesome/UIAwesome.prefabGassets/assetbundlelocal/prefabs/ui/awesome/uiawesome.prefab.assetbundle
 p

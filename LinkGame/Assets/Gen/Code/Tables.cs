@@ -34,6 +34,8 @@ namespace cfg
 		public TBLoadingTitleSprite TBLoadingTitleSprite {get; private set;}
 		public TBLuckMoment TBLuckMoment {get; private set;}
 		public TBLevelDicIcon TBLevelDicIcon {get; private set;}
+		public TBReddot TBReddot {get; private set;}
+		public TBWithdrawableLevels TBWithdrawableLevels {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -75,6 +77,10 @@ namespace cfg
 			tables.Add("TBLuckMoment", TBLuckMoment);
 			TBLevelDicIcon = new TBLevelDicIcon(loader("tbleveldicicon")); 
 			tables.Add("TBLevelDicIcon", TBLevelDicIcon);
+			TBReddot = new TBReddot(loader("tbreddot")); 
+			tables.Add("TBReddot", TBReddot);
+			TBWithdrawableLevels = new TBWithdrawableLevels(loader("tbwithdrawablelevels")); 
+			tables.Add("TBWithdrawableLevels", TBWithdrawableLevels);
 	
 			PostInit();
 			ResolveAllTable();
@@ -115,6 +121,10 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBLuckMomentDataFinish);
 			configNames.Enqueue("tbleveldicicon");
             configCbFuncs.Enqueue(OnTBLevelDicIconDataFinish);
+			configNames.Enqueue("tbreddot");
+            configCbFuncs.Enqueue(OnTBReddotDataFinish);
+			configNames.Enqueue("tbwithdrawablelevels");
+            configCbFuncs.Enqueue(OnTBWithdrawableLevelsDataFinish);
 
             LoadAllConfig();
         }
@@ -171,6 +181,8 @@ namespace cfg
 			TBLoadingTitleSprite.TranslateText(translator); 
 			TBLuckMoment.TranslateText(translator); 
 			TBLevelDicIcon.TranslateText(translator); 
+			TBReddot.TranslateText(translator); 
+			TBWithdrawableLevels.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -192,6 +204,8 @@ namespace cfg
 			TBLoadingTitleSprite.Resolve(tables);
 			TBLuckMoment.Resolve(tables);
 			TBLevelDicIcon.Resolve(tables);
+			TBReddot.Resolve(tables);
+			TBWithdrawableLevels.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -244,6 +258,12 @@ namespace cfg
 					break;
 				case "TBLevelDicIcon":
 					TBLevelDicIcon.Reload(_loader("TBLevelDicIcon"));
+					break;
+				case "TBReddot":
+					TBReddot.Reload(_loader("TBReddot"));
+					break;
+				case "TBWithdrawableLevels":
+					TBWithdrawableLevels.Reload(_loader("TBWithdrawableLevels"));
 					break;
 			}
 	
@@ -333,6 +353,16 @@ namespace cfg
 		{
 			TBLevelDicIcon = new TBLevelDicIcon(buf);
 			tables.Add("TBLevelDicIcon", TBLevelDicIcon);
+		}
+		public void OnTBReddotDataFinish(ByteBuf buf)
+		{
+			TBReddot = new TBReddot(buf);
+			tables.Add("TBReddot", TBReddot);
+		}
+		public void OnTBWithdrawableLevelsDataFinish(ByteBuf buf)
+		{
+			TBWithdrawableLevels = new TBWithdrawableLevels(buf);
+			tables.Add("TBWithdrawableLevels", TBWithdrawableLevels);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

@@ -78,9 +78,13 @@ namespace XrCode
         private int curLuckMomentCount;//老虎机计数
         private int curTopNoticeCount;//顶部消息计数
         private int curAwesomeCount;//送钱计数
+        private int curRateCount;//让评论计数
 
         private Dictionary<int, int> randomGoodIcon;//让图样随机的词典
         private List<int> RGIids;//randomGoodIcon辅助数组
+
+        private Queue<int> withdrawableLevel;//可提现的关卡
+        private int curWLevel;//当前提现关卡Id
 
         protected override void OnLoad()
         {
@@ -115,6 +119,8 @@ namespace XrCode
             GamePlayFacade.GetCurTotalLinkCount += GetCurTotalLinkCount;
             GamePlayFacade.GetCurLuckMomentCount += GetCurLuckMomentCount;
             GamePlayFacade.SetCurLuckMomentCount += SetCurLuckMomentCount;
+            GamePlayFacade.GetWithdrawableLevel += GetWithdrawableLevel;
+            GamePlayFacade.GetCurWLevel += GetCurWLevel;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -133,15 +139,12 @@ namespace XrCode
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
 
-
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
             pathObj = new Dictionary<int, GameObject>();
             SetPathObj();
 
             LoadData();
-
-            
         }
 
         protected override void OnUpdate()
@@ -162,6 +165,13 @@ namespace XrCode
             curLuckMomentCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curLuckMomentCount);
             //curTopNoticeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curTopNoticeCount);
             //curAwesomeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curAwesomeCount);
+
+            withdrawableLevel = SPlayerPrefs.GetQueue<int>(PlayerPrefDefines.withdrawableLevel, true);
+            if(withdrawableLevel.Count == 0)
+            {
+                withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(1).Level);
+                curWLevel = 1;
+            }
 
             if (curLevel == 0)
             {
@@ -189,6 +199,7 @@ namespace XrCode
         /// <returns></returns>
         private Sprite GetGoodIcon(int id)
         {
+            Debug.LogError(id);
             return goodIcons[randomGoodIcon[id]];
         }
 
@@ -231,7 +242,15 @@ namespace XrCode
 
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
 
-            _randomMap();
+            if(curLevelData.levelType == ELevelType.Fixed)
+            {
+                _fixedMap();
+            }
+            else
+            {
+                _randomMap();
+            }
+            
         }
 
         /// <summary>
@@ -293,6 +312,7 @@ namespace XrCode
             Debug.Log("khoi tao map");
         }
 
+        //随机生成物体序列并于场景中生成
         private void _randomMap()
         {
             Debug.Log("::::Random MAP::::");
@@ -305,24 +325,44 @@ namespace XrCode
 
             int total_good = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_good_fixed.Count;
             int total_good_type = curLevelData.GoodKinds;
-            int number_good_4 = (total_good - 2 * total_good_type) / 2;
-            int number_good_2 = total_good_type - number_good_4;
-
+            //int number_good_4 = (total_good - 2 * total_good_type) / 2;
+            //int number_good_2 = total_good_type - number_good_4;
+            int number_good_average = total_good / 2 / total_good_type;
+            int number_good_remainder = (total_good - (number_good_average * 2 * total_good_type)) / 2;
+                   
             ArrayList list_good = new ArrayList();
-            for (int i = 0; i < number_good_4; i++)
+            for (int i = 0; i < total_good_type; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < number_good_average * 2; j++)
                 {
                     list_good.Add(i);
                 }
             }
-            for (int i = number_good_4; i < number_good_4 + number_good_2; i++)
+            for (int i = 0; i < number_good_remainder; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
                     list_good.Add(i);
                 }
             }
+            #region old
+            //ArrayList list_good = new ArrayList();
+            //for (int i = 0; i < number_good_4; i++)
+            //{
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        list_good.Add(i);
+            //    }
+            //}
+            //for (int i = number_good_4; i < number_good_4 + number_good_2; i++)
+            //{
+            //    for (int j = 0; j < 2; j++)
+            //    {
+            //        list_good.Add(i);
+            //    }
+            //}
+            #endregion
+
             int list_pk_count = list_good.Count;
             int temp2 = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_pk_count - list_good_fixed.Count;
             if (temp2 % 2 != 0)
@@ -402,9 +442,63 @@ namespace XrCode
             }
         }
 
+        //固定生成物体序列并于场景中生成
+        private void _fixedMap()
+        {
+            Debug.Log("::::Fixed MAP::::");
+            curMapState = EMapState.None;
+
+            ArrayList list_good_fixed = curLevelData.list_block_good_fixed;
+            ArrayList list_obs_fixed = curLevelData.list_block_stone_fixed;
+            ArrayList list_obs_moving = curLevelData.list_block_stone_moving;
+            list_block_frozen = curLevelData.list_block_frozen_fixed;
+
+            for (int i = 0; i < list_obs_fixed.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_obs_fixed[i];
+                AddSpecialItem(GameDefines.OBS_FIXED_ID, pos.R, pos.C);
+                MAP[pos.R][pos.C] = GameDefines.OBS_FIXED_ID;
+            }
+
+            for (int i = 0; i < list_obs_moving.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_obs_moving[i];
+                AddSpecialItem(GameDefines.OBS_MOVING_ID, pos.R, pos.C);
+                MAP[pos.R][pos.C] = GameDefines.OBS_MOVING_ID;
+            }
+
+            ArrayList list_fixedLevel_good = curLevelData.list_fixedLevel_good;
+            foreach(FixedLevelGood good in list_fixedLevel_good)
+            {
+                int p_row = (int)good.X;
+                int p_col = (int)good.Y;
+                int p_id = (int)good.id;
+                AddGood(p_id, p_row, p_col);
+                MAP[p_row][p_col] = p_id;
+            }
+
+            for (int i = 0; i < list_block_frozen.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_block_frozen[i];
+                AddSpecialItem(GameDefines.HID_FIXED_ID, "hid_", pos.R, pos.C);
+            }
+
+            for (int i = 0; i < curLevelData.list_auto_gen.Count; i++)
+            {
+                AutoGenData auto_gen_data = (AutoGenData)curLevelData.list_auto_gen[i];
+                GenAutoGen(auto_gen_data);
+            }
+
+            UpdateListHiddle();
+
+            ChangeMapState(EMapState.Playing);
+        }
+
         //向场景中添加一个物品预制体
         private void AddGood(int type, int row, int col, int online_id = 0)
         {
+            Debug.LogError(type + "  " + "(" + row + " , " + col + ")");
+
             if (type == -1)
                 return;
             MAP[row][col] = type;
@@ -1561,6 +1655,13 @@ namespace XrCode
             else
                 curAwesomeCount += 1;
 
+            if(curRateCount == GameDefines.Rate_Count_Max && FacadeTimeZone.IfNextDay())
+            {
+                UIManager.Instance.OpenWindowAsync<UIRate>(EUIType.EUIRate);
+            }
+            else
+                curRateCount += 1;
+
             SPlayerPrefs.SetInt(PlayerPrefDefines.curTotalLinkCount, curTotalLinkCount);
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLuckMomentCount, curLuckMomentCount);
             //SPlayerPrefs.SetInt(PlayerPrefDefines.curTopNoticeCount, curTopNoticeCount);
@@ -1620,6 +1721,7 @@ namespace XrCode
                     {
                         UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
                         UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
+
                         NextLevel();
                     });
 
@@ -2275,7 +2377,15 @@ namespace XrCode
         private void NextLevel()
         {
             curLevel += 1;
-            PlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
+
+            if(ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+            {
+                curWLevel += 1;
+                withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
+                SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+            }
         }
 
         private int GetTipCount()
@@ -2952,6 +3062,16 @@ namespace XrCode
             {
                 randomGoodIcon.Add(RGIids[i], newIds[i]);
             }
+        }
+
+        private Queue<int> GetWithdrawableLevel()
+        {
+            return withdrawableLevel;
+        }
+
+        private int GetCurWLevel()
+        {
+            return curWLevel;
         }
 
         #endregion

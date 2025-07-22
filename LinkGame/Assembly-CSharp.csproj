@@ -85,6 +85,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\TypeModel.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\BaseResourceLoader.cs" />
     <Compile Include="Assets\Scripts\Resource\Utils\PathUtil.cs" />
+    <Compile Include="Assets\Scripts\Facade\FacadeTimeZone.cs" />
     <Compile Include="Assets\Scripts\PayType\PayTypeModule.cs" />
     <Compile Include="Assets\Scripts\NetWork\NetworkModule.cs" />
     <Compile Include="Assets\Scripts\Notify\MiniJsonTool.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Assets\Scripts\MiniComponent\AutoHandSwing.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UICompatibility\ETWindow.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\IExtensible.cs" />
+    <Compile Include="Assets\Scripts\TimeZone\TimeZoneModule.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\AssetBundleResourceLoader.cs" />
     <Compile Include="Assets\Tools\ListShuffle\ListShuffle.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Behaviours\UIPanelBehaviour.cs" />
@@ -126,6 +128,7 @@
     <Compile Include="Assets\Gen\Code\ConfLevelDicIcon.cs" />
     <Compile Include="Assets\Gen\Code\TbUIRes.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwistMe.cs" />
+    <Compile Include="Assets\Gen\Code\TBReddot.cs" />
     <Compile Include="Assets\Scripts\UI\ViewConfig.cs" />
     <Compile Include="Assets\Tools\Timer\STimerManager.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableSingle\UIWithdrawableSingle.cs" />
@@ -244,7 +247,6 @@
     <Compile Include="Assets\Scripts\Config\ConfigModule.cs" />
     <Compile Include="Assets\Scripts\Guide\GuideModule.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UITemplate\UIChallengeSuccessful_Temp.cs" />
-    <Compile Include="Assets\UIRibbonRewardItem.cs" />
     <Compile Include="Assets\Scripts\Tools\SqlLite\SqLiteHelper.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadePayType.cs" />
     <Compile Include="Assets\Scripts\Reward\GetMoneyTipItem.cs" />
@@ -271,8 +273,11 @@
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\ListView\LoopListView2.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ArrayDecorator.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoContractAttribute.cs" />
+    <Compile Include="Assets\Gen\Code\ConfReddot.cs" />
     <Compile Include="Assets\Scripts\PlayerPref\PlayerPrefDefines.cs" />
     <Compile Include="Assets\Scripts\UI\Rate\UITemplate\UIRate_Temp.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\UIRibbonRewardItem.cs" />
+    <Compile Include="Assets\Gen\Code\ConfWithdrawableLevels.cs" />
     <Compile Include="Assets\Scripts\UI\Common\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IFixedUpdate.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoEnumAttribute.cs" />
@@ -390,6 +395,7 @@
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Components\PointerEventListener.cs" />
     <Compile Include="Assets\Gen\Code\ConfAudio.cs" />
     <Compile Include="Assets\Scripts\GameSDK\GameSDKManger.cs" />
+    <Compile Include="Assets\Scripts\Gaming\GamePlay\FixedLevelGood.cs" />
     <Compile Include="Assets\Scripts\UI\Recover\UIRecover.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UITwistPinch\UIPinch.cs" />
     <Compile Include="Assets\Scripts\_Game\EarthRotation.cs" />
@@ -416,6 +422,7 @@
     <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
     <Compile Include="Assets\Scripts\UI\FuncPopup\UITemplate\UIFuncPopup_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt32Serializer.cs" />
+    <Compile Include="Assets\Gen\Code\TBWithdrawableLevels.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectManager.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeFailed\UITemplate\UIChallengeFailed_Temp.cs" />
     <Compile Include="Assets\Scripts\UI\GamePlay\UICurLevelItem.cs" />
@@ -435,6 +442,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IDispose.cs" />
     <Compile Include="Assets\Scripts\PayType\PayItem.cs" />
+    <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\WithdrawMItem.cs" />
     <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenData.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ImplicitFields.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\Gesture.cs" />

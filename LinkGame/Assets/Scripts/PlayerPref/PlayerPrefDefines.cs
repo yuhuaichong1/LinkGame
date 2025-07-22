@@ -13,6 +13,8 @@ public abstract class PlayerPrefDefines
     public const string curLuckMomentCount = "LinkGame_curLuckMomentCount";  //GamePlayModule_老虎机计数
     public const string curTopNoticeCount = "LinkGame_curTopNoticeCount";    //GamePlayModule_顶部消息计数
     public const string curAwesomeCount = "LinkGame_curAwesomeCount";        //GamePlayModule_送钱计数
+    public const string withdrawableLevel = "LinkGame_withdrawableLevel";    //GamePlayModule_可兑现关卡
+    public const string curWLevel = "LinkGame_curWLevel";                    //GamePlayModule_当前兑现关卡进度
 
     public const string moneyCount = "LinkGame_moneyCount";                  //PlayerModule_玩家货币数
     public const string wPayType = "LinkGame_wPayType";                      //PlayerModule_玩家支付方式
@@ -26,5 +28,5 @@ public abstract class PlayerPrefDefines
     public const string musicToggle = "LinkGame_musicToggle";                //AudioModule_音乐开关
     public const string vibrateToggle = "LinkGame_vibrateToggle";            //AudioModule_震动开关
 
-    
+    public const string lastZTime = "LinkGame_lastZTime";                    //TimeZoneModule_上传登录时间
 }

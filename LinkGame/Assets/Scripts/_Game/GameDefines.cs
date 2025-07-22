@@ -89,6 +89,7 @@ public abstract class GameDefines
     public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
     public const int TopNotice_Count_Max = 12;                                                              //顶部提示展示的最大值
     public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
+    public const int Rate_Count_Max = 5;                                                                    //评论UI展示的最大值
 
     public static Vector2 Awesome_ExtraMoney_Num = new Vector2(10, 50);                                     //Awesome界面随机钱区间
 
@@ -267,6 +268,15 @@ public enum ERewardType : int
     Money = 1,//钱
     Func,//道具
     Withdrawable,//兑现机会
+}
+
+/// <summary>
+/// 关卡类型
+/// </summary>
+public enum ELevelType : int
+{
+    Random = 0,
+    Fixed,
 }
 
 #endregion
