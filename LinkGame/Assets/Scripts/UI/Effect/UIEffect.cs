@@ -352,7 +352,7 @@ namespace XrCode
         }
 
         protected override void OnDisable() 
-        { 
+        {
             
         }
 

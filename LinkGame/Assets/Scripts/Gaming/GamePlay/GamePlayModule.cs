@@ -199,7 +199,6 @@ namespace XrCode
         /// <returns></returns>
         private Sprite GetGoodIcon(int id)
         {
-            Debug.LogError(id);
             return goodIcons[randomGoodIcon[id]];
         }
 
@@ -497,8 +496,6 @@ namespace XrCode
         //向场景中添加一个物品预制体
         private void AddGood(int type, int row, int col, int online_id = 0)
         {
-            Debug.LogError(type + "  " + "(" + row + " , " + col + ")");
-
             if (type == -1)
                 return;
             MAP[row][col] = type;
@@ -1631,6 +1628,8 @@ namespace XrCode
         private void EatCountAddAndCallback()
         {
             curTotalLinkCount += 1;
+
+            if (curLevel == 1 || curLevel == 2) return;
 
             if(curLuckMomentCount == GameDefines.LuckMoment_Count_Max)
             {

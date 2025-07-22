@@ -59,7 +59,7 @@ public abstract class GameDefines
 
     public const string FadeMaterials = "Materials/Fade.mat";                                               //UI褪色材质
 
-    public const float FlyEffect_Start_Delay = 1;                                                           //飞行特效开始延迟时间
+    public const float FlyEffect_Start_Delay = 0.5f;                                                           //飞行特效开始延迟时间
     public const float PRN_Effect_MoveTime = 0.5f;                                                          //“上方随机玩家兑现提示”特效移动时间
     public const float PRN_Effect_StayTime = 2.5f;                                                          //“上方随机玩家兑现提示”特效滞留时间
     public const float TL_Effect_XMoveTime = 0.5f;                                                          //“目标关卡提示”特效横向移动时间
