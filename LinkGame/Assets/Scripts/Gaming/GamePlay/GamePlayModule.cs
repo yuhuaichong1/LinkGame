@@ -2376,16 +2376,16 @@ namespace XrCode
         /// </summary>
         private void NextLevel()
         {
-            curLevel += 1;
-            SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
-
-            if(ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+            if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
             {
                 curWLevel += 1;
                 withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
                 SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
             }
+
+            curLevel += 1;
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
 
         private int GetTipCount()
