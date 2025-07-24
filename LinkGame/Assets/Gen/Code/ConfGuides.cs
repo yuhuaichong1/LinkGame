@@ -20,15 +20,18 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     {
         Sn = _buf.ReadInt();
         NextStep = _buf.ReadInt();
+        Notes = _buf.ReadString();
         BackStep = _buf.ReadInt();
+        IfBackPlay = _buf.ReadBool();
+        IfNextStep = _buf.ReadBool();
+        IfNextPlay = _buf.ReadBool();
+        AutohiddenTime = _buf.ReadFloat();
         DiglogContentId = _buf.ReadInt();
         DiglogPos = _buf.ReadString();
         HandPos = _buf.ReadString();
         IfMask = _buf.ReadBool();
         TransparentPos = _buf.ReadString();
-        BtnPos = _buf.ReadString();
-        AutohiddenTime = _buf.ReadFloat();
-        IfNext = _buf.ReadBool();
+        ClickPos = _buf.ReadString();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Extra = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     Extra.Add(_k0, _v0);}}
         PostInit();
     }
@@ -47,9 +50,29 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// </summary>
     public int NextStep { get; protected set; }
     /// <summary>
-    /// 引导中断后跳转的引导
+    /// 说明
+    /// </summary>
+    public string Notes { get; protected set; }
+    /// <summary>
+    /// 引导中断后，再次进入时跳转步骤
     /// </summary>
     public int BackStep { get; protected set; }
+    /// <summary>
+    /// 引导中断后，再次进入时是否执行跳转的步骤
+    /// </summary>
+    public bool IfBackPlay { get; protected set; }
+    /// <summary>
+    /// 点击/倒计时结束后是否前进一步
+    /// </summary>
+    public bool IfNextStep { get; protected set; }
+    /// <summary>
+    /// 前进一步后是否执行接下来的步骤
+    /// </summary>
+    public bool IfNextPlay { get; protected set; }
+    /// <summary>
+    /// 引导自动消失时间
+    /// </summary>
+    public float AutohiddenTime { get; protected set; }
     /// <summary>
     /// 提示框内容（对应Language表）
     /// </summary>
@@ -73,15 +96,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// <summary>
     /// 教程可点击部分
     /// </summary>
-    public string BtnPos { get; protected set; }
-    /// <summary>
-    /// 引导自动消失时间
-    /// </summary>
-    public float AutohiddenTime { get; protected set; }
-    /// <summary>
-    /// 点击/倒计时结束后自动下一步
-    /// </summary>
-    public bool IfNext { get; protected set; }
+    public string ClickPos { get; protected set; }
     /// <summary>
     /// 额外字段
     /// </summary>
@@ -103,15 +118,18 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     {
         Sn = reloadData.Sn;
         NextStep = reloadData.NextStep;
+        Notes = reloadData.Notes;
         BackStep = reloadData.BackStep;
+        IfBackPlay = reloadData.IfBackPlay;
+        IfNextStep = reloadData.IfNextStep;
+        IfNextPlay = reloadData.IfNextPlay;
+        AutohiddenTime = reloadData.AutohiddenTime;
         DiglogContentId = reloadData.DiglogContentId;
         DiglogPos = reloadData.DiglogPos;
         HandPos = reloadData.HandPos;
         IfMask = reloadData.IfMask;
         TransparentPos = reloadData.TransparentPos;
-        BtnPos = reloadData.BtnPos;
-        AutohiddenTime = reloadData.AutohiddenTime;
-        IfNext = reloadData.IfNext;
+        ClickPos = reloadData.ClickPos;
         if(Extra==null)
         {
             Extra = reloadData.Extra;
@@ -142,15 +160,18 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         return "{ "
         + "Sn:" + Sn + ","
         + "NextStep:" + NextStep + ","
+        + "Notes:" + Notes + ","
         + "BackStep:" + BackStep + ","
+        + "IfBackPlay:" + IfBackPlay + ","
+        + "IfNextStep:" + IfNextStep + ","
+        + "IfNextPlay:" + IfNextPlay + ","
+        + "AutohiddenTime:" + AutohiddenTime + ","
         + "DiglogContentId:" + DiglogContentId + ","
         + "DiglogPos:" + DiglogPos + ","
         + "HandPos:" + HandPos + ","
         + "IfMask:" + IfMask + ","
         + "TransparentPos:" + TransparentPos + ","
-        + "BtnPos:" + BtnPos + ","
-        + "AutohiddenTime:" + AutohiddenTime + ","
-        + "IfNext:" + IfNext + ","
+        + "ClickPos:" + ClickPos + ","
         + "Extra:" + Bright.Common.StringUtil.CollectionToString(Extra) + ","
         + "}";
     }

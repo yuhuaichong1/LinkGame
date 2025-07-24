@@ -21,7 +21,7 @@ public class SGuidePenetrate : MonoBehaviour, IPointerClickHandler, IPointerDown
             // 如果点击在目标区域内，则传递事件
             ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerClickHandler);
 
-            FacadeGuide.NextStep(ifNext);
+            FacadeGuide.NextStep();
 
             return;
         }

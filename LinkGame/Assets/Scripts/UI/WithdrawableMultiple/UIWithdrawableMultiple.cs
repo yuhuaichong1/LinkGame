@@ -59,7 +59,7 @@ namespace XrCode
 
             if(GamePlayFacade.GetIsTutorial())
             {
-                FacadeGuide.PlayGuide(FacadeGuide.GetCurStep());
+                FacadeGuide.PlayGuide();
             }
         }
         	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);        }	    private void OnWithdrawBtnClickHandle()

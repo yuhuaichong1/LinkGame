@@ -91,7 +91,11 @@ namespace XrCode
                 mPayType3Toggle.onValueChanged.AddListener(OnPayType3TogChangeHandle);
                 PayTypeDic.Add(3, payTypes[2]);
             }
-        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);                    }	    private void OnHelpBtnClickHandle()        {            UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
+        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);            if(GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
+            {
+                FacadeGuide.PlayGuide();
+                FacadeGuide.SetWithdrawableUIcheck(false);
+            }        }	    private void OnHelpBtnClickHandle()        {            UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
         {
             if(mNameInput.text != "")
             {

@@ -41,8 +41,9 @@ namespace XrCode
 
             if (GamePlayFacade.GetIsTutorial())
             {
-                Debug.LogError(FacadeGuide.GetCurStep());
-                FacadeGuide.PlayGuide(FacadeGuide.GetCurStep());
+                FacadeGuide.NextStepHead();
+                FacadeGuide.PlayGuide();
+                FacadeGuide.SetWithdrawableUIcheck(true);
             }
         }
         	    private void OnWithdrawBtnClickHandle()

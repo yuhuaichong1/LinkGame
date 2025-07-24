@@ -34,4 +34,5 @@ public abstract class PlayerPrefDefines
     public const string curChallengeRDId = "LinkGame_curChallengeRDId";      //TaskModule_当前挑战任务红点进度
 
     public const string curStep = "LinkGame_curStep";                        //GuideModule_当前引导步骤
+    public const string withdrawableUIcheck = "LinkGame_withdrawableUIcheck";//GuideModule_兑现相关界面仅执行一次
 }

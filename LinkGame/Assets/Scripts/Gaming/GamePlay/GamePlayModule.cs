@@ -122,6 +122,7 @@ namespace XrCode
             GamePlayFacade.GetWithdrawableLevel += GetWithdrawableLevel;
             GamePlayFacade.GetCurWLevel += GetCurWLevel;
             GamePlayFacade.GetIsTutorial += GetIsTutorial;
+            GamePlayFacade.SetIsTutorial += SetIsTutorial;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -3084,6 +3085,11 @@ namespace XrCode
         private bool GetIsTutorial()
         {
             return isTutorial;
+        }
+        private void SetIsTutorial(bool b)
+        {
+            isTutorial = b;
+            SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
         }
 
         #endregion

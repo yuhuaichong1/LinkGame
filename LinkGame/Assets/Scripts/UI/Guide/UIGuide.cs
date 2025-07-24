@@ -41,14 +41,14 @@ namespace XrCode
             if (ifshow)
             {
                 mGuideText.text = info.diglogContent;
-                mGuideTextBg.transform.position = info.diglogPos.position;
+                mGuideTextBg.transform.position = FindTrans(info.diglogPos).position;
             }
 
             ifshow = info.handPos != null;
             mHander.gameObject.SetActive(ifshow);
             if(ifshow)
             {
-                mHander.transform.position = info.handPos.position;
+                mHander.transform.position = FindTrans(info.handPos).position;
                 mHand.Reset();
             }
 
@@ -58,8 +58,8 @@ namespace XrCode
             mHole.gameObject.SetActive(ifshow);
             if(ifshow)
             {
-                mHole.transform.position = info.transparentPos.position;
-                mHole.sizeDelta = info.transparentPos.GetComponent<RectTransform>().sizeDelta;
+                mHole.transform.position = FindTrans(info.transparentPos).position;
+                mHole.sizeDelta = FindTrans(info.transparentPos).GetComponent<RectTransform>().sizeDelta;
             }
 
             float autoHiddenTime = info.autohiddenTime;
@@ -67,31 +67,21 @@ namespace XrCode
             {
                 STimerManager.Instance.CreateSDelay(autoHiddenTime, () => 
                 { 
-                    FacadeGuide.NextStep(info.ifNext); 
+                    FacadeGuide.NextStep(); 
                 });
             }
             else
             {
-                //ifshow = info.btnPos != null;
-                //mGuideBtn.gameObject.SetActive(ifshow);
-                //if (ifshow)
-                //{
-                //    mGuideBtn.transform.position = info.btnPos.position;
-                //    mGuideBtn.GetComponent<RectTransform>().sizeDelta = info.btnPos.GetComponent<RectTransform>().sizeDelta;
-                //}
-
-                //clickAction = () => { FacadeGuide.NextStep(true); };
-
-                ifshow = info.btnPos != null;
-                mMask.penetrateObj = ifshow ? info.btnPos.GetComponent<RectTransform>() : null;
+                ifshow = info.clickPos != null;
+                mMask.penetrateObj = ifshow ? FindTrans(info.clickPos).GetComponent<RectTransform>() : null;
                 if (ifshow)
                 {
-                    mMask.penetrateObj = info.btnPos.GetComponent<RectTransform>();
-                    mMask.ifNext = info.ifNext;
+                    mMask.penetrateObj = FindTrans(info.clickPos).GetComponent<RectTransform>();
+                    mMask.ifNext = info.ifNextPlay;
                 }
             }
 
-            if(info.extra.Count != 0)
+            if(info.extra != null && info.extra.Count != 0)
                 SetExtraShow(info.extra);
         }
 
@@ -116,17 +106,21 @@ namespace XrCode
             }
         }
 
-        private void PlayGuide(int step)
+        private void PlayGuide()
         {
             mGuidePlane.gameObject.SetActive(true);
 
-            FacadeGuide.SetGuide(step);
             SetGuideShow();
         }
 
         private void CloseGuide()
         {
             mGuidePlane.gameObject.SetActive(false);
+        }
+
+        private Transform FindTrans(string path)
+        {
+            return GameObject.Find(path).transform;
         }
 
         protected override void OnDisable() { }

@@ -42,6 +42,7 @@ public static class GamePlayFacade
     public static Func<Queue<int>> GetWithdrawableLevel;  //获取兑现目标关卡数
     public static Func<int> GetCurWLevel;                 //获取当前兑现目标关卡
     public static Func<bool> GetIsTutorial;               //获取当前是否为新手引导进程
+    public static Action<bool> SetIsTutorial;               //设置是否为新手引导进程
 
     public static Func<Transform> GetMapTrans;              //获取生成物体的父对象
     public static Func<Transform> GetFlyMoneyTarget;        //得到飞钱移动终点目标

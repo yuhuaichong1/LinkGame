@@ -93,8 +93,7 @@ namespace XrCode
 
             SetTipInfo();
 
-            //if(GamePlayFacade.GetIsTutorial())
-            if (false)
+            if(GamePlayFacade.GetIsTutorial())
             {
                 mTipFuncTip.gameObject.SetActive(false);
                 mRefushFuncTip.gameObject.SetActive(false);
@@ -105,7 +104,7 @@ namespace XrCode
                     UIManager.Instance.OpenWindowAsync<UIGuide>(EUIType.EUIGuide, (baseUI) =>
                     {
                         mGamePlayMask.gameObject.SetActive(false);
-                        FacadeGuide.PlayGuide(FacadeGuide.GetCurStep());
+                        FacadeGuide.PlayGuide();
                     });
                 });
             }
