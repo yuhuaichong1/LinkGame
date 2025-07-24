@@ -117,6 +117,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\DataFormat.cs" />
     <Compile Include="Assets\Gen\Code\ConfLoadingTitleSprite.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\Button-Event-Input\ButtonInputUI.cs" />
+    <Compile Include="Assets\BTest.cs" />
     <Compile Include="Assets\Scripts\UI\Congratfulations\UITemplate\UICongratfulations_Temp.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\BytesUtils.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\Common\CommonDefine.cs" />

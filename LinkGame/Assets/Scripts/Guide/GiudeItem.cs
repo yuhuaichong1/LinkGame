@@ -13,5 +13,6 @@ public class GuideItem
     public Transform transparentPos;
     public Transform btnPos;
     public float autohiddenTime;
+    public bool ifNext;
     public Dictionary<string, string> extra;
 }

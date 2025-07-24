@@ -44,7 +44,6 @@ namespace XrCode
             GamePlayFacade.GetFlyMoneyTarget += GetFlyMoneyTarget;
             GamePlayFacade.GetFlyMoneyTipOrgin += GetFlyMoneyTipOrgin;
             GamePlayFacade.GetFuncTarget += GetFuncTarget;
-            GamePlayFacade.GetMapScale += GetMapScale;
 
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
@@ -77,7 +76,6 @@ namespace XrCode
 
             FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Out, (kind, num) => 
             {
-                Debug.LogError(num);
                 mReddotText.text = num.ToString();
                 mReddot.gameObject.SetActive(num != 0);
             }, SetRDNodeKind.Add);
@@ -95,13 +93,19 @@ namespace XrCode
 
             SetTipInfo();
 
-            if(GamePlayFacade.GetIsTutorial())
+            //if(GamePlayFacade.GetIsTutorial())
+            if (false)
             {
+                mTipFuncTip.gameObject.SetActive(false);
+                mRefushFuncTip.gameObject.SetActive(false);
+                mRemoveFuncTip.gameObject.SetActive(false);
+
                 GoodShowOneByOne(() => 
                 {
                     UIManager.Instance.OpenWindowAsync<UIGuide>(EUIType.EUIGuide, (baseUI) =>
                     {
-                        FacadeGuide.PlayGuide(GameDefines.firstGuideId);
+                        mGamePlayMask.gameObject.SetActive(false);
+                        FacadeGuide.PlayGuide(FacadeGuide.GetCurStep());
                     });
                 });
             }
@@ -429,12 +433,6 @@ namespace XrCode
             FacadeEffect.PlayRewardNoticeEffect();
         }
 
-        //得到当前地图的缩放值
-        private float GetMapScale()
-        {
-            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel());
-            return mapScale * level.SizeExtra;
-        }
 
         protected override void OnDisable()
         { 

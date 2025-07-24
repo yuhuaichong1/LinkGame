@@ -18,7 +18,7 @@ namespace XrCode
         {
             LanguageModule = new LanguageModule();
         }
-        protected override void OnEnable() 
+        protected override void OnEnable()
         {
             ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
             rewardValue = level.Reward;
@@ -30,7 +30,7 @@ namespace XrCode
             mWithdrawBtn.gameObject.SetActive(ifwithdraw);
             mClaimBtn.gameObject.SetActive(!ifwithdraw);
             mOnlyMoney.gameObject.SetActive(!ifwithdraw);
-            if(!ifwithdraw)
+            if (!ifwithdraw)
             {
                 rewardValue = rewardValue / 10;
                 LayoutRebuilder.ForceRebuildLayoutImmediate(mParent);
@@ -38,6 +38,12 @@ namespace XrCode
             }
 
             mParticle.Play();
+
+            if (GamePlayFacade.GetIsTutorial())
+            {
+                Debug.LogError(FacadeGuide.GetCurStep());
+                FacadeGuide.PlayGuide(FacadeGuide.GetCurStep());
+            }
         }
         	    private void OnWithdrawBtnClickHandle()
         {

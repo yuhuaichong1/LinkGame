@@ -2222,7 +2222,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You can withdraw now
+  m_Text: Pass Level X, withdraw all cash
   m_languageId: 
   m_editorText: 
   isArabicText: 0
@@ -2537,7 +2537,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Withdrawable Amount
+  m_Text: Current Balance
   m_languageId: 
   m_editorText: 
   isArabicText: 0
