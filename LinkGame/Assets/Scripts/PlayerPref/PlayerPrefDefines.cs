@@ -29,4 +29,7 @@ public abstract class PlayerPrefDefines
     public const string vibrateToggle = "LinkGame_vibrateToggle";            //AudioModule_震动开关
 
     public const string lastZTime = "LinkGame_lastZTime";                    //TimeZoneModule_上传登录时间
+
+    public const string curDailyRDId = "LinkGame_curDailyRDId";              //TaskModule_当前日常任务红点进度
+    public const string curChallengeRDId = "LinkGame_curChallengeRDId";      //TaskModule_当前挑战任务红点进度
 }

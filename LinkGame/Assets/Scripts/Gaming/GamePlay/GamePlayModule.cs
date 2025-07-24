@@ -121,6 +121,7 @@ namespace XrCode
             GamePlayFacade.SetCurLuckMomentCount += SetCurLuckMomentCount;
             GamePlayFacade.GetWithdrawableLevel += GetWithdrawableLevel;
             GamePlayFacade.GetCurWLevel += GetCurWLevel;
+            GamePlayFacade.GetIsTutorial += GetIsTutorial;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -179,6 +180,8 @@ namespace XrCode
             {
                 Debug.LogError("第一次进游戏");
                 curLevel = 1;
+                isTutorial = true;
+                SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
         }
 
@@ -1630,6 +1633,7 @@ namespace XrCode
         private void EatCountAddAndCallback()
         {
             curTotalLinkCount += 1;
+            FacadeTask.CheckLinkCount(curTotalLinkCount);
 
             if (curLevel == 1 || curLevel == 2) return;
 
@@ -1722,6 +1726,8 @@ namespace XrCode
                     {
                         UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
                         UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
+
+                        FacadeTask.CheckLevelPass(curLevel);
 
                         NextLevel();
                     });
@@ -3073,6 +3079,11 @@ namespace XrCode
         private int GetCurWLevel()
         {
             return curWLevel;
+        }
+
+        private bool GetIsTutorial()
+        {
+            return isTutorial;
         }
 
         #endregion

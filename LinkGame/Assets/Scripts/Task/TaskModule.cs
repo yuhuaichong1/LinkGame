@@ -17,6 +17,9 @@ namespace XrCode
         private int re_taskId;
         private int re_taskType;
 
+        private int curDailyRDId;
+        private int curChallengeRDId;
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -25,12 +28,13 @@ namespace XrCode
             FacadeTask.GetChallageTask += GetChallageTask;
             FacadeTask.SetReceiveInfo += SetReceiveInfo;
             FacadeTask.ReceiveDataRemove += ReceiveDataRemove;
+            FacadeTask.CheckLinkCount += CheckLinkCount;
+            FacadeTask.CheckLevelPass += CheckLevelPass;
 
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             DailyTask = new Dictionary<int, Task>();
             ChallengeTask = new Dictionary<int, Task>();
-            //taskStatus = new Dictionary<int, int>();
             GetTaskData();
         }
 
@@ -51,14 +55,29 @@ namespace XrCode
                         Reward = temp.Reward,
                         taskStatus = (ETaskStatus)status.Value,
                     };
+
                     if (task.Type == 0)
+                    {
                         DailyTask.Add(temp.Sn, task);
+                        if (task.taskStatus == ETaskStatus.Receive)
+                            FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
+                    }
                     else
+                    {
                         ChallengeTask.Add(temp.Sn, task);
+                        if (task.taskStatus == ETaskStatus.Receive)
+                            FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
+                    }
+
+                    curDailyRDId = SPlayerPrefs.GetInt(PlayerPrefDefines.curDailyRDId);
+                    curChallengeRDId = SPlayerPrefs.GetInt(PlayerPrefDefines.curChallengeRDId);
                 }
             }
             else
             {
+                bool firstDSn = true;
+                bool firstCSn = true;
+
                 taskStatus = new Dictionary<int, int>();
                 List<ConfTask> tasks = ConfigModule.Instance.Tables.TBTask.DataList;
                 foreach (ConfTask task in tasks)
@@ -74,10 +93,28 @@ namespace XrCode
                         taskStatus = ETaskStatus.Progress,
                     };
                     if (task.Type == 0)
+                    {
                         DailyTask.Add(task.Sn, item);
+                        if(firstDSn) 
+                        {
+                            firstDSn = false;
+                            curDailyRDId = task.Sn;
+                        }
+                    }
                     else
+                    {
                         ChallengeTask.Add(task.Sn, item);
+                        if(firstCSn)
+                        {
+                            firstCSn = false;
+                            curChallengeRDId = task.Sn;
+                        }
+                    }   
                 }
+
+                SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.taskStatus, taskStatus);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.curDailyRDId, curDailyRDId);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.curChallengeRDId, curChallengeRDId);
             }
         }
 
@@ -108,15 +145,15 @@ namespace XrCode
             if (re_taskType == 0)
             {
                 DailyTask.Remove(re_taskId);
+                FacadeRedDot.ReduceRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
                 FacadeTask.RefreshDailyTask();
             }
             else
             {
                 ChallengeTask.Remove(re_taskId);
+                FacadeRedDot.ReduceRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
                 FacadeTask.RefreshChallageTask();
             }
-
-
         }
 
         /// <summary>
@@ -146,6 +183,46 @@ namespace XrCode
             }
             return tasks;
         }
+
+        #region 红点增值相关
+        public void SetDailyTaskRecive(int id)
+        {
+            taskStatus[id] = 1;
+            ConfTask temp = ConfigModule.Instance.Tables.TBTask.Get(id);
+            switch (temp.Type)
+            {
+                case 0:
+                    FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
+                    break;
+                case 1:
+                    FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
+                    break;
+            }
+            SPlayerPrefs.SetDictionary(PlayerPrefDefines.taskStatus, taskStatus);
+        }
+
+        private void CheckLinkCount(int count)
+        {
+            int target = ConfigModule.Instance.Tables.TBTask.Get(curDailyRDId).Target;
+            if(count >= target)
+            {
+                SetDailyTaskRecive(curDailyRDId);
+                curDailyRDId += 1;
+                SPlayerPrefs.SetInt(PlayerPrefDefines.curDailyRDId, curDailyRDId);
+            }
+        }
+
+        private void CheckLevelPass(int level)
+        {
+            int target = ConfigModule.Instance.Tables.TBTask.Get(curChallengeRDId).Target;
+            if (level >= target)
+            {
+                SetDailyTaskRecive(curChallengeRDId);
+                curChallengeRDId += 1;
+                SPlayerPrefs.SetInt(PlayerPrefDefines.curChallengeRDId, curChallengeRDId);
+            }
+        }
+        #endregion
     }
 }
 

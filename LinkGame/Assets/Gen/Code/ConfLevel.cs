@@ -31,6 +31,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         HiddleGoodDelay = _buf.ReadString();
         WithdrawType = _buf.ReadInt();
         Reward = _buf.ReadFloat();
+        SizeExtra = _buf.ReadFloat();
         PostInit();
     }
 
@@ -88,6 +89,10 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 通关奖励
     /// </summary>
     public float Reward { get; protected set; }
+    /// <summary>
+    /// 关卡缩放补正
+    /// </summary>
+    public float SizeExtra { get; protected set; }
 
     public const int __ID__ = 1172697760;
     public override int GetTypeId() => __ID__;
@@ -138,6 +143,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         HiddleGoodDelay = reloadData.HiddleGoodDelay;
         WithdrawType = reloadData.WithdrawType;
         Reward = reloadData.Reward;
+        SizeExtra = reloadData.SizeExtra;
     }
 
     public override string ToString()
@@ -156,6 +162,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         + "HiddleGoodDelay:" + HiddleGoodDelay + ","
         + "WithdrawType:" + WithdrawType + ","
         + "Reward:" + Reward + ","
+        + "SizeExtra:" + SizeExtra + ","
         + "}";
     }
     

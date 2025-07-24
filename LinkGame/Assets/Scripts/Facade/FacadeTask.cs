@@ -16,5 +16,8 @@ namespace XrCode
         public static Action RefreshDailyTask;                      //刷新日常任务数据
         public static Action RefreshChallageTask;                   //刷新挑战任务数据
         public static Action CurMoneyTextShow;                      //任务钱的弹回动画
+
+        public static Action<int> CheckLinkCount;                   //检测消除数红点是否应该添加
+        public static Action<int> CheckLevelPass;                   //检测关卡红点是否应该添加（调用该方法，即说明可以添加了）
     }
 }

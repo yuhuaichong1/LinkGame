@@ -93,7 +93,11 @@ public abstract class GameDefines
 
     public static Vector2 Awesome_ExtraMoney_Num = new Vector2(10, 50);                                     //Awesome界面随机钱区间
 
+    public static string Reddot_Name_Out;                                                                   //外部红点名称
+    public static string Reddot_Name_Daily;                                                                 //日常任务红点名称
+    public static string Reddot_Name_Challenge;                                                             //挑战任务红点名称
 
+    public static int firstGuideId = 10001;                                                                 //起始引导步骤序号
 }
 #endregion
 

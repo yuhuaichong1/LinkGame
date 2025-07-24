@@ -52,14 +52,13 @@ public class RedDotModule : BaseModule
             string keyName = item.KeyName;
             int father = item.Father;
             string ui = item.Path;
-            CreateRDNode(keyName, item.Father == 0 ? "" : reddots[father].KeyName, (kind, num) =>
-            {
-                if(num != 0)
-                {
-
-                }
-            });
+            CreateRDNode(keyName, item.Father == 0 ? null : reddots[father].KeyName);
         }
+
+        //可能会有其他更好的赋值方式，
+        GameDefines.Reddot_Name_Out = reddots[10001].KeyName;
+        GameDefines.Reddot_Name_Daily = reddots[10002].KeyName;
+        GameDefines.Reddot_Name_Challenge = reddots[10003].KeyName;
     }
 
     //====================================================================================================================================//
@@ -482,12 +481,12 @@ public class RedDotModule : BaseModule
         RDNode curRDNode = rdNode;
         while (true)
         {
-            int num = rdNode.num;
-            OverKind kind = CheckRDNodeStatus(rdNode);
-            rdNode.changeAction?.Invoke(kind, num);
+            int num = curRDNode.num;
+            OverKind kind = CheckRDNodeStatus(curRDNode);
+            curRDNode.changeAction?.Invoke(kind, num);
 
-            if (ifRefushF && rdNode.Father != null)
-                curRDNode = rdNode.Father;
+            if (ifRefushF && curRDNode.Father != null)
+                curRDNode = curRDNode.Father;
             else
                 break;
         }

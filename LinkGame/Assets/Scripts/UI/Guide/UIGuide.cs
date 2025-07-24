@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,81 +17,13 @@ namespace XrCode
 
         protected override void OnAwake() 
         {
-            FacadeGuide.SetPos += SetPos;
-            FacadeGuide.SetHand += SetHand;
-            FacadeGuide.SetDialog += SetDialog;
-            FacadeGuide.SetHole += SetHole;
-            FacadeGuide.SetBtn += SetBtn;
-            FacadeGuide.SetObjToHere += SetObjToHere;
+            FacadeGuide.PlayGuide += PlayGuide;
 
-            level1GuideGoodDic = FacadeGuide.GetLevel1GuideGoodDic();
-            posTrans = new Dictionary<string, RectTransform>();
 
-            //GetAllChildrenRecursive(mPos);
         }
         protected override void OnEnable() 
         {
             
-        }
-
-        private void SetHand(string posTarget)
-        {
-            if (posTarget == "*")
-            {
-                mHander.gameObject.SetActive(false);
-            }
-            else
-            {
-                mHander.gameObject.SetActive(true);
-                mHander.position = posTrans[$"{posTarget}"].position;
-            }
-            
-        }
-
-        private void SetDialog(string posTarget, string content) 
-        {
-            if (posTarget == "*")
-            {
-                mGuideTextBg.gameObject.SetActive(false);
-            }
-            else
-            {
-                mGuideTextBg.gameObject.SetActive(true);
-                mGuideTextBg.position = posTrans[$"{posTarget}"].position;
-                mGuideText.text = ModuleMgr.Instance.LanguageMod.GetText(content);
-            }
-        }
-
-        private void SetHole(string posTarget)
-        {
-            if (posTarget == "*")
-            {
-                mHole.gameObject.SetActive(false);
-            }
-            else
-            {
-                mHole.gameObject.SetActive(true);
-                RectTransform rect = posTrans[$"{posTarget}"];
-                mHole.position = rect.position;
-                mHole.sizeDelta = new Vector3(posTrans[$"{posTarget}"].rect.width, posTrans[$"{posTarget}"].rect.height);
-            }
-        }
-
-        private void SetBtn(string posTarget, Action clickAction)
-        {
-            if (posTarget == "*")
-            {
-                mGuideBtn.gameObject.SetActive(false);
-            }
-            else
-            {
-                RectTransform rect = mGuideBtn.GetComponent<RectTransform>();
-                mGuideBtn.gameObject.SetActive(true);
-                rect.position = posTrans[$"{posTarget}"].position;
-
-                rect.sizeDelta = new Vector3(posTrans[$"{posTarget}"].rect.width, posTrans[$"{posTarget}"].rect.height);
-                this.clickAction = clickAction;
-            }
         }
 
         //引导按钮回调
@@ -99,47 +32,94 @@ namespace XrCode
             clickAction?.Invoke();
         }
 
-        //将某个物体放置到该UI之下
-        private void SetObjToHere(Transform targetTrans)
+        private void SetGuideShow()
         {
-            targetTrans.SetParent(mObjTrans);
-        }
+            GuideItem info = FacadeGuide.GetCurGuideItems();
 
-        //设置位置信息
-        private void SetPos()
-        {
-            List<RectTransform> rects = FacadeGuide.GetGuideTargetPos();
-            Transform Good1Pos = rects[3].transform;
-            Transform Good2Pos = rects[4].transform;
-            Transform Good3Pos = rects[5].transform;
+            bool ifshow;
 
-            posTrans["BP1"].transform.position = Good1Pos.position;
-            posTrans["BP2"].transform.position = Good2Pos.position;
-            posTrans["BP3"].transform.position = Good3Pos.position;
-
-            posTrans["HP1"].transform.position = Good1Pos.position;
-            posTrans["HP2"].transform.position = Good2Pos.position;
-            posTrans["HP3"].transform.position = Good3Pos.position;
-
-            int i1 = level1GuideGoodDic[1] > 3 ? 1 : -1;
-            posTrans["DP1"].anchoredPosition = new Vector2(0, posTrans["BP1"].GetComponent<RectTransform>().anchoredPosition.y + 270 * i1);
-            int i2 = level1GuideGoodDic[2] > 3 ? 1 : -1;
-            posTrans["DP2"].anchoredPosition = new Vector2(0, posTrans["BP2"].GetComponent<RectTransform>().anchoredPosition.y + 270 * i2);
-            int i3 = level1GuideGoodDic[3] > 3 ? 1 : -1;
-            posTrans["DP3"].anchoredPosition = new Vector2(0, posTrans["BP3"].GetComponent<RectTransform>().anchoredPosition.y + 270 * i3);
-
-            posTrans["HP4"].transform.position = rects[6].transform.position;
-        }
-
-        //递归获取所有子物体
-        void GetAllChildrenRecursive(Transform parent)
-        {
-            for (int i = 0; i < parent.childCount; i++)
+            ifshow = info.diglogPos != null;
+            mGuideTextBg.gameObject.SetActive(ifshow);
+            if (ifshow)
             {
-                Transform child = parent.GetChild(i);
-                posTrans.Add(child.name, child.GetComponent<RectTransform>());
-                GetAllChildrenRecursive(child);
+                mGuideText.text = info.diglogContent;
+                mGuideTextBg.transform.position = info.diglogPos.position;
             }
+
+            ifshow = info.handPos != null;
+            mHander.gameObject.SetActive(ifshow);
+            if(ifshow)
+            {
+                mHander.transform.position = info.handPos.position;
+                mHand.Reset();
+            }
+
+            mHoleMask.gameObject.SetActive(info.ifMask);
+
+            ifshow = info.transparentPos != null;
+            mHole.gameObject.SetActive(ifshow);
+            if(ifshow)
+            {
+                mHole.transform.position = info.transparentPos.position;
+                mHole.sizeDelta = info.transparentPos.GetComponent<RectTransform>().sizeDelta;
+            }
+
+            float autoHiddenTime = info.autohiddenTime;
+            if (autoHiddenTime != 0)
+            {
+                STimerManager.Instance.CreateSDelay(autoHiddenTime, () => 
+                { 
+                    FacadeGuide.NextStep(true); 
+                });
+            }
+            else
+            {
+                ifshow = info.btnPos != null;
+                mGuideBtn.gameObject.SetActive(ifshow);
+                if (ifshow)
+                {
+                    mGuideBtn.transform.position = info.btnPos.position;
+                    mGuideBtn.GetComponent<RectTransform>().sizeDelta = info.btnPos.GetComponent<RectTransform>().sizeDelta;
+                }
+
+                //mGuideBtn.onClick.RemoveAllListeners();
+                //mGuideBtn.onClick.AddListener(() => { FacadeGuide.NextStep(true); });
+                clickAction = () => { FacadeGuide.NextStep(true); };
+            }
+
+            if(info.extra.Count != 0)
+                SetExtraShow(info.extra);
+        }
+
+        private void SetExtraShow(Dictionary<string, string> extraData)
+        {
+            foreach(KeyValuePair<string, string> kvp in extraData)
+            {
+                switch(kvp.Key) 
+                {
+                    case "btn":
+                        float sizeScale = int.Parse(kvp.Value) == 1 ? GamePlayFacade.GetMapScale() : 1;
+                        mGuideBtn.transform.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
+                        break;
+                    case "line":
+                        string[] value = kvp.Value.Split('|');
+
+                        bool b = int.Parse(value[0]) == 1;
+                        mCanNotLink.gameObject.SetActive(b);
+                        if(b)
+                        {
+                            Vector3 target = GameObject.Find(UIManager.Instance.GetUIPath(value[1].Split(","))).transform.position;
+                            mCanNotLink.transform.position = target;
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void PlayGuide(int step)
+        {
+            FacadeGuide.SetGuide(step);
+            SetGuideShow();
         }
 
         protected override void OnDisable() { }

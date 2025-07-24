@@ -24,4 +24,9 @@ public class AutoHandSwing : MonoBehaviour
         if(sTimer != null)
             sTimer.Stop();
     }
+
+    public void Reset()
+    {
+        sTimer.ReStart();
+    }
 }

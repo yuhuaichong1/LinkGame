@@ -8,6 +8,7 @@ using System;
 using cfg;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.IO;
 
 namespace XrCode
 {
@@ -344,6 +345,16 @@ namespace XrCode
         public void Update()
         {
             curUI?.Update();
+        }
+
+        public string GetUIPath(string[] strArray)
+        {
+            ConfUIRes confData = ConfigModule.Instance.Tables.TbUIRes.Get(int.Parse(strArray[0]));
+            int uiLevel = confData.UiLevel;
+            string uiName = Path.GetFileNameWithoutExtension(confData.UiPath);
+            string objPath = strArray[1];
+
+            return $"{canvas.name}/{uiLevelNodeDic[uiLevel].name}/{uiName}(Clone)/{objPath}";
         }
     }
 

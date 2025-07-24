@@ -1,73 +1,81 @@
 using cfg;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using XrCode;
 
 public class GuideModule : BaseModule
 {
-    public int step;//新手教程步骤
+    private LanguageModule LanguageModule;
 
-    private Dictionary<int, int> level1GuideGoodDic;
-    private bool hasGet;
-
-    private Dictionary<int, GiudeItem> guideItems;
+    private int curStep;
+    private GuideItem curGuideItems;
 
     protected override void OnLoad()
     {
         base.OnLoad();
 
-        InitGuideData();
+        FacadeGuide.NextStep += NextStep;
+        FacadeGuide.SetGuide += SetGuide;
+        FacadeGuide.GetCurGuideItems += GetCurGuideItems;
 
-        guideItems = new Dictionary<int, GiudeItem>();
+        LanguageModule = new LanguageModule();
 
-        List<ConfGuides> guideData = ConfigModule.Instance.Tables.TBGuides.DataList;
-        foreach (ConfGuides guide in guideData)
+        curGuideItems = new GuideItem();
+    }
+
+    private void SetGuide(int step)
+    {
+        curStep = step;
+
+        ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
+        curGuideItems.step = step;
+        curGuideItems.nextStep = guideData.NextStep;
+        //curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId);
+        curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
+        curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
+        curGuideItems.ifMask = guideData.IfMask;
+        curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
+        curGuideItems.btnPos = GetClickBtnRectTrans(guideData.BtnPos, curGuideItems);
+        curGuideItems.autohiddenTime = guideData.AutohiddenTime;
+        curGuideItems.extra = guideData.Extra;
+    }
+
+    private void NextStep(bool ifPlay)
+    {
+        curStep = curGuideItems.nextStep;
+        SetGuide(curStep);
+        if (ifPlay)
+            FacadeGuide.PlayGuide(curStep);
+    }
+
+    private RectTransform GetUIRectTrans(string pathData)
+    {
+        if (pathData == "") return null;
+
+        string[] diglongPosStr = pathData.Split(',');
+        string path = UIManager.Instance.GetUIPath(diglongPosStr);
+        return GameObject.Find(path).GetComponent<RectTransform>();
+    }
+
+    private RectTransform GetClickBtnRectTrans(string pathData, GuideItem item) 
+    { 
+        switch(pathData) 
         {
-            int step = guide.Step;
-            int key = guide.DiglogContent;
-            string DP = guide.DiglogPos;
-            string HP = guide.HandPos;
-            string TP = guide.TransparentPos;
-            string OH = guide.OtherHighlight;
-            string BP = guide.BtnPos;
-            guideItems.Add(step, new GiudeItem 
-            {
-                step = step,
-                contentKey = key, 
-                DP = DP,
-                HP = HP, 
-                TP = TP, 
-                OH = OH, 
-                BP = BP
-            });
+            case "handPos":
+                return item.handPos.GetComponent<RectTransform>();
+            case "transparentPos":
+                return item.transparentPos.GetComponent<RectTransform>();
+            default:
+                return GetUIRectTrans(pathData);
         }
     }
 
-    public void InitGuideData()
+    private GuideItem GetCurGuideItems()
     {
-        //step = PlayerPrefs.GetInt("guideStep");
-    }
-    public void SaveGuideData()
-    {
-        //PlayerPrefs.SetInt("guideStep", step);
-    }
-
-    private void SetRects()
-    {
-        if(!hasGet)
-        {
-            hasGet = true;
-
-            FacadeGuide.SetPos();
-
-            level1GuideGoodDic = FacadeGuide.GetLevel1GuideGoodDic();
-        }
-        
-    }
-
-    public void ShowGuide()
-    {
-        
+        return curGuideItems;
     }
 }

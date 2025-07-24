@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using cfg;
+using DG.Tweening;
 using SuperScrollView;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,17 @@ namespace XrCode
             FacadeTask.CurMoneyTextShow += CurMoneyTextShow;
 
             GetTaskInfo();
+
+            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Daily, (kind, num) =>
+            {
+                mDTRd.gameObject.SetActive(num != 0);
+            }, SetRDNodeKind.Add);
+            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_Daily, true);
+            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Challenge, (kind, num) =>
+            {
+                mCTRd.gameObject.SetActive(num != 0);
+            }, SetRDNodeKind.Add);
+            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_Challenge, true);
         }
 
         protected override void OnEnable()        {

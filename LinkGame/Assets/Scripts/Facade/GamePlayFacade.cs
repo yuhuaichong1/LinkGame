@@ -41,11 +41,15 @@ public static class GamePlayFacade
     public static Action<int> SetCurLuckMomentCount;      //设置幸老虎机累计消除次数（一般用作归0）
     public static Func<Queue<int>> GetWithdrawableLevel;  //获取兑现目标关卡数
     public static Func<int> GetCurWLevel;                 //获取当前兑现目标关卡
+    public static Func<bool> GetIsTutorial;               //获取当前是否为新手引导进程
+    public static Func<float> GetMapScale;                //获得当前地图的缩放值
 
     public static Func<Transform> GetMapTrans;              //获取生成物体的父对象
     public static Func<Transform> GetFlyMoneyTarget;        //得到飞钱移动终点目标
     public static Func<Transform> GetFlyMoneyTipOrgin;      //得到获得飞钱提示起点
     public static Func<EFuncType ,Transform> GetFuncTarget; //得到飞功能移动终点目标
+
+    
 }
 
 

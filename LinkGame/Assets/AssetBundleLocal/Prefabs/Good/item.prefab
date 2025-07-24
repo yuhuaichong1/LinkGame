@@ -288,7 +288,7 @@ MonoBehaviour:
   mRectTrans: {fileID: 4000012075210468}
   mImage: {fileID: 8983916580746990935}
   mBtn: {fileID: 2378655762448804157}
-  selectedColor: {r: 0.01668743, g: 0.7075472, b: 0.27177113, a: 1}
+  selectedColor: {r: 0.42352942, g: 0.9254902, b: 0.60784316, a: 1}
   mIcon: {fileID: 190437351545853936}
 --- !u!222 &7293264501782012639
 CanvasRenderer:

@@ -19,13 +19,15 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     public ConfGuides(ByteBuf _buf) 
     {
         Sn = _buf.ReadInt();
-        Step = _buf.ReadInt();
-        DiglogContent = _buf.ReadInt();
+        NextStep = _buf.ReadInt();
+        DiglogContentId = _buf.ReadInt();
         DiglogPos = _buf.ReadString();
         HandPos = _buf.ReadString();
+        IfMask = _buf.ReadBool();
         TransparentPos = _buf.ReadString();
-        OtherHighlight = _buf.ReadString();
         BtnPos = _buf.ReadString();
+        AutohiddenTime = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Extra = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     Extra.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -39,13 +41,13 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// </summary>
     public int Sn { get; protected set; }
     /// <summary>
-    /// 步骤
+    /// 下一步骤
     /// </summary>
-    public int Step { get; protected set; }
+    public int NextStep { get; protected set; }
     /// <summary>
-    /// 教程内容（对应Language表）
+    /// 提示框内容（对应Language表）
     /// </summary>
-    public int DiglogContent { get; protected set; }
+    public int DiglogContentId { get; protected set; }
     /// <summary>
     /// 提示框位置
     /// </summary>
@@ -55,17 +57,25 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// </summary>
     public string HandPos { get; protected set; }
     /// <summary>
+    /// 是否有黑色遮罩
+    /// </summary>
+    public bool IfMask { get; protected set; }
+    /// <summary>
     /// 透明框位置
     /// </summary>
     public string TransparentPos { get; protected set; }
     /// <summary>
-    /// 其他UI的高亮部分
-    /// </summary>
-    public string OtherHighlight { get; protected set; }
-    /// <summary>
     /// 教程可点击部分
     /// </summary>
     public string BtnPos { get; protected set; }
+    /// <summary>
+    /// 引导自动消失时间
+    /// </summary>
+    public float AutohiddenTime { get; protected set; }
+    /// <summary>
+    /// 额外字段
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, string> Extra { get; protected set; }
 
     public const int __ID__ = 1865134427;
     public override int GetTypeId() => __ID__;
@@ -82,26 +92,52 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     public void Reload(ConfGuides reloadData)
     {
         Sn = reloadData.Sn;
-        Step = reloadData.Step;
-        DiglogContent = reloadData.DiglogContent;
+        NextStep = reloadData.NextStep;
+        DiglogContentId = reloadData.DiglogContentId;
         DiglogPos = reloadData.DiglogPos;
         HandPos = reloadData.HandPos;
+        IfMask = reloadData.IfMask;
         TransparentPos = reloadData.TransparentPos;
-        OtherHighlight = reloadData.OtherHighlight;
         BtnPos = reloadData.BtnPos;
+        AutohiddenTime = reloadData.AutohiddenTime;
+        if(Extra==null)
+        {
+            Extra = reloadData.Extra;
+        }else
+        {
+            foreach (var rawDataKey in Extra.Keys.ToList())
+            {
+                if(!reloadData.Extra.ContainsKey(rawDataKey))
+                {
+                    Extra.Remove(rawDataKey);
+                }
+            }
+            foreach (var reload in reloadData.Extra)
+            {
+                if(Extra.ContainsKey(reload.Key))
+                {
+                    Extra[reload.Key] = reload.Value;
+                }else
+                {
+                    Extra.Add(reload.Key,reload.Value);
+                }
+            }
+        }
     }
 
     public override string ToString()
     {
         return "{ "
         + "Sn:" + Sn + ","
-        + "Step:" + Step + ","
-        + "DiglogContent:" + DiglogContent + ","
+        + "NextStep:" + NextStep + ","
+        + "DiglogContentId:" + DiglogContentId + ","
         + "DiglogPos:" + DiglogPos + ","
         + "HandPos:" + HandPos + ","
+        + "IfMask:" + IfMask + ","
         + "TransparentPos:" + TransparentPos + ","
-        + "OtherHighlight:" + OtherHighlight + ","
         + "BtnPos:" + BtnPos + ","
+        + "AutohiddenTime:" + AutohiddenTime + ","
+        + "Extra:" + Bright.Common.StringUtil.CollectionToString(Extra) + ","
         + "}";
     }
     

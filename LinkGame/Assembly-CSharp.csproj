@@ -321,6 +321,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIncludeAttribute.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleLoader.cs" />
     <Compile Include="Assets\Scripts\Tools\Pool\ClassObjectManager.cs" />
+    <Compile Include="Assets\SGuidePenetrate.cs" />
     <Compile Include="Assets\Scripts\_Game\ModuleMgr.cs" />
     <Compile Include="Assets\Gen\Code\TBAudio.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCDPad.cs" />
@@ -472,6 +473,7 @@
     <None Include="Assets\Tools\SqlLite\Plugins\System.Data.dll" />
     <None Include="Assets\Tools\SqlLite\Plugins\Mono.Data.Sqlite.dll" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Materials\Guide\SGPMask.shader" />
     <None Include="Assets\Tools\SqlLite\Plugins\sqlite3.dll" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\ReleaseNotes.txt" />

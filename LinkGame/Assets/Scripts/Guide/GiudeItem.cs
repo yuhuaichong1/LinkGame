@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GiudeItem
+public class GuideItem
 {
     public int step;
-    public int contentKey;
-    public string DP;
-    public string HP;
-    public string TP;
-    public string OH;
-    public string BP;
+    public int nextStep;
+    public string diglogContent;
+    public Transform diglogPos;
+    public Transform handPos;
+    public bool ifMask;
+    public Transform transparentPos;
+    public Transform btnPos;
+    public float autohiddenTime;
+    public Dictionary<string, string> extra;
 }

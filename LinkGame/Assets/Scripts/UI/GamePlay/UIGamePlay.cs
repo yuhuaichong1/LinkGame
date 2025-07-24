@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections.Generic;
 using cfg;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 namespace XrCode
 {
@@ -43,6 +44,7 @@ namespace XrCode
             GamePlayFacade.GetFlyMoneyTarget += GetFlyMoneyTarget;
             GamePlayFacade.GetFlyMoneyTipOrgin += GetFlyMoneyTipOrgin;
             GamePlayFacade.GetFuncTarget += GetFuncTarget;
+            GamePlayFacade.GetMapScale += GetMapScale;
 
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
@@ -72,13 +74,19 @@ namespace XrCode
             };
 
             UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
+
+            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Out, (kind, num) => 
+            {
+                Debug.LogError(num);
+                mReddotText.text = num.ToString();
+                mReddot.gameObject.SetActive(num != 0);
+            }, SetRDNodeKind.Add);
+            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_Out, true);
         }
-        protected override void OnEnable() 
+        protected override void OnEnable()
         {
-            string size = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel()).LevelSize;
-            //float goodsSizeScale = -0.00694f * sss + 1.6666f;
-            float goodsSizeScale = 1;
-            float sizeScale = goodsSizeScale * mapScale;
+            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel());
+            float sizeScale = mapScale * level.SizeExtra;
             mMap.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
 
             curLevel = GamePlayFacade.GetCurLevel();
@@ -87,18 +95,31 @@ namespace XrCode
 
             SetTipInfo();
 
-            if(true)//首次（重开）进入关卡
+            if(GamePlayFacade.GetIsTutorial())
             {
-                FuncTipShow();
-
-                mWithdrawTip.gameObject.SetActive(false);
-                mCurDir.gameObject.SetActive(false);
-
-                GoodShowOneByOne();
+                GoodShowOneByOne(() => 
+                {
+                    UIManager.Instance.OpenWindowAsync<UIGuide>(EUIType.EUIGuide, (baseUI) =>
+                    {
+                        FacadeGuide.PlayGuide(GameDefines.firstGuideId);
+                    });
+                });
             }
             else
             {
-                STimerManager.Instance.CreateSDelay(1, ()=> { FacadeEffect.PlayRewardNoticeEffect(); });
+                if (true)//首次（重开）进入关卡
+                {
+                    FuncTipShow();
+
+                    mWithdrawTip.gameObject.SetActive(false);
+                    mCurDir.gameObject.SetActive(false);
+
+                    GoodShowOneByOne(WithdrawTipShow);
+                }
+                else
+                {
+                    STimerManager.Instance.CreateSDelay(1, () => { FacadeEffect.PlayRewardNoticeEffect(); });
+                }
             }
 
             mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
@@ -337,7 +358,7 @@ namespace XrCode
         }
 
         //逐个显示物体
-        private void GoodShowOneByOne()
+        private void GoodShowOneByOne(Action successAction = null)
         {
             mGamePlayMask.gameObject.SetActive(true);
 
@@ -352,7 +373,6 @@ namespace XrCode
                         obj.gameObject.SetActive(false);
                         obj.GetComponent<Good>().mIcon.transform.localScale = Vector3.zero;
                     }
-                        
                 }
             }
 
@@ -374,7 +394,7 @@ namespace XrCode
                 sequence.AppendInterval(GameDefines.GoodShowTime);
             }
 
-            sequence.Play().OnComplete(WithdrawTipShow);
+            sequence.Play().OnComplete(()=> { successAction?.Invoke(); });
         }
 
         //提现目标特效以及UI生成
@@ -407,6 +427,13 @@ namespace XrCode
             mCurDir.gameObject.SetActive(true);
             mGamePlayMask.gameObject.SetActive(false);
             FacadeEffect.PlayRewardNoticeEffect();
+        }
+
+        //得到当前地图的缩放值
+        private float GetMapScale()
+        {
+            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel());
+            return mapScale * level.SizeExtra;
         }
 
         protected override void OnDisable()

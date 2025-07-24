@@ -20,7 +20,7 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
-            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel());
+            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
             rewardValue = level.Reward;
             bool ifwithdraw = level.WithdrawType == 1;
 
@@ -29,7 +29,7 @@ namespace XrCode
 
             mWithdrawBtn.gameObject.SetActive(ifwithdraw);
             mClaimBtn.gameObject.SetActive(!ifwithdraw);
-            mOnlyMoneyBtn.gameObject.SetActive(!ifwithdraw);
+            mOnlyMoney.gameObject.SetActive(!ifwithdraw);
             if(!ifwithdraw)
             {
                 rewardValue = rewardValue / 10;
