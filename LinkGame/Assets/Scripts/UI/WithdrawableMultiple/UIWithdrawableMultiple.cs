@@ -56,6 +56,11 @@ namespace XrCode
             DateTime currentDate = DateTime.Now;
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText(""), currentDate.Year, currentDate.Month, currentDate.Day);
             ShowNoticeInfo();
+
+            if(GamePlayFacade.GetIsTutorial())
+            {
+                FacadeGuide.PlayGuide(FacadeGuide.GetCurStep());
+            }
         }
         	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);        }	    private void OnWithdrawBtnClickHandle()
         {
@@ -69,6 +74,8 @@ namespace XrCode
             {
                 UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
             }
+
+            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);
         }
 
         private void ShowNoticeInfo()
@@ -88,6 +95,7 @@ namespace XrCode
                     break;
             }  
         }
+
         private void ShowNoticeInfo2(int PNpeople, int ACNpeople, float AWNpeople)
         {
             mPNpeopleCount.text = PNpeople.ToString();

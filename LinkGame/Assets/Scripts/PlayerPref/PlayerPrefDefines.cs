@@ -32,4 +32,6 @@ public abstract class PlayerPrefDefines
 
     public const string curDailyRDId = "LinkGame_curDailyRDId";              //TaskModule_当前日常任务红点进度
     public const string curChallengeRDId = "LinkGame_curChallengeRDId";      //TaskModule_当前挑战任务红点进度
+
+    public const string curStep = "LinkGame_curStep";                        //GuideModule_当前引导步骤
 }

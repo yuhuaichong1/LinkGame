@@ -20,6 +20,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     {
         Sn = _buf.ReadInt();
         NextStep = _buf.ReadInt();
+        BackStep = _buf.ReadInt();
         DiglogContentId = _buf.ReadInt();
         DiglogPos = _buf.ReadString();
         HandPos = _buf.ReadString();
@@ -27,6 +28,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         TransparentPos = _buf.ReadString();
         BtnPos = _buf.ReadString();
         AutohiddenTime = _buf.ReadFloat();
+        IfNext = _buf.ReadBool();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Extra = new System.Collections.Generic.Dictionary<string, string>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); string _v0;  _v0 = _buf.ReadString();     Extra.Add(_k0, _v0);}}
         PostInit();
     }
@@ -44,6 +46,10 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// 下一步骤
     /// </summary>
     public int NextStep { get; protected set; }
+    /// <summary>
+    /// 引导中断后跳转的引导
+    /// </summary>
+    public int BackStep { get; protected set; }
     /// <summary>
     /// 提示框内容（对应Language表）
     /// </summary>
@@ -73,6 +79,10 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     /// </summary>
     public float AutohiddenTime { get; protected set; }
     /// <summary>
+    /// 点击/倒计时结束后自动下一步
+    /// </summary>
+    public bool IfNext { get; protected set; }
+    /// <summary>
     /// 额外字段
     /// </summary>
     public System.Collections.Generic.Dictionary<string, string> Extra { get; protected set; }
@@ -93,6 +103,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
     {
         Sn = reloadData.Sn;
         NextStep = reloadData.NextStep;
+        BackStep = reloadData.BackStep;
         DiglogContentId = reloadData.DiglogContentId;
         DiglogPos = reloadData.DiglogPos;
         HandPos = reloadData.HandPos;
@@ -100,6 +111,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         TransparentPos = reloadData.TransparentPos;
         BtnPos = reloadData.BtnPos;
         AutohiddenTime = reloadData.AutohiddenTime;
+        IfNext = reloadData.IfNext;
         if(Extra==null)
         {
             Extra = reloadData.Extra;
@@ -130,6 +142,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         return "{ "
         + "Sn:" + Sn + ","
         + "NextStep:" + NextStep + ","
+        + "BackStep:" + BackStep + ","
         + "DiglogContentId:" + DiglogContentId + ","
         + "DiglogPos:" + DiglogPos + ","
         + "HandPos:" + HandPos + ","
@@ -137,6 +150,7 @@ public sealed partial class ConfGuides :  Bright.Config.BeanBase
         + "TransparentPos:" + TransparentPos + ","
         + "BtnPos:" + BtnPos + ","
         + "AutohiddenTime:" + AutohiddenTime + ","
+        + "IfNext:" + IfNext + ","
         + "Extra:" + Bright.Common.StringUtil.CollectionToString(Extra) + ","
         + "}";
     }

@@ -1,7 +1,5 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +16,7 @@ namespace XrCode
         protected override void OnAwake() 
         {
             FacadeGuide.PlayGuide += PlayGuide;
-
+            FacadeGuide.CloseGuide += CloseGuide;
 
         }
         protected override void OnEnable() 
@@ -54,7 +52,7 @@ namespace XrCode
                 mHand.Reset();
             }
 
-            mHoleMask.gameObject.SetActive(info.ifMask);
+            mHoleMask.alpha = info.ifMask ? 1 : 0;
 
             ifshow = info.transparentPos != null;
             mHole.gameObject.SetActive(ifshow);
@@ -69,22 +67,28 @@ namespace XrCode
             {
                 STimerManager.Instance.CreateSDelay(autoHiddenTime, () => 
                 { 
-                    FacadeGuide.NextStep(true); 
+                    FacadeGuide.NextStep(info.ifNext); 
                 });
             }
             else
             {
+                //ifshow = info.btnPos != null;
+                //mGuideBtn.gameObject.SetActive(ifshow);
+                //if (ifshow)
+                //{
+                //    mGuideBtn.transform.position = info.btnPos.position;
+                //    mGuideBtn.GetComponent<RectTransform>().sizeDelta = info.btnPos.GetComponent<RectTransform>().sizeDelta;
+                //}
+
+                //clickAction = () => { FacadeGuide.NextStep(true); };
+
                 ifshow = info.btnPos != null;
-                mGuideBtn.gameObject.SetActive(ifshow);
+                mMask.penetrateObj = ifshow ? info.btnPos.GetComponent<RectTransform>() : null;
                 if (ifshow)
                 {
-                    mGuideBtn.transform.position = info.btnPos.position;
-                    mGuideBtn.GetComponent<RectTransform>().sizeDelta = info.btnPos.GetComponent<RectTransform>().sizeDelta;
+                    mMask.penetrateObj = info.btnPos.GetComponent<RectTransform>();
+                    mMask.ifNext = info.ifNext;
                 }
-
-                //mGuideBtn.onClick.RemoveAllListeners();
-                //mGuideBtn.onClick.AddListener(() => { FacadeGuide.NextStep(true); });
-                clickAction = () => { FacadeGuide.NextStep(true); };
             }
 
             if(info.extra.Count != 0)
@@ -97,10 +101,6 @@ namespace XrCode
             {
                 switch(kvp.Key) 
                 {
-                    case "btn":
-                        float sizeScale = int.Parse(kvp.Value) == 1 ? GamePlayFacade.GetMapScale() : 1;
-                        mGuideBtn.transform.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
-                        break;
                     case "line":
                         string[] value = kvp.Value.Split('|');
 
@@ -118,8 +118,15 @@ namespace XrCode
 
         private void PlayGuide(int step)
         {
+            mGuidePlane.gameObject.SetActive(true);
+
             FacadeGuide.SetGuide(step);
             SetGuideShow();
+        }
+
+        private void CloseGuide()
+        {
+            mGuidePlane.gameObject.SetActive(false);
         }
 
         protected override void OnDisable() { }
