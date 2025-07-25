@@ -99,11 +99,16 @@ namespace XrCode
 
                 GoodShowOneByOne(() => 
                 {
+                    mGamePlayMask.gameObject.SetActive(false);
+                    
                     UIManager.Instance.OpenWindowAsync<UIGuide>(EUIType.EUIGuide, (baseUI) =>
                     {
-                        mGamePlayMask.gameObject.SetActive(false);
-                        FacadeGuide.PlayGuide();
+                        if (FacadeGuide.GetCurGuideItems().ifBackPlay)
+                            FacadeGuide.PlayGuide();
+                        else
+                            FacadeGuide.CloseGuide();
                     });
+                        
                 });
             }
             else
