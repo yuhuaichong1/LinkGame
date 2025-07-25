@@ -34,7 +34,6 @@ namespace XrCode
         {
             CultureInfo currentCulture = CultureInfo.CurrentCulture;
             string countryCode = currentCulture.Name.Split("-")[1];
-
             List<ConfPayRegion> payRegionList = ConfigModule.Instance.Tables.TBPayRegion.DataList;
             foreach (ConfPayRegion payRegion in payRegionList) 
             {

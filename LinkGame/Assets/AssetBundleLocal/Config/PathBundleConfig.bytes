@@ -23,8 +23,8 @@ x
 8Assets/AssetBundleLocal/UI/PayType/TogglePic/revolut.pngDassets/assetbundlelocal/ui/paytype/togglepic/revolut.png.assetbundle
 ~
 7Assets/AssetBundleLocal/UI/PayType/TogglePic/skrill.pngCassets/assetbundlelocal/ui/paytype/togglepic/skrill.png.assetbundle
-~
-7Assets/AssetBundleLocal/UI/PayType/TogglePic/sofort.pngCassets/assetbundlelocal/ui/paytype/togglepic/sofort.png.assetbundle
+†
+7Assets/AssetBundleLocal/UI/PayType/TogglePic/sofort.pngKassets/assetbundlelocal/prefabs/ui/enterinfo/uienterinfo.prefab.assetbundle
 |
 6Assets/AssetBundleLocal/UI/PayType/TogglePic/venmo.pngBassets/assetbundlelocal/ui/paytype/togglepic/venmo.png.assetbundle
 |
@@ -439,6 +439,8 @@ l
 Assets/UI/FuncPopup/tihsi.pngKassets/assetbundlelocal/prefabs/ui/funcpopup/uifuncpopup.prefab.assetbundle
 Ž
 ?Assets/AssetBundleLocal/Prefabs/UI/EnterInfo/UIEnterInfo.prefabKassets/assetbundlelocal/prefabs/ui/enterinfo/uienterinfo.prefab.assetbundle
+x
+)Assets/UI/EnterInfo/btn_zhifu_hover 1.pngKassets/assetbundlelocal/prefabs/ui/enterinfo/uienterinfo.prefab.assetbundle
 k
 Assets/UI/EnterInfo/icon.pngKassets/assetbundlelocal/prefabs/ui/enterinfo/uienterinfo.prefab.assetbundle
 j

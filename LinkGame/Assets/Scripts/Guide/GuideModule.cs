@@ -54,8 +54,6 @@ public class GuideModule : BaseModule
 
     private void SetGuide(int step)
     {
-        Debug.LogError(step);
-
         curStep = step;
 
         ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
