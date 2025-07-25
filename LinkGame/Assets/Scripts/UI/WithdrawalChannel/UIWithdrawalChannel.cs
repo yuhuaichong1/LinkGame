@@ -8,16 +8,27 @@ namespace XrCode
 
     public partial class UIWithdrawalChannel : BaseUI
     {
-        protected override void OnAwake() { }
-        protected override void OnEnable() { }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
+        protected override void OnAwake() 
+        {
+            mAddressOrPhonePlaceholder.text = ModuleMgr.Instance.LanguageMod.GetText("10043");
+        }
+        protected override void OnEnable() 
+        {
+            ShowAnim(mPlane);
+        }
+        	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawalChannel);            });        }	    private void OnConfirmBtnClickHandle()
         {
             if (mAddressOrPhoneInput.text != "")
             {
                 PlayerFacade.SetNameAndWEmailOrPhone("", mAddressOrPhoneInput.text);
-                UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);
-                UIManager.Instance.CloseUI(EUIType.EUIWithdrawalChannel);
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                HideAnim(mPlane, () =>
+                {
+                    UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);
+                    UIManager.Instance.CloseUI(EUIType.EUIWithdrawalChannel);
+                    UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                });
+                
             }
             else
             {

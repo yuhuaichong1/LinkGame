@@ -31,8 +31,11 @@ namespace XrCode
             }
 
             mGreyRateBtn.gameObject.SetActive(true);
+
+            ShowAnim(mPlane);
         }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIRate);        }	    private void OnStar1ClickHandle()        {            StarBtnClick(0);        }	    private void OnStar2ClickHandle()        {            StarBtnClick(1);        }	    private void OnStar3ClickHandle()        {
+        	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUIRate);            });        }	    private void OnStar1ClickHandle()        {            StarBtnClick(0);        }	    private void OnStar2ClickHandle()        {            StarBtnClick(1);        }	    private void OnStar3ClickHandle()        {
             StarBtnClick(2);        }	    private void OnStar4ClickHandle()        {
             StarBtnClick(3);        }	    private void OnStar5ClickHandle()        {
             StarBtnClick(4);        }        private void StarBtnClick(int index)
@@ -48,7 +51,9 @@ namespace XrCode
         }	    private void OnRateBtnClickHandle()
         {
             D.Error($"打分：{ratePoint}");
-            UIManager.Instance.CloseUI(EUIType.EUIRate);
+            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIRate);            });
         }
         protected override void OnDisable()
         {

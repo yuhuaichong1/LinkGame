@@ -473,6 +473,9 @@ MonoBehaviour:
   - m_Target: {fileID: 5784384107884290337}
     m_ComponentList:
     - {fileID: 6977526842312248694}
+  - m_Target: {fileID: 4231158282948023450}
+    m_ComponentList:
+    - {fileID: 6668607702935046583}
 --- !u!225 &6471598746726185307
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -827,6 +830,7 @@ GameObject:
   - component: {fileID: 9092574251824129153}
   - component: {fileID: 5708953276242121184}
   - component: {fileID: 6998007531554613579}
+  - component: {fileID: 3550419279507815362}
   m_Layer: 5
   m_Name: OnlyMoneyBtn
   m_TagString: Untagged
@@ -905,6 +909,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3550419279507815362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597802687510173934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &4999749892742109051
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,7 +1025,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6977526842312248694}
   - component: {fileID: 3204264740830489544}
-  - component: {fileID: 4765914131103659369}
+  - component: {fileID: 6951911525489575088}
   - component: {fileID: 3186823179951402088}
   - component: {fileID: 8063828501273923621}
   m_Layer: 5
@@ -1028,7 +1062,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5784384107884290337}
   m_CullTransparentMesh: 1
---- !u!114 &4765914131103659369
+--- !u!114 &6951911525489575088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1037,7 +1071,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5784384107884290337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1054,7 +1088,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 5
-    m_MaxSize: 59
+    m_MaxSize: 55
     m_Alignment: 7
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1062,6 +1096,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Claim
+  m_languageId: 10058
+  m_editorText: 
+  isArabicText: 0
+  m_bAutoArabicByText: 1
 --- !u!114 &3186823179951402088
 MonoBehaviour:
   m_ObjectHideFlags: 0

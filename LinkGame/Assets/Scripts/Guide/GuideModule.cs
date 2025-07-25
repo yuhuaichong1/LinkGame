@@ -25,6 +25,8 @@ public class GuideModule : BaseModule
         FacadeGuide.NextStepHead += NextStepHead;
         FacadeGuide.GetWithdrawableUIcheck += GetWithdrawableUIcheck;
         FacadeGuide.SetWithdrawableUIcheck += SetWithdrawableUIcheck;
+        FacadeGuide.CheckWithdrawableUI += CheckWithdrawableUI;
+
         LanguageModule = new LanguageModule();
 
         curGuideItems = new GuideItem();
@@ -158,6 +160,16 @@ public class GuideModule : BaseModule
 
         SPlayerPrefs.SetBool(PlayerPrefDefines.withdrawableUIcheck, withdrawableUIcheck);
     }
+
+    private void CheckWithdrawableUI()
+    {
+        if (GamePlayFacade.GetIsTutorial() && withdrawableUIcheck)
+        {
+            FacadeGuide.PlayGuide();
+            withdrawableUIcheck = false;
+        }
+    }
+
 
     /// <summary>
     /// Òýµ¼½áÊø

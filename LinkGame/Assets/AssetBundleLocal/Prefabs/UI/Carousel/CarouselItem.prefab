@@ -78,8 +78,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: Congratulations Player_zZ3g on clearing Level 3 (<color=#FFEB3B>challenged
-    28 times</color>), withdrawal <color=#FFEB3B>$276.64</color>
+  m_Text: 99:99:99 Congratulations Player_zZ3g on passing this level (<color=#FF0000>Challenge
+    99 times</color>), Withdrawn <color=#FF0000>$999.999</color>
 --- !u!1 &6299856782642104244
 GameObject:
   m_ObjectHideFlags: 0

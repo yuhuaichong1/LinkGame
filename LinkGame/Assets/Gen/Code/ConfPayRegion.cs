@@ -25,6 +25,7 @@ public sealed partial class ConfPayRegion :  Bright.Config.BeanBase
         Decimal = _buf.ReadInt();
         ExchangeRate = _buf.ReadFloat();
         Lang = _buf.ReadString();
+        NANP = _buf.ReadInt();
         PostInit();
     }
 
@@ -61,6 +62,10 @@ public sealed partial class ConfPayRegion :  Bright.Config.BeanBase
     /// 语言
     /// </summary>
     public string Lang { get; protected set; }
+    /// <summary>
+    /// 国际长途电话区号
+    /// </summary>
+    public int NANP { get; protected set; }
 
     public const int __ID__ = 1443696344;
     public override int GetTypeId() => __ID__;
@@ -83,6 +88,7 @@ public sealed partial class ConfPayRegion :  Bright.Config.BeanBase
         Decimal = reloadData.Decimal;
         ExchangeRate = reloadData.ExchangeRate;
         Lang = reloadData.Lang;
+        NANP = reloadData.NANP;
     }
 
     public override string ToString()
@@ -95,6 +101,7 @@ public sealed partial class ConfPayRegion :  Bright.Config.BeanBase
         + "Decimal:" + Decimal + ","
         + "ExchangeRate:" + ExchangeRate + ","
         + "Lang:" + Lang + ","
+        + "NANP:" + NANP + ","
         + "}";
     }
     

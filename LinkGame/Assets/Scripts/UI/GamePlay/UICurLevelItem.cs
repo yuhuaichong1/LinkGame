@@ -34,7 +34,7 @@ public class UICurLevelItem : MonoBehaviour
         ItemGreyBg.gameObject.SetActive(!b);
         ItemGreenBg.gameObject.SetActive(b);
         finishIcon.SetActive(b);
-        curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("levelSlider"), level);
+        curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("10011"), level);
         wTip.SetActive(b ? false : ConfigModule.Instance.Tables.TBLevel.Get(level).WithdrawType == 1);
     }
 }

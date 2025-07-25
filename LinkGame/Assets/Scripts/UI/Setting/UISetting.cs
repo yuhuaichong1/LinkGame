@@ -20,9 +20,14 @@ namespace XrCode
 
             OnText = LanguageModule.GetText("");
             OffText = LanguageModule.GetText("");
+            mIDText.text = $"{LanguageModule.GetText("10048")}{114514}";
         }
-        protected override void OnEnable() { }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUISetting);        }	    private void OnUserLvDetailsBtnClickHandle()
+        protected override void OnEnable() 
+        {
+            ShowAnim(mPlane);
+        }
+        	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUISetting);            });        }	    private void OnUserLvDetailsBtnClickHandle()
         {
             UIManager.Instance.OpenWindowAsync<UIUserLevel>(EUIType.EUIUserLevel);
         }

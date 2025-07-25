@@ -66,11 +66,12 @@ namespace XrCode
             int remaining = GameDefines.LuckMoment_Count_Max - GamePlayFacade.GetCurLuckMomentCount();
             bool b = remaining == 0;
             SpinBtnActive(b);
-            //mBottomText.text = b ? LanguageModule.GetText("") : string.Format(LanguageModule.GetText(""), remaining);
-            mBottomText.text = b ? "可以使用了" : $"再消除{remaining}个后可消使用";
+            mBottomText.text = b ? "" : string.Format(LanguageModule.GetText("10064"), remaining);
 
             if (preRewardId != -1)
                 wheelDic[preRewardId].Bg.sprite = NotActivatedBg;
+
+            ShowAnim(mPlane);
         }
                 private string GetLMDesc(int type, int reward, float count)
         {
@@ -90,7 +91,8 @@ namespace XrCode
             }
         }
 
-        private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUILuckMoment);        }	    private void OnSpinBtnClickHandle()
+        private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUILuckMoment);            });        }	    private void OnSpinBtnClickHandle()
         {
             mExitBtn.gameObject.SetActive(false);
             SpinBtnActive(false);
@@ -150,8 +152,6 @@ namespace XrCode
                     preRewardId = random;
                     STimerManager.Instance.CreateSDelay(1, () => 
                     {
-                        UIManager.Instance.CloseUI(EUIType.EUILuckMoment);
-
                         ConfLuckMoment confLuckMoment = ConfigModule.Instance.Tables.TBLuckMoment.Get(random);
                         ERewardType type = (ERewardType)confLuckMoment.Type;
                         switch (type) 
@@ -221,6 +221,11 @@ namespace XrCode
                                 }
                                 break;
                         }
+
+                        HideAnim(mPlane, () =>
+                        {
+                            UIManager.Instance.CloseUI(EUIType.EUILuckMoment);
+                        });
                     });
                 }
             });
@@ -233,8 +238,6 @@ namespace XrCode
             mDisAbleBg.gameObject.SetActive(!b);
 
         }
-
-        
 
         protected override void OnDisable() { }
         protected override void OnDispose() { }

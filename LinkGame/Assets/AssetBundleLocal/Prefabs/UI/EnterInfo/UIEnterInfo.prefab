@@ -69,9 +69,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 50
     m_FontStyle: 2
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 64
+    m_BestFit: 1
+    m_MinSize: 32
+    m_MaxSize: 50
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -962,9 +962,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 50
     m_FontStyle: 2
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 64
+    m_BestFit: 1
+    m_MinSize: 32
+    m_MaxSize: 50
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1765,9 +1765,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 50
     m_FontStyle: 2
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 64
+    m_BestFit: 1
+    m_MinSize: 32
+    m_MaxSize: 50
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1971,8 +1971,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Select Channel
-  m_languageId: 
+  m_Text: Select Method
+  m_languageId: 10034
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2520,7 +2520,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Confirm
-  m_languageId: 
+  m_languageId: 10038
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2954,9 +2954,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 50
     m_FontStyle: 2
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 64
+    m_BestFit: 1
+    m_MinSize: 32
+    m_MaxSize: 50
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -3666,8 +3666,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Withdrawal Channel
-  m_languageId: 
+  m_Text: Withdrawal Method
+  m_languageId: 10033
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -3766,7 +3766,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Enter Information
-  m_languageId: 
+  m_languageId: 10032
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

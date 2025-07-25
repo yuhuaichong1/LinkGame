@@ -143,9 +143,13 @@ MonoBehaviour:
   - m_Target: {fileID: 2791164799053202535}
     m_ComponentList:
     - {fileID: 6092252814351346025}
+    - {fileID: 454997428077367798}
   - m_Target: {fileID: 2179170699343422344}
     m_ComponentList:
     - {fileID: 1354547361253593877}
+  - m_Target: {fileID: 5194825494919585320}
+    m_ComponentList:
+    - {fileID: 7431472123996063948}
 --- !u!225 &7680409655723338788
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -505,7 +509,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 354.3, y: -73}
-  m_SizeDelta: {x: 0, y: 73.22}
+  m_SizeDelta: {x: 145, y: 73.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &863327905487969139
 CanvasRenderer:
@@ -549,7 +553,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Claim
-  m_languageId: 
+  m_languageId: 10058
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -1074,9 +1078,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 36
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 24
+    m_MaxSize: 36
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1

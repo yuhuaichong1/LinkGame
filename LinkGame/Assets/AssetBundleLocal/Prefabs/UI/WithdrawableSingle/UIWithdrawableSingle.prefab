@@ -261,6 +261,9 @@ MonoBehaviour:
   - m_Target: {fileID: 292647965251066733}
     m_ComponentList:
     - {fileID: 2617984099070361856}
+  - m_Target: {fileID: 7302328754493182081}
+    m_ComponentList:
+    - {fileID: 8069650528422529043}
 --- !u!225 &3140837131208776681
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -353,7 +356,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdrawable Amount
-  m_languageId: 
+  m_languageId: 10045
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -636,8 +639,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
+    m_BestFit: 1
+    m_MinSize: 48
     m_MaxSize: 60
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1166,7 +1169,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: You can withdraw now
-  m_languageId: 
+  m_languageId: 10046
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

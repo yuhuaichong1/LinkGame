@@ -132,7 +132,8 @@ namespace XrCode
         private void SetTipInfo()
         {
             //兑现所有的目标关卡提示
-            mWithdrawTipText.text = string.Format(LanguageModule.GetText(""), lastLevelId - curLevel);
+            int diff = lastLevelId - curLevel;
+            mWithdrawTipText.text = diff == 0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), lastLevelId - curLevel);
 
             //箭头图片
             int MoveDicId = ConfigModule.Instance.Tables.TBLevel.Get(curLevel).MoveDic;

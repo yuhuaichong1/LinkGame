@@ -2,6 +2,8 @@
  * 基础视图
  */
 
+using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 namespace XrCode
@@ -100,5 +102,16 @@ namespace XrCode
             }
         }
 
+        protected void ShowAnim(RectTransform target, Action successAction = null)
+        {
+            target.localScale = Vector3.zero;
+            target.DOScale(Vector3.one, GameDefines.ShowAnimTime).SetEase(Ease.OutBack).OnComplete(()=> { successAction?.Invoke(); });
+        }
+
+        protected void HideAnim(RectTransform target, Action successAction = null)
+        {
+            target.localScale = Vector3.one;
+            target.DOScale(Vector3.zero, GameDefines.ShowAnimTime).SetEase(Ease.InBack).OnComplete(() => { successAction?.Invoke(); });
+        }
     }
 }

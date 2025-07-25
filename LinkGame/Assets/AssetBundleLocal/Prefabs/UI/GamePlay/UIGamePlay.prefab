@@ -855,17 +855,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: withdraw
-  m_languageId: 
+  m_Text: Withdraw
+  m_languageId: 10015
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2037,17 +2037,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 36
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 24
+    m_MaxSize: 36
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Change title direction
-  m_languageId: 
+  m_Text: Change Tile Direction
+  m_languageId: 10056
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2604,8 +2604,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c4797d20251b47e489dd34bf077c1ca3, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2684,8 +2684,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 4
+    m_BestFit: 1
+    m_MinSize: 32
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2694,10 +2694,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Refresh
-  m_languageId: 
+  m_languageId: 10019
   m_editorText: 
   isArabicText: 0
-  m_bAutoArabicByText: 1
+  m_bAutoArabicByText: 0
 --- !u!114 &5743692945845926354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3171,8 +3171,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 4
+    m_BestFit: 1
+    m_MinSize: 32
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -3180,8 +3180,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shift
-  m_languageId: 
+  m_Text: Switch
+  m_languageId: 10018
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -4824,17 +4824,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: withdraw
-  m_languageId: 
+  m_Text: Withdraw
+  m_languageId: 10015
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -5831,17 +5831,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: withdraw
-  m_languageId: 
+  m_Text: Withdraw
+  m_languageId: 10015
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -5989,17 +5989,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: withdraw
-  m_languageId: 
+  m_Text: Withdraw
+  m_languageId: 10015
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -6324,8 +6324,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Witchdraw
-  m_languageId: 
+  m_Text: Withdraw
+  m_languageId: 10015
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -7139,8 +7139,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 4
+    m_BestFit: 1
+    m_MinSize: 32
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -7149,7 +7149,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Hint
-  m_languageId: 
+  m_languageId: 10017
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

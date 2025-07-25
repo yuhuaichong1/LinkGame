@@ -623,7 +623,7 @@ MonoBehaviour:
     m_FontSize: 48
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 25
+    m_MinSize: 36
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1062,16 +1062,16 @@ MonoBehaviour:
     m_FontSize: 36
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_MinSize: 28
+    m_MaxSize: 36
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Averoge Challenge Attempts
-  m_languageId: 
+  m_Text: Average Attempts
+  m_languageId: 10029
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -1319,7 +1319,7 @@ MonoBehaviour:
     m_FontSize: 36
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 3
+    m_MinSize: 28
     m_MaxSize: 36
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1327,8 +1327,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Number of Passes Today
-  m_languageId: 
+  m_Text: Levels Cleared Today
+  m_languageId: 10028
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -1839,16 +1839,16 @@ MonoBehaviour:
     m_FontSize: 36
     m_FontStyle: 1
     m_BestFit: 1
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_MinSize: 28
+    m_MaxSize: 36
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Averoge Withdrawal Amount
-  m_languageId: 
+  m_Text: Average Withdrawal
+  m_languageId: 10030
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2156,7 +2156,7 @@ GameObject:
   - component: {fileID: 128688162535078025}
   - component: {fileID: 8243842773779661452}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TargetText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2213,8 +2213,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 4
+    m_BestFit: 1
+    m_MinSize: 32
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2528,17 +2528,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 48
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 4
+    m_BestFit: 1
+    m_MinSize: 32
     m_MaxSize: 48
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Current Balance
-  m_languageId: 
+  m_languageId: 10026
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2658,6 +2658,15 @@ MonoBehaviour:
   - m_Target: {fileID: 9187328480163741807}
     m_ComponentList:
     - {fileID: 3816679673057948618}
+  - m_Target: {fileID: 5783865498624965639}
+    m_ComponentList:
+    - {fileID: 8243842773779661452}
+  - m_Target: {fileID: 1624564488422451113}
+    m_ComponentList:
+    - {fileID: 5796088594013060265}
+  - m_Target: {fileID: 6187202260964111180}
+    m_ComponentList:
+    - {fileID: 4285687812562287523}
 --- !u!225 &7387917614530033933
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2987,7 +2996,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdraw
-  m_languageId: 
+  m_languageId: 10015
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

@@ -13,7 +13,7 @@ namespace XrCode
         private string mark;//货币单位
         private int decimals;//显示暴保留小数点
         private float exchangeRate;//汇率
-
+        private int NANP;//国际长途电话区号
 
         protected override void OnLoad()
         {
@@ -23,6 +23,7 @@ namespace XrCode
 
             FacadePayType.GetPayItems += GetPayItems;
             FacadePayType.RegionalChange += RegionalChange;
+            FacadePayType.GetNANP += GetNANP;
 
             CountryCodeToInfo();
         }
@@ -48,6 +49,8 @@ namespace XrCode
 
                     ModuleMgr.Instance.LanguageMod.SetLanguage((ELanguageType)Enum.Parse(typeof(ELanguageType), payRegion.Lang));
 
+                    NANP = payRegion.NANP;
+
                     return;
                 }
                 
@@ -60,6 +63,7 @@ namespace XrCode
             decimals = GameDefines.Default_Decimal;
             exchangeRate = GameDefines.Default_ExchangeRate;
             ModuleMgr.Instance.LanguageMod.SetLanguage(GameDefines.Default_Language);
+            NANP = GameDefines.Default_NANP;
 
         }
 
@@ -99,6 +103,11 @@ namespace XrCode
             {
                 return $"{Mathf.Round(value * 10)}";
             }
+        }
+
+        private int GetNANP()
+        {
+            return NANP;
         }
     }
 }

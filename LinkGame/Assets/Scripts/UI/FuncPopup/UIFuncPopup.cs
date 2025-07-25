@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,11 +7,14 @@ namespace XrCode
 {
     public partial class UIFuncPopup : BaseUI
     {
+        private LanguageModule LanguageModule;
         private EFuncType eFuncType;
         private Action btnAction;
 
         protected override void OnAwake() 
         {
+            LanguageModule = ModuleMgr.Instance.LanguageMod;
+
             LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
         }
         
@@ -38,12 +40,16 @@ namespace XrCode
                     D.Error("Unknown Func Icon Type!");
                     goto case EFuncType.Tip;
             }
+
+            ShowAnim(mProgessTextRect);
+            ShowAnim(mPlane);
         }
 
         //显示提示相关UI
         private void AddTipPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Hint_IconPath);
+            mContent.text = LanguageModule.GetText("");
             AddEffect();
         }
 
@@ -51,6 +57,7 @@ namespace XrCode
         private void AddRefushPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Refush_IconPath);
+            mContent.text = LanguageModule.GetText("");
             AddEffect();
         }
 
@@ -58,6 +65,7 @@ namespace XrCode
         private void AddRemovePlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Shift_IconPath);
+            mContent.text = LanguageModule.GetText("10056");
             AddEffect();
         }
 
@@ -125,14 +133,25 @@ namespace XrCode
                             break;
                     }
                     PlayerFacade.AddWMoney(addMoney);
-                    UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
+                    HideAnim(mProgessTextRect);
+                    HideAnim(mPlane, () =>
+                    {
+                        UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
+                    });
                 }, null);
             };
         }
 
         //退出界面
-        private void OnExitBtnClickHandle()        {
-            UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);        }	    
+        private void OnExitBtnClickHandle()
+        {
+            HideAnim(mProgessTextRect);
+            HideAnim(mPlane, () => 
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIFuncPopup);
+            });
+        }
+	    
         private void OnAdGetBtnClickHandle()
         {
             btnAction?.Invoke();

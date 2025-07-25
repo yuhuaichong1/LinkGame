@@ -712,7 +712,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Challenge Tasks
-  m_languageId: 
+  m_languageId: 10070
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -2409,7 +2409,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Daily Tasks
-  m_languageId: 
+  m_languageId: 10069
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -3145,10 +3145,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'In
-
-    Progress'
-  m_languageId: 
+  m_Text: In Progress
+  m_languageId: 10072
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -4448,10 +4446,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'In
-
-    Progress'
-  m_languageId: 
+  m_Text: In Progress
+  m_languageId: 10072
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

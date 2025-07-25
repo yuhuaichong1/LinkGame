@@ -50,7 +50,7 @@ namespace XrCode
                     {
                         Id = temp.Sn,
                         Type = temp.Type,
-                        Content = LanguageModule.GetText(string.Format(temp.Content, temp.Target)),
+                        Content = string.Format(LanguageModule.GetText(temp.Content), temp.Target),
                         Target = temp.Target,
                         Reward = temp.Reward,
                         taskStatus = (ETaskStatus)status.Value,

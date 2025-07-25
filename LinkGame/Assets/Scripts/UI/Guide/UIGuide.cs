@@ -17,7 +17,6 @@ namespace XrCode
         {
             FacadeGuide.PlayGuide += PlayGuide;
             FacadeGuide.CloseGuide += CloseGuide;
-
         }
         protected override void OnEnable() 
         {

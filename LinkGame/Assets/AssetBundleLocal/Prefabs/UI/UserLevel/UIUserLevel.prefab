@@ -463,6 +463,9 @@ MonoBehaviour:
   - m_Target: {fileID: 7517455233971647540}
     m_ComponentList:
     - {fileID: 6671114478079883471}
+  - m_Target: {fileID: 6115034092820959713}
+    m_ComponentList:
+    - {fileID: 902079388197894870}
 --- !u!225 &3267336117504104864
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -544,12 +547,12 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 55
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
+    m_BestFit: 1
+    m_MinSize: 38
     m_MaxSize: 55
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
@@ -858,17 +861,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 52
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
+    m_BestFit: 1
+    m_MinSize: 42
     m_MaxSize: 52
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Continue
-  m_languageId: 
+  m_languageId: 10053
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -1111,17 +1114,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 70
+    m_BestFit: 1
+    m_MinSize: 48
+    m_MaxSize: 60
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Level
-  m_languageId: 
+  m_languageId: 10009
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

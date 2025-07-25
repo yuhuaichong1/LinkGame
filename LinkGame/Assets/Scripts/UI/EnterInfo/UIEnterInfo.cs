@@ -12,14 +12,23 @@ namespace XrCode
         private Dictionary<int, PayItem> PayTypeDic;
         private int curPayInfo;
         private EPayType curPayType;
+        private LanguageModule LanguageModule;
 
         protected override void OnAwake()
         {
+            LanguageModule = ModuleMgr.Instance.LanguageMod;
+
             PayTypeDic = new Dictionary<int, PayItem>();
 
             List<PayItem> payTypes = FacadePayType.GetPayItems();
 
             SetToggle(payTypes);
+
+            mNamePlaceholder.text = LanguageModule.GetText("10035");
+            mAddressPlaceholder.text = LanguageModule.GetText("10036");
+            mPhonePlaceholder.text = LanguageModule.GetText("10037");
+            mAddressOrPhonePlaceholder.text = LanguageModule.GetText("10043");
+            mPhoneAreaCodeText.text = $"+{FacadePayType.GetNANP()}";
         }
         protected override void OnEnable() 
         {
@@ -91,11 +100,7 @@ namespace XrCode
                 mPayType3Toggle.onValueChanged.AddListener(OnPayType3TogChangeHandle);
                 PayTypeDic.Add(3, payTypes[2]);
             }
-        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);            if(GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
-            {
-                FacadeGuide.PlayGuide();
-                FacadeGuide.SetWithdrawableUIcheck(false);
-            }        }	    private void OnHelpBtnClickHandle()        {            UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
+        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);            FacadeGuide.CheckWithdrawableUI();        }	    private void OnHelpBtnClickHandle()        {            UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
         {
             if(mNameInput.text != "")
             {

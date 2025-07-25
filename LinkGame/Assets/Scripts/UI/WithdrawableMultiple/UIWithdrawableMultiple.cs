@@ -33,6 +33,10 @@ namespace XrCode
             for(int i = 0; i < count; i++)
             {
                 wItems[i].SetInfo(curWLevel - i, withQueue.Pop());
+                if(i == 0)
+                {
+                    mTargetText.text = string.Format(LanguageModule.GetText("10014"), curWLevel - i);
+                }
             }
             mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
 
@@ -54,28 +58,31 @@ namespace XrCode
             #endregion
 
             DateTime currentDate = DateTime.Now;
-            mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText(""), currentDate.Year, currentDate.Month, currentDate.Day);
+            mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Year, currentDate.Month, currentDate.Day);
             ShowNoticeInfo();
 
             if(GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
             {
                 FacadeGuide.PlayGuide();
             }
+
+            ShowAnim(mDayNotice);
+            ShowAnim(mPlanes);
         }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);        }	    private void OnWithdrawBtnClickHandle()
+        	    private void OnExitBtnClickHandle()        {            HideAnim(mDayNotice);            HideAnim(mPlanes, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);            });        }	    private void OnWithdrawBtnClickHandle()
         {
             //UIManager.Instance.OpenNotice(LanguageModule.GetText(""));
-
-            if (PlayerFacade.GetPayType() == 0)
+            HideAnim(mDayNotice);            HideAnim(mPlanes, () =>
             {
-                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
-            }
-            else
-            {
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
-            }
-
-            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);                if (PlayerFacade.GetPayType() == 0)
+                {
+                    UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
+                }
+                else
+                {
+                    UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                }            });
         }
 
         private void ShowNoticeInfo()

@@ -6,6 +6,7 @@
 
 #region 常量
 
+using cfg;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +35,8 @@ public abstract class GameDefines
     public const int Default_Decimal = 2;                                                                   //默认小数点位
     public const int Default_ExchangeRate = 1;                                                              //默认汇率
     public const ELanguageType Default_Language = ELanguageType.English;                                    //默认语言
-    
+    public const int Default_NANP = 1;                                                                      //默认国际长途电话区号
+
     public const string Func_Hint_IconPath = "UI/FuncIcon/FuncIcon_Hint.png";                               //下三功能“提示”图片                        （*）
     public const string Func_Refush_IconPath = "UI/FuncIcon/FuncIcon_Refush.png";                           //下三功能“刷新”图片                        （*）
     public const string Func_Remove_IconPath = "UI/FuncIcon/FuncIcon_Remove.png";                           //下三功能“移除”图片                        （*）
@@ -98,6 +100,9 @@ public abstract class GameDefines
     public static string Reddot_Name_Challenge;                                                             //挑战任务红点名称
 
     public static int firstGuideId = 10001;                                                                 //起始引导步骤序号
+
+    public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
+    public static float HideAnimTime = 0.25f;                                                               //UI动画关闭持续时间
 }
 #endregion
 
@@ -144,6 +149,7 @@ public enum EUIType
     EUIChallengeSuccessful = 22,
     EUIChallengeFailed = 23,
     EUICongratfulations = 24,
+    EUIWithdrawableWaitCheck = 25,
 }
 
 public enum ESceneType : byte

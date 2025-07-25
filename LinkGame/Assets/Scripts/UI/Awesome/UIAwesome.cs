@@ -1,4 +1,5 @@
 ﻿
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,7 +25,9 @@ namespace XrCode
             awesomeMoney = UnityEngine.Random.Range(GameDefines.Awesome_ExtraMoney_Num.x, GameDefines.Awesome_ExtraMoney_Num.y);
             awesomeMoney_Extra = awesomeMoney / 10;
             mMoneyText.text = FacadePayType.RegionalChange(awesomeMoney);
-            mOnlyMoney.text = string.Format(LanguageModule.GetText(""), FacadePayType.RegionalChange(awesomeMoney_Extra));
+            mOnlyMoney.text = $"{LanguageModule.GetText("10057")} {FacadePayType.RegionalChange(awesomeMoney_Extra)}";
+
+            ShowAnim(mPlane);
         }
         	    private void OnClaimBtnClickHandle()        {            FacadeAd.PlayRewardAd(() =>             {
                 PlayerFacade.AddWMoney(awesomeMoney);
@@ -39,7 +42,11 @@ namespace XrCode
                 {
                     GamePlayFacade.ChangeMoneyShow();
                 });
-                UIManager.Instance.CloseUI(EUIType.EUIAwesome);            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
+                HideAnim(mPlane, () => 
+                {
+                    UIManager.Instance.CloseUI(EUIType.EUIAwesome);
+                });
+                            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
         {
             PlayerFacade.AddWMoney(awesomeMoney_Extra);
             FacadeEffect.PlayRewardEffect(new List<RewardItem>()
@@ -53,7 +60,10 @@ namespace XrCode
             {
                 GamePlayFacade.ChangeMoneyShow();
             });
-            UIManager.Instance.CloseUI(EUIType.EUIAwesome);
+            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIAwesome);
+            });
         }
         protected override void OnDisable() { }
         protected override void OnDispose() { }

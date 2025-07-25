@@ -126,7 +126,7 @@ namespace XrCode
         private void PlayRewardNoticeEffect()
         {
             mIcon.sprite = icons[UnityEngine.Random.Range(0, icons.Count)];
-            mNameText.text = PlayerFacade.GetRandomPlayerName();
+            mNameText.text = string.Format(LanguageModule.GetText(""), PlayerFacade.GetRandomPlayerName());
 
             string[] temp = PlayerFacade.GetRandomAttemptAndMoney();
             string attempt = temp[0];
@@ -208,7 +208,7 @@ namespace XrCode
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
             int diff = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(GamePlayFacade.GetCurWLevel()).Level - GamePlayFacade.GetCurLevel();
-            mLevelTargetText.text = string.Format(LanguageModule.GetText(""), diff);
+            mLevelTargetText.text = diff ==0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff);
             mLevelTarget.localScale = Vector3.one;
             mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 

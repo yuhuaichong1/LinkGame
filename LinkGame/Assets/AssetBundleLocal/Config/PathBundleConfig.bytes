@@ -233,6 +233,8 @@ p
 WAssets/AssetBundleLocal/Prefabs/UI/WithdrawalInformation/UIWithdrawalInformation.prefabcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
 n
 /Assets/AssetBundleLocal/Font/HirukoPro_Bold.ttf;assets/assetbundlelocal/font/hirukopro_bold.ttf.assetbundle
+@
+Assets/UI/Common/btn.png$assets/ui/common/btn.png.assetbundle
 D
 Assets/UI/Common/sidai.png&assets/ui/common/sidai.png.assetbundle
 è
@@ -245,8 +247,6 @@ H
 Assets/UI/Common/btn_big.png(assets/ui/common/btn_big.png.assetbundle
 Æ
 OAssets/AssetBundleLocal/Prefabs/UI/WithdrawalChannel/UIWithdrawalChannel.prefab[assets/assetbundlelocal/prefabs/ui/withdrawalchannel/uiwithdrawalchannel.prefab.assetbundle
-@
-Assets/UI/Common/btn.png$assets/ui/common/btn.png.assetbundle
 D
 Assets/UI/Common/input.png&assets/ui/common/input.png.assetbundle
 B
@@ -415,8 +415,6 @@ j
 Assets/UI/Common/yuandian.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 r
 %Assets/UI/GamePlay/icon_huangguan.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
-¢
-UAssets/Tools/EasyTouchBundle/EasyTouchControls/Examples/_Medias/Textures/Muzzle01.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 h
 Assets/UI/GamePlay/bg 1.pngIassets/assetbundlelocal/prefabs/ui/gameplay/uigameplay.prefab.assetbundle
 p

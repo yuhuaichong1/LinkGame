@@ -17,17 +17,22 @@ namespace XrCode
         protected override void OnEnable() 
         {
             int userLevel = PlayerFacade.GetUserLevel();
-            //mCULText.text = string.Format(LanguageModule.GetText(""), userLevel.ToString());
+            mCULText.text = $"{LanguageModule.GetText("10052")}{userLevel.ToString()}";
             int nextTotalExp = ConfigModule.Instance.Tables.TBUserLevel.GetOrDefault(userLevel - 1).NextLevelExp;
             int curExp = PlayerFacade.GetCurUserExp();
             float progress = curExp * 1f / nextTotalExp;
             progress = Mathf.Floor(progress * 100) / 100f;
             mCULSlider.value = progress;
             mCULSText.text = $"{progress}%";
+
+            ShowAnim(mPlane);
         }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIUserLevel);        }	    private void OnContinueBtnClickHandle()
+        	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUIUserLevel);            });        }	    private void OnContinueBtnClickHandle()
         {
-            UIManager.Instance.CloseUI(EUIType.EUIUserLevel);
+            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIUserLevel);            });
         }
 
         protected override void OnDisable() { }

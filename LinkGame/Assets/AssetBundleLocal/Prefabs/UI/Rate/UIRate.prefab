@@ -220,17 +220,17 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
+    m_BestFit: 1
+    m_MinSize: 48
     m_MaxSize: 68
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rate
-  m_languageId: 
+  m_Text: Rate Us
+  m_languageId: 10061
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -582,6 +582,9 @@ MonoBehaviour:
   - m_Target: {fileID: 8358708204261465568}
     m_ComponentList:
     - {fileID: 4914981202368087740}
+  - m_Target: {fileID: 6931544830073387549}
+    m_ComponentList:
+    - {fileID: 4653383524310280565}
 --- !u!225 &4800148652484586553
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1550,8 +1553,8 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 52
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
+    m_BestFit: 1
+    m_MinSize: 42
     m_MaxSize: 54
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1559,8 +1562,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: If you enjoy our game, please rate us 5 stars!
-  m_languageId: 
+  m_Text: If you enjoy the game, please give us a 5-star rating!
+  m_languageId: 10062
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

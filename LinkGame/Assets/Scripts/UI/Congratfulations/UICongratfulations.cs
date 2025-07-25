@@ -29,9 +29,10 @@ namespace XrCode
         {
             awesomeMoney_Extra = awesomeMoney / 10;
             mMoneyText.text = FacadePayType.RegionalChange(awesomeMoney);
-            mOnlyMoney.text = string.Format(LanguageModule.GetText(""), FacadePayType.RegionalChange(awesomeMoney_Extra));
-        }
-        	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);        }	    private void OnClaimBtnClickHandle()        {
+            mOnlyMoney.text = $"{ LanguageModule.GetText("10057")} { FacadePayType.RegionalChange(awesomeMoney_Extra)}";
+
+            ShowAnim(mPlane);
+        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);        }	    private void OnClaimBtnClickHandle()        {
             FacadeAd.PlayRewardAd(() =>
             {
                 PlayerFacade.AddWMoney(awesomeMoney);
@@ -49,8 +50,10 @@ namespace XrCode
                 });
 
                 FacadeTask.ReceiveDataRemove();
-
-                UIManager.Instance.CloseUI(EUIType.EUICongratfulations);            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
+                HideAnim(mPlane, () => 
+                {
+                    UIManager.Instance.CloseUI(EUIType.EUICongratfulations);
+                });            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
         {
             PlayerFacade.AddWMoney(awesomeMoney_Extra);
             FacadeEffect.PlayRewardEffect(new List<RewardItem>()
@@ -68,7 +71,10 @@ namespace XrCode
 
             FacadeTask.ReceiveDataRemove();
 
-            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);
+            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUICongratfulations);
+            });
         }
         protected override void OnDisable() { }
         protected override void OnDispose() { }

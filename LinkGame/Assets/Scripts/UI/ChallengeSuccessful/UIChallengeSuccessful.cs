@@ -34,7 +34,7 @@ namespace XrCode
             {
                 rewardValue = rewardValue / 10;
                 LayoutRebuilder.ForceRebuildLayoutImmediate(mParent);
-                mOnlyMoney.text = string.Format(LanguageModule.GetText(""), FacadePayType.RegionalChange(rewardValue));
+                mOnlyMoney.text = $"{LanguageModule.GetText("10057")} {FacadePayType.RegionalChange(rewardValue)}";
             }
 
             mParticle.Play();

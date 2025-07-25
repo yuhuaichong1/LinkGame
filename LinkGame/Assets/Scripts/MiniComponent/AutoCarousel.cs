@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 using XrCode;
@@ -92,6 +93,8 @@ public class AutoCarousel : MonoBehaviour
         int times = UnityEngine.Random.Range(1, 50);
         float money = times * UnityEngine.Random.Range(8f, 12f);
         string moneyShow = FacadePayType.RegionalChange(money);
+
+        //99:99:99 Congratulations Player_zZ3g on passing this level(< color =#FF0000>Challenge 99 times</color>), Withdrawn <color=#FF0000>$999.999</color>
 
         obj.transform.GetChild(1).GetComponent<Text>().text = string.Format(ModuleMgr.Instance.LanguageMod.GetText(""), name, times, moneyShow);
     }

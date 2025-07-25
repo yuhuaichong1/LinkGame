@@ -142,7 +142,7 @@ namespace XrCode
             char c2 = nameChars[UnityEngine.Random.Range(0, length)];
             char c3 = nameChars[UnityEngine.Random.Range(0, length)];
 
-            return $"{LanguageModule.GetText("")}_{c1}{c2}{c3}";
+            return $"{LanguageModule.GetText("10008")}_{c1}{c2}{c3}";
         }
 
         /// <summary>

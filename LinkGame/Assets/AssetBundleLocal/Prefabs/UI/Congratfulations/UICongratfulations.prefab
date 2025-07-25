@@ -70,6 +70,9 @@ MonoBehaviour:
   - m_Target: {fileID: 6528155028811343240}
     m_ComponentList:
     - {fileID: 3377118090489960888}
+  - m_Target: {fileID: 6207559782802078853}
+    m_ComponentList:
+    - {fileID: 1477414267601158229}
 --- !u!225 &7665561849366782298
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -828,6 +831,7 @@ GameObject:
   - component: {fileID: 6894040476011177846}
   - component: {fileID: 8690682859995852346}
   - component: {fileID: 3377118090489960888}
+  - component: {fileID: 6418600264722588333}
   m_Layer: 5
   m_Name: OnlyMoneyBtn
   m_TagString: Untagged
@@ -906,6 +910,36 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6418600264722588333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528155028811343240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7337570539551027557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,7 +1067,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7567582926466482403}
   - component: {fileID: 2834917155082075854}
-  - component: {fileID: 3364380493402832022}
+  - component: {fileID: 2399285050325684709}
   - component: {fileID: 6700138852871150614}
   - component: {fileID: 344312884317749628}
   m_Layer: 5
@@ -1070,7 +1104,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8448690774024336134}
   m_CullTransparentMesh: 1
---- !u!114 &3364380493402832022
+--- !u!114 &2399285050325684709
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1079,7 +1113,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8448690774024336134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1096,7 +1130,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 5
-    m_MaxSize: 59
+    m_MaxSize: 55
     m_Alignment: 7
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1104,6 +1138,10 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Claim
+  m_languageId: 10058
+  m_editorText: 
+  isArabicText: 0
+  m_bAutoArabicByText: 1
 --- !u!114 &6700138852871150614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,9 +1412,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 60
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 6
-    m_MaxSize: 78
+    m_BestFit: 1
+    m_MinSize: 42
+    m_MaxSize: 60
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

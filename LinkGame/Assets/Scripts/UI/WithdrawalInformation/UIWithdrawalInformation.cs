@@ -17,12 +17,32 @@ namespace XrCode
             //mCurPayIcon.sprite = PlayerFacade.GetWName
             string ifn = PlayerFacade.GetWName?.Invoke() == "" ? "" : "\n";
             mInfoText.text = $"{PlayerFacade.GetWName?.Invoke()}{ifn}{PlayerFacade.GetWEmailOrPhone?.Invoke()}";
+
+            ShowAnim(mPlane);
         }
 
-        private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);        }	    private void OnReEnterBtnClickHandle()
+        private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);
+            });                        FacadeGuide.CheckWithdrawableUI();        }	    private void OnReEnterBtnClickHandle()
         {
-            UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);            UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
+            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);
+                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
+            });
+            
         }
+
+        private void OnWNEnterBtnClickHandle()
+        {
+            HideAnim(mPlane, () =>
+            {
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);
+                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIWithdrawableWaitCheck);
+            });
+        }
+
         protected override void OnDisable() { }
         protected override void OnDispose() { }
     }

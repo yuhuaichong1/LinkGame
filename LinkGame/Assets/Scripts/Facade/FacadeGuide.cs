@@ -10,4 +10,5 @@ public static class FacadeGuide
     public static Action CloseGuide;
     public static Func<bool> GetWithdrawableUIcheck;
     public static Action<bool> SetWithdrawableUIcheck;
+    public static Action CheckWithdrawableUI;
 }
