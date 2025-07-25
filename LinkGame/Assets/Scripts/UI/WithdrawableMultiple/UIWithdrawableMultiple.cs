@@ -61,31 +61,31 @@ namespace XrCode
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Year, currentDate.Month, currentDate.Day);
             ShowNoticeInfo();
 
-            if(GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
-            {
-                FacadeGuide.PlayGuide();
-            }
 
-            //ShowAnim(mDayNotice);
-            //ShowAnim(mPlanes);
+            ShowAnim(mDayNotice);
+            ShowAnim(mPlanes, () => 
+            {
+                if (GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
+                {
+                    FacadeGuide.PlayGuide();
+                }
+            });
         }
         	    private void OnExitBtnClickHandle()        {            HideAnim(mDayNotice);            HideAnim(mPlanes, () =>             {
                 UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);            });        }	    private void OnWithdrawBtnClickHandle()
         {
-            //UIManager.Instance.OpenNotice(LanguageModule.GetText(""));
-            //HideAnim(mDayNotice);            //HideAnim(mPlanes, () =>
-            //{
-                            //});
-
-            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);
-            if (PlayerFacade.GetPayType() == 0)
+            HideAnim(mDayNotice);            HideAnim(mPlanes, () =>
             {
-                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
-            }
-            else
-            {
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
-            }
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);
+                if (PlayerFacade.GetPayType() == 0)
+                {
+                    UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
+                }
+                else
+                {
+                    UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                }
+            });
         }
 
         private void ShowNoticeInfo()

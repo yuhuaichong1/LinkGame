@@ -10,7 +10,6 @@ using Unity.VisualScripting;
 
 namespace XrCode
 {
-
     public partial class UIGamePlay : BaseUI
     {
         private int curLevel;
@@ -44,6 +43,7 @@ namespace XrCode
             GamePlayFacade.GetFlyMoneyTarget += GetFlyMoneyTarget;
             GamePlayFacade.GetFlyMoneyTipOrgin += GetFlyMoneyTipOrgin;
             GamePlayFacade.GetFuncTarget += GetFuncTarget;
+            GamePlayFacade.GetMapScale += GetMapScale;
 
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
@@ -59,8 +59,6 @@ namespace XrCode
             //根据屏幕宽高比以及物体排布数量控制物体缩放大小
             float screenScale = Screen.width * 1f / Screen.height;
             mapScale = -3.3507f * screenScale + 2.8858f;
-            
-
             
             lastLevelId = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
             secondLastLevelId = lastLevelId - 1;
@@ -432,11 +430,14 @@ namespace XrCode
             mGamePlayMask.gameObject.SetActive(false);
             FacadeEffect.PlayRewardNoticeEffect();
         }
-
+        private float GetMapScale()
+        {
+            return mapScale;
+        }
 
         protected override void OnDisable()
         { 
-        
+            
         }
         protected override void OnDispose()
         {

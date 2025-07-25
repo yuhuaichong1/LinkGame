@@ -86,6 +86,8 @@ namespace XrCode
         private Queue<int> withdrawableLevel;//可提现的关卡
         private int curWLevel;//当前提现关卡Id
 
+        private Dictionary<int, List<int>> randomIconPriority;//出现图样的优先级
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -194,7 +196,7 @@ namespace XrCode
             List<ConfGoodIcon> confs = ConfigModule.Instance.Tables.TBGoodIcon.DataList;
             foreach(ConfGoodIcon conf in confs)
             {
-                goodIcons.Add(conf.GoodId, ResourceMod.Instance.SyncLoad<Sprite>(conf.GoodPath));
+                goodIcons.Add(conf.Sn, ResourceMod.Instance.SyncLoad<Sprite>(conf.GoodPath));
             }
         }
 
@@ -223,14 +225,14 @@ namespace XrCode
         #region 创建关卡
         private void CreateLevel()
         {
-            SetRandomGoodIcon();
-
             curLevelData = new LevelData(curLevel);
             row = curLevelData.LevelXCount;
             col = curLevelData.LevelYCount;
             curLevelDirection = curLevelData.list_constraint;
 
             goodPrefab = ResourceMod.Instance.SyncLoad<GameObject>("Prefabs/Good/item.prefab");
+
+            SetRandomGoodIcon(curLevelData.GoodKinds);
 
             LMap(row, col);
 
@@ -3060,7 +3062,7 @@ namespace XrCode
         }
 
         //设置随机图片
-        private void SetRandomGoodIcon()
+        private void SetRandomGoodIcon(int kinds)
         {
             randomGoodIcon.Clear();
 

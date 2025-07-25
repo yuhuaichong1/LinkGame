@@ -906,7 +906,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 6418600264722588333}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1094,7 +1094,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 354, y: -65.5}
-  m_SizeDelta: {x: 145, y: 62.62}
+  m_SizeDelta: {x: 0, y: 62.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2834917155082075854
 CanvasRenderer:

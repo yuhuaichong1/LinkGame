@@ -32,7 +32,11 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
-            OldValue();
+            ShowAnim(mPlane, () => 
+            {
+                OldValue();
+            });
+            
         }
 
         //如果是从Withrawal Information界面跳转回来的，则赋予旧值
@@ -55,10 +59,11 @@ namespace XrCode
                 }
             }
 
-            STimerManager.Instance.CreateSDelay(0.05f, () =>
-            {
-                PayInputShow(mPayType1Toggle.transform.position, PayTypeDic[select].info, PayTypeDic[select].payType);
-            });
+            PayInputShow(mPayType1Toggle.transform.position, PayTypeDic[select].info, PayTypeDic[select].payType);
+            //STimerManager.Instance.CreateSDelay(0.05f, () =>
+            //{
+                
+            //});
 
             mNameInput.text = PlayerFacade.GetWName();
 
@@ -100,7 +105,8 @@ namespace XrCode
                 mPayType3Toggle.onValueChanged.AddListener(OnPayType3TogChangeHandle);
                 PayTypeDic.Add(3, payTypes[2]);
             }
-        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);            FacadeGuide.CheckWithdrawableUI();        }	    private void OnHelpBtnClickHandle()        {            UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
+        }	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
+                UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);                FacadeGuide.CheckWithdrawableUI();            });        }	    private void OnHelpBtnClickHandle()        {            UIManager.Instance.OpenWindowAsync<UIWithdrawalChannel>(EUIType.EUIWithdrawalChannel);        }	    private void OnConfirmBtnClickHandle()
         {
             if(mNameInput.text != "")
             {
@@ -145,8 +151,11 @@ namespace XrCode
 
                 PlayerFacade.SetPayType(curPayType);
                 PlayerFacade.SetNameAndWEmailOrPhone(name, pe);
-                UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                HideAnim(mPlane, () =>
+                {
+                    UIManager.Instance.CloseUI(EUIType.EUIEnterInfo);
+                    UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+                });
             }
             else
             {

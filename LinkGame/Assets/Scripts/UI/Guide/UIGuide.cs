@@ -32,7 +32,7 @@ namespace XrCode
         private void SetGuideShow()
         {
             GuideItem info = FacadeGuide.GetCurGuideItems();
-
+            Debug.LogError(info.step + "   " + info.note);
             bool ifshow;
 
             ifshow = info.diglogPos != null;
@@ -99,6 +99,8 @@ namespace XrCode
                         {
                             Vector3 target = GameObject.Find(UIManager.Instance.GetUIPath(value[1].Split(","))).transform.position;
                             mCanNotLink.transform.position = target;
+                            float sc = GamePlayFacade.GetMapScale();
+                            mCanNotLink.transform.localScale = new Vector3(sc, sc, sc);
                         }
                         break;
                 }

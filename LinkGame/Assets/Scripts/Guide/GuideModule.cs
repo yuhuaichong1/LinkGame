@@ -40,9 +40,13 @@ public class GuideModule : BaseModule
         if (curStep == 0) 
         {
             curStep = GameDefines.firstGuideId;
+        }
+        else
+        {
             int backStep = ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
             curStep = backStep != 0 ? backStep : curStep;
         }
+
         SetGuide(curStep);
 
         withdrawableUIcheck = SPlayerPrefs.GetBool(PlayerPrefDefines.withdrawableUIcheck);
@@ -50,6 +54,8 @@ public class GuideModule : BaseModule
 
     private void SetGuide(int step)
     {
+        Debug.LogError(step);
+
         curStep = step;
 
         ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
@@ -75,12 +81,12 @@ public class GuideModule : BaseModule
     /// </summary>
     private void NextStep()
     {
-        if(curGuideItems.ifNextStep)
+        if(curGuideItems.ifNextStep && !CheckGuideEnd())
         {
+            bool orginBool = curGuideItems.ifNextPlay;
             curStep = curGuideItems.nextStep;
-            CheckGuideEnd();
             SetGuide(curStep);
-            if (curGuideItems.ifNextPlay) 
+            if (orginBool) 
             {
                 FacadeGuide.PlayGuide();
             }
@@ -172,8 +178,9 @@ public class GuideModule : BaseModule
 
 
     /// <summary>
-    /// 引导结束
+    /// 检测引导是否结束
     /// </summary>
+    /// <returns>引导是否结束</returns>
     private bool CheckGuideEnd()
     {
         bool temp = ConfigModule.Instance.Tables.TBGuides.Get(curStep).NextStep == 0;

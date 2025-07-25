@@ -111,7 +111,11 @@ namespace XrCode
         protected void HideAnim(RectTransform target, Action successAction = null)
         {
             target.localScale = Vector3.one;
-            target.DOScale(Vector3.zero, GameDefines.ShowAnimTime).SetEase(Ease.InBack).OnComplete(() => { successAction?.Invoke(); });
+            target.DOScale(Vector3.zero, GameDefines.ShowAnimTime).SetEase(Ease.InBack).OnComplete(() => 
+            {
+                target.localScale = Vector3.one;
+                successAction?.Invoke(); 
+            });
         }
     }
 }

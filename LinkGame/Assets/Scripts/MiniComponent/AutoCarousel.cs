@@ -90,13 +90,13 @@ public class AutoCarousel : MonoBehaviour
         int count = payItems.Count;
         obj.transform.GetChild(0).GetComponent<Image>().sprite = payItems[UnityEngine.Random.Range(0, count)].icon;
 
+        string name = PlayerFacade.GetRandomPlayerName();
         int times = UnityEngine.Random.Range(1, 50);
         float money = times * UnityEngine.Random.Range(8f, 12f);
         string moneyShow = FacadePayType.RegionalChange(money);
 
-        //99:99:99 Congratulations Player_zZ3g on passing this level(< color =#FF0000>Challenge 99 times</color>), Withdrawn <color=#FF0000>$999.999</color>
-
+        //99:99:99 Congratulations Player_zZ3g on passing this level(<color=#FF0000>Challenge 99 times</color>), Withdrawn <color=#FF0000>$999.999</color>
         //obj.transform.GetChild(1).GetComponent<Text>().text = string.Format(ModuleMgr.Instance.LanguageMod.GetText(""), name, times, moneyShow);
-        obj.transform.GetChild(1).GetComponent<Text>().text = string.Format($"Congratulations {PlayerFacade.GetRandomPlayerName()} on passing this level(<color=#FF0000>Challenge {times} times</color>), Withdrawn <color=#FF0000>{moneyShow}</color>");
+        obj.transform.GetChild(1).GetComponent<Text>().text = string.Format("Congratulations {0} on passing this level(<color=#FF0000>Challenge {1} times</color>), Withdrawn <color=#FF0000>{2}</color>", name, times, moneyShow);
     }
 }

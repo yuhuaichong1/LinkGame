@@ -21,7 +21,7 @@ namespace XrCode
             ShowAnim(mPlane);
         }
         	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
-                UIManager.Instance.CloseUI(EUIType.EUIWithdrawableSingle);            });        }	    private void OnWithdrawBtnClickHandle()
+                UIManager.Instance.CloseUI(EUIType.EUIWithdrawableSingle);                FacadeGuide.CheckWithdrawableUI();            });        }	    private void OnWithdrawBtnClickHandle()
         {
             HideAnim(mPlane, () =>
             {
