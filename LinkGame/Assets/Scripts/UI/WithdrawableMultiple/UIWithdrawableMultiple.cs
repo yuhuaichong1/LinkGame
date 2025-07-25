@@ -57,7 +57,7 @@ namespace XrCode
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText(""), currentDate.Year, currentDate.Month, currentDate.Day);
             ShowNoticeInfo();
 
-            if(GamePlayFacade.GetIsTutorial())
+            if(GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
             {
                 FacadeGuide.PlayGuide();
             }
