@@ -66,23 +66,26 @@ namespace XrCode
                 FacadeGuide.PlayGuide();
             }
 
-            ShowAnim(mDayNotice);
-            ShowAnim(mPlanes);
+            //ShowAnim(mDayNotice);
+            //ShowAnim(mPlanes);
         }
         	    private void OnExitBtnClickHandle()        {            HideAnim(mDayNotice);            HideAnim(mPlanes, () =>             {
                 UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);            });        }	    private void OnWithdrawBtnClickHandle()
         {
             //UIManager.Instance.OpenNotice(LanguageModule.GetText(""));
-            HideAnim(mDayNotice);            HideAnim(mPlanes, () =>
+            //HideAnim(mDayNotice);            //HideAnim(mPlanes, () =>
+            //{
+                            //});
+
+            UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);
+            if (PlayerFacade.GetPayType() == 0)
             {
-                UIManager.Instance.CloseUI(EUIType.EUIWithdrawableMultiple);                if (PlayerFacade.GetPayType() == 0)
-                {
-                    UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
-                }
-                else
-                {
-                    UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
-                }            });
+                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
+            }
+            else
+            {
+                UIManager.Instance.OpenWindowAsync<UIWithdrawalInformation>(EUIType.EUIWithdrawalInformation);
+            }
         }
 
         private void ShowNoticeInfo()

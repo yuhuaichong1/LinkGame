@@ -18,9 +18,11 @@ namespace XrCode
             LanguageModule = ModuleMgr.Instance.LanguageMod;
             AudioModule = ModuleMgr.Instance.AudioMod;
 
-            OnText = LanguageModule.GetText("");
-            OffText = LanguageModule.GetText("");
-            mIDText.text = $"{LanguageModule.GetText("10048")}{114514}";
+            //OnText = LanguageModule.GetText("");
+            //OffText = LanguageModule.GetText("");
+            OnText = "On";
+            OffText = "Off";
+            mIDText.text = $"{LanguageModule.GetText("10048")}{148857948}";
         }
         protected override void OnEnable() 
         {
