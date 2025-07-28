@@ -220,9 +220,17 @@ namespace XrCode
         {
             if(GamePlayFacade.GetTipCount?.Invoke() > 0)
             {
-                GamePlayFacade.TipFunc?.Invoke();
-                GamePlayFacade.ChangeTipCount?.Invoke(-1);
-                ChangeFuncTipCount();
+                if(!GamePlayFacade.GetIfHintFunc())
+                {
+                    GamePlayFacade.TipFunc?.Invoke();
+                    GamePlayFacade.ChangeTipCount?.Invoke(-1);
+                    ChangeFuncTipCount();
+                }
+                else
+                {
+                    UIManager.Instance.OpenNotice("提示功能进行中，请勿重复使用");
+                }
+
             }
             else
             {
@@ -247,21 +255,33 @@ namespace XrCode
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Refush);
             }
         }
-        //移除（现为变向）功能按钮点击
+        //移除功能按钮点击
         private void OnRemoveBtnClickHandle()
         {
             if(GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
             {
-                GamePlayFacade.RemoveFunc?.Invoke();
-                //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
-                GamePlayFacade.ChangeRemoveCount.Invoke(-1);
-                ChangeFuncRemoveCount();
+                if (!GamePlayFacade.GetIfRemoveFunc())
+                {
+                    GamePlayFacade.RemoveFunc?.Invoke();
+                    GamePlayFacade.ChangeRemoveCount.Invoke(-1);
+                    ChangeFuncRemoveCount();
 
-                //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
-                //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
-                //mCurDir.sprite = curLevelDicIcon;
-                //mCurDir.gameObject.SetActive(false);
-                //TMDTipShow();
+                    #region old(转向功能)
+                    //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
+                    //GamePlayFacade.ChangeRemoveCount.Invoke(-1);
+                    //ChangeFuncRemoveCount();
+
+                    //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
+                    //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
+                    //mCurDir.sprite = curLevelDicIcon;
+                    //mCurDir.gameObject.SetActive(false);
+                    //TMDTipShow();
+                    #endregion 
+                }
+                else
+                {
+                    UIManager.Instance.OpenNotice("消除功能进行中，请勿重复使用");
+                }
             }
             else
             {

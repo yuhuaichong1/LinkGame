@@ -92,6 +92,7 @@ namespace XrCode
         private STimer ifKSTimer;//是否全同类物体震动双击间隔计算器
 
         private bool ifRemoveFunc;//是否处于移除功能中
+        private bool ifHintFunc;//是否处于提示功能中
 
         protected override void OnLoad()
         {
@@ -132,6 +133,8 @@ namespace XrCode
             GamePlayFacade.GetIsTutorial += GetIsTutorial;
             GamePlayFacade.SetIsTutorial += SetIsTutorial;
             GamePlayFacade.GetNumberGoodCanEat += GetNumberGoodCanEat;
+            GamePlayFacade.GetIfRemoveFunc += GetIfRemoveFunc;
+            GamePlayFacade.GetIfHintFunc += GetIfHintFunc;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -2257,6 +2260,8 @@ namespace XrCode
         //提示可消除功能
         private void TipFunc()
         {
+            ifHintFunc = true;
+
             int count = list_good_can_eat1.Count;
             if (count == 0)
             {
@@ -3116,6 +3121,8 @@ namespace XrCode
         //消去摇动（提示）特效
         void RemoveHint()
         {
+            ifHintFunc = false;
+
             GameObject good = null;
             if (HINT_POS1 != null)
             {
@@ -3261,6 +3268,16 @@ namespace XrCode
         {
             isTutorial = b;
             SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
+        }
+
+        private bool GetIfRemoveFunc()
+        {
+            return ifRemoveFunc;
+        }
+
+        private bool GetIfHintFunc()
+        {
+            return ifHintFunc;
         }
 
         #endregion

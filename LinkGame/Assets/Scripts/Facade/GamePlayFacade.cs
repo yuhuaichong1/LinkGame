@@ -13,9 +13,11 @@ public static class GamePlayFacade
     public static Action CreateLevel;                     //创建关卡
     public static Action<Vector2, Vector2> CheckIfLink;   //检测是否能链接
     public static Action TipFunc;                         //提示功能
+    public static Func<bool> GetIfHintFunc;               //获取当前是否处于提示功能状态
     public static Action RefushFunc;                      //刷新功能
     public static Action RemoveFunc;                      //移除功能
     public static Func<Good, bool> RemoveFunc2;           //移除功能2（点击后执行真正的移除）
+    public static Func<bool> GetIfRemoveFunc;             //获取当前是否处于移除功能状态
     public static Func<EGoodMoveDic> ChangeDirection;     //方向变更功能
     public static Action<int> ChangeTipCount;             //改变提示功能数量
     public static Action<int> ChangeRefushCount;          //改变刷新功能数量
