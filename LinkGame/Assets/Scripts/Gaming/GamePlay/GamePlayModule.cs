@@ -94,6 +94,9 @@ namespace XrCode
         private bool ifRemoveFunc;//是否处于移除功能中
         private bool ifHintFunc;//是否处于提示功能中
 
+        private int totalGood;//总物品数量
+        private int remainGood;//剩余物品数量
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -135,6 +138,7 @@ namespace XrCode
             GamePlayFacade.GetNumberGoodCanEat += GetNumberGoodCanEat;
             GamePlayFacade.GetIfRemoveFunc += GetIfRemoveFunc;
             GamePlayFacade.GetIfHintFunc += GetIfHintFunc;
+            GamePlayFacade.GetRemainPCT += GetRemainPCT;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -239,6 +243,9 @@ namespace XrCode
         #region 创建关卡
         private void CreateLevel()
         {
+            totalGood = 0;
+            remainGood = 0;
+
             curLevelData = new LevelData(curLevel);
             row = curLevelData.LevelXCount;
             col = curLevelData.LevelYCount;
@@ -271,7 +278,8 @@ namespace XrCode
             {
                 _randomMap();
             }
-            
+
+            remainGood = totalGood;
         }
 
         /// <summary>
@@ -521,6 +529,8 @@ namespace XrCode
             good.setOnlineId(online_id);
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
             MAP_Goods[row][col] = obj;
+
+            totalGood += 1;
         }
 
         //得到场景中的某物体上的Pokemon类
@@ -1625,6 +1635,7 @@ namespace XrCode
             AudioModule.PlayEffect(EAudioType.ElinkRemove);
 
             D.Log($"消去的是: ({ pos2.R},{ pos2.C}) , ({pos1.R},{pos1.C})");
+            remainGood -= 2;
 
             ChangeMapState(EMapState.Eating);
             GameObject eatGood1 = GetGood(pos1.R, pos1.C);
@@ -3278,6 +3289,12 @@ namespace XrCode
         private bool GetIfHintFunc()
         {
             return ifHintFunc;
+        }
+
+        private string GetRemainPCT()
+        {
+            float temp = (1 - 1f * remainGood / totalGood) * 100;
+            return $"{temp.ToString("F2")}%";
         }
 
         #endregion
