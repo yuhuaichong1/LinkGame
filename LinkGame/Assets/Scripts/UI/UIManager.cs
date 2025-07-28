@@ -101,7 +101,7 @@ namespace XrCode
             ConfUIRes conf = ConfigModule.Instance.Tables.TbUIRes.GetOrDefault((int)uType);
             if (conf != null)
             {
-                Debug.Log($"[ConfUI]: 加载ui {conf.Sn} ___ {conf.UiPath}");
+                D.Log($"[ConfUI]: 加载ui {conf.Sn} ___ {conf.UiPath}");
                 ResourceMod.Instance.AsyncLoad<UnityEngine.Object>(conf.UiPath,
                     (obj) =>
                     {
@@ -144,7 +144,7 @@ namespace XrCode
             ConfUIRes conf = ConfigModule.Instance.Tables.TbUIRes.GetOrDefault((int)uType);
             if (conf != null)
             {
-                Debug.Log($"[ConfUI]: 加载ui {conf.Sn}");
+                D.Log($"[ConfUI]: 加载ui {conf.Sn}");
 #if UNITY_EDITOR
                 var obj = ResourceMod.Instance.SyncLoad<GameObject>(conf.UiPath);
                 GameObject go = InitUITransform(obj, conf.UiLevel);
@@ -168,7 +168,7 @@ namespace XrCode
         private void OpenUI(BaseUI ui)
         {
             if(curUI != null)
-                Debug.LogError(curUI.UIType);
+                D.Error(curUI.UIType.ToString());
             if (curUI != null && ui.UIType != EUIType.EUIPopup)
             {
                 if (ui.IsFullScreen) curUI.Hide();
@@ -262,7 +262,7 @@ namespace XrCode
             ConfUIRes conf = ConfigModule.Instance.Tables.TbUIRes.GetOrDefault((int)uType);
             if (conf != null)
             {
-                Debug.Log($"[ConfUI]: 加载ui {conf.Sn} ___ {conf.UiPath}");
+                D.Log($"[ConfUI]: 加载ui {conf.Sn} ___ {conf.UiPath}");
                 ResourceMod.Instance.AsyncLoad<UnityEngine.Object>(conf.UiPath,
                     (obj) =>
                     {
@@ -303,7 +303,7 @@ namespace XrCode
                 ConfUIRes conf = ConfigModule.Instance.Tables.TbUIRes.GetOrDefault((int)EUIType.EUINotice);
                 if (conf != null)
                 {
-                    Debug.Log($"[ConfUI]: 加载ui {conf.Sn} ___ {conf.UiPath}");
+                    D.Log($"[ConfUI]: 加载ui {conf.Sn} ___ {conf.UiPath}");
                     ResourceMod.Instance.AsyncLoad<UnityEngine.Object>(conf.UiPath,
                         (obj) =>
                         {
@@ -331,7 +331,7 @@ namespace XrCode
             }
             else
             {
-                Debug.LogError("UIAnims is null!");
+                D.Error("UIAnims is null!");
                 return null;
             }
         }

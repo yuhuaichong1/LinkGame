@@ -32,7 +32,6 @@ namespace XrCode
         private void SetGuideShow()
         {
             GuideItem info = FacadeGuide.GetCurGuideItems();
-            Debug.LogError(info.step + "   " + info.note);
             bool ifshow;
 
             ifshow = info.diglogPos != null;

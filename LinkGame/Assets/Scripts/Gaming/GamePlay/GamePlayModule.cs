@@ -1,6 +1,7 @@
 using cfg;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -80,13 +81,14 @@ namespace XrCode
         private int curAwesomeCount;//送钱计数
         private int curRateCount;//让评论计数
 
+        private Dictionary<int, List<int>> GoodIconRange;//图样随机区间
         private Dictionary<int, int> randomGoodIcon;//让图样随机的词典
-        private List<int> RGIids;//randomGoodIcon辅助数组
 
         private Queue<int> withdrawableLevel;//可提现的关卡
         private int curWLevel;//当前提现关卡Id
 
-        private Dictionary<int, List<int>> randomIconPriority;//出现图样的优先级
+        private int ifkindShake;//是否全同类物体震动（判断是否快速双击）
+        private STimer ifKSTimer;
 
         protected override void OnLoad()
         {
@@ -128,8 +130,8 @@ namespace XrCode
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
-            randomGoodIcon = new Dictionary<int, int>();
-            RGIids = new List<int>(ConfigModule.Instance.Tables.TBGoodIcon.DataMap.Keys);
+            GoodIconRange = new Dictionary<int, List<int>>();
+            randomGoodIcon = new Dictionary<int, int>();   
 
             LPath = new ArrayList();
             keyLPath = new ArrayList();
@@ -143,10 +145,14 @@ namespace XrCode
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
 
+            LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
             pathObj = new Dictionary<int, GameObject>();
             SetPathObj();
+
+            RandomGoodIconRange();
 
             LoadData();
         }
@@ -181,7 +187,7 @@ namespace XrCode
 
             if (curLevel == 0)
             {
-                Debug.LogError("第一次进游戏");
+                D.Error("第一次进游戏");
                 curLevel = 1;
                 isTutorial = true;
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
@@ -285,11 +291,6 @@ namespace XrCode
             //    CELL_WIDH = CELL_HEIGHT;
             //}
 
-            Debug.Log($"Screen_width : {camHalfWidth}");
-            Debug.Log($"Screen_height : {camHalfHeight}");
-            Debug.Log($"Cell_width : {CELL_WIDH}");
-            Debug.Log($"Cell_height : {CELL_HEIGHT}");
-
             MAP = new int[row][];
             MAP_FROZEN = new int[row][];
             MAP_Goods = new GameObject[row][];
@@ -316,13 +317,13 @@ namespace XrCode
                     POS[i][j].z = i / 10.0f;
                 }
             }
-            Debug.Log("khoi tao map");
+            D.Log("khoi tao map");
         }
 
         //随机生成物体序列并于场景中生成
         private void _randomMap()
         {
-            Debug.Log("::::Random MAP::::");
+            D.Log("::::Random MAP::::");
             curMapState = EMapState.None;
 
             ArrayList list_good_fixed = curLevelData.list_block_good_fixed;
@@ -374,7 +375,7 @@ namespace XrCode
             int temp2 = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_pk_count - list_good_fixed.Count;
             if (temp2 % 2 != 0)
             {
-                Debug.Log("Amount of good must be even");
+                D.Log("Amount of good must be even");
                 return;
             }
             int max_id = (int)list_good[list_pk_count - 1];
@@ -452,7 +453,7 @@ namespace XrCode
         //固定生成物体序列并于场景中生成
         private void _fixedMap()
         {
-            Debug.Log("::::Fixed MAP::::");
+            D.Log("::::Fixed MAP::::");
             curMapState = EMapState.None;
 
             ArrayList list_good_fixed = curLevelData.list_block_good_fixed;
@@ -581,7 +582,7 @@ namespace XrCode
             if (_numberResetMap > 500)
                 return;
             RemoveHint();
-            Debug.Log(":::::Reset MAP::::");
+            D.Log(":::::Reset MAP::::");
             //get list pokemon and stone in map
             ArrayList list_pokemon = new ArrayList();
             ArrayList list_stone_moving = new ArrayList();
@@ -1566,12 +1567,15 @@ namespace XrCode
         void CheckPair(Vec2 pos)
         {
             POS2 = new Vec2(pos.R, pos.C);
+
             if (MAP_FROZEN[pos.R][pos.C] != -1)
             {
                 return;
             }
             if (POS1 != null && MAP[POS1.R][POS1.C] != MAP[POS2.R][POS2.C])
             {
+                ShakeTwoGood();
+
                 AudioModule.PlayEffect(EAudioType.ECantMove);
                 DeSelect();
                 POS1 = null;
@@ -1587,6 +1591,8 @@ namespace XrCode
             }
             else
             {
+                ShakeTwoGood();
+
                 AudioModule.PlayEffect(EAudioType.ECantMove);
                 DeSelect();
                 POS1 = null;
@@ -1596,12 +1602,21 @@ namespace XrCode
             }
         }
 
+        //震动两个物体
+        private void ShakeTwoGood()
+        {
+            Good good1 = GetGood(POS1.R, POS1.C).GetComponent<Good>();
+            Good good2 = GetGood(POS2.R, POS2.C).GetComponent<Good>();
+            good1.Hint2();
+            good2.Hint2();
+        }
+
         //消除选中的两个物体
         public void Eat(Vec2 pos1, Vec2 pos2, bool isOffline)
         {
             AudioModule.PlayEffect(EAudioType.ElinkRemove);
 
-            D.Log("消去的是: (" + pos1.R + "," + pos1.C + ")");
+            D.Log($"消去的是: ({ pos2.R},{ pos2.C}) , ({pos1.R},{pos1.C})");
 
             ChangeMapState(EMapState.Eating);
             GameObject eatGood1 = GetGood(pos1.R, pos1.C);
@@ -2108,10 +2123,11 @@ namespace XrCode
                 //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
             }
             int numberGoodCanEat = GetNumberGoodCanEat();
-            Debug.Log("剩余可消除对数 : " + numberGoodCanEat);
+            D.Log("剩余可消除对数 : " + numberGoodCanEat);
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
-                Game.Instance.StartCoroutine(StartResetMap());
+                UIManager.Instance.OpenNotice("没有可消除的麻将了，请使用刷新功能");
+                //Game.Instance.StartCoroutine(StartResetMap());
             }
             if (curMapState == EMapState.Eating)
                 ChangeMapState(EMapState.Playing);
@@ -2145,6 +2161,8 @@ namespace XrCode
         //被选中
         private void Select(Vec2 pos)
         {
+            //IfShakeSameKind();
+
             if (checking_paire)
             {
                 return;
@@ -2168,8 +2186,11 @@ namespace XrCode
             {
                 return;
             }
-            if (POS1 != null && POS1.C == pos.C && POS1.R == pos.R)
+            if (POS1 != null && POS1.C == pos.C && POS1.R == pos.R)//点击同一物体时
             {
+                //if (ifkindShake >= 2)
+                    ShakeSameKindGood(MAP_Goods[POS1.R][POS1.C].GetComponent<Good>().id);
+
                 DeSelect();
                 AudioModule.PlayEffect(EAudioType.EDeSelect);
             }
@@ -2203,22 +2224,22 @@ namespace XrCode
         private void DeSelect()
         {
             D.Log("DESELECT :::");
-            GameObject pokemon = null;
+            GameObject good = null;
             if (POS1 != null)
             {
-                pokemon = GetGood(POS1.R, POS1.C);
+                good = GetGood(POS1.R, POS1.C);
             }
-            if (pokemon != null)
+            if (good != null)
             {
-                pokemon.GetComponent<Good>().DeSelect();
+                good.GetComponent<Good>().DeSelect();
             }
             if (POS2 != null)
             {
-                pokemon = GetGood(POS2.R, POS2.C);
+                good = GetGood(POS2.R, POS2.C);
             }
-            if (pokemon != null)
+            if (good != null)
             {
-                pokemon.GetComponent<Good>().DeSelect();
+                good.GetComponent<Good>().DeSelect();
             }
             POS1 = null;
             POS2 = null;
@@ -2287,7 +2308,7 @@ namespace XrCode
 
             EGoodMoveDic EGMD = (EGoodMoveDic)newDir;
 
-            Debug.LogError("现在的方向是：" + EGMD);
+            D.Error("现在的方向是：" + EGMD);
 
             //上&上下离去的情况
             if (EGMD == EGoodMoveDic.Up || EGMD == EGoodMoveDic.UpDown_Away)
@@ -2344,7 +2365,7 @@ namespace XrCode
             list_pos_need_update.Clear();
             UpdateMap();
 
-            Debug.LogError("目前会和“提示功能”有冲突，当方向改变后，第一次提示会显示错误的位置");
+            D.Error("目前会和“提示功能”有冲突，当方向改变后，第一次提示会显示错误的位置");
 
             return EGMD;
         }
@@ -2507,6 +2528,37 @@ namespace XrCode
                 }
             }
             return number;
+        }
+
+        //同种类的物体全部进行摇晃
+        private void ShakeSameKindGood(int tagetId)
+        {
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1
+                        && MAP[i1][j1] == tagetId)
+                    {
+                        MAP_Goods[i1][j1].GetComponent<Good>().Hint2();
+                    }
+                }
+            }
+        }
+
+        //判断是否双击才能进行摇晃
+        private void IfShakeSameKind()
+        {
+            ifkindShake += 1;
+            if (ifKSTimer != null && ifKSTimer.STimerState != STimerState.Standby)
+                ifKSTimer.ReStart();
+            else
+            {
+                ifKSTimer = STimerManager.Instance.CreateSDelay(0.5f, () =>
+                {
+                    ifkindShake = 0;
+                });
+            }
         }
 
         //更新冰冻物体列表
@@ -3061,16 +3113,68 @@ namespace XrCode
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLuckMomentCount, value);
         }
 
+        //随机图片优先显示区间
+        private void RandomGoodIconRange()
+        {
+            Dictionary<int, ConfGoodIcon> cgis = ConfigModule.Instance.Tables.TBGoodIcon.DataMap;
+            
+            foreach(KeyValuePair<int, ConfGoodIcon> item in cgis)
+            {
+                int priority = item.Value.Priority;
+                if(!GoodIconRange.ContainsKey(priority)) 
+                    GoodIconRange.Add(priority, new List<int>());
+                GoodIconRange[priority].Add(item.Key);
+            }
+        }
+
         //设置随机图片
         private void SetRandomGoodIcon(int kinds)
         {
             randomGoodIcon.Clear();
 
-            List<int> newIds = new List<int>(RGIids);
-            ShuffleHelper.Shuffle(newIds);
-            for (int i = 0; i < RGIids.Count; i++) 
+            List<int> oldIds = new List<int>();
+            oldIds.AddRange(GoodIconRange[0]);
+            int adds = oldIds.Count;
+            if(kinds > adds)
             {
-                randomGoodIcon.Add(RGIids[i], newIds[i]);
+                int diff = kinds - adds;
+                for (int i = 1; i < GoodIconRange.Count; i++)
+                {
+                    int curPIds = GoodIconRange[i].Count;
+
+                    if (curPIds < diff)
+                    {
+                        oldIds.AddRange(GoodIconRange[i]);
+                        diff -= curPIds;
+                    }
+                    else if (GoodIconRange[i].Count == diff)
+                    {
+                        break;
+                    }
+                    else//GoodIconRange[i].Count > diff
+                    {
+                        List<int> temp = new List<int>(GoodIconRange[i]);
+                        ShuffleHelper.Shuffle(temp);
+                        for(int j = 0; j < diff; j++)
+                        {
+                            oldIds.Add(temp[j]);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            if(kinds > oldIds.Count)
+            {
+                D.Error("种类超出了物品图片的总数");
+                return;
+            }
+
+            List<int> newIds = new List<int>(oldIds);
+            ShuffleHelper.Shuffle(newIds);
+            for (int i = 0; i < oldIds.Count; i++)
+            {
+                randomGoodIcon.Add(oldIds[i], newIds[i]);
             }
         }
 

@@ -34,7 +34,7 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     /// </summary>
     public int Sn { get; protected set; }
     /// <summary>
-    /// 物品Id
+    /// 物品优先级
     /// </summary>
     public int Priority { get; protected set; }
     /// <summary>

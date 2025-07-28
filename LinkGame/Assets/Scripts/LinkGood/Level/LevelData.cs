@@ -47,7 +47,7 @@ public class LevelData
     {
 		try
         {
-            Debug.Log("level :: " + level + " - mode :: " + mode + " - maxLevel :: " + LevelDefines.maxLevel);
+            D.Log("level :: " + level + " - mode :: " + mode + " - maxLevel :: " + LevelDefines.maxLevel);
 
             list_auto_gen.Clear();
             list_block_good_fixed.Clear();

@@ -82,6 +82,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BufferExtension.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoBehaviorExtensionElement.cs" />
     <Compile Include="Assets\Scripts\UI\Base\BaseUI.cs" />
+    <Compile Include="Assets\Scripts\UI\Guide\SGuidePenetrate.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\TypeModel.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\BaseResourceLoader.cs" />
     <Compile Include="Assets\Scripts\Resource\Utils\PathUtil.cs" />
@@ -324,7 +325,6 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIncludeAttribute.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleLoader.cs" />
     <Compile Include="Assets\Scripts\Tools\Pool\ClassObjectManager.cs" />
-    <Compile Include="Assets\SGuidePenetrate.cs" />
     <Compile Include="Assets\Scripts\_Game\ModuleMgr.cs" />
     <Compile Include="Assets\Gen\Code\TBAudio.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCDPad.cs" />

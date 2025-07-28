@@ -162,6 +162,11 @@ public class Good : MonoBehaviour
         }
     }
 
+    public void Hint2()
+    {
+        animator.SetTrigger("ifShake2");
+    }
+
 
     public void Select()
     {
