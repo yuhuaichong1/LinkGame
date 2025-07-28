@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.ParticleSystem;
 
 namespace XrCode
 {
@@ -88,7 +89,9 @@ namespace XrCode
         private int curWLevel;//当前提现关卡Id
 
         private int ifkindShake;//是否全同类物体震动（判断是否快速双击）
-        private STimer ifKSTimer;
+        private STimer ifKSTimer;//是否全同类物体震动双击间隔计算器
+
+        private bool ifRemoveFunc;//是否处于移除功能中
 
         protected override void OnLoad()
         {
@@ -99,6 +102,7 @@ namespace XrCode
             GamePlayFacade.TipFunc += TipFunc;
             GamePlayFacade.RefushFunc += RefushFunc;
             GamePlayFacade.RemoveFunc += RemoveFunc;
+            GamePlayFacade.RemoveFunc2 += RemoveFunc2;
             GamePlayFacade.ChangeTipCount += ChangeTipCount;
             GamePlayFacade.ChangeRefushCount += ChangeRefushCount;
             GamePlayFacade.ChangeRemoveCount += ChangeRemoveCount;
@@ -127,6 +131,7 @@ namespace XrCode
             GamePlayFacade.GetCurWLevel += GetCurWLevel;
             GamePlayFacade.GetIsTutorial += GetIsTutorial;
             GamePlayFacade.SetIsTutorial += SetIsTutorial;
+            GamePlayFacade.GetNumberGoodCanEat += GetNumberGoodCanEat;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
 
@@ -2283,10 +2288,49 @@ namespace XrCode
             }
         }
 
-        //随机消除功能
+        //指定1个+随机1个消除功能
         private void RemoveFunc()
         {
+            DeSelect();
+            ifRemoveFunc = true;
+        }
+        private bool RemoveFunc2(Good good)
+        {
+            if(ifRemoveFunc)
+            {
+                ifRemoveFunc = false;
 
+                List<Good> sameGoods = new List<Good>();
+
+                for (int i1 = 1; i1 < row - 1; i1++)
+                {
+                    for (int j1 = 1; j1 < col - 1; j1++)
+                    {
+                        if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1
+                            && good.POS.C!= j1 && good.POS.R !=i1 && MAP[i1][j1] == good.id)
+                        {
+                            sameGoods.Add(MAP_Goods[i1][j1].GetComponent<Good>());
+                        }
+                    }
+                }
+
+                Vec2 good2POS = sameGoods[UnityEngine.Random.Range(0, sameGoods.Count)].POS;
+                Eat(good.POS, good2POS, true);
+                drawExplore(POS[good.POS.R][good.POS.C], false);
+                drawExplore(POS[good2POS.R][good2POS.C], false);
+
+                POS1 = good.POS;
+                POS2 = good2POS;
+                UpdateMap(false);
+
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+            
         }
 
         //改变当前关卡方向功能
@@ -2528,6 +2572,27 @@ namespace XrCode
                 }
             }
             return number;
+        }
+
+        private void GetAllSameKindGood(int tagetId)
+        {
+            List<Good> sameGoods = new List<Good>();
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1
+                        && MAP[i1][j1] == tagetId)
+                    {
+                        MAP_Goods[i1][j1].GetComponent<Good>().Hint2();
+                        sameGoods.Add(MAP_Goods[i1][j1].GetComponent<Good>());
+                    }
+                }
+            }
+
+            Vec2 good2Vec2 = sameGoods[UnityEngine.Random.Range(0, sameGoods.Count)].POS;
+
+
         }
 
         //同种类的物体全部进行摇晃

@@ -15,6 +15,7 @@ public static class GamePlayFacade
     public static Action TipFunc;                         //提示功能
     public static Action RefushFunc;                      //刷新功能
     public static Action RemoveFunc;                      //移除功能
+    public static Func<Good, bool> RemoveFunc2;           //移除功能2（点击后执行真正的移除）
     public static Func<EGoodMoveDic> ChangeDirection;     //方向变更功能
     public static Action<int> ChangeTipCount;             //改变提示功能数量
     public static Action<int> ChangeRefushCount;          //改变刷新功能数量
@@ -50,7 +51,7 @@ public static class GamePlayFacade
     public static Func<Transform> GetFlyMoneyTipOrgin;      //得到获得飞钱提示起点
     public static Func<EFuncType ,Transform> GetFuncTarget; //得到飞功能移动终点目标
 
-    
+    public static Func<int> GetNumberGoodCanEat;            //获取剩余可消除物品对数
 }
 
 

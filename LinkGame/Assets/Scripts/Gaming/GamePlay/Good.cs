@@ -41,7 +41,13 @@ public class Good : MonoBehaviour
             sprites = _sprites;
 
         mRectTrans.localScale = Vector3.one;
-        mBtn.onClick.AddListener(()=>{ GamePlayFacade.Select(POS); });
+        mBtn.onClick.AddListener(()=>
+        {
+            if(GamePlayFacade.RemoveFunc2(this))
+            {
+                GamePlayFacade.Select(POS);
+            }
+        });
     }
 
     // Update is called once per frame

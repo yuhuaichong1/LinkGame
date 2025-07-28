@@ -113,10 +113,10 @@ namespace XrCode
             }
             else
             {
+                FuncTipShow();
+
                 if (true)//首次（重开）进入关卡
                 {
-                    FuncTipShow();
-
                     mWithdrawTip.gameObject.SetActive(false);
                     mCurDir.gameObject.SetActive(false);
 
@@ -124,7 +124,18 @@ namespace XrCode
                 }
                 else
                 {
-                    STimerManager.Instance.CreateSDelay(1, () => { FacadeEffect.PlayRewardNoticeEffect(); });
+                    GoodShowOneByOne(() => 
+                    {
+                        if (GamePlayFacade.GetNumberGoodCanEat() == 0)
+                        {
+                            UIManager.Instance.OpenNotice("没有可消除的麻将了，请使用刷新功能");
+                        }
+                        else
+                        {
+                            STimerManager.Instance.CreateSDelay(1, () => { FacadeEffect.PlayRewardNoticeEffect(); });
+                        }
+                    });
+                    
                 }
             }
 
@@ -241,16 +252,16 @@ namespace XrCode
         {
             if(GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
             {
-                //GamePlayFacade.RemoveFunc?.Invoke();
-                EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
+                GamePlayFacade.RemoveFunc?.Invoke();
+                //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
 
-                string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
-                curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
-                mCurDir.sprite = curLevelDicIcon;
-                mCurDir.gameObject.SetActive(false);
-                TMDTipShow();
+                //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
+                //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
+                //mCurDir.sprite = curLevelDicIcon;
+                //mCurDir.gameObject.SetActive(false);
+                //TMDTipShow();
             }
             else
             {
@@ -325,7 +336,6 @@ namespace XrCode
             mTipFuncTip.gameObject.SetActive(false);
             mRefushFuncTip.gameObject.SetActive(false);
             mRemoveFuncTip.gameObject.SetActive(false);
-
             
             if (loopDelay == null)
             {
