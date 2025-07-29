@@ -18,7 +18,7 @@ public class WithdrawMItem
 
     public void SetInfo(int level, int gold)
     {
-        LevelTitle.text = string.Format(LanguageModule.GetText("10049"), level);
-        GoalTitle.text = string.Format(LanguageModule.GetText("10031"), gold);
+        LevelTitle.text = $"{LanguageModule.GetText("10049")} {level}";
+        GoalTitle.text = $"{LanguageModule.GetText("10031")} {gold}";
     }
 }
