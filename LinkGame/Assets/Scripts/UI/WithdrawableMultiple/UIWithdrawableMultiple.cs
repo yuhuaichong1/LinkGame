@@ -32,11 +32,12 @@ namespace XrCode
             mPrePreLevelPlane.gameObject.SetActive(count >= 3);
             for(int i = 0; i < count; i++)
             {
-                wItems[i].SetInfo(curWLevel - i, withQueue.Pop());
-                if(i == 0)
-                {
-                    mTargetText.text = string.Format(LanguageModule.GetText("10014"), curWLevel - i);
-                }
+                Debug.LogError(i + "  " + (curWLevel - i) + "  " + withQueue.Peek());
+                wItems[i].SetInfo(withQueue.Pop(), curWLevel - i);
+                //if(i == 0)
+                //{
+                //    mTargetText.text = string.Format(LanguageModule.GetText("10014"), curWLevel - i);
+                //}
             }
             mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
 
@@ -58,7 +59,7 @@ namespace XrCode
             #endregion
 
             DateTime currentDate = DateTime.Now;
-            mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Year, currentDate.Month, currentDate.Day);
+            mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Month, currentDate.Day, currentDate.Year);
             ShowNoticeInfo();
 
 
