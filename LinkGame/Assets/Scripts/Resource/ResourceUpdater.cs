@@ -10,7 +10,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Text;
 using System;
-using Newtonsoft.Json;
 namespace XrCode
 {
     public class ResourceUpdater : MonoSingleton<ResourceUpdater>, ILoad
@@ -53,7 +52,7 @@ namespace XrCode
         private IEnumerator CheckUpdate()
         {
             // 加载并初始化版本信息文件
-            yield return InitVersion();
+            //yield return InitVersion();
 
             // 没有版本对比文件，直接进入游戏
             if (mLocalVersionConfig == null || mServerVersionConfig == null)
@@ -92,12 +91,12 @@ namespace XrCode
             }
             else
             {
-                GameSDKManger.Instance.ReadFileSync(VERSIONCONFIGFILE, delegate (string str)
-                {
-                    JsonSerializerSettings settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new Hash128Converter());
-                    mLocalVersionConfig = JsonConvert.DeserializeObject<VersionConfig>(str, settings);
-                });
+                //GameSDKManger.Instance.ReadFileSync(VERSIONCONFIGFILE, delegate (string str)
+                //{
+                //    JsonSerializerSettings settings = new JsonSerializerSettings();
+                //    settings.Converters.Add(new Hash128Converter());
+                //    mLocalVersionConfig = JsonConvert.DeserializeObject<VersionConfig>(str, settings);
+                //});
             }
             string serverVersionConfigPath = PathUtil.GetServerFileURL("StreamingAssets/" + VERSIONCONFIGFILE);
             UnityWebRequest webReq = new UnityWebRequest(serverVersionConfigPath);
@@ -131,12 +130,13 @@ namespace XrCode
         /// </summary>
         private void UpdateVersionConfig()
         {
-            //var path = PathUtil.GetPresistentDataFilePath(VERSIONCONFIGFILE);
-            //var text = JsonUtility.ToJson(mServerVersionConfig);
-            //FileUtil.WriteAllText(path, text);
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-            settings.Converters.Add(new Hash128Converter());
-            var text = JsonConvert.SerializeObject(mServerVersionConfig, settings);
+            var path = PathUtil.GetPresistentDataFilePath(VERSIONCONFIGFILE);
+            var text = JsonUtility.ToJson(mServerVersionConfig);
+            FileUtil.WriteAllText(path, text);
+
+            //JsonSerializerSettings settings = new JsonSerializerSettings();
+            //settings.Converters.Add(new Hash128Converter());
+            //var text = JsonConvert.SerializeObject(mServerVersionConfig, settings);
             GameSDKManger.Instance.WriteFileSync(VERSIONCONFIGFILE, text);
         }
 
@@ -382,9 +382,14 @@ namespace XrCode
                 {
                     mLocalVersionConfig.assetMD5.Add(abName, mServerVersionConfig.assetMD5[abName]);
                 }
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.Converters.Add(new Hash128Converter());
-                string text = JsonConvert.SerializeObject(mLocalVersionConfig, settings);
+
+                var path = PathUtil.GetPresistentDataFilePath(VERSIONCONFIGFILE);
+                var text = JsonUtility.ToJson(mLocalVersionConfig);
+                FileUtil.WriteAllText(path, text);
+
+                //JsonSerializerSettings settings = new JsonSerializerSettings();
+                //settings.Converters.Add(new Hash128Converter());
+                //string text = JsonConvert.SerializeObject(mLocalVersionConfig, settings);
                 GameSDKManger.Instance.WriteFileSync(VERSIONCONFIGFILE, text);
             }
             catch (System.Exception e)
