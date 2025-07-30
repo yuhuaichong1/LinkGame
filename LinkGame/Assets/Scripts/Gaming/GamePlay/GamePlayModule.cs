@@ -3242,9 +3242,11 @@ namespace XrCode
             randomGoodIcon.Clear();
 
             List<int> oldIds = new List<int>();
+            List<int> auxiliaryIds = new List<int>();
             oldIds.AddRange(GoodIconRange[0]);
             int adds = oldIds.Count;
-            if(kinds > adds)
+            int flowIdsCount = adds;
+            if (kinds > adds)
             {
                 int diff = kinds - adds;
                 for (int i = 1; i < GoodIconRange.Count; i++)
@@ -3258,16 +3260,20 @@ namespace XrCode
                     }
                     else if (GoodIconRange[i].Count == diff)
                     {
+                        flowIdsCount = kinds;
                         break;
                     }
                     else//GoodIconRange[i].Count > diff
                     {
                         List<int> temp = new List<int>(GoodIconRange[i]);
-                        //ShuffleHelper.Shuffle(temp);
+                        List<int> temp2 = new List<int>(temp);
+                        ShuffleHelper.Shuffle(temp2);
                         for(int j = 0; j < diff; j++)
                         {
                             oldIds.Add(temp[j]);
+                            auxiliaryIds.Add(temp2[j]);
                         }
+                        flowIdsCount = kinds - diff;
                         break;
                     }
                 }
@@ -3280,6 +3286,11 @@ namespace XrCode
             }
 
             List<int> newIds = new List<int>(oldIds);
+            for(int i = 0; i < auxiliaryIds.Count; i ++)
+            {
+                newIds[newIds.Count - 1 - i] = auxiliaryIds[i];
+            }
+
             ShuffleHelper.Shuffle(newIds);
             for (int i = 0; i < oldIds.Count; i++)
             {
