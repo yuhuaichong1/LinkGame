@@ -19,12 +19,14 @@ namespace XrCode
             mInfoText.text = $"{PlayerFacade.GetWName?.Invoke()}{ifn}{PlayerFacade.GetWEmailOrPhone?.Invoke()}";
 
             ShowAnim(mPlane);
+
+            mWNEnterBtn.gameObject.SetActive(PlayerFacade.GetWMoney() != 0);
         }
 
         private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);
-            });                        FacadeGuide.CheckWithdrawableUI();        }	    private void OnReEnterBtnClickHandle()
+            });            FacadeGuide.CheckWithdrawableUI();        }	    private void OnReEnterBtnClickHandle()
         {
             HideAnim(mPlane, () =>
             {
@@ -39,7 +41,7 @@ namespace XrCode
             HideAnim(mPlane, () =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);
-                UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIWithdrawableWaitCheck);
+                UIManager.Instance.OpenWindowAsync<UIWithdrawalSuccessful>(EUIType.EUIWithdrawalSuccessful);
             });
         }
 
