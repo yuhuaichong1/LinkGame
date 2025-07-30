@@ -221,7 +221,7 @@ namespace XrCode
             musicVolume = Mathf.Clamp01(volume);
             musicSource.volume = musicVolume;
 
-            SPlayerPrefs.SetFloat(PlayerPrefDefines.musicToggle, volume);
+            SPlayerPrefs.SetBool(PlayerPrefDefines.musicToggle, volume == 1);
         }
 
         // …Ë÷√“Ù–ß“Ù¡ø

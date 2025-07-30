@@ -32,7 +32,6 @@ namespace XrCode
             mPrePreLevelPlane.gameObject.SetActive(count >= 3);
             for(int i = 0; i < count; i++)
             {
-                Debug.LogError(i + "  " + (curWLevel - i) + "  " + withQueue.Peek());
                 wItems[i].SetInfo(withQueue.Pop(), curWLevel - i);
                 //if(i == 0)
                 //{

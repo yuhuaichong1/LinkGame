@@ -13,8 +13,9 @@ namespace XrCode
         }
     
         protected override void BindButtonEvent() 
-        {
-            		mExitBtn.onClick.AddListener( OnExitBtnClickHandle);		mUserLvDetailsBtn.onClick.AddListener( OnUserLvDetailsBtnClickHandle);
+        {  			mExitBtn.onClick.AddListener( OnExitBtnClickHandle);			mUserLvDetailsBtn.onClick.AddListener( OnUserLvDetailsBtnClickHandle);
+            mMusicSMT.onValueChange.AddListener( OnMusicSMTChange);
+			mVibrationSMT.onValueChange.AddListener( OnVibrationSMTChange);
         }
     
         protected override void UnBindButtonEvent() 

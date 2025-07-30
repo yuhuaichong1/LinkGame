@@ -141,6 +141,7 @@ namespace XrCode
             }
 
             mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
+            mPrizeDrawBtn.gameObject.SetActive(GamePlayFacade.GetCurLevel() != 1 && GamePlayFacade.GetCurLevel() != 2);
         }
 
         //设置当前关卡的可显示信息
