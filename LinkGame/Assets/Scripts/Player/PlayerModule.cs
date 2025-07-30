@@ -155,7 +155,6 @@ namespace XrCode
             float money = attempt * UnityEngine.Random.Range(1f, 3f);
             string aText = attempt.ToString();
             string mText = FacadePayType.RegionalChange(money);
-            //string mText = string.Format(LanguageModule.GetText(""), money);
 
             return new string[2] { aText, mText };
         }

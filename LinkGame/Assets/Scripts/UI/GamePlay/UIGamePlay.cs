@@ -40,6 +40,7 @@ namespace XrCode
             GamePlayFacade.ChangeRefushCountShow += ChangeFuncRefushCount;
             GamePlayFacade.ChangeRemoveCountShow += ChangeFuncRemoveCount;
             GamePlayFacade.GetMapTrans += GetMapTrans;
+            GamePlayFacade.GetObsTrans += GetObsTrans;
             GamePlayFacade.GetFlyMoneyTarget += GetFlyMoneyTarget;
             GamePlayFacade.GetFlyMoneyTipOrgin += GetFlyMoneyTipOrgin;
             GamePlayFacade.GetFuncTarget += GetFuncTarget;
@@ -218,19 +219,17 @@ namespace XrCode
         //提示功能按钮点击
         private void OnTipBtnClickHandle()
         {
+            if(GamePlayFacade.GetIfHintFunc())
+            {
+                UIManager.Instance.OpenNotice("提示功能进行中，请勿重复使用");
+                return;
+            }
+
             if(GamePlayFacade.GetTipCount?.Invoke() > 0)
             {
-                if(!GamePlayFacade.GetIfHintFunc())
-                {
-                    GamePlayFacade.TipFunc?.Invoke();
-                    GamePlayFacade.ChangeTipCount?.Invoke(-1);
-                    ChangeFuncTipCount();
-                }
-                else
-                {
-                    UIManager.Instance.OpenNotice("提示功能进行中，请勿重复使用");
-                }
-
+                GamePlayFacade.TipFunc?.Invoke();
+                GamePlayFacade.ChangeTipCount?.Invoke(-1);
+                ChangeFuncTipCount();
             }
             else
             {
@@ -258,15 +257,19 @@ namespace XrCode
         //移除功能按钮点击
         private void OnRemoveBtnClickHandle()
         {
-            if(GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
+            if (GamePlayFacade.GetIfRemoveFunc())
             {
-                if (!GamePlayFacade.GetIfRemoveFunc())
-                {
-                    GamePlayFacade.RemoveFunc?.Invoke();
-                    GamePlayFacade.ChangeRemoveCount.Invoke(-1);
-                    ChangeFuncRemoveCount();
+                UIManager.Instance.OpenNotice("消除功能进行中，请勿重复使用");
+                return;
+            }
 
-                    #region old(转向功能)
+            if (GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
+            {
+                GamePlayFacade.RemoveFunc?.Invoke();
+                GamePlayFacade.ChangeRemoveCount.Invoke(-1);
+                ChangeFuncRemoveCount();
+
+                #region old(转向功能)
                     //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
                     //GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                     //ChangeFuncRemoveCount();
@@ -277,11 +280,6 @@ namespace XrCode
                     //mCurDir.gameObject.SetActive(false);
                     //TMDTipShow();
                     #endregion 
-                }
-                else
-                {
-                    UIManager.Instance.OpenNotice("消除功能进行中，请勿重复使用");
-                }
             }
             else
             {
@@ -318,6 +316,11 @@ namespace XrCode
         private Transform GetMapTrans()
         {
             return mMap.transform;
+        }
+        //得到生成的隐藏物体的父对象
+        private Transform GetObsTrans()
+        {
+            return mObstacle.transform;
         }
         private Transform GetFlyMoneyTarget()
         {

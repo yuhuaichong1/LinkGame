@@ -17,10 +17,14 @@ public abstract class GameDefines
 
     public const int map_margin_bottom = 5;                                                                 //关卡显示区域下边距
 
-    public const int OBS_FIXED_ID = 99;                                                                     //不可移动的障碍物
-    public const int OBS_MOVING_ID = 98;                                                                    //可移动的障碍物
-    public const int HID_FIXED_ID = 97;                                                                     //不可移动的隐藏物
-    public const int HID_MOVING_ID = 96;                                                                    //可移动的隐藏物
+    public const int OBS_FIXED_ID = 10003;                                                                     //不可移动的障碍物
+    public const int OBS_MOVING_ID = 10004;                                                                    //可移动的障碍物
+    public const int HID_FIXED_ID = 10001;                                                                     //不可移动的隐藏物
+    public const int HID_MOVING_ID = 10002;                                                                    //可移动的隐藏物
+    public const string OFName = "Fixed_OBS_";                                                              //不可移动的障碍物名称
+    public const string OMName = "Moving_OBS_";                                                             //可移动的障碍物名称
+    public const string HFName = "Fixed_HID_";                                                              //不可移动的隐藏物名称
+    public const string HMName = "Moving_HID_";                                                             //可移动的隐藏物名称
 
     public const int STATE_NORMAL = 0;                                                                      //物体状态——一般
     public const int STATE_HIDE = 1;                                                                        //物体状态——隐藏

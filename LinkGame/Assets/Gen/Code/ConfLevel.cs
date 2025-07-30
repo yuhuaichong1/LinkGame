@@ -48,6 +48,9 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 物品总数
     /// </summary>
     public string LevelSize { get; protected set; }
+    /// <summary>
+    /// 关卡类型
+    /// </summary>
     public int LevelType { get; protected set; }
     /// <summary>
     /// 物品种类数量
@@ -58,7 +61,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// </summary>
     public int MoveDic { get; protected set; }
     /// <summary>
-    /// aa
+    /// 当关卡类型为固定关卡时，物品的排序
     /// </summary>
     public System.Collections.Generic.Dictionary<string, int> FixedGridMap { get; protected set; }
     /// <summary>

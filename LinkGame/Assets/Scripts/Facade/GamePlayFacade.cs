@@ -49,6 +49,7 @@ public static class GamePlayFacade
     public static Func<float> GetMapScale;                //获得屏幕缩放
 
     public static Func<Transform> GetMapTrans;              //获取生成物体的父对象
+    public static Func<Transform> GetObsTrans;              //获取生成的隐藏物体的父对象
     public static Func<Transform> GetFlyMoneyTarget;        //得到飞钱移动终点目标
     public static Func<Transform> GetFlyMoneyTipOrgin;      //得到获得飞钱提示起点
     public static Func<EFuncType ,Transform> GetFuncTarget; //得到飞功能移动终点目标

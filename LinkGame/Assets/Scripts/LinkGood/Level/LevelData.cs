@@ -20,7 +20,7 @@ public class LevelData
 	public ArrayList list_block_stone_fixed 	 = new ArrayList();//不可移动的石块障碍物
 	public ArrayList list_block_stone_moving 	 = new ArrayList();//可移动的石块障碍物
 	public ArrayList list_block_frozen_fixed 	 = new ArrayList();//不可移动的冰冻物体
-    public ArrayList list_boloc_frozen_moving    = new ArrayList();//可移动的冰冻物体（新添，原始代码中不存在此变量）
+    public ArrayList list_block_frozen_moving    = new ArrayList();//可移动的冰冻物体（新添，原始代码中不存在此变量）
     public ArrayList list_block_stone_and_frozen = new ArrayList();//冰冻物体和石块物体
 	public ArrayList list_constraint 			 = new ArrayList();//关卡物体移动方向
 	public ArrayList list_reward 				 = new ArrayList();//关卡奖励
@@ -54,6 +54,7 @@ public class LevelData
             list_block_stone_fixed.Clear();
             list_block_stone_moving.Clear();
             list_block_frozen_fixed.Clear();
+            list_block_frozen_moving.Clear();
             list_block_stone_and_frozen.Clear();
             list_constraint.Clear();
             list_reward.Clear();
@@ -295,7 +296,7 @@ public class LevelData
                 string[] xy = hidGodMovsStr[i].Split(",");
                 int row = int.Parse(xy[0]);
                 int col = int.Parse(xy[1]);
-                list_boloc_frozen_moving.Add(new Vec2(row, col));
+                list_block_frozen_moving.Add(new Vec2(row, col));
             }
         }
     }

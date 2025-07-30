@@ -2,6 +2,7 @@ using cfg;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem;
@@ -18,8 +19,8 @@ namespace XrCode
 
         private AudioModule AudioModule;
 
-        private GameObject[][] MAP_Goods;//场景中的所有物体（包含障碍物）
-        private int[][] MAP;//场景中的所有物体的id（包含障碍物）
+        private GameObject[][] MAP_Goods;//场景中的所有物体（包含障碍物，不包含隐藏物）
+        private int[][] MAP;//场景中的所有物体的id（包含障碍物，不包含隐藏物）
         private int[][] MAP_FROZEN;//场景中的所有物体是否为冰冻状态（非冰冻状态为-1，否则为97（固定冰块）或96（可移动冰块））
         private Vec2 POS1;//被选中的第1个物体or提示的第一个物品
         private Vec2 POS2;//被选中的第2个物体or提示的第二个物品
@@ -43,9 +44,9 @@ namespace XrCode
 
         private LevelData curLevelData;//当前关卡的数据
         private EMapState curMapState;//关卡当前的状态
-        
 
-        private ArrayList list_block_frozen;//关卡中不可移动的物体的集合？
+        private ArrayList list_moving_frozen;//关卡中可移动的物体的冰冻物体
+        private ArrayList list_block_frozen;//关卡中不可移动的物体的冰冻物体？
         private ArrayList list_block_frozen_normal;//关卡中不可移动？
         private ArrayList list_block_frozen_special;//关卡中不可移动的？
         private ArrayList listAutoGens;//自动冰冻完毕的物品集合
@@ -53,7 +54,8 @@ namespace XrCode
         private ArrayList list_good_can_eat1 = new ArrayList();
         private ArrayList list_good_can_eat2 = new ArrayList();
 
-        private Transform mapTrans;//生成物体的父亲对象
+        private Transform mapTrans;//生成物体的父对象
+        private Transform obsTrans;//生成隐藏物体的父对象
 
         private bool checkingPaire;//当前关卡是否在检测配对
 
@@ -147,6 +149,7 @@ namespace XrCode
 
             LPath = new ArrayList();
             keyLPath = new ArrayList();
+            list_moving_frozen = new ArrayList();
             list_block_frozen = new ArrayList();
             list_block_frozen_normal = new ArrayList();
             list_block_frozen_special = new ArrayList();
@@ -269,8 +272,9 @@ namespace XrCode
             curMapState = EMapState.Playing;
 
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
+            obsTrans = GamePlayFacade.GetObsTrans?.Invoke();
 
-            if(curLevelData.levelType == ELevelType.Fixed)
+            if (curLevelData.levelType == ELevelType.Fixed)
             {
                 _fixedMap();
             }
@@ -346,6 +350,7 @@ namespace XrCode
             ArrayList list_obs_fixed = curLevelData.list_block_stone_fixed;
             ArrayList list_obs_moving = curLevelData.list_block_stone_moving;
             list_block_frozen = curLevelData.list_block_frozen_fixed;
+            list_moving_frozen = curLevelData.list_block_frozen_moving;
 
             int total_good = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_good_fixed.Count;
             int total_good_type = curLevelData.GoodKinds;
@@ -444,7 +449,12 @@ namespace XrCode
             for (int i = 0; i < list_block_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_block_frozen[i];
-                AddSpecialItem(GameDefines.HID_FIXED_ID, "hid_", pos.R, pos.C);
+                AddSpecialItem(GameDefines.HID_FIXED_ID, GameDefines.HFName, pos.R, pos.C);
+            }
+            for(int i = 0; i < list_moving_frozen.Count;i++)
+            {
+                Vec2 pos = (Vec2)list_moving_frozen[i];
+                AddSpecialItem(GameDefines.HID_MOVING_ID, GameDefines.HMName, pos.R, pos.C);
             }
 
             for (int i = 0; i < curLevelData.list_auto_gen.Count; i++)
@@ -476,6 +486,7 @@ namespace XrCode
             ArrayList list_obs_fixed = curLevelData.list_block_stone_fixed;
             ArrayList list_obs_moving = curLevelData.list_block_stone_moving;
             list_block_frozen = curLevelData.list_block_frozen_fixed;
+            list_moving_frozen = curLevelData.list_block_frozen_moving;
 
             for (int i = 0; i < list_obs_fixed.Count; i++)
             {
@@ -504,7 +515,12 @@ namespace XrCode
             for (int i = 0; i < list_block_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_block_frozen[i];
-                AddSpecialItem(GameDefines.HID_FIXED_ID, "hid_", pos.R, pos.C);
+                AddSpecialItem(GameDefines.HID_FIXED_ID, GameDefines.HFName, pos.R, pos.C);
+            }
+            for (int i = 0; i < list_moving_frozen.Count; i++)
+            {
+                Vec2 pos = (Vec2)list_moving_frozen[i];
+                AddSpecialItem(GameDefines.HID_MOVING_ID, GameDefines.HMName, pos.R, pos.C);
             }
 
             for (int i = 0; i < curLevelData.list_auto_gen.Count; i++)
@@ -533,7 +549,7 @@ namespace XrCode
             totalGood += 1;
         }
 
-        //得到场景中的某物体上的Pokemon类
+        //得到场景中的某物体上的Good类
         public Good GetGoodClass(int row, int col)
         {
             GameObject obj = GetGood(row, col);
@@ -550,26 +566,26 @@ namespace XrCode
             return MAP_Goods == null ? null : MAP_Goods[row][col];
         }
 
-        //向场景中添加一个特殊的物品预制体（障碍物、冰冻物品）
+        //向场景中添加一个特殊的物品预制体（障碍物）
         public void AddSpecialItem(int type, int row, int col)
         {
             if (type == -1)
                 return;
             GameObject obj = GameObject.Instantiate(goodPrefab);
             Good goodComp = obj.GetComponent<Good>();
-            goodComp.setSpecialInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
+            goodComp.setSpecialInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, obsTrans);
             MAP_Goods[row][col] = obj;
         }
-        //向场景中添加一个特殊的物品预制体（障碍物、冰冻物品）（带返回值版本）
+        //向场景中添加一个特殊的物品预制体（冰冻物品）（带返回值版本）
         public Good AddSpecialItem(int type, string name, int row, int col)
         {
             if (type == -1)
                 return null;
             GameObject obj = GameObject.Instantiate(goodPrefab);
             Good good = obj.GetComponent<Good>();
-            good.setSpecialInfo(type, name, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
+            good.setSpecialInfo(type, name, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, obsTrans);
             good.setFrozen(true);
-            MAP_FROZEN[row][col] = GameDefines.HID_FIXED_ID;
+            MAP_FROZEN[row][col] = type;
             return good;
         }
 
@@ -601,8 +617,8 @@ namespace XrCode
                 return;
             RemoveHint();
             D.Log(":::::Reset MAP::::");
-            //get list pokemon and stone in map
-            ArrayList list_pokemon = new ArrayList();
+            //get list good and stone in map
+            ArrayList list_good = new ArrayList();
             ArrayList list_stone_moving = new ArrayList();
             ArrayList list_slot_no_frozen = new ArrayList();
             ArrayList list_slot_has_frozen = new ArrayList();
@@ -618,7 +634,7 @@ namespace XrCode
                         }
                         else
                         {
-                            list_pokemon.Add(GetGood(i, j));
+                            list_good.Add(GetGood(i, j));
                         }
                     }
                 }
@@ -647,39 +663,39 @@ namespace XrCode
             for (int i = 0; i < list_stone_moving.Count; i++)
             {
                 GameObject obj = (GameObject)list_stone_moving[i];
-                Good pokemon = obj.GetComponent<Good>();
-                int type = pokemon.id;
+                Good good = obj.GetComponent<Good>();
+                int type = good.id;
                 Vec2 pos = (Vec2)list_slot_no_frozen[0];
-                ChangeGood(pokemon, type, pos);
+                ChangeGood(good, type, pos);
                 MAP_Goods[pos.R][pos.C] = obj;
                 MAP[pos.R][pos.C] = type;
                 list_slot_no_frozen.RemoveAt(0);
-                pokemon.setFrozen(false);
+                good.setFrozen(false);
             }
 
             ArrayList list_slot = new ArrayList();
             list_slot.AddRange(list_slot_no_frozen);
             list_slot.AddRange(list_slot_has_frozen);
-            for (int i = 0; i < list_pokemon.Count; i++)
+            for (int i = 0; i < list_good.Count; i++)
             {
-                GameObject obj = (GameObject)list_pokemon[i];
-                Good pokemon = obj.GetComponent<Good>();
-                int type = pokemon.id;
+                GameObject obj = (GameObject)list_good[i];
+                Good good = obj.GetComponent<Good>();
+                int type = good.id;
                 Vec2 pos = (Vec2)list_slot[i];
                 if (MAP_FROZEN[pos.R][pos.C] == -1)
                 {
-                    pokemon.setFrozen(false);
+                    good.setFrozen(false);
                 }
                 else
                 {
-                    pokemon.setFrozen(true);
+                    good.setFrozen(true);
                 }
-                ChangeGood(pokemon, type, pos);
+                ChangeGood(good, type, pos);
                 MAP_Goods[pos.R][pos.C] = obj;
                 MAP[pos.R][pos.C] = type;
             }
-            int numberPokemonCanEat = GetNumberGoodCanEat();
-            if (numberPokemonCanEat == 0)
+            int numberGoodCanEat = GetNumberGoodCanEat();
+            if (numberGoodCanEat == 0)
             {
                 _resetMap();
             }
@@ -1973,10 +1989,12 @@ namespace XrCode
         //向上移动
         private void MoveUp(Vec2 POS, int row_down, int row_up)
         {
+            Debug.LogError("======>");
+
             ArrayList list_good_col1 = new ArrayList();
             for (int i = POS.R; i >= row_down; i--)
             {
-                if (MAP[i][POS.C] != -1 && MAP[i][POS.C] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[i][POS.C] == -1)
+                if (MAP[i][POS.C] != -1 && MAP[i][POS.C] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[i][POS.C] == -1 || MAP_FROZEN[i][POS.C] == GameDefines.HID_MOVING_ID)
                 {
                     list_good_col1.Add(GetGood(i, POS.C));
                 }
@@ -2013,7 +2031,7 @@ namespace XrCode
             ArrayList list_good_col1 = new ArrayList();
             for (int i = POS.R; i <= row_up; i++)
             {
-                if (MAP[i][POS.C] != -1 && MAP[i][POS.C] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[i][POS.C] == -1)
+                if (MAP[i][POS.C] != -1 && MAP[i][POS.C] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[i][POS.C] == -1 || MAP_FROZEN[i][POS.C] == GameDefines.HID_MOVING_ID)
                 {
                     list_good_col1.Add(GetGood(i, POS.C));
                 }
@@ -2052,7 +2070,7 @@ namespace XrCode
             ArrayList list_good_row1 = new ArrayList();
             for (int i = POS.C; i <= col_right; i++)
             {
-                if (MAP[POS.R][i] != -1 && MAP[POS.R][i] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[POS.R][i] == -1)
+                if (MAP[POS.R][i] != -1 && MAP[POS.R][i] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[POS.R][i] == -1 || MAP_FROZEN[POS.R][i] == GameDefines.HID_MOVING_ID)
                 {
                     list_good_row1.Add(GetGood(POS.R, i));
                 }
@@ -2089,7 +2107,7 @@ namespace XrCode
             ArrayList list_good_row1 = new ArrayList();
             for (int i = POS.C; i >= col_left; i--)
             {
-                if (MAP[POS.R][i] != -1 && MAP[POS.R][i] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[POS.R][i] == -1)
+                if (MAP[POS.R][i] != -1 && MAP[POS.R][i] != GameDefines.OBS_FIXED_ID && MAP_FROZEN[POS.R][i] == -1 || MAP_FROZEN[POS.R][i] == GameDefines.HID_MOVING_ID)
                 {
                     list_good_row1.Add(GetGood(POS.R, i));
                 }
@@ -2794,10 +2812,10 @@ namespace XrCode
         //移除场景中某行某列的冰冻特效
         public void RemoveHidden(int row, int col, bool showParticle)
         {
-            GameObject frozen = getFrozen(row, col);
-            if (frozen != null)
+            GameObject hidden = getHidden(row, col);
+            if (hidden != null)
             {
-                UnityEngine.Object.DestroyImmediate(frozen);
+                UnityEngine.Object.DestroyImmediate(hidden);
                 if (showParticle)
                 {
                     GameObject obj = null;
@@ -2902,9 +2920,12 @@ namespace XrCode
         }
 
         //得当场景中某行某列的冰冻特效
-        public GameObject getFrozen(int row, int col)
+        public GameObject getHidden(int row, int col)
         {
-            return GameObject.Find("hidden_" + row + "_" + col);
+            GameObject temp = GameObject.Find($"{GameDefines.HMName}{row}_{col}");
+            if(temp == null)
+                temp = GameObject.Find($"{GameDefines.HFName}{row}_{col}");
+            return temp;
         }
 
         //得到目标周围的冰冻物体
@@ -3087,7 +3108,7 @@ namespace XrCode
             }
             if (type == GameDefines.OBS_FIXED_ID || type == GameDefines.OBS_MOVING_ID)
             {
-                good.setSpecialInfo(type, next_pos.R, next_pos.C, POS[next_pos.R][next_pos.C], CELL_WIDH, CELL_HEIGHT, mapTrans);
+                good.setSpecialInfo(type, next_pos.R, next_pos.C, POS[next_pos.R][next_pos.C], CELL_WIDH, CELL_HEIGHT, obsTrans);
                 MAP[next_pos.R][next_pos.C] = type;
             }
             else
@@ -3100,6 +3121,11 @@ namespace XrCode
         //改变场景中的物品的信息2版本
         public bool ChangeGood(GameObject obj, Good good, Vec2 next_pos, float time_move)
         {
+            if(obj.GetComponent<TestMark>() != null)
+            {
+                Debug.LogError(obj.name + " --> nextPos：(" + next_pos.R + "," + next_pos.C + ")");
+            }
+
             if (good.POS.R == next_pos.R && good.POS.C == next_pos.C)
                 return false;
             good.updateInfo(next_pos, POS[next_pos.R][next_pos.C], time_move);
@@ -3237,7 +3263,7 @@ namespace XrCode
                     else//GoodIconRange[i].Count > diff
                     {
                         List<int> temp = new List<int>(GoodIconRange[i]);
-                        ShuffleHelper.Shuffle(temp);
+                        //ShuffleHelper.Shuffle(temp);
                         for(int j = 0; j < diff; j++)
                         {
                             oldIds.Add(temp[j]);

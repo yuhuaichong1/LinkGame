@@ -76,17 +76,15 @@ public class Good : MonoBehaviour
     {
         this.id = id;
         this.POS = new Vec2(row, col);
-        transform.position = pos;
+        //transform.position = pos;
         transform.parent = parent;
-        string item_name = "";
+        mRectTrans.anchoredPosition = pos;
         if (id == GameDefines.OBS_FIXED_ID)
         {
-            item_name = "Obs3D_Fixed";
             transform.position = new Vector3(pos.x - width / 2, pos.y + height / 2, pos.z);
         }
         else if (id == GameDefines.OBS_MOVING_ID)
         {
-            item_name = "Obs3D_Moving";
             backKawai.SetActive(false);
             backDefault.SetActive(false);
             backNew.SetActive(false);
@@ -95,10 +93,9 @@ public class Good : MonoBehaviour
         }
         else if (id == GameDefines.HID_FIXED_ID)
         {
-            item_name = "HidBox";
             SetSpecialOrder();
         }
-        Sprite sprite = GetSprite(item_name);
+        Sprite sprite = GetSprite(id);
         GetComponent<Image>().sprite = sprite;
         localScale = new Vector3(Mathf.Abs(width * 1.0f / sprite.bounds.size.x), Mathf.Abs(-height * 1.0f / sprite.bounds.size.y), 1);
         if (id == GameDefines.OBS_FIXED_ID)
@@ -113,17 +110,16 @@ public class Good : MonoBehaviour
     {
         this.id = id;
         this.POS = new Vec2(row, col);
-        transform.position = pos;
+        //transform.position = pos;
         transform.parent = parent;
-        string item_name = "";
+        mRectTrans.anchoredPosition = pos;
+        mIcon.gameObject.SetActive(false);
         if (id == GameDefines.OBS_FIXED_ID)
         {
-            item_name = "stone3d";
             transform.position = new Vector3(pos.x - width / 2, pos.y + height / 2, pos.z);
         }
         else if (id == GameDefines.OBS_MOVING_ID)
         {
-            item_name = "Crate";
             back = backBox;
             backKawai.SetActive(false);
             backDefault.SetActive(false);
@@ -132,11 +128,14 @@ public class Good : MonoBehaviour
         }
         else if (id == GameDefines.HID_FIXED_ID)
         {
-            item_name = "IceBox";
+            SetSpecialOrder();
+        }
+        else if(id == GameDefines.HID_MOVING_ID)
+        {
             SetSpecialOrder();
         }
 
-        Sprite sprite = GetSprite(item_name);
+        Sprite sprite = GetSprite(id);
         GetComponent<Image>().sprite = sprite;
         localScale = new Vector3(Mathf.Abs(width * 1.0f / sprite.bounds.size.x), Mathf.Abs(-height * 1.0f / sprite.bounds.size.y), 1);
         if (id == GameDefines.OBS_FIXED_ID)
@@ -248,6 +247,13 @@ public class Good : MonoBehaviour
                 return sprite;
         }
         return null;
+    }
+
+    //通过Id获取图片（自写）
+    public Sprite GetSprite(int id)
+    {
+        string path = ConfigModule.Instance.Tables.TBObstacleIcon.Get(id).GoodPath;
+        return ResourceMod.Instance.SyncLoad<Sprite>(path);
     }
 
     IEnumerator Disappear(bool isOffline)

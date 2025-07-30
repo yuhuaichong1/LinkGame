@@ -102,7 +102,7 @@ namespace XrCode
                     ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.Single_Link_Money * 12);
                     break;
                 default:
-                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * UnityEngine.Random.Range(20, 26), UnityEngine.Random.Range(18, 23), UnityEngine.Random.Range(100f, 200f));
+                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * UnityEngine.Random.Range(20, 26), UnityEngine.Random.Range(2, 6), UnityEngine.Random.Range(3f, 10f));
                     break;
             }  
         }

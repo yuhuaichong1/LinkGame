@@ -59,6 +59,10 @@ v
 3Assets/AssetBundleLocal/UI/PayType/Icon/venmo_s.png?assets/assetbundlelocal/ui/paytype/icon/venmo_s.png.assetbundle
 v
 3Assets/AssetBundleLocal/UI/PayType/Icon/zelle_s.png?assets/assetbundlelocal/ui/paytype/icon/zelle_s.png.assetbundle
+t
+2Assets/AssetBundleLocal/UI/ObstacleIcon/Hidden.png>assets/assetbundlelocal/ui/obstacleicon/hidden.png.assetbundle
+x
+4Assets/AssetBundleLocal/UI/ObstacleIcon/Obstacle.png@assets/assetbundlelocal/ui/obstacleicon/obstacle.png.assetbundle
 r
 1Assets/AssetBundleLocal/UI/LuckMoment/icon_ka.png=assets/assetbundlelocal/ui/luckmoment/icon_ka.png.assetbundle
 v
