@@ -112,8 +112,8 @@
     <Compile Include="Assets\Scripts\UI\Notice\UINotice.cs" />
     <Compile Include="Assets\Scripts\Notify\NotifyModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int16Serializer.cs" />
-    <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\UIWithdrawableMultiple.cs" />
     <Compile Include="Assets\TestMark.cs" />
+    <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\UIWithdrawableMultiple.cs" />
     <Compile Include="Assets\Gen\Code\item\EQuality.cs" />
     <Compile Include="Assets\Scripts\MiniComponent\DoTween\ShakeRotateLeftRight.cs" />
     <Compile Include="Assets\Tools\LubanLib\BeanBase.cs" />

@@ -61,11 +61,11 @@ namespace XrCode
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Month, currentDate.Day, currentDate.Year);
             ShowNoticeInfo();
 
-
             ShowAnim(mDayNotice);
             ShowAnim(mPlanes, () => 
             {
-                if (GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
+                int a = FacadeGuide.GetCurStep();
+                if (GamePlayFacade.GetIsTutorial() && FacadeGuide.GetCurStep() == 10014 || FacadeGuide.GetCurStep() == 10018)
                 {
                     FacadeGuide.PlayGuide();
                 }
