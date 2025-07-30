@@ -503,6 +503,10 @@ e
 Assets/UI/Effect/FX_Flare_9.TGABassets/assetbundlelocal/prefabs/effect/flymoney.prefab.assetbundle
 ‚
 9Assets/AssetBundleLocal/Prefabs/Effect/GetMoneyTip.prefabEassets/assetbundlelocal/prefabs/effect/getmoneytip.prefab.assetbundle
+|
+6Assets/AssetBundleLocal/Prefabs/Effect/HidBreak.prefabBassets/assetbundlelocal/prefabs/effect/hidbreak.prefab.assetbundle
+R
+!Assets/Materials/Effect/Flame.mat-assets/materials/effect/flame.mat.assetbundle
 ‚
 9Assets/AssetBundleLocal/Prefabs/Effect/ItemExplore.prefabEassets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
 q
@@ -511,8 +515,6 @@ h
 Assets/UI/Effect/Glow_030_c.tgaEassets/assetbundlelocal/prefabs/effect/itemexplore.prefab.assetbundle
 „
 :Assets/AssetBundleLocal/Prefabs/Effect/ItemExplore2.prefabFassets/assetbundlelocal/prefabs/effect/itemexplore2.prefab.assetbundle
-R
-!Assets/Materials/Effect/Flame.mat-assets/materials/effect/flame.mat.assetbundle
 Œ
 >Assets/AssetBundleLocal/Prefabs/Effect/ItemExploreEnemy.prefabJassets/assetbundlelocal/prefabs/effect/itemexploreenemy.prefab.assetbundle
 Œ

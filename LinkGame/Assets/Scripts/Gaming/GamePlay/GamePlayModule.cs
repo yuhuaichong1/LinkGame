@@ -21,7 +21,7 @@ namespace XrCode
 
         private GameObject[][] MAP_Goods;//场景中的所有物体（包含障碍物，不包含隐藏物）
         private int[][] MAP;//场景中的所有物体的id（包含障碍物，不包含隐藏物）
-        private int[][] MAP_FROZEN;//场景中的所有物体是否为冰冻状态（非冰冻状态为-1，否则为97（固定冰块）或96（可移动冰块））
+        private int[][] MAP_FROZEN;//场景中的所有物体是否为冰冻状态（非冰冻状态为-1，否则为“固定冰块”（GameDefines.HID_FIXED_ID）或“可移动冰块”（GameDefines.HID_MOVING_ID））
         private Vec2 POS1;//被选中的第1个物体or提示的第一个物品
         private Vec2 POS2;//被选中的第2个物体or提示的第二个物品
         private Vec2 HINT_POS1;//提示的第一个物品
@@ -1989,8 +1989,6 @@ namespace XrCode
         //向上移动
         private void MoveUp(Vec2 POS, int row_down, int row_up)
         {
-            Debug.LogError("======>");
-
             ArrayList list_good_col1 = new ArrayList();
             for (int i = POS.R; i >= row_down; i--)
             {
@@ -2812,16 +2810,16 @@ namespace XrCode
         //移除场景中某行某列的冰冻特效
         public void RemoveHidden(int row, int col, bool showParticle)
         {
-            GameObject hidden = getHidden(row, col);
+            GameObject hidden = GetHidden(row, col);
             if (hidden != null)
             {
                 UnityEngine.Object.DestroyImmediate(hidden);
                 if (showParticle)
                 {
-                    GameObject obj = null;
-                    obj = GameObject.Instantiate(Resources.Load("Prefab/IceBreakParticle", typeof(GameObject))) as GameObject;
-                    obj.transform.position = POS[row][col];
+                    GameObject obj = GameObject.Instantiate(ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.HidBreak_ObjPath));
                     obj.transform.SetParent(mapTrans);
+                    obj.GetComponent<RectTransform>().localScale = Vector3.one;
+                    obj.GetComponent<RectTransform>().anchoredPosition = POS[row][col];
                     obj.GetComponent<PathItem>().live(2);
                     AudioModule.PlayEffect(EAudioType.EReleaseHiddle);
                 }
@@ -2920,7 +2918,7 @@ namespace XrCode
         }
 
         //得当场景中某行某列的冰冻特效
-        public GameObject getHidden(int row, int col)
+        public GameObject GetHidden(int row, int col)
         {
             GameObject temp = GameObject.Find($"{GameDefines.HMName}{row}_{col}");
             if(temp == null)
@@ -3125,6 +3123,19 @@ namespace XrCode
             {
                 Debug.LogError(obj.name + " --> nextPos：(" + next_pos.R + "," + next_pos.C + ")");
             }
+
+            if (MAP_FROZEN[good.POS.R][good.POS.C] == GameDefines.HID_MOVING_ID)
+            {
+                GameObject hidObj = GetHidden(good.POS.R, good.POS.C);
+                if (hidObj != null) 
+                {
+                    hidObj.GetComponent<Good>().updateInfo(next_pos, POS[next_pos.R][next_pos.C], time_move);
+                    MAP_FROZEN[good.POS.R][good.POS.C] = -1;
+                    MAP_FROZEN[next_pos.R][next_pos.C] = GameDefines.HID_MOVING_ID;
+                    hidObj.name = $"{GameDefines.HMName}{next_pos.R}_{next_pos.C}";
+                }
+            }
+
 
             if (good.POS.R == next_pos.R && good.POS.C == next_pos.C)
                 return false;

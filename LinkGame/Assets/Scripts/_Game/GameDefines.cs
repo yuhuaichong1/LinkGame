@@ -79,6 +79,7 @@ public abstract class GameDefines
     public const float FlyFunc_ObjTime = 0.25f;                                                             //飞功能特效持续时间（非特殊情况请保持和FlyMoney_ObjTime一致）
     public const string FlyMoneyTip_ObjPath = "Prefabs/Effect/GetMoneyTip.prefab";                          //飞钱奖励提示的预制体
     public const float FlyMoneyTip_ObjTime = 2f;                                                            //飞钱奖励提示特效持续时间
+    public const string HidBreak_ObjPath = "Prefabs/Effect/HidBreak.prefab";                                //隐藏物体破除特效
 
     public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
     public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
