@@ -700,7 +700,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6850f37e4c5a588439b2bd6619535c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOn: 1
   isOnTrans: {fileID: 2043296650434979157}
   isOffTrans: {fileID: 8692097790537963272}
   Handle: {fileID: 5621024297388226721}
@@ -762,7 +761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6850f37e4c5a588439b2bd6619535c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOn: 1
   isOnTrans: {fileID: 1856063750677407946}
   isOffTrans: {fileID: 9023427757355178647}
   Handle: {fileID: 5447328663183635774}
@@ -1078,7 +1076,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'ID:'
-  m_languageId: 10048
+  m_languageId: 
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

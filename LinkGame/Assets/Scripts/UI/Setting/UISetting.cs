@@ -26,10 +26,13 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
+            bool muiscb = SPlayerPrefs.GetBool(PlayerPrefDefines.musicToggle);
+            bool vibration = SPlayerPrefs.GetBool(PlayerPrefDefines.vibrateToggle);
+            mUserLvText.text = $"LV.{GamePlayFacade.GetCurLevel()}";
+
+
             ShowAnim(mPlane, () => 
             {
-                bool muiscb = SPlayerPrefs.GetBool(PlayerPrefDefines.musicToggle);
-                bool vibration = SPlayerPrefs.GetBool(PlayerPrefDefines.vibrateToggle);
                 mMusicSMT.isOn = muiscb;
                 mVibrationSMT.isOn = vibration;
                 MusicSMTShow(muiscb);

@@ -26,7 +26,7 @@ namespace XrCode
         protected override void OnEnable()
         {
             //mProgessText.text = LanguageModule.GetText("");
-            mProgessText.text = GamePlayFacade.GetRemainPCT();
+            mProgessText.text = $"{GamePlayFacade.GetRemainPCT()}%";
 
             switch (eFuncType)
             {

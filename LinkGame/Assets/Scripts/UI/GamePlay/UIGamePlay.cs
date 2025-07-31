@@ -222,6 +222,11 @@ namespace XrCode
         //提示功能按钮点击
         private void OnTipBtnClickHandle()
         {
+            if(GamePlayFacade.GetNumberGoodCanEat() == 0)
+            {
+                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                return;
+            }
             if(GamePlayFacade.GetIfHintFunc())
             {
                 UIManager.Instance.OpenNotice("提示功能进行中，请勿重复使用");

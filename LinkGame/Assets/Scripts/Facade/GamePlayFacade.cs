@@ -55,7 +55,7 @@ public static class GamePlayFacade
     public static Func<EFuncType ,Transform> GetFuncTarget; //得到飞功能移动终点目标
 
     public static Func<int> GetNumberGoodCanEat;            //获取剩余可消除物品对数
-    public static Func<string> GetRemainPCT;                //获取关卡进度
+    public static Func<float> GetRemainPCT;                //获取关卡进度
 }
 
 

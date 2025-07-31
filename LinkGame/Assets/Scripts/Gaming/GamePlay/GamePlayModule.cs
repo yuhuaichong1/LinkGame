@@ -15,6 +15,7 @@ namespace XrCode
         private bool isTutorial;//是否通过了新手教程
 
         private AudioModule AudioModule;
+        private LanguageModule LanguageModule;
 
         private GameObject[][] MAP_Goods;//场景中的所有物体（包含障碍物，不包含隐藏物）
         private int[][] MAP;//场景中的所有物体的id（包含障碍物，不包含隐藏物）
@@ -140,6 +141,7 @@ namespace XrCode
             GamePlayFacade.GetRemainPCT += GetRemainPCT;
 
             AudioModule = ModuleMgr.Instance.AudioMod;
+            LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             GoodIconRange = new Dictionary<int, List<int>>();
             randomGoodIcon = new Dictionary<int, int>();   
@@ -2158,7 +2160,7 @@ namespace XrCode
             D.Log("剩余可消除对数 : " + numberGoodCanEat);
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
-                UIManager.Instance.OpenNotice("没有可消除的麻将了，请使用刷新功能");
+                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
                 //Game.Instance.StartCoroutine(StartResetMap());
             }
             if (curMapState == EMapState.Eating)
@@ -3336,10 +3338,11 @@ namespace XrCode
             return ifHintFunc;
         }
 
-        private string GetRemainPCT()
+        private float GetRemainPCT()
         {
             float temp = (1 - 1f * remainGood / totalGood) * 100;
-            return $"{temp.ToString("F2")}%";
+            string temp2 = temp.ToString("F2");
+            return float.Parse(temp2);
         }
 
         #endregion
