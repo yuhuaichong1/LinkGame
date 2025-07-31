@@ -2,6 +2,9 @@ using cfg;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using static UnityEngine.ParticleSystem;
 
 
 namespace XrCode
@@ -97,10 +100,12 @@ namespace XrCode
         private int totalGood;//总物品数量
         private int remainGood;//剩余物品数量
 
+        private float passTime;                 //通关用时
+
         protected override void OnLoad()
         {
             base.OnLoad();
-
+            RegisetUpdateObj();
             GamePlayFacade.CreateLevel += CreateLevel;
             GamePlayFacade.CheckIfLink += CheckIfLink;
             GamePlayFacade.TipFunc += TipFunc;
@@ -173,7 +178,10 @@ namespace XrCode
 
         protected override void OnUpdate()
         {
-
+            if (passTime < 1800)
+            {
+                passTime += Time.deltaTime;
+            }
         }
 
         //加载数据
@@ -240,11 +248,13 @@ namespace XrCode
             {
                 pathObj.Add(conf.PathObjId, ResourceMod.Instance.SyncLoad<GameObject>(conf.PathObjPath));
             }
+
         }
 
         #region 创建关卡
         private void CreateLevel()
         {
+            passTime = 0;
             totalGood = 0;
             remainGood = 0;
 
@@ -1758,6 +1768,7 @@ namespace XrCode
                 }
                 ChangeMapState(EMapState.Result);
                 D.Log($"+++++++++++++++++++++++++++++++++++++++++关卡 {curLevel} 通过+++++++++++++++++++++++++++++++++++++++++++++++++");
+                D.Error($" ___________ 通关关卡：{curLevel}，用时：{passTime}");
                 DeSelect();
                 LPath.Clear();
                 keyLPath.Clear();
