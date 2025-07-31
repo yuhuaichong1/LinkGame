@@ -32,7 +32,6 @@ namespace XrCode
             mPrePreLevelPlane.gameObject.SetActive(count >= 3);
             for(int i = 0; i < count; i++)
             {
-                Debug.LogError(i + "  " + (curWLevel - i) + "  " + withQueue.Peek());
                 wItems[i].SetInfo(withQueue.Pop(), curWLevel - i);
                 //if(i == 0)
                 //{
@@ -62,11 +61,11 @@ namespace XrCode
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Month, currentDate.Day, currentDate.Year);
             ShowNoticeInfo();
 
-
             ShowAnim(mDayNotice);
             ShowAnim(mPlanes, () => 
             {
-                if (GamePlayFacade.GetIsTutorial() && FacadeGuide.GetWithdrawableUIcheck())
+                int a = FacadeGuide.GetCurStep();
+                if (GamePlayFacade.GetIsTutorial() && FacadeGuide.GetCurStep() == 10014 || FacadeGuide.GetCurStep() == 10018)
                 {
                     FacadeGuide.PlayGuide();
                 }

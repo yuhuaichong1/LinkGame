@@ -89,6 +89,7 @@
     <Compile Include="Assets\Scripts\Facade\FacadeTimeZone.cs" />
     <Compile Include="Assets\Scripts\PayType\PayTypeModule.cs" />
     <Compile Include="Assets\Scripts\NetWork\NetworkModule.cs" />
+    <Compile Include="Assets\Scripts\UI\WithdrawalSuccessful\UITemplate\UIWithdrawalSuccessful_Temp.cs" />
     <Compile Include="Assets\Scripts\Notify\MiniJsonTool.cs" />
     <Compile Include="Assets\Gen\Code\TBLoadingTitleSprite.cs" />
     <Compile Include="Assets\Scripts\Facade\PlayerFacade.cs" />
@@ -111,8 +112,8 @@
     <Compile Include="Assets\Scripts\UI\Notice\UINotice.cs" />
     <Compile Include="Assets\Scripts\Notify\NotifyModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int16Serializer.cs" />
-    <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\UIWithdrawableMultiple.cs" />
     <Compile Include="Assets\TestMark.cs" />
+    <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\UIWithdrawableMultiple.cs" />
     <Compile Include="Assets\Gen\Code\item\EQuality.cs" />
     <Compile Include="Assets\Scripts\MiniComponent\DoTween\ShakeRotateLeftRight.cs" />
     <Compile Include="Assets\Tools\LubanLib\BeanBase.cs" />
@@ -240,7 +241,6 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\XmlProtoSerializer.cs" />
     <Compile Include="Assets\Scripts\Guide\GiudeItem.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\TouchPad-Event-Input\TouchPadUIEvent.cs" />
-    <Compile Include="Assets\Scripts\UI\WithdrawableWaitCheck\UIWithdrawableWaitCheck.cs" />
     <Compile Include="Assets\Scripts\LinkGood\Level\LevelDefines.cs" />
     <Compile Include="Assets\Scripts\MiniComponent\DoTween\ReStartLeftRight.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ISerializerProxy.cs" />
@@ -313,7 +313,6 @@
     <Compile Include="Assets\Tools\LubanLib\ByteBufExtensions.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RTSExample\RTSCamera.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\GridView\LoopGridItemPool.cs" />
-    <Compile Include="Assets\Scripts\UI\WithdrawableWaitCheck\UITemplate\UIWithdrawableWaitCheck_Temp.cs" />
     <Compile Include="Assets\Scripts\_Game\Game.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\CallbackAttributes.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\KeyValuePairDecorator.cs" />
@@ -324,6 +323,7 @@
     <Compile Include="Assets\Tools\SMovingToggle\SMovingToggle.cs" />
     <Compile Include="Assets\Scripts\Config\AppConfig.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ParseableSerializer.cs" />
+    <Compile Include="Assets\Scripts\UI\WithdrawalSuccessful\UIWithdrawalSuccessful.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIncludeAttribute.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleLoader.cs" />
     <Compile Include="Assets\Scripts\Tools\Pool\ClassObjectManager.cs" />

@@ -26,7 +26,15 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
-            ShowAnim(mPlane);
+            ShowAnim(mPlane, () => 
+            {
+                bool muiscb = SPlayerPrefs.GetBool(PlayerPrefDefines.musicToggle);
+                bool vibration = SPlayerPrefs.GetBool(PlayerPrefDefines.vibrateToggle);
+                mMusicSMT.isOn = muiscb;
+                mVibrationSMT.isOn = vibration;
+                MusicSMTShow(muiscb);
+                VibrationSMTShow(vibration);
+            });
         }
         	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
                 UIManager.Instance.CloseUI(EUIType.EUISetting);            });        }	    private void OnUserLvDetailsBtnClickHandle()
@@ -35,18 +43,25 @@ namespace XrCode
         }
         private void OnMusicSMTChange(bool b)
         {
+            MusicSMTShow(b);
+            AudioModule.SetMusicVolume(b ? 1 : 0);
+            AudioModule.SetEffectsVolume(b ? 1 : 0);
+        }
+        private void MusicSMTShow(bool b)
+        {
             mMSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
             mMSMTLabel.text = LanguageModule.GetText(b ? OnText : OffText);
-            AudioModule.SetMusicVolume(b? 1 : 0);
-            AudioModule.SetEffectsVolume(b? 1 : 0);
         }
 
         private void OnVibrationSMTChange(bool b)
         {
+            VibrationSMTShow(b);
+            AudioModule.SetVibrate(b);
+        }
+        private void VibrationSMTShow(bool b)
+        {
             mVSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
             mVSMTLabel.text = LanguageModule.GetText(b ? OnText : OffText);
-
-            AudioModule.SetVibrate(b);
         }
 
 

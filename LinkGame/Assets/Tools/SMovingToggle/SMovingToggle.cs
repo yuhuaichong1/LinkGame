@@ -7,7 +7,19 @@ using UnityEngine.UI;
 //[AddComponentMenu("SimpleUI/SMovingToggle", 30)]
 public class SMovingToggle : MonoBehaviour, IPointerDownHandler
 {
-    public bool isOn;//开关状态
+    private bool _isOn;//开关状态
+    public bool isOn
+    {
+        set 
+        {
+            _isOn = value;
+            ChangeTogShow();
+        }
+        get 
+        { 
+            return _isOn;
+        }
+    }
 
     public Transform isOnTrans;//开启时滑块的坐标
     public Transform isOffTrans;//关闭时滑块的坐标
@@ -26,12 +38,8 @@ public class SMovingToggle : MonoBehaviour, IPointerDownHandler
     private float fillWidth;//覆盖类型事件的宽
     private RectTransform isOnBgRectTrans;//覆盖类型事件的Rect
 
-    /// <summary>
-    /// 初始化
-    /// </summary>
-    void Start()
+    void Awake()
     {
-        Handle.transform.position = isOn ? isOnTrans.position : isOffTrans.position;
         isOnBgRectTrans = isOnBg.GetComponent<RectTransform>();
         fillWidth = isOnBgRectTrans.rect.width;
     }
@@ -42,14 +50,22 @@ public class SMovingToggle : MonoBehaviour, IPointerDownHandler
     /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
-        isOn = !isOn;
-        onValueChange?.Invoke(isOn);
-        Vector3 target = isOn ? isOnTrans.position : isOffTrans.position;
+        _isOn = !_isOn;
+        onValueChange?.Invoke(_isOn);
+        ChangeTogShow();
+    }
+
+    /// <summary>
+    /// 改变开关显示状态
+    /// </summary>
+    private void ChangeTogShow()
+    {
+        Vector3 target = _isOn ? isOnTrans.position : isOffTrans.position;
         switch (SMTAnimType)
         {
             case SMTAnimType.None:
                 Handle.transform.position = target;
-                isOnBg.gameObject.SetActive(isOn);
+                isOnBg.gameObject.SetActive(_isOn);
                 break;
             case SMTAnimType.OnlyHandle:
                 isOnBg.gameObject.SetActive(true);
@@ -61,18 +77,18 @@ public class SMovingToggle : MonoBehaviour, IPointerDownHandler
             case SMTAnimType.Gradient:
                 isOnBg.gameObject.SetActive(true);
                 isOnBgRectTrans.offsetMin = Vector2.zero;
-                GradientBgGameObjectAnim(isOn);
+                GradientBgGameObjectAnim(_isOn);
                 movingGameObjectAnim(target);
                 break;
             case SMTAnimType.Cover:
                 isOnBg.gameObject.SetActive(true);
-                CoverBgGameObjectAnim(isOn);
+                CoverBgGameObjectAnim(_isOn);
                 isOnBg.color = new Color(isOnBg.color.r, isOnBg.color.g, isOnBg.color.b, 1);
                 movingGameObjectAnim(target);
                 break;
             case SMTAnimType.Gradient_And_Cover:
                 isOnBg.gameObject.SetActive(true);
-                GCBgGameObjectAnim(isOn);
+                GCBgGameObjectAnim(_isOn);
                 movingGameObjectAnim(target);
                 break;
         }

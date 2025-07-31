@@ -233,30 +233,38 @@ p
 0Assets/AssetBundleLocal/UI/Direction/up_down.png<assets/assetbundlelocal/ui/direction/up_down.png.assetbundle
 †
 ;Assets/AssetBundleLocal/ScriptableObject/SUIAnimCurve.assetGassets/assetbundlelocal/scriptableobject/suianimcurve.asset.assetbundle
-¾
-WAssets/AssetBundleLocal/Prefabs/UI/WithdrawalInformation/UIWithdrawalInformation.prefabcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
+º
+UAssets/AssetBundleLocal/Prefabs/UI/WithdrawalSuccessful/UIWithdrawalSuccessful.prefabaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
 n
 /Assets/AssetBundleLocal/Font/HirukoPro_Bold.ttf;assets/assetbundlelocal/font/hirukopro_bold.ttf.assetbundle
-@
-Assets/UI/Common/btn.png$assets/ui/common/btn.png.assetbundle
+‘
+,Assets/UI/WithdrawalSuccessful/tixian_bg.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
 D
 Assets/UI/Common/sidai.png&assets/ui/common/sidai.png.assetbundle
-
-(Assets/UI/WithdrawalInformation/bg_3.pngcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
-F
-Assets/UI/Common/bg_1 1.png'assets/ui/common/bg_1 1.png.assetbundle
+“
+.Assets/UI/WithdrawalSuccessful/shuliang_bg.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
+y
+Assets/ç”»æ¿ 23.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
+
+(Assets/UI/WithdrawalSuccessful/jinbi.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
 L
 Assets/UI/Common/btn_close.png*assets/ui/common/btn_close.png.assetbundle
 H
 Assets/UI/Common/btn_big.png(assets/ui/common/btn_big.png.assetbundle
+¾
+WAssets/AssetBundleLocal/Prefabs/UI/WithdrawalInformation/UIWithdrawalInformation.prefabcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
+@
+Assets/UI/Common/btn.png$assets/ui/common/btn.png.assetbundle
+
+(Assets/UI/WithdrawalInformation/bg_3.pngcassets/assetbundlelocal/prefabs/ui/withdrawalinformation/uiwithdrawalinformation.prefab.assetbundle
+F
+Assets/UI/Common/bg_1 1.png'assets/ui/common/bg_1 1.png.assetbundle
 ®
 OAssets/AssetBundleLocal/Prefabs/UI/WithdrawalChannel/UIWithdrawalChannel.prefab[assets/assetbundlelocal/prefabs/ui/withdrawalchannel/uiwithdrawalchannel.prefab.assetbundle
 D
 Assets/UI/Common/input.png&assets/ui/common/input.png.assetbundle
 B
 Assets/UI/Common/bg_2.png%assets/ui/common/bg_2.png.assetbundle
-¾
-WAssets/AssetBundleLocal/Prefabs/UI/WithdrawableWaitCheck/UIWithdrawableWaitCheck.prefabcassets/assetbundlelocal/prefabs/ui/withdrawablewaitcheck/uiwithdrawablewaitcheck.prefab.assetbundle
 ²
 QAssets/AssetBundleLocal/Prefabs/UI/WithdrawableSingle/UIWithdrawableSingle.prefab]assets/assetbundlelocal/prefabs/ui/withdrawablesingle/uiwithdrawablesingle.prefab.assetbundle
 X

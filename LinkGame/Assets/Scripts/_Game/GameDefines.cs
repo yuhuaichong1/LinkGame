@@ -154,7 +154,7 @@ public enum EUIType
     EUIChallengeSuccessful = 22,
     EUIChallengeFailed = 23,
     EUICongratfulations = 24,
-    EUIWithdrawableWaitCheck = 25,
+    EUIWithdrawalSuccessful = 25,
 }
 
 public enum ESceneType : byte
