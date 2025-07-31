@@ -126,14 +126,12 @@ namespace XrCode
         private void PlayRewardNoticeEffect()
         {
             mIcon.sprite = icons[UnityEngine.Random.Range(0, icons.Count)];
-            //mNameText.text = string.Format(LanguageModule.GetText(""), PlayerFacade.GetRandomPlayerName());
-            mNameText.text = string.Format("Congratulations {0}", PlayerFacade.GetRandomPlayerName());
+            mNameText.text = string.Format(LanguageModule.GetText("10082"), PlayerFacade.GetRandomPlayerName());
 
             string[] temp = PlayerFacade.GetRandomAttemptAndMoney();
             string attempt = temp[0];
             string money = temp[1];
-            //mPGRNText.text = string.Format(LanguageModule.GetText(""), attempt, money);
-            mPGRNText.text = string.Format("{0} attempt, successfully withdrawn {1}", attempt, money);
+            mPGRNText.text = string.Format(LanguageModule.GetText("10083"), attempt, money);
 
             DG.Tweening.Sequence sequence = DOTween.Sequence();
             sequence.Append(mPlayerGetRewardNotice.DOLocalMoveY(PGRNotice_MoveY, GameDefines.PRN_Effect_MoveTime));

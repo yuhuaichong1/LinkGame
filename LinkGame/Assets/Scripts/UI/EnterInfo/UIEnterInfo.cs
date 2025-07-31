@@ -27,7 +27,7 @@ namespace XrCode
             mNamePlaceholder.text = LanguageModule.GetText("10035");
             mAddressPlaceholder.text = LanguageModule.GetText("10036");
             mPhonePlaceholder.text = LanguageModule.GetText("10037");
-            mAddressOrPhonePlaceholder.text = LanguageModule.GetText("10043");
+            mAddressOrPhonePlaceholder.text = LanguageModule.GetText("10092");
             mPhoneAreaCodeText.text = $"+{FacadePayType.GetNANP()}";
         }
         protected override void OnEnable() 
@@ -134,7 +134,7 @@ namespace XrCode
                         }
                         else
                         {
-                            UIManager.Instance.OpenNotice("没填地址");
+                            UIManager.Instance.OpenNotice(LanguageModule.GetText("10037"));
                             return;
                         }
                         break;
@@ -145,7 +145,7 @@ namespace XrCode
                         }
                         else
                         {
-                            UIManager.Instance.OpenNotice("没填电话");
+                            UIManager.Instance.OpenNotice(LanguageModule.GetText("10036"));
                             return;
                         }
                         break;
@@ -156,7 +156,7 @@ namespace XrCode
                         }
                         else
                         {
-                            UIManager.Instance.OpenNotice("没填地址/电话");
+                            UIManager.Instance.OpenNotice(LanguageModule.GetText("10092"));
                             return;
                         }
                         break;
@@ -172,7 +172,7 @@ namespace XrCode
             }
             else
             {
-                UIManager.Instance.OpenNotice("没填姓名");
+                UIManager.Instance.OpenNotice(LanguageModule.GetText("10091"));
             }
         }
 
