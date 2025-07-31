@@ -1657,11 +1657,10 @@ namespace XrCode
 
             Temp = POS2;
             
-            STimerManager.Instance.CreateSDelay(0.1f, () => 
+            STimerManager.Instance.CreateSDelay(0f, () => 
             {
                 GamePlayFacade.Select(Temp);
             });
-            
         }
 
         //消除选中的两个物体
