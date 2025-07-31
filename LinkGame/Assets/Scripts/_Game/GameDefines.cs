@@ -155,6 +155,9 @@ public enum EUIType
     EUIChallengeFailed = 23,
     EUICongratfulations = 24,
     EUIWithdrawalSuccessful = 25,
+    EUIGamePlayBy = 26,
+    EUIDailyTasks = 27,
+    EUIChallengeTask = 28,
 }
 
 public enum ESceneType : byte

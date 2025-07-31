@@ -37,6 +37,7 @@ namespace cfg
 		public TBReddot TBReddot {get; private set;}
 		public TBWithdrawableLevels TBWithdrawableLevels {get; private set;}
 		public TBObstacleIcon TBObstacleIcon {get; private set;}
+		public TBLevelAct TBLevelAct {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -84,6 +85,8 @@ namespace cfg
 			tables.Add("TBWithdrawableLevels", TBWithdrawableLevels);
 			TBObstacleIcon = new TBObstacleIcon(loader("tbobstacleicon")); 
 			tables.Add("TBObstacleIcon", TBObstacleIcon);
+			TBLevelAct = new TBLevelAct(loader("tblevelact")); 
+			tables.Add("TBLevelAct", TBLevelAct);
 	
 			PostInit();
 			ResolveAllTable();
@@ -130,6 +133,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBWithdrawableLevelsDataFinish);
 			configNames.Enqueue("tbobstacleicon");
             configCbFuncs.Enqueue(OnTBObstacleIconDataFinish);
+			configNames.Enqueue("tblevelact");
+            configCbFuncs.Enqueue(OnTBLevelActDataFinish);
 
             LoadAllConfig();
         }
@@ -189,6 +194,7 @@ namespace cfg
 			TBReddot.TranslateText(translator); 
 			TBWithdrawableLevels.TranslateText(translator); 
 			TBObstacleIcon.TranslateText(translator); 
+			TBLevelAct.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -213,6 +219,7 @@ namespace cfg
 			TBReddot.Resolve(tables);
 			TBWithdrawableLevels.Resolve(tables);
 			TBObstacleIcon.Resolve(tables);
+			TBLevelAct.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -274,6 +281,9 @@ namespace cfg
 					break;
 				case "TBObstacleIcon":
 					TBObstacleIcon.Reload(_loader("TBObstacleIcon"));
+					break;
+				case "TBLevelAct":
+					TBLevelAct.Reload(_loader("TBLevelAct"));
 					break;
 			}
 	
@@ -378,6 +388,11 @@ namespace cfg
 		{
 			TBObstacleIcon = new TBObstacleIcon(buf);
 			tables.Add("TBObstacleIcon", TBObstacleIcon);
+		}
+		public void OnTBLevelActDataFinish(ByteBuf buf)
+		{
+			TBLevelAct = new TBLevelAct(buf);
+			tables.Add("TBLevelAct", TBLevelAct);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()
