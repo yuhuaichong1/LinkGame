@@ -1646,6 +1646,7 @@ namespace XrCode
             }
         }
 
+        Vec2 Temp;
         //震动两个物体
         private void ShakeTwoGood()
         {
@@ -1654,7 +1655,13 @@ namespace XrCode
             good1.Hint2();
             good2.Hint2();
 
-            GamePlayFacade.Select(POS2);
+            Temp = POS2;
+            
+            STimerManager.Instance.CreateSDelay(0.1f, () => 
+            {
+                GamePlayFacade.Select(Temp);
+            });
+            
         }
 
         //消除选中的两个物体
@@ -2380,6 +2387,9 @@ namespace XrCode
 
         private void RemoveFunc3()
         {
+            if(ifHintFunc)
+                RemoveHint();
+
             Dictionary<int, List<Good>> goodsDic = new Dictionary<int, List<Good>>();
             List<int> randomKey = new List<int>();
             for (int i1 = 1; i1 < row - 1; i1++)
@@ -3145,9 +3155,6 @@ namespace XrCode
         {
             return;
         }
-
-
-
 
         //改变场景中的物品的信息1版本
         public void ChangeGood(Good good, int type, Vec2 next_pos)
