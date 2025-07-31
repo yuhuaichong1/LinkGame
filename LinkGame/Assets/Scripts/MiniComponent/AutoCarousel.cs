@@ -8,6 +8,8 @@ using XrCode;
 
 public class AutoCarousel : MonoBehaviour
 {
+    private LanguageModule LanguageModule;
+
     public int showCount;
     public float height;
     public RectTransform content;
@@ -19,6 +21,11 @@ public class AutoCarousel : MonoBehaviour
 
     //private PayTypeManager PayTypeManager;
     //private RankManager RankManager;
+
+    void Awake()
+    {
+        LanguageModule = ModuleMgr.Instance.LanguageMod;
+    }
 
     public void Play()
     {
@@ -95,8 +102,14 @@ public class AutoCarousel : MonoBehaviour
         float money = times * UnityEngine.Random.Range(8f, 12f);
         string moneyShow = FacadePayType.RegionalChange(money);
 
-        //99:99:99 Congratulations Player_zZ3g on passing this level(<color=#FF0000>Challenge 99 times</color>), Withdrawn <color=#FF0000>$999.999</color>
-        //obj.transform.GetChild(1).GetComponent<Text>().text = string.Format(ModuleMgr.Instance.LanguageMod.GetText(""), name, times, moneyShow);
-        obj.transform.GetChild(1).GetComponent<Text>().text = string.Format("Congratulations {0} on passing this level(<color=#FF0000>Challenge {1} times</color>), Withdrawn <color=#FF0000>{2}</color>", name, times, moneyShow);
+        // 获取当前时间
+        System.DateTime currentTime = System.DateTime.Now;
+        int hour = currentTime.Hour;
+        int minute = currentTime.Minute;
+        int second = currentTime.Second;
+        string HMS = $"{hour:D2}:{minute:D2}:{second:D2}";
+        string content = string.Format(LanguageModule.GetText("10095"), name, times, moneyShow);
+        obj.transform.GetChild(1).GetComponent<Text>().text = $"<color=#FF0000>{HMS}</color> {content}";
+        //obj.transform.GetChild(1).GetComponent<Text>().text = string.Format("Congratulations {0} on passing this level(<color=#FF0000>Challenge {1} times</color>), Withdrawn <color=#FF0000>{2}</color>", name, times, moneyShow);
     }
 }

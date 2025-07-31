@@ -2206,17 +2206,10 @@ namespace XrCode
         #endregion
 
         #region 点击物体
-        //双击抖动
-        private void SameKindShake(int kind)
-        {
-
-        }
 
         //被选中
         private void Select(Vec2 pos)
         {
-            Debug.LogError(":(");
-
             //IfShakeSameKind();
 
             if (checking_paire)

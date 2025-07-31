@@ -2046,8 +2046,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Change Tile Direction
-  m_languageId: 10056
+  m_Text: 
+  m_languageId: 10086
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -3180,8 +3180,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Switch
-  m_languageId: 10018
+  m_Text: 
+  m_languageId: 10087
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -4919,8 +4919,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shuffle all titles
-  m_languageId: 
+  m_Text: 
+  m_languageId: 10085
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1
@@ -5760,8 +5760,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Find title to clear
-  m_languageId: 
+  m_Text: 
+  m_languageId: 10084
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

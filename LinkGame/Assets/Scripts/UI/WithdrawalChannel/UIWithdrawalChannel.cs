@@ -8,9 +8,12 @@ namespace XrCode
 
     public partial class UIWithdrawalChannel : BaseUI
     {
+        LanguageModule LanguageModule;
         protected override void OnAwake() 
         {
-            mAddressOrPhonePlaceholder.text = ModuleMgr.Instance.LanguageMod.GetText("10043");
+            LanguageModule = ModuleMgr.Instance.LanguageMod;
+
+            mAddressOrPhonePlaceholder.text = LanguageModule.GetText("10043");
         }
         protected override void OnEnable() 
         {
@@ -32,7 +35,7 @@ namespace XrCode
             }
             else
             {
-                UIManager.Instance.OpenNotice("没填地址/电话");
+                UIManager.Instance.OpenNotice(LanguageModule.GetText("10092"));
             }
         }
         protected override void OnDisable() { }
