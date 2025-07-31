@@ -78,7 +78,7 @@ namespace XrCode
         private ArrayList list_pos_need_update;//需要更新（可位移的物品）
         private ArrayList curLevelDirection;//移动方向
 
-        
+
         private int curTotalLinkCount;//累计消除次数
         private int curLuckMomentCount;//老虎机计数
         private int curTopNoticeCount;//顶部消息计数
@@ -101,6 +101,9 @@ namespace XrCode
         private int remainGood;//剩余物品数量
 
         private float passTime;                 //通关用时
+        private string shakingSourceKey = null;
+
+        private bool ifContinue;//是否继续关卡进度
 
         protected override void OnLoad()
         {
@@ -150,7 +153,7 @@ namespace XrCode
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             GoodIconRange = new Dictionary<int, List<int>>();
-            randomGoodIcon = new Dictionary<int, int>();   
+            randomGoodIcon = new Dictionary<int, int>();
 
             LPath = new ArrayList();
             keyLPath = new ArrayList();
@@ -200,7 +203,7 @@ namespace XrCode
             //curAwesomeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curAwesomeCount);
 
             withdrawableLevel = SPlayerPrefs.GetQueue<int>(PlayerPrefDefines.withdrawableLevel, true);
-            if(withdrawableLevel.Count == 0)
+            if (withdrawableLevel.Count == 0)
             {
                 withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(1).Level);
                 curWLevel = 1;
@@ -215,6 +218,10 @@ namespace XrCode
                 isTutorial = true;
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
+
+            ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
+            randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
+            
         }
 
         /// <summary>
@@ -223,7 +230,7 @@ namespace XrCode
         private void SetGoodIcon()
         {
             List<ConfGoodIcon> confs = ConfigModule.Instance.Tables.TBGoodIcon.DataList;
-            foreach(ConfGoodIcon conf in confs)
+            foreach (ConfGoodIcon conf in confs)
             {
                 goodIcons.Add(conf.Sn, ResourceMod.Instance.SyncLoad<Sprite>(conf.GoodPath));
             }
@@ -249,7 +256,6 @@ namespace XrCode
             {
                 pathObj.Add(conf.PathObjId, ResourceMod.Instance.SyncLoad<GameObject>(conf.PathObjPath));
             }
-
         }
 
         #region 创建关卡
@@ -269,31 +275,26 @@ namespace XrCode
             SetRandomGoodIcon(curLevelData.GoodKinds);
 
             LMap(row, col);
+            LoadMaps();
 
-            //if (isTutorial)
-            //{
-                
-                
-            //}
-            //else
-            //{
-                
-            //}
             curMapState = EMapState.Playing;
 
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
             obsTrans = GamePlayFacade.GetObsTrans?.Invoke();
 
-            if (curLevelData.levelType == ELevelType.Fixed)
+            if(ifContinue)
             {
-                _fixedMap();
+                _contiuneMap();
             }
             else
             {
-                _randomMap();
-            }
+                if (curLevelData.levelType == ELevelType.Fixed)
+                    _fixedMap();
+                else
+                    _randomMap();
 
-            remainGood = totalGood;
+                remainGood = totalGood;
+            }
         }
 
         /// <summary>
@@ -368,7 +369,7 @@ namespace XrCode
             //int number_good_2 = total_good_type - number_good_4;
             int number_good_average = total_good / 2 / total_good_type;
             int number_good_remainder = (total_good - (number_good_average * 2 * total_good_type)) / 2;
-                   
+
             ArrayList list_good = new ArrayList();
             for (int i = 0; i < total_good_type; i++)
             {
@@ -461,7 +462,7 @@ namespace XrCode
                 Vec2 pos = (Vec2)list_block_frozen[i];
                 AddSpecialItem(GameDefines.HID_FIXED_ID, GameDefines.HFName, pos.R, pos.C);
             }
-            for(int i = 0; i < list_moving_frozen.Count;i++)
+            for (int i = 0; i < list_moving_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_moving_frozen[i];
                 AddSpecialItem(GameDefines.HID_MOVING_ID, GameDefines.HMName, pos.R, pos.C);
@@ -513,7 +514,7 @@ namespace XrCode
             }
 
             ArrayList list_fixedLevel_good = curLevelData.list_fixedLevel_good;
-            foreach(FixedLevelGood good in list_fixedLevel_good)
+            foreach (FixedLevelGood good in list_fixedLevel_good)
             {
                 int p_row = (int)good.X;
                 int p_col = (int)good.Y;
@@ -537,6 +538,37 @@ namespace XrCode
             {
                 AutoGenData auto_gen_data = (AutoGenData)curLevelData.list_auto_gen[i];
                 GenAutoGen(auto_gen_data);
+            }
+
+            UpdateListHiddle();
+
+            ChangeMapState(EMapState.Playing);
+        }
+
+        private void _contiuneMap()
+        {
+            curMapState = EMapState.None;
+
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1)
+                    {
+                        AddGood(MAP[i1][j1], i1, j1);
+                    }
+                    if (MAP_FROZEN[i1][j1] != -1)
+                    {
+                        if (MAP_FROZEN[i1][j1] == GameDefines.HID_FIXED_ID)
+                        {
+                            AddSpecialItem(GameDefines.HID_FIXED_ID, GameDefines.HFName, i1, j1);
+                        }
+                        else//MAP[i1][j1] == GameDefines.HID_MOVING_ID
+                        {
+                            AddSpecialItem(GameDefines.HID_MOVING_ID, GameDefines.HMName, i1, j1);
+                        }
+                    }
+                }
             }
 
             UpdateListHiddle();
@@ -1569,7 +1601,7 @@ namespace XrCode
             instance.transform.SetParent(mapTrans);
             instance.GetComponent<RectTransform>().localScale = Vector3.one;
             instance.GetComponent<RectTransform>().anchoredPosition = pos;
-            
+
         }
         #endregion
 
@@ -1656,8 +1688,8 @@ namespace XrCode
             good2.Hint2();
 
             Temp = POS2;
-            
-            STimerManager.Instance.CreateSDelay(0f, () => 
+
+            STimerManager.Instance.CreateSDelay(0f, () =>
             {
                 GamePlayFacade.Select(Temp);
             });
@@ -1690,7 +1722,7 @@ namespace XrCode
             //特效部分
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood1.transform, GamePlayFacade.GetFlyMoneyTarget());
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
-            STimerManager.Instance.CreateSDelay(GameDefines.FlyEffect_Start_Delay, () => 
+            STimerManager.Instance.CreateSDelay(GameDefines.FlyEffect_Start_Delay, () =>
             {
                 FacadeEffect.PlayGetMoneyTipEffect(GameDefines.Single_Link_Money);
                 PlayerFacade.AddWMoney(GameDefines.Single_Link_Money);
@@ -1708,14 +1740,14 @@ namespace XrCode
 
             if (curLevel == 1 || curLevel == 2) return;
 
-            if(curLuckMomentCount == GameDefines.LuckMoment_Count_Max)
+            if (curLuckMomentCount == GameDefines.LuckMoment_Count_Max)
             {
                 UIManager.Instance.OpenWindowAsync<UILuckMoment>(EUIType.EUILuckMoment);
             }
             else
                 curLuckMomentCount += 1;
 
-            if(curTopNoticeCount == GameDefines.TopNotice_Count_Max)
+            if (curTopNoticeCount == GameDefines.TopNotice_Count_Max)
             {
                 curTopNoticeCount = 0;
                 FacadeEffect.PlayRewardNoticeEffect();
@@ -1723,7 +1755,7 @@ namespace XrCode
             else
                 curTopNoticeCount += 1;
 
-            if(curAwesomeCount == GameDefines.Awesome_Count_Max)
+            if (curAwesomeCount == GameDefines.Awesome_Count_Max)
             {
                 curAwesomeCount = 0;
                 UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
@@ -1731,7 +1763,7 @@ namespace XrCode
             else
                 curAwesomeCount += 1;
 
-            if(curRateCount == GameDefines.Rate_Count_Max && FacadeTimeZone.IfNextDay())
+            if (curRateCount == GameDefines.Rate_Count_Max && FacadeTimeZone.IfNextDay())
             {
                 UIManager.Instance.OpenWindowAsync<UIRate>(EUIType.EUIRate);
             }
@@ -1781,6 +1813,9 @@ namespace XrCode
                 DeSelect();
                 LPath.Clear();
                 keyLPath.Clear();
+                ifContinue = false;
+                SPlayerPrefs.SetBool(PlayerPrefDefines.ifContinue, false);
+                randomGoodIcon.Clear();
                 //logicLevel.collectReward();
 
                 if (curLevel == LevelDefines.maxLevel)
@@ -1794,7 +1829,7 @@ namespace XrCode
                 else
                 {
                     float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
-                    STimerManager.Instance.CreateSDelay(delayTime, () => 
+                    STimerManager.Instance.CreateSDelay(delayTime, () =>
                     {
                         UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
                         UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
@@ -1813,6 +1848,9 @@ namespace XrCode
             }
             else
             {
+                ifContinue = true;
+                SPlayerPrefs.SetBool(PlayerPrefDefines.ifContinue, true);
+                SaveMaps();
                 Game.Instance.StartCoroutine(updateLogicLevel(isOffline));
             }
         }
@@ -1900,17 +1938,17 @@ namespace XrCode
                     case EGoodMoveDic.UpDown_Closer:
                         break;
                     case EGoodMoveDic.LeftRight_Away:
-                        
+
                         break;
-                    case EGoodMoveDic.LeftRight_Closer: 
+                    case EGoodMoveDic.LeftRight_Closer:
                         break;
-                    default: 
+                    default:
                         break;
                 }
 
                 if (direction == (int)EGoodMoveDic.Left)
                 {
-                    
+
                 }
                 else if (direction == (int)EGoodMoveDic.Right)
                 {
@@ -1918,11 +1956,11 @@ namespace XrCode
                 }
                 else if (direction == (int)EGoodMoveDic.Up)
                 {
-                    
+
                 }
                 else if (direction == (int)EGoodMoveDic.Down)
                 {
-                    
+
                 }
             }
         }
@@ -2210,7 +2248,13 @@ namespace XrCode
         //被选中
         private void Select(Vec2 pos)
         {
-            //IfShakeSameKind();
+
+            // 检查是否是正在摇晃的源物体，如果是则不能选中
+            string currentKey = $"{pos.R}_{pos.C}";
+            if (currentKey == shakingSourceKey)
+            {
+                return; // 自身正在摇晃，不能被选中
+            }
 
             if (checking_paire)
             {
@@ -2237,8 +2281,8 @@ namespace XrCode
             }
             if (POS1 != null && POS1.C == pos.C && POS1.R == pos.R)//点击同一物体时
             {
-                //if (ifkindShake >= 2)
-                    ShakeSameKindGood(MAP_Goods[POS1.R][POS1.C].GetComponent<Good>().id);
+                // 传递源物体位置给摇晃方法
+                ShakeSameKindGood(MAP_Goods[POS1.R][POS1.C].GetComponent<Good>().id, POS1.R, POS1.C);
 
                 DeSelect();
                 AudioModule.PlayEffect(EAudioType.EDeSelect);
@@ -2342,7 +2386,7 @@ namespace XrCode
         }
         private bool RemoveFunc2(Good good)
         {
-            if(ifRemoveFunc)
+            if (ifRemoveFunc)
             {
                 ifRemoveFunc = false;
 
@@ -2353,7 +2397,7 @@ namespace XrCode
                     for (int j1 = 1; j1 < col - 1; j1++)
                     {
                         if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1
-                            && good.POS.C!= j1 && good.POS.R !=i1 && MAP[i1][j1] == good.id)
+                            && good.POS.C != j1 && good.POS.R != i1 && MAP[i1][j1] == good.id)
                         {
                             sameGoods.Add(MAP_Goods[i1][j1].GetComponent<Good>());
                         }
@@ -2379,7 +2423,7 @@ namespace XrCode
 
         private void RemoveFunc3()
         {
-            if(ifHintFunc)
+            if (ifHintFunc)
                 RemoveHint();
 
             Dictionary<int, List<Good>> goodsDic = new Dictionary<int, List<Good>>();
@@ -2396,7 +2440,7 @@ namespace XrCode
                         {
                             goodsDic.Add(temp.id, new List<Good>());
                             randomKey.Add(temp.id);
-                        }  
+                        }
                         goodsDic[temp.id].Add(temp);
                     }
                 }
@@ -2443,7 +2487,7 @@ namespace XrCode
             //上&上下离去的情况
             if (EGMD == EGoodMoveDic.Up || EGMD == EGoodMoveDic.UpDown_Away)
             {
-                for(int i = 1; i <= YGoodCount; i++)
+                for (int i = 1; i <= YGoodCount; i++)
                 {
                     list_pos_need_update.Add(new Vec2(XGoodCount, i));
                 }
@@ -2457,14 +2501,14 @@ namespace XrCode
                 }
             }
             //上下聚拢的情况
-            if(EGMD == EGoodMoveDic.UpDown_Closer)
+            if (EGMD == EGoodMoveDic.UpDown_Closer)
             {
                 int temp = XGoodCount / 2;
-                for(int i = 1;i <= YGoodCount;i++)
+                for (int i = 1; i <= YGoodCount; i++)
                 {
                     list_pos_need_update.Add(new Vec2(temp, i));
                     list_pos_need_update.Add(new Vec2(temp + 1, i));
-                }    
+                }
             }
             //左&左右离去的情况
             if (EGMD == EGoodMoveDic.Left || EGMD == EGoodMoveDic.LeftRight_Away)
@@ -2553,12 +2597,12 @@ namespace XrCode
         {
             return tipCount;
         }
-        private int GetRefushCount() 
-        { 
+        private int GetRefushCount()
+        {
             return refushCount;
         }
-        private int GetRemoveCount() 
-        { 
+        private int GetRemoveCount()
+        {
             return removeCount;
         }
         #endregion
@@ -2681,21 +2725,33 @@ namespace XrCode
 
         }
 
-        //同种类的物体全部进行摇晃
-        private void ShakeSameKindGood(int tagetId)
+
+
+
+
+        private void ShakeSameKindGood(int tagetId, int sourceRow, int sourceCol)
         {
+            shakingSourceKey = $"{sourceRow}_{sourceCol}";
             for (int i1 = 1; i1 < row - 1; i1++)
             {
                 for (int j1 = 1; j1 < col - 1; j1++)
                 {
-                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID
+                        && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1
                         && MAP[i1][j1] == tagetId)
                     {
                         MAP_Goods[i1][j1].GetComponent<Good>().Hint2();
                     }
                 }
             }
+
+            // 摇晃结束后清除源物体标记（假设动画持续0.5秒）
+            STimerManager.Instance.CreateSDelay(0.5f, () =>
+            {
+                shakingSourceKey = null;
+            });
         }
+
 
         //判断是否双击才能进行摇晃
         private void IfShakeSameKind()
@@ -2975,7 +3031,7 @@ namespace XrCode
         public GameObject GetHidden(int row, int col)
         {
             GameObject temp = GameObject.Find($"{GameDefines.HMName}{row}_{col}");
-            if(temp == null)
+            if (temp == null)
                 temp = GameObject.Find($"{GameDefines.HFName}{row}_{col}");
             return temp;
         }
@@ -3170,7 +3226,7 @@ namespace XrCode
         //改变场景中的物品的信息2版本
         public bool ChangeGood(GameObject obj, Good good, Vec2 next_pos, float time_move)
         {
-            if(obj.GetComponent<TestMark>() != null)
+            if (obj.GetComponent<TestMark>() != null)
             {
                 Debug.LogError(obj.name + " --> nextPos：(" + next_pos.R + "," + next_pos.C + ")");
             }
@@ -3178,7 +3234,7 @@ namespace XrCode
             if (MAP_FROZEN[good.POS.R][good.POS.C] == GameDefines.HID_MOVING_ID)
             {
                 GameObject hidObj = GetHidden(good.POS.R, good.POS.C);
-                if (hidObj != null) 
+                if (hidObj != null)
                 {
                     hidObj.GetComponent<Good>().updateInfo(next_pos, POS[next_pos.R][next_pos.C], time_move);
                     MAP_FROZEN[good.POS.R][good.POS.C] = -1;
@@ -3288,11 +3344,11 @@ namespace XrCode
         private void RandomGoodIconRange()
         {
             Dictionary<int, ConfGoodIcon> cgis = ConfigModule.Instance.Tables.TBGoodIcon.DataMap;
-            
-            foreach(KeyValuePair<int, ConfGoodIcon> item in cgis)
+
+            foreach (KeyValuePair<int, ConfGoodIcon> item in cgis)
             {
                 int priority = item.Value.Priority;
-                if(!GoodIconRange.ContainsKey(priority)) 
+                if (!GoodIconRange.ContainsKey(priority))
                     GoodIconRange.Add(priority, new List<int>());
                 GoodIconRange[priority].Add(item.Key);
             }
@@ -3301,6 +3357,8 @@ namespace XrCode
         //设置随机图片
         private void SetRandomGoodIcon(int kinds)
         {
+            if (randomGoodIcon.Count > 0) return;
+
             randomGoodIcon.Clear();
 
             List<int> oldIds = new List<int>();
@@ -3330,7 +3388,7 @@ namespace XrCode
                         List<int> temp = new List<int>(GoodIconRange[i]);
                         List<int> temp2 = new List<int>(temp);
                         ShuffleHelper.Shuffle(temp2);
-                        for(int j = 0; j < diff; j++)
+                        for (int j = 0; j < diff; j++)
                         {
                             oldIds.Add(temp[j]);
                             auxiliaryIds.Add(temp2[j]);
@@ -3341,14 +3399,14 @@ namespace XrCode
                 }
             }
 
-            if(kinds > oldIds.Count)
+            if (kinds > oldIds.Count)
             {
                 D.Error("种类超出了物品图片的总数");
                 return;
             }
 
             List<int> newIds = new List<int>(oldIds);
-            for(int i = 0; i < auxiliaryIds.Count; i ++)
+            for (int i = 0; i < auxiliaryIds.Count; i++)
             {
                 newIds[newIds.Count - 1 - i] = auxiliaryIds[i];
             }
@@ -3358,6 +3416,8 @@ namespace XrCode
             {
                 randomGoodIcon.Add(oldIds[i], newIds[i]);
             }
+
+            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon ,randomGoodIcon);
         }
 
         private Queue<int> GetWithdrawableLevel()
@@ -3395,6 +3455,61 @@ namespace XrCode
             float temp = (1 - 1f * remainGood / totalGood) * 100;
             string temp2 = temp.ToString("F2");
             return float.Parse(temp2);
+        }
+
+        private void LoadMaps()
+        {
+            if(!ifContinue) { return; }
+
+            List<string> mapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP, true);
+            List<string> frozenmapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP_FROZEN, true);
+            foreach(string item in mapDataList) 
+            {
+                if(item != "")
+                {
+                    string[] strs = item.Split("_");
+                    int r = int.Parse(strs[0]);
+                    int c = int.Parse(strs[1]);
+                    int value = int.Parse(strs[2]);
+                    MAP[r][c] = value;
+                }
+
+            }
+            foreach (string item in frozenmapDataList)
+            {
+                if (item != "")
+                {
+                    string[] strs = item.Split("_");
+                    int r = int.Parse(strs[0]);
+                    int c = int.Parse(strs[1]);
+                    int value = int.Parse(strs[2]);
+                    MAP_FROZEN[r][c] = value;
+                }
+            }
+        }
+
+        //保存当前关卡样式
+        private void SaveMaps()
+        {
+            List<string> mapDataList = new List<string>();
+            List<string> frozenmapDataList = new List<string>();
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1)
+                    {
+                        mapDataList.Add($"{i1}_{j1}_{MAP[i1][j1]}");
+                    }
+                    if(MAP_FROZEN[i1][j1] != -1)
+                    {
+                        frozenmapDataList.Add($"{i1}_{j1}_{MAP_FROZEN[i1][j1]}");
+                    }
+                }
+            }
+
+            SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
+            SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
         }
 
         #endregion
