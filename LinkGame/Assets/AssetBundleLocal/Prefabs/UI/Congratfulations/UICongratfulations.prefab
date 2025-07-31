@@ -1413,7 +1413,7 @@ MonoBehaviour:
     m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 42
+    m_MinSize: 48
     m_MaxSize: 60
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1421,8 +1421,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Congratfulations
-  m_languageId: 
+  m_Text: Congratulations
+  m_languageId: 10078
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

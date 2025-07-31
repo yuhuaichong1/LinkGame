@@ -129,7 +129,7 @@ namespace XrCode
                     {
                         if (GamePlayFacade.GetNumberGoodCanEat() == 0)
                         {
-                            UIManager.Instance.OpenNotice("没有可消除的麻将了，请使用刷新功能");
+                            UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
                         }
                         else
                         {
@@ -229,7 +229,7 @@ namespace XrCode
             }
             if(GamePlayFacade.GetIfHintFunc())
             {
-                UIManager.Instance.OpenNotice("提示功能进行中，请勿重复使用");
+                UIManager.Instance.OpenNotice(LanguageModule.GetText("10093"));
                 return;
             }
 
@@ -267,13 +267,14 @@ namespace XrCode
         {
             if (GamePlayFacade.GetIfRemoveFunc())
             {
-                UIManager.Instance.OpenNotice("消除功能进行中，请勿重复使用");
+                UIManager.Instance.OpenNotice(LanguageModule.GetText("10093"));
                 return;
             }
 
             if (GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
             {
-                GamePlayFacade.RemoveFunc?.Invoke();
+                //GamePlayFacade.RemoveFunc?.Invoke();
+                GamePlayFacade.RemoveFunc3();
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
 

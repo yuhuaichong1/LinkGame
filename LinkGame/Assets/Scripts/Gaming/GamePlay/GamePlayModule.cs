@@ -112,6 +112,7 @@ namespace XrCode
             GamePlayFacade.RefushFunc += RefushFunc;
             GamePlayFacade.RemoveFunc += RemoveFunc;
             GamePlayFacade.RemoveFunc2 += RemoveFunc2;
+            GamePlayFacade.RemoveFunc3 += RemoveFunc3;
             GamePlayFacade.ChangeTipCount += ChangeTipCount;
             GamePlayFacade.ChangeRefushCount += ChangeRefushCount;
             GamePlayFacade.ChangeRemoveCount += ChangeRemoveCount;
@@ -1652,6 +1653,8 @@ namespace XrCode
             Good good2 = GetGood(POS2.R, POS2.C).GetComponent<Good>();
             good1.Hint2();
             good2.Hint2();
+
+            GamePlayFacade.Select(POS2);
         }
 
         //消除选中的两个物体
@@ -2206,6 +2209,8 @@ namespace XrCode
         //被选中
         private void Select(Vec2 pos)
         {
+            Debug.LogError(":(");
+
             //IfShakeSameKind();
 
             if (checking_paire)
@@ -2371,8 +2376,45 @@ namespace XrCode
             {
                 return true;
             }
+        }
 
-            
+        private void RemoveFunc3()
+        {
+            Dictionary<int, List<Good>> goodsDic = new Dictionary<int, List<Good>>();
+            List<int> randomKey = new List<int>();
+            for (int i1 = 1; i1 < row - 1; i1++)
+            {
+                for (int j1 = 1; j1 < col - 1; j1++)
+                {
+                    if (MAP[i1][j1] != -1 && MAP[i1][j1] != GameDefines.OBS_FIXED_ID && MAP[i1][j1] != GameDefines.OBS_MOVING_ID && MAP_FROZEN[i1][j1] == -1)
+                    {
+                        Good temp = MAP_Goods[i1][j1].GetComponent<Good>();
+
+                        if (!goodsDic.ContainsKey(temp.id))
+                        {
+                            goodsDic.Add(temp.id, new List<Good>());
+                            randomKey.Add(temp.id);
+                        }  
+                        goodsDic[temp.id].Add(temp);
+                    }
+                }
+            }
+
+            int targetId = randomKey[UnityEngine.Random.Range(0, randomKey.Count)];
+            List<Good> goods = goodsDic[targetId];
+            goods.Shuffle();
+
+            Vec2 good1Vec = goods[0].POS;
+            Vec2 good2Vec = goods[1].POS;
+
+            Eat(good1Vec, good2Vec, true);
+            drawExplore(POS[good1Vec.R][good1Vec.C], false);
+            drawExplore(POS[good2Vec.R][good2Vec.C], false);
+
+            POS1 = good1Vec;
+            POS2 = good2Vec;
+            UpdateMap(false);
+
         }
 
         //改变当前关卡方向功能

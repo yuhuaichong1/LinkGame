@@ -17,6 +17,7 @@ public static class GamePlayFacade
     public static Action RefushFunc;                      //刷新功能
     public static Action RemoveFunc;                      //移除功能
     public static Func<Good, bool> RemoveFunc2;           //移除功能2（点击后执行真正的移除）
+    public static Action RemoveFunc3;                     //移除功能3（直接随机移除一组）
     public static Func<bool> GetIfRemoveFunc;             //获取当前是否处于移除功能状态
     public static Func<EGoodMoveDic> ChangeDirection;     //方向变更功能
     public static Action<int> ChangeTipCount;             //改变提示功能数量

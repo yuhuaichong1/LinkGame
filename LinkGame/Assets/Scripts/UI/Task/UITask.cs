@@ -79,24 +79,36 @@ namespace XrCode
 
         private LoopGridViewItem ChallageTaskCallBack(LoopGridView cell, int index, int row, int column)
         {
-            LoopGridViewItem item = mChallengeScroll.NewListViewItem("ChallengeTaskItem");
-            Task task = ChallageTasks[index];
-            TaskItemData dataMono = item.GetComponent<TaskItemData>();
-            dataMono.SetProgress(GamePlayFacade.GetCurLevel() - 1, task.Target);
-            dataMono.SetMsg(task.Content, task.Id, task.Type);
+            try 
+            {
+                LoopGridViewItem item = mChallengeScroll.NewListViewItem("ChallengeTaskItem");
+                Debug.LogError("一般Id是：" + index + "  " + ChallageTasks.Count);
+                Task task = ChallageTasks[index];
+                TaskItemData dataMono = item.GetComponent<TaskItemData>();
+                dataMono.SetProgress(GamePlayFacade.GetCurLevel() - 1, task.Target);
+                dataMono.SetMsg(task.Content, task.Id, task.Type);
 
-            return item;
+                return item;
+            }
+            catch 
+            {
+                Debug.LogError("错误的Id是：" + index);
+                return null;
+            }
         }
 
         private void RefreshDailyTask()
         {
-            DailyTasks = FacadeTask.GetDailyTask();   
+            DailyTasks = FacadeTask.GetDailyTask();
+            mDailyScroll.SetListItemCount(DailyTasks.Count);
             mDailyScroll.RefreshAllShownItem();
+            
         }
 
         private void RefreshChallageTask()
         {
             ChallageTasks = FacadeTask.GetChallageTask();
+            mChallengeScroll.SetListItemCount(ChallageTasks.Count);
             mChallengeScroll.RefreshAllShownItem();
         }
 
