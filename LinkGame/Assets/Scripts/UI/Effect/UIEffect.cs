@@ -208,7 +208,7 @@ namespace XrCode
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
             int diff = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(GamePlayFacade.GetCurWLevel()).Level - GamePlayFacade.GetCurLevel();
-            mLevelTargetText.text = diff ==0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff);
+            mLevelTargetText.text = diff ==0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff + 1);
             mLevelTarget.localScale = Vector3.one;
             mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 
