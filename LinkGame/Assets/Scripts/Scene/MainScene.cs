@@ -8,10 +8,22 @@
         protected override void OnLoad()
         {
             //UIManager.Instance.OpenAsync<UIMainCity>(EUIType.EUIMainCity);
-            UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, (BaseUI) =>
+            if (Game.Instance.IsAb)
             {
-                
-            });
+                UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, (BaseUI) =>
+                {
+
+                });
+            }
+            else
+            {
+
+                UIManager.Instance.OpenAsync<UIGamePlayBy>(EUIType.EUIGamePlayBy, (BaseUI) =>
+                {
+
+                });
+            }
+
         }
 
         protected override void OnUpdate()

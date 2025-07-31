@@ -164,8 +164,15 @@ namespace XrCode
             check_id = new ArrayList();
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
-
-            LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+            if (Game.Instance.IsAb)
+            {
+                LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+            }
+            else
+            {
+                LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
+            }
+        
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
