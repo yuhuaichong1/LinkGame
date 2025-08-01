@@ -1,12 +1,11 @@
 using cfg;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem;
-using Random = UnityEngine.Random;
+
 
 namespace XrCode
 {
@@ -105,7 +104,6 @@ namespace XrCode
         private string shakingSourceKey = null;
 
         private bool ifContinue;//是否继续关卡进度
-        private float _lastPCT = -1f;
 
         protected override void OnLoad()
         {
@@ -169,9 +167,10 @@ namespace XrCode
             check_id = new ArrayList();
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
+
             LevelDefines.maxLevel = Game.Instance.IsAb
-             ? ConfigModule.Instance.Tables.TBLevel.DataList.Count
-             : ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
+      ? ConfigModule.Instance.Tables.TBLevel.DataList.Count
+      : ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -225,6 +224,8 @@ namespace XrCode
             ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
             randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
 
+            totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
+            //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
         }
 
         /// <summary>
@@ -265,8 +266,8 @@ namespace XrCode
         private void CreateLevel()
         {
             passTime = 0;
-            totalGood = 0;
-            remainGood = 0;
+            //totalGood = 0;
+            //remainGood = 0;
 
             curLevelData = new LevelData(curLevel);
             row = curLevelData.LevelXCount;
@@ -288,6 +289,8 @@ namespace XrCode
             if (ifContinue)
             {
                 _contiuneMap();
+
+                remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
             }
             else
             {
@@ -591,7 +594,8 @@ namespace XrCode
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
             MAP_Goods[row][col] = obj;
 
-            totalGood += 1;
+            if (!ifContinue)
+                totalGood += 1;
         }
 
         //得到场景中的某物体上的Good类
@@ -1719,9 +1723,9 @@ namespace XrCode
             {
                 Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
             }
-
-            EatCountAddAndCallback();
             GamePlayFacade.GetRemainPCTBack?.Invoke();
+            EatCountAddAndCallback();
+
             //特效部分
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood1.transform, GamePlayFacade.GetFlyMoneyTarget());
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
@@ -1819,6 +1823,8 @@ namespace XrCode
                 ifContinue = false;
                 SPlayerPrefs.SetBool(PlayerPrefDefines.ifContinue, false);
                 randomGoodIcon.Clear();
+                SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, 0);
+                totalGood = 0;
                 //logicLevel.collectReward();
 
                 if (curLevel == LevelDefines.maxLevel)
@@ -3463,8 +3469,7 @@ namespace XrCode
         {
             float temp = (1 - 1f * remainGood / totalGood) * 100;
             string temp2 = temp.ToString("F2");
-            float currentPCT = float.Parse(temp2);
-            return currentPCT;
+            return float.Parse(temp2);
         }
 
         private void LoadMaps()
@@ -3501,25 +3506,33 @@ namespace XrCode
         //保存当前关卡样式
         private void SaveMaps()
         {
-            List<string> mapDataList = new List<string>();
-            List<string> frozenmapDataList = new List<string>();
-            for (int i1 = 1; i1 < row - 1; i1++)
+            STimerManager.Instance.CreateSDelay(0, () =>
             {
-                for (int j1 = 1; j1 < col - 1; j1++)
+                List<string> mapDataList = new List<string>();
+                List<string> frozenmapDataList = new List<string>();
+                for (int i1 = 1; i1 < row - 1; i1++)
                 {
-                    if (MAP[i1][j1] != -1)
+                    for (int j1 = 1; j1 < col - 1; j1++)
                     {
-                        mapDataList.Add($"{i1}_{j1}_{MAP[i1][j1]}");
-                    }
-                    if (MAP_FROZEN[i1][j1] != -1)
-                    {
-                        frozenmapDataList.Add($"{i1}_{j1}_{MAP_FROZEN[i1][j1]}");
+                        if (MAP[i1][j1] != -1)
+                        {
+                            mapDataList.Add($"{i1}_{j1}_{MAP[i1][j1]}");
+                        }
+                        if (MAP_FROZEN[i1][j1] != -1)
+                        {
+                            frozenmapDataList.Add($"{i1}_{j1}_{MAP_FROZEN[i1][j1]}");
+                        }
                     }
                 }
-            }
 
-            SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
-            SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
+                SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
+                SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
+
+                Debug.LogError("totalGood  " + totalGood);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, totalGood);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
+            });
+
         }
 
         #endregion

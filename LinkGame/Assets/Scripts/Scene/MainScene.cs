@@ -9,21 +9,9 @@
         {
             //UIManager.Instance.OpenAsync<UIMainCity>(EUIType.EUIMainCity);
             if (Game.Instance.IsAb)
-            {
-                UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, (BaseUI) =>
-                {
-
-                });
-            }
+                UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, _ => { });
             else
-            {
-
-                UIManager.Instance.OpenAsync<UIGamePlayBy>(EUIType.EUIGamePlayBy, (BaseUI) =>
-                {
-
-                });
-            }
-
+                UIManager.Instance.OpenAsync<UIGamePlayBy>(EUIType.EUIGamePlayBy, _ => { });
         }
 
         protected override void OnUpdate()
