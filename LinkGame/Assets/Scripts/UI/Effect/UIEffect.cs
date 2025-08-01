@@ -57,6 +57,7 @@ namespace XrCode
                 {EFuncType.Tip, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncHint_IconPath)},
                 {EFuncType.Refush, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncRefresh_IconPath)},
                 {EFuncType.Shift, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncShift_IconPath)},
+                {EFuncType.Remove, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncRemove_IconPath)}
             };
 
             List<PayItem> temp = FacadePayType.GetPayItems();

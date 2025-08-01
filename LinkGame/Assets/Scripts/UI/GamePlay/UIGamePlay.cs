@@ -354,6 +354,7 @@ namespace XrCode
                     return mTipFuncIcon.transform;
                 case EFuncType.Refush:
                     return mRefushFuncIcon.transform;
+                case EFuncType.Remove:
                 case EFuncType.Shift:
                     return mRemoveFuncIcon.transform;
                 default:

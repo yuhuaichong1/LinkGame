@@ -121,7 +121,7 @@ namespace XrCode
                             case EFuncType.Refush:
                                 GamePlayFacade.ChangeRefushCountShow.Invoke();
                                 break;
-                            case EFuncType.Shift:
+                            case EFuncType.Remove:
                                 GamePlayFacade.ChangeRemoveCountShow?.Invoke();
                                 break;
                         }
@@ -137,7 +137,7 @@ namespace XrCode
                         case EFuncType.Refush:
                             GamePlayFacade.ChangeRefushCount(addFunc);
                             break;
-                        case EFuncType.Shift:
+                        case EFuncType.Remove:
                             GamePlayFacade.ChangeRemoveCount(addFunc);
                             break;
                     }
