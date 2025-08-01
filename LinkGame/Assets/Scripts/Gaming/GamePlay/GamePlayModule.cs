@@ -3498,7 +3498,7 @@ namespace XrCode
         //保存当前关卡样式
         private void SaveMaps()
         {
-            STimerManager.Instance.CreateSDelay(0, () => 
+            STimerManager.Instance.CreateSDelay(GoodDefine.moveTime, () => 
             {
                 List<string> mapDataList = new List<string>();
                 List<string> frozenmapDataList = new List<string>();
@@ -3520,7 +3520,6 @@ namespace XrCode
                 SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
                 SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
 
-                Debug.LogError("totalGood  " + totalGood);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, totalGood);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
