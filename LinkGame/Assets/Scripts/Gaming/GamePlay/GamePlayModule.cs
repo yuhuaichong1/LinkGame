@@ -221,7 +221,9 @@ namespace XrCode
 
             ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
             randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
-            
+
+            totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
+            //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
         }
 
         /// <summary>
@@ -262,8 +264,8 @@ namespace XrCode
         private void CreateLevel()
         {
             passTime = 0;
-            totalGood = 0;
-            remainGood = 0;
+            //totalGood = 0;
+            //remainGood = 0;
 
             curLevelData = new LevelData(curLevel);
             row = curLevelData.LevelXCount;
@@ -285,6 +287,8 @@ namespace XrCode
             if(ifContinue)
             {
                 _contiuneMap();
+
+                remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
             }
             else
             {
@@ -588,7 +592,8 @@ namespace XrCode
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
             MAP_Goods[row][col] = obj;
 
-            totalGood += 1;
+            if(!ifContinue)
+                totalGood += 1;
         }
 
         //得到场景中的某物体上的Good类
@@ -1816,6 +1821,8 @@ namespace XrCode
                 ifContinue = false;
                 SPlayerPrefs.SetBool(PlayerPrefDefines.ifContinue, false);
                 randomGoodIcon.Clear();
+                SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, 0);
+                totalGood = 0;
                 //logicLevel.collectReward();
 
                 if (curLevel == LevelDefines.maxLevel)
@@ -3512,6 +3519,10 @@ namespace XrCode
 
                 SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
                 SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
+
+                Debug.LogError("totalGood  " + totalGood);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, totalGood);
+                SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
             
         }

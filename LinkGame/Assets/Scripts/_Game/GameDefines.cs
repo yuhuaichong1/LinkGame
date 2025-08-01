@@ -294,4 +294,23 @@ public enum ELevelType : int
     Fixed,
 }
 
+//广告类型
+public enum EAdtype
+{
+    Reward,//激励
+    Interstitial,//插屏
+    Banner,//横幅
+}
+
+//广告来源
+public enum EAdSource 
+{
+    Awesome,//中途额外奖励界面
+    ChallengeSuccessful,//关卡结算界面
+    Congratfulations,//任务领取界面
+    FuncPopup_Hint,//获取提示道具界面
+    FuncPopup_Refresh,//获取刷新道具界面
+    FuncPopup_Remove,//获取移除道具界面
+}
+
 #endregion
