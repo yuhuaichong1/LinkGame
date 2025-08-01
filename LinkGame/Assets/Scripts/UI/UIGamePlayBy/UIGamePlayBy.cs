@@ -62,7 +62,7 @@ namespace XrCode
             float screenScale = Screen.width * 1f / Screen.height;
             mapScale = -3.3507f * screenScale + 2.8858f;
 
-            lastLevelId = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+            lastLevelId = ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
             secondLastLevelId = lastLevelId - 1;
             sliderDic = new Dictionary<int, float>()
             {
@@ -83,15 +83,13 @@ namespace XrCode
         }
         protected override void OnEnable()
         {
-            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel());
+            ConfLevelAct level = ConfigModule.Instance.Tables.TBLevelAct.Get(GamePlayFacade.GetCurLevel());
             float sizeScale = mapScale * level.SizeExtra;
             mMap.localScale = new Vector3(sizeScale, sizeScale, sizeScale);
 
             curLevel = GamePlayFacade.GetCurLevel();
 
             GamePlayFacade.CreateLevel?.Invoke();
-
-            //SetTipInfo();
 
             if (GamePlayFacade.GetIsTutorial())
             {
@@ -160,56 +158,7 @@ namespace XrCode
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
         }
-        //设置当前关卡的可显示信息
-        private void SetTipInfo()
-        {
-            //箭头图片
-            int MoveDicId = ConfigModule.Instance.Tables.TBLevel.Get(curLevel).MoveDic;
-            ifDicEffectShow = MoveDicId != 0;
-            if (ifDicEffectShow)
-            {
-                string MDPath = ConfigModule.Instance.Tables.TBLevelDicIcon.GetOrDefault(MoveDicId).Path;
-                curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(MDPath);
-                mCurDir.sprite = curLevelDicIcon;
-            }
-
-            //关卡进度物体显示
-            //兑现所有的目标关卡提示
-            int[] levels;
-            if (curLevel == 1 || curLevel == 2)//前2关
-            {
-                int fsTLevel = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(3).Level;
-                levels = new int[5] { 1, 2, 3, 4, fsTLevel };
-                mWithdrawTipText.text = LanguageModule.GetText("10012");
-            }
-            else if (curLevel == secondLastLevelId || curLevel == lastLevelId)//倒数2关
-            {
-                levels = new int[5] { secondLastLevelId - 3, secondLastLevelId - 2, secondLastLevelId - 1, secondLastLevelId, lastLevelId };
-            }
-            else
-            {
-                int target = GetNextTarget(curLevel);
-                levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, target };
-                if (WLevels.Contains(curLevel))
-                    mWithdrawTipText.text = LanguageModule.GetText("10012");
-                else
-                    mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
-
-            }
-            mCurLevelItem1.SetCurLevelInfo(levels[0]);
-            mCurLevelItem2.SetCurLevelInfo(levels[1]);
-            mCurLevelItem3.SetCurLevelInfo(levels[2]);
-            mCurLevelItem4.SetCurLevelInfo(levels[3]);
-            mCurLevelItem5.SetCurLevelInfo(levels[4]);
-
-            //关卡进度显示
-            if (sliderDic.ContainsKey(curLevel))
-                mSlider.value = sliderDic[curLevel];
-            else
-                mSlider.value = 0.5f;
-
-
-        }
+ 
 
 
         private void OnWithdrawalBtnClickHandle()
@@ -292,17 +241,7 @@ namespace XrCode
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
 
-                #region old(转向功能)
-                //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
-                //GamePlayFacade.ChangeRemoveCount.Invoke(-1);
-                //ChangeFuncRemoveCount();
 
-                //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
-                //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
-                //mCurDir.sprite = curLevelDicIcon;
-                //mCurDir.gameObject.SetActive(false);
-                //TMDTipShow();
-                #endregion
             }
             else
             {
@@ -510,31 +449,6 @@ namespace XrCode
 
 
         private List<int> WLevels = new List<int>();
-        private int GetNextTarget(int curLevel)
-        {
-            List<ConfWithdrawableLevels> WLevelsData = ConfigModule.Instance.Tables.TBWithdrawableLevels.DataList;
-            foreach (var item in WLevelsData)
-            {
-                int lv = item.Level;
-                WLevels.Add(lv);
-            }
 
-            int target = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
-
-            for (int i = 0; i < WLevels.Count; i++)
-            {
-                if (WLevels[i] >= curLevel)
-                {
-                    if (WLevels[i] == curLevel + 1)
-                        target = WLevels[i + 1];
-                    else
-                        target = WLevels[i];
-
-                    break;
-                }
-            }
-
-            return target;
-        }
     }
 }

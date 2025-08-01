@@ -20,10 +20,19 @@ namespace XrCode
         }
         protected override void OnEnable()
         {
-            ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
-            rewardValue = level.Reward;
-            bool ifwithdraw = level.WithdrawType == 1;
-
+             bool ifwithdraw;
+            if (Game.Instance.IsAb)
+            {
+                ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
+                rewardValue = level.Reward;
+                 ifwithdraw = level.WithdrawType == 1;
+            }
+            else
+            {
+                ConfLevelAct level = ConfigModule.Instance.Tables.TBLevelAct.Get(GamePlayFacade.GetCurLevel() - 1);
+                rewardValue = level.Reward;
+                 ifwithdraw = level.WithdrawType == 1;
+            }
             string str = FacadePayType.RegionalChange(rewardValue);
             mMoneyText.text = str;
 

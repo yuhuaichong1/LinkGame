@@ -169,15 +169,9 @@ namespace XrCode
             check_id = new ArrayList();
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
-            if (Game.Instance.IsAb)
-            {
-                LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
-            }
-            else
-            {
-                LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
-            }
-
+            LevelDefines.maxLevel = Game.Instance.IsAb
+             ? ConfigModule.Instance.Tables.TBLevel.DataList.Count
+             : ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -2590,15 +2584,21 @@ namespace XrCode
         /// </summary>
         private void NextLevel()
         {
-            if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+            // 检查当前关卡是否需要处理可撤回逻辑
+            var withdrawType = Game.Instance.IsAb
+                ? ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType
+                : ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType;
+
+            if (withdrawType == 1)
             {
-                curWLevel += 1;
+                curWLevel++;
                 withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
                 SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
             }
 
-            curLevel += 1;
+            // 关卡前进
+            curLevel++;
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
 

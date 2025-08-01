@@ -37,26 +37,16 @@ public class GuideModule : BaseModule
     private void GetData()
     {
         curStep = SPlayerPrefs.GetInt(PlayerPrefDefines.curStep);
-        if (curStep == 0) 
-        {
-            curStep = GameDefines.firstGuideId;
-        }
+        if (curStep == 0) curStep = GameDefines.firstGuideId;
         else
         {
-            int backStep = 0;
-            if (Game.Instance.IsAb)
-            {
-                 backStep = ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
-            }
-            else
-            {
-                backStep = ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep).BackStep;
-            }
+            var backStep = Game.Instance.IsAb
+                ? ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep
+                : ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep).BackStep;
             curStep = backStep != 0 ? backStep : curStep;
         }
 
         SetGuide(curStep);
-
         withdrawableUIcheck = SPlayerPrefs.GetBool(PlayerPrefDefines.withdrawableUIcheck);
     }
 
@@ -101,7 +91,6 @@ public class GuideModule : BaseModule
             curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
             curGuideItems.extra = guideData.Extra;
         }
-
     }
 
     /// <summary>
@@ -211,12 +200,15 @@ public class GuideModule : BaseModule
     /// <returns>引导是否结束</returns>
     private bool CheckGuideEnd()
     {
-        bool temp = ConfigModule.Instance.Tables.TBGuides.Get(curStep).NextStep == 0;
-        if (temp)
+        var nextStep = Game.Instance.IsAb
+               ? ConfigModule.Instance.Tables.TBGuides.Get(curStep)?.NextStep ?? 0
+               : ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep)?.NextStep ?? 0;
+        var isEnd = nextStep == 0;
+        if (isEnd)
         {
             D.Error("Guide End");
             GamePlayFacade.SetIsTutorial(false);
         }
-        return temp;
+        return isEnd;
     }
 }
