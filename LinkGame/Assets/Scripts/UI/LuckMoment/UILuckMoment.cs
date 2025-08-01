@@ -59,7 +59,7 @@ namespace XrCode
                 wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
                 wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
 
-                proDic.Add(LM.Probability, LM.Sn);
+                proDic.Add(LM.Sn, LM.Probability);
             }
 
             preRewardId = -1;

@@ -12,22 +12,23 @@ public static class GetProbability
     /// <typeparam name="T">对应值的类型 </typeparam>
     /// <param name="pros">字典数据（权重<==>对应值）</param>
     /// <returns>对应值</returns>
-    public static T GatValue<T>(Dictionary<int, T> pros)
+    public static T GatValue<T>(Dictionary<T, int> pros)
     {
-        List<int> values = pros.Keys.ToList();
         int total = 0;
-        foreach (int item in values)
+        foreach (var pair in pros)
         {
-            total += item;
+            total += pair.Value;
         }
+
         int random = UnityEngine.Random.Range(0, total);
-        int currentSum = 0;
-        foreach (int key in values)
+        
+        int current = 0;
+        foreach (var pair in pros)
         {
-            currentSum += key;
-            if (currentSum > random)
+            current += pair.Value;
+            if (random < current)
             {
-                return pros[key];
+                return pair.Key;
             }
         }
 
