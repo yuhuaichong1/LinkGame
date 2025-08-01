@@ -38,6 +38,7 @@ namespace cfg
 		public TBWithdrawableLevels TBWithdrawableLevels {get; private set;}
 		public TBObstacleIcon TBObstacleIcon {get; private set;}
 		public TBLevelAct TBLevelAct {get; private set;}
+		public TBGuidesAct TBGuidesAct {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -87,6 +88,8 @@ namespace cfg
 			tables.Add("TBObstacleIcon", TBObstacleIcon);
 			TBLevelAct = new TBLevelAct(loader("tblevelact")); 
 			tables.Add("TBLevelAct", TBLevelAct);
+			TBGuidesAct = new TBGuidesAct(loader("tbguidesact")); 
+			tables.Add("TBGuidesAct", TBGuidesAct);
 	
 			PostInit();
 			ResolveAllTable();
@@ -135,6 +138,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBObstacleIconDataFinish);
 			configNames.Enqueue("tblevelact");
             configCbFuncs.Enqueue(OnTBLevelActDataFinish);
+			configNames.Enqueue("tbguidesact");
+            configCbFuncs.Enqueue(OnTBGuidesActDataFinish);
 
             LoadAllConfig();
         }
@@ -195,6 +200,7 @@ namespace cfg
 			TBWithdrawableLevels.TranslateText(translator); 
 			TBObstacleIcon.TranslateText(translator); 
 			TBLevelAct.TranslateText(translator); 
+			TBGuidesAct.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -220,6 +226,7 @@ namespace cfg
 			TBWithdrawableLevels.Resolve(tables);
 			TBObstacleIcon.Resolve(tables);
 			TBLevelAct.Resolve(tables);
+			TBGuidesAct.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -284,6 +291,9 @@ namespace cfg
 					break;
 				case "TBLevelAct":
 					TBLevelAct.Reload(_loader("TBLevelAct"));
+					break;
+				case "TBGuidesAct":
+					TBGuidesAct.Reload(_loader("TBGuidesAct"));
 					break;
 			}
 	
@@ -393,6 +403,11 @@ namespace cfg
 		{
 			TBLevelAct = new TBLevelAct(buf);
 			tables.Add("TBLevelAct", TBLevelAct);
+		}
+		public void OnTBGuidesActDataFinish(ByteBuf buf)
+		{
+			TBGuidesAct = new TBGuidesAct(buf);
+			tables.Add("TBGuidesAct", TBGuidesAct);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

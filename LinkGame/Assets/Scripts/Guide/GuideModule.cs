@@ -55,23 +55,45 @@ public class GuideModule : BaseModule
     private void SetGuide(int step)
     {
         curStep = step;
+        if (Game.Instance.IsAb)
+        {
+            ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
+            curGuideItems.step = step;
+            curGuideItems.nextStep = guideData.NextStep;
+            curGuideItems.note = guideData.Notes;
+            curGuideItems.backStep = guideData.BackStep;
+            curGuideItems.ifBackPlay = guideData.IfBackPlay;
+            curGuideItems.ifNextStep = guideData.IfNextStep;
+            curGuideItems.ifNextPlay = guideData.IfNextPlay;
+            curGuideItems.autohiddenTime = guideData.AutohiddenTime;
+            curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId.ToString());
+            curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
+            curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
+            curGuideItems.ifMask = guideData.IfMask;
+            curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
+            curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
+            curGuideItems.extra = guideData.Extra;
+        }
+        else
+        {
+            ConfGuidesAct guideData = ConfigModule.Instance.Tables.TBGuidesAct.Get(step);
+            curGuideItems.step = step;
+            curGuideItems.nextStep = guideData.NextStep;
+            curGuideItems.note = guideData.Notes;
+            curGuideItems.backStep = guideData.BackStep;
+            curGuideItems.ifBackPlay = guideData.IfBackPlay;
+            curGuideItems.ifNextStep = guideData.IfNextStep;
+            curGuideItems.ifNextPlay = guideData.IfNextPlay;
+            curGuideItems.autohiddenTime = guideData.AutohiddenTime;
+            curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId.ToString());
+            curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
+            curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
+            curGuideItems.ifMask = guideData.IfMask;
+            curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
+            curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
+            curGuideItems.extra = guideData.Extra;
+        }
 
-        ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
-        curGuideItems.step = step;
-        curGuideItems.nextStep = guideData.NextStep;
-        curGuideItems.note = guideData.Notes;
-        curGuideItems.backStep = guideData.BackStep;
-        curGuideItems.ifBackPlay = guideData.IfBackPlay;
-        curGuideItems.ifNextStep = guideData.IfNextStep;
-        curGuideItems.ifNextPlay = guideData.IfNextPlay;
-        curGuideItems.autohiddenTime = guideData.AutohiddenTime;
-        curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId.ToString());
-        curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
-        curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
-        curGuideItems.ifMask = guideData.IfMask;
-        curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
-        curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
-        curGuideItems.extra = guideData.Extra;
     }
 
     /// <summary>
