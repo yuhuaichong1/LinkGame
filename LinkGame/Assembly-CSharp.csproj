@@ -64,9 +64,11 @@
     <Compile Include="Assets\Scripts\GameSDK\EdirotSDK\EditorSDK.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BclHelpers.cs" />
     <Compile Include="Assets\Scripts\UI\Awesome\UIAwesome.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\IInterstitialAdLoadListener.cs" />
     <Compile Include="Assets\Scripts\GameSDK\SDKBase.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoSwipe.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\CompiledSerializer.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\IRewardAdLoadListener.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\NetObjectSerializer.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializer.cs" />
     <Compile Include="Assets\Scripts\UI\Guide\UIGuide.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\BallRunPlayer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Gen\Code\TBLuckMoment.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\KwaiRequest.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BufferExtension.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoBehaviorExtensionElement.cs" />
     <Compile Include="Assets\Scripts\UI\Base\BaseUI.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Assets\Scripts\Notify\MiniJsonTool.cs" />
     <Compile Include="Assets\Gen\Code\TBLoadingTitleSprite.cs" />
     <Compile Include="Assets\Scripts\Facade\PlayerFacade.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\IAdListener.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\Ball.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IGame.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\ValueMember.cs" />
@@ -106,6 +110,7 @@
     <Compile Include="Assets\Scripts\TimeZone\TimeZoneModule.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\AssetBundleResourceLoader.cs" />
     <Compile Include="Assets\Tools\ListShuffle\ListShuffle.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Constants.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Behaviours\UIPanelBehaviour.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Compiler\Local.cs" />
     <Compile Include="Assets\Scripts\Scene\LoadingProgressController.cs" />
@@ -128,6 +133,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\LoadLevelScript.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DateTimeSerializer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\ControlEventInput\ControlUIEvent.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\IClientBidding.cs" />
     <Compile Include="Assets\Gen\Code\ConfLevelDicIcon.cs" />
     <Compile Include="Assets\Gen\Code\TbUIRes.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwistMe.cs" />
@@ -149,10 +155,12 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\FieldDecorator.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IComponent.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectPool.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\KwaiRewardAdController.cs" />
     <Compile Include="Assets\Scripts\_Game\GameDefines.cs" />
     <Compile Include="Assets\Scripts\Notify\Notification.cs" />
     <Compile Include="Assets\Gen\Code\TBTask.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int32Serializer.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\IClientFactory.cs" />
     <Compile Include="Assets\Tools\LubanLib\ByteBuf.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeTask.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoTapMe.cs" />
@@ -168,6 +176,7 @@
     <Compile Include="Assets\Tools\SafeArea\SUISafeArea.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeGuide.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCInput.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\IKwaiAdController.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeEffect.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\PinchMe.cs" />
     <Compile Include="Assets\Gen\Code\ConfTask.cs" />
@@ -177,6 +186,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\EnumSerializer.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioModule.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\LongTapMe.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\KwaiRewardAdRequest.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleConfig.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TagDecorator.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILoad.cs" />
@@ -187,6 +197,7 @@
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleMod.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\TwoFingerGesture.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Components\DragEventListener.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\IRewardAdController.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\SerializationContext.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UIChallengeSuccessful.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCAxis.cs" />
@@ -216,6 +227,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\Scripts\NetWork\NetModule.cs" />
     <Compile Include="Assets\Gen\Code\TBLevelDicIcon.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\KwaiSdkClient.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\GridView\LoopGridView.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\UITemplate\UIWithdrawableMultiple_Temp.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\DragMe.cs" />
@@ -254,6 +266,7 @@
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UITemplate\UIChallengeSuccessful_Temp.cs" />
     <Compile Include="Assets\Scripts\Tools\SqlLite\SqLiteHelper.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadePayType.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\KwaiAdSDKInit.cs" />
     <Compile Include="Assets\Scripts\Reward\GetMoneyTipItem.cs" />
     <Compile Include="Assets\Scripts\Task\Task.cs" />
     <Compile Include="Assets\Scripts\UI\Popup\UITemplate\UIPopup_Temp.cs" />
@@ -283,9 +296,9 @@
     <Compile Include="Assets\Scripts\UI\Rate\UITemplate\UIRate_Temp.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\UIRibbonRewardItem.cs" />
     <Compile Include="Assets\Gen\Code\ConfWithdrawableLevels.cs" />
-    <Compile Include="Assets\Scripts\UI\Common\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IFixedUpdate.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoEnumAttribute.cs" />
+    <Compile Include="Assets\Scripts\UI\Common\LoadingView.cs" />
     <Compile Include="Assets\Tools\Timer\Data\STimerState.cs" />
     <Compile Include="Assets\Scripts\Facade\GamePlayFacade.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\LinkPath.cs" />
@@ -293,6 +306,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\PrefixStyle.cs" />
     <Compile Include="Assets\Gen\Code\TBUserLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Compiler\CompilerContext.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\AndroidPlatformTool.cs" />
     <Compile Include="Assets\Scripts\Notify\NotifyDefine.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TooglePickMethodUI.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\AdvancedExamples\AutoSelect\MultiLayerUI.cs" />
@@ -313,6 +327,7 @@
     <Compile Include="Assets\Tools\LubanLib\ByteBufExtensions.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RTSExample\RTSCamera.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\GridView\LoopGridItemPool.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\AndroidClientFactory.cs" />
     <Compile Include="Assets\Scripts\_Game\Game.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\CallbackAttributes.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\KeyValuePairDecorator.cs" />
@@ -333,13 +348,16 @@
     <Compile Include="Assets\Scripts\UI\UserLevel\UIUserLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ByteSerializer.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\ListView\LoopListItemPool.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\KwaiAdsSdk.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ImmutableCollectionDecorator.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoTouchMe.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCSingleton.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TupleSerializer.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\GuidSerializer.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\ISDK.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TypeSerializer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\EasyTouch.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\IRewardAdListener.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UITwistPinch\UITwist.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\FPSExample\ImpactEffect.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\Component\EasyTouchTrigger.cs" />
@@ -373,6 +391,7 @@
     <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenController.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int64Serializer.cs" />
     <Compile Include="Assets\Scripts\UI\LuckMoment\LuckMomentItem.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\IInterstitialAdListener.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridView.cs" />
@@ -392,6 +411,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UITwistPinch\UIDrag.cs" />
     <Compile Include="Assets\Gen\Code\ConfPayRegion.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawalChannel\UIWithdrawalChannel.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\KwaiInterstitialAdRequest.cs" />
     <Compile Include="Assets\Gen\Code\TBPayChannel.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\LanguageText.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioDefines.cs" />
@@ -407,6 +427,8 @@
     <Compile Include="Assets\Scripts\_Game\EarthRotation.cs" />
     <Compile Include="Assets\Scripts\UI\Base\Entity.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\ArabicSupport.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\IInterstitialAdController.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\KwaiAdConfig.cs" />
     <Compile Include="Assets\Scripts\UI\Setting\UISetting.cs" />
     <Compile Include="Assets\Gen\Code\ConfLuckMoment.cs" />
     <Compile Include="Assets\Scripts\Ad\AdModule.cs" />
@@ -457,6 +479,7 @@
     <Compile Include="Assets\API\DLL\SimpleJSON.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawalChannel\UITemplate\UIWithdrawalChannel_Temp.cs" />
     <Compile Include="Assets\Tools\Timer\Data\ClickActionType.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Api\InitResultCallback.cs" />
     <Compile Include="Assets\Gen\Code\TBObstacleIcon.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\WireType.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoConverterAttribute.cs" />
@@ -464,8 +487,10 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCButton.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\Common\ClickEventListener.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableSingle\UITemplate\UIWithdrawableSingle_Temp.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\KwaiInterstitialAdController.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ComponentExtensions.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ProtoDecoratorBase.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\IAdLoadListener.cs" />
     <Compile Include="Assets\Scripts\UI\Task\UITask.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -473,6 +498,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\Spine\version.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Adjust\Native\Android\AdjustAndroidManifest.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Readme.txt" />
     <None Include="Assets\Resources\GlobalAchievementsList.txt" />
@@ -1351,20 +1377,60 @@
       <HintPath>D:\Unitty\2022.3.52f1c1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Timeline">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+    <Reference Include="Unity.EditorCoroutines.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Shared.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.EditorCoroutines.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
+    <Reference Include="Unity.VisualScripting.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Flow">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Flow.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Timeline">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
+      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
@@ -1391,40 +1457,16 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Shared.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    <Reference Include="MaxSdk.Scripts.IntegrationManager.Editor">
+      <HintPath>Library\ScriptAssemblies\MaxSdk.Scripts.IntegrationManager.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Core">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Core.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
@@ -1435,16 +1477,8 @@
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
+    <Reference Include="MaxSdk.Scripts">
+      <HintPath>Library\ScriptAssemblies\MaxSdk.Scripts.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -1453,21 +1487,29 @@
       <Project>{00592EDB-94A4-AD0C-382C-4D6B454B6851}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="spine-unity.csproj">
-      <Project>{86209CBC-6D93-7749-D626-D47E5520015D}</Project>
-      <Name>spine-unity</Name>
+    <ProjectReference Include="AdjustSdk.Editor.csproj">
+      <Project>{410B7C3F-B083-F184-BDDA-6BC8385676AE}</Project>
+      <Name>AdjustSdk.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="IngameDebugConsole.Editor.csproj">
       <Project>{FB4FA627-5CC4-F3F1-4937-78DA3802FC30}</Project>
       <Name>IngameDebugConsole.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="spine-csharp.csproj">
+      <Project>{7659278C-0751-E41E-C377-5DB7C455EB06}</Project>
+      <Name>spine-csharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity.csproj">
+      <Project>{86209CBC-6D93-7749-D626-D47E5520015D}</Project>
+      <Name>spine-unity</Name>
+    </ProjectReference>
     <ProjectReference Include="spine-unity-editor.csproj">
       <Project>{DBDEC694-1537-8708-D154-E70666B2B30B}</Project>
       <Name>spine-unity-editor</Name>
     </ProjectReference>
-    <ProjectReference Include="spine-csharp.csproj">
-      <Project>{7659278C-0751-E41E-C377-5DB7C455EB06}</Project>
-      <Name>spine-csharp</Name>
+    <ProjectReference Include="AdjustSdk.Scripts.csproj">
+      <Project>{BE897FB8-E6F4-9C84-CBA1-2F4F65EBD892}</Project>
+      <Name>AdjustSdk.Scripts</Name>
     </ProjectReference>
     <ProjectReference Include="IngameDebugConsole.Runtime.csproj">
       <Project>{0F97FBEA-2570-5503-F5B3-F12CA0815591}</Project>
