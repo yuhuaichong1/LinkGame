@@ -24,6 +24,7 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
         Type = _buf.ReadInt();
         Extra = _buf.ReadInt();
         Count = _buf.ReadFloat();
+        Probability = _buf.ReadInt();
         PostInit();
     }
 
@@ -56,6 +57,10 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
     /// 数量
     /// </summary>
     public float Count { get; protected set; }
+    /// <summary>
+    /// 概率（权重
+    /// </summary>
+    public int Probability { get; protected set; }
 
     public const int __ID__ = 1147648885;
     public override int GetTypeId() => __ID__;
@@ -77,6 +82,7 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
         Type = reloadData.Type;
         Extra = reloadData.Extra;
         Count = reloadData.Count;
+        Probability = reloadData.Probability;
     }
 
     public override string ToString()
@@ -88,6 +94,7 @@ public sealed partial class ConfLuckMoment :  Bright.Config.BeanBase
         + "Type:" + Type + ","
         + "Extra:" + Extra + ","
         + "Count:" + Count + ","
+        + "Probability:" + Probability + ","
         + "}";
     }
     

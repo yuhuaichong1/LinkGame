@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 //using ThinkingData.Analytics;
 using UnityEngine;
+using UnityEngine.Analytics;
 namespace XrCode
 {
     public class TDAnalyticsManager : BaseModule
@@ -72,5 +73,164 @@ namespace XrCode
         //    properties.Add("ex", ex);
         //    TDAnalytics.Track("ExampleKey", properties);
         //}
+
+        /// <summary>
+        /// 广告开始播放
+        /// </summary>
+        /// <param name="adtype">广告类型</param>
+        /// <param name="diasource">广告位</param>
+        /// <param name="ecpm">ecpm</param>
+        /// <param name="platform">广告平台</param>
+        public void AdStart(EAdtype adtype, EAdSource diasource, float ecpm, string platform)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("adtype", adtype.ToString());
+            properties.Add("diasource", diasource.ToString());
+            properties.Add("ecpm", ecpm);
+            properties.Add("platform", platform);
+
+            //SetUserMD();
+            //TDAnalytics.Track("LG_AdStart", properties);
+        }
+
+        /// <summary>
+        /// 广告观看失败
+        /// </summary>
+        /// <param name="adtype">广告类型</param>
+        /// <param name="diasource">广告位</param>
+        /// <param name="ecpm">ecpm</param>
+        /// <param name="platform">广告平台</param>
+        public void AdFail(EAdtype adtype, EAdSource diasource, float ecpm, string platform)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("adtype", adtype.ToString());
+            properties.Add("diasource", diasource.ToString());
+            properties.Add("ecpm", ecpm);
+            properties.Add("platform", platform);
+
+            //SetUserMD();
+            //TDAnalytics.Track("LG_AdFail", properties);
+        }
+
+        /// <summary>
+        /// 广告观看成功
+        /// </summary>
+        /// <param name="adtype">广告类型</param>
+        /// <param name="diasource">广告位</param>
+        /// <param name="ecpm">ecpm</param>
+        /// <param name="platform">广告平台</param>
+        public void AdComplete(EAdtype adtype, EAdSource diasource, float ecpm, string platform)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("adtype", adtype.ToString());
+            properties.Add("diasource", diasource.ToString());
+            properties.Add("ecpm", ecpm);
+            properties.Add("platform", platform);
+
+            //SetUserMD();
+            //TDAnalytics.Track("TGM_AdComplete", properties);
+        }
+
+        /// <summary>
+        /// 5次广告收入成功时累计收入
+        /// </summary>
+        /// <param name="accu_revenue">累计值</param>
+        public void Times_5_Ad(float accu_revenue)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("accu_revenue", accu_revenue);
+
+            //TDAnalytics.Track("LG_Times_5_Ad", properties);
+        }
+
+        /// <summary>
+        /// 10次广告收入成功时累计收入
+        /// </summary>
+        /// <param name="accu_revenue">累计值</param>
+        public void Times_10_Ad(float accu_revenue)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("accu_revenue", accu_revenue);
+
+            //TDAnalytics.Track("LG_Times_10_Ad", properties);
+        }
+
+        /// <summary>
+        /// 15次广告收入成功时累计收入
+        /// </summary>
+        /// <param name="accu_revenue">累计值</param>
+        public void Times_15_Ad(float accu_revenue)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("accu_revenue", accu_revenue);
+
+            //TDAnalytics.Track("LG_Times_15_Ad", properties);
+        }
+
+        /// <summary>
+        /// 20次广告收入成功时累计收入
+        /// </summary>
+        /// <param name="accu_revenue">累计值</param>
+        public void Times_20_Ad(float accu_revenue)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("accu_revenue", accu_revenue);
+
+            //TDAnalytics.Track("LG_Times_20_Ad", properties);
+        }
+    
+        public void RegisterFinish()
+        {
+
+        }
+
+        public void LoadingStart()
+        {
+
+        }
+
+        public void LoadFinish()
+        {
+
+        }
+
+        public void EnterMainUI()
+        {
+
+        }
+
+        public void LoginSuccess()
+        {
+
+        }
+
+        public void GuideStep(int step)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("step", step);
+
+            //TDAnalytics.Track("LG_GuideStep", properties);
+        }
+
+        public void ButtonClick(string buttonpath)
+        {
+
+        }
     }
 }

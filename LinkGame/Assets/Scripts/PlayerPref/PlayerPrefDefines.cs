@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XrCode;
+
 public abstract class PlayerPrefDefines
 {
     private static string GetKey(string baseKey)
     {
-        if (Game.Instance != null && !Game.Instance.IsAb)
-        {
-            return baseKey + "Act";
-        }
+        //if (Game.Instance != null && !Game.Instance.IsAb)
+        //{
+        //    return baseKey + "Act";
+        //}
         return baseKey;
     }
 
@@ -49,4 +50,8 @@ public abstract class PlayerPrefDefines
     public static string randomGoodIcon => GetKey("LinkGame_randomGoodIcon");          //GamePlayModule_继续游戏用，让图样随机的词典
     public static string MAP => GetKey("LinkGame_MAP");                                //场景中的所有物体的id（包含障碍物，不包含隐藏物）
     public static string MAP_FROZEN => GetKey("LinkGame_MAP_FROZEN");                  //场景中的所有物体是否为冰冻状态
+
+    public static string totalGood => GetKey("LinkGame_totalGood");                    //场景中的物体的总数
+    public static string remainGood => GetKey("LinkGame_remainGood");                  //场景中剩余物体数量
+
 }

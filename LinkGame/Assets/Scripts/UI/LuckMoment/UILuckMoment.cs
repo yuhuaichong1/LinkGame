@@ -1,6 +1,7 @@
 ﻿using cfg;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,8 @@ namespace XrCode
 
         private int preRewardId;
 
+        private Dictionary<int, int> proDic;
+
         protected override void OnAwake() 
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
@@ -41,6 +44,7 @@ namespace XrCode
             };
 
             wheelStayTime = new Dictionary<int, float>();
+            proDic = new Dictionary<int, int>();
 
             NotActivatedBg = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.LuckMomentNotActivatedBg);
             ActivatedBg = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.LuckMomentActivatedBg);
@@ -55,9 +59,12 @@ namespace XrCode
                 wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
                 wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
 
+                proDic.Add(LM.Sn, LM.Probability);
             }
 
             preRewardId = -1;
+
+            proDic = new Dictionary<int, int>();
         }
         protected override void OnEnable() 
         {
@@ -98,7 +105,7 @@ namespace XrCode
             SpinBtnActive(false);
 
             wheelStayTime.Clear();
-            int random = UnityEngine.Random.Range(0, 8);
+            int random = GetProbability.GatValue(proDic);
             int movTimes = GameDefines.Default_LM_Accelerate_Times + GameDefines.Default_LM_Uniform_Times + random + GameDefines.Default_LM_Moderate_Times - 1;
             int lastSome = movTimes - GameDefines.Default_LM_Moderate_Times - 1;
 
