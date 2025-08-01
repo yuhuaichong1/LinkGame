@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8c889182e69ab62469e8f6fe6e5b1394
+guid: 395f6ebfc0f41e143bedfa0ead4efbdc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: assets/assetbundlelocal/ui/funcicon/icon_shift.png.assetbundle
+  assetBundleName: assets/assetbundlelocal/prefabs/ui/uiloading/uiloading.prefab.assetbundle
   assetBundleVariant: 

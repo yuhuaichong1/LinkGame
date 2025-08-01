@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8c889182e69ab62469e8f6fe6e5b1394
+guid: f400c7c9a867ac8428567299fca3eaba
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -149,5 +149,5 @@ TextureImporter:
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
-  assetBundleName: assets/assetbundlelocal/ui/funcicon/icon_shift.png.assetbundle
+  assetBundleName: assets/ui/common/2.png.assetbundle
   assetBundleVariant: 

@@ -70,7 +70,7 @@ namespace XrCode
         //显示移除相关UI（现为改变方向功能)
         private void AddRemovePlane()
         {
-            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Shift_IconPath);
+            mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Remove_IconPath);
             mContent.text = LanguageModule.GetText("10056");
             AddEffect();
         }
@@ -90,7 +90,7 @@ namespace XrCode
                     eAdSource = EAdSource.FuncPopup_Refresh;
                     break;
                 case EFuncType.Shift:
-                    addFunc = GameDefines.GetFunc_Shift_Num;
+                    addFunc = GameDefines.GetFunc_Remove_Num;
                     eAdSource = EAdSource.FuncPopup_Remove;
                     break;
             }

@@ -41,14 +41,15 @@ public abstract class GameDefines
     public const ELanguageType Default_Language = ELanguageType.English;                                    //默认语言
     public const int Default_NANP = 1;                                                                      //默认国际长途电话区号
 
-    public const string Func_Hint_IconPath = "UI/FuncIcon/FuncIcon_Hint.png";                               //下三功能“提示”图片                        （*）
-    public const string Func_Refush_IconPath = "UI/FuncIcon/FuncIcon_Refush.png";                           //下三功能“刷新”图片                        （*）
-    public const string Func_Remove_IconPath = "UI/FuncIcon/FuncIcon_Remove.png";                           //下三功能“移除”图片                        （*）
-    public const string Func_Shift_IconPath = "UI/FuncIcon/FuncIcon_Shift.png";                             //下三功能“换向”图片                        （*）
+    public const string Func_Hint_IconPath = "UI/FuncIcon/icon_hint.png";                                   //下三功能“提示”图片                        （*）
+    public const string Func_Refush_IconPath = "UI/FuncIcon/icon_re.png";                                   //下三功能“刷新”图片                        （*）
+    public const string Func_Remove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                              //下三功能“移除”图片                        （*）
+    public const string Func_Shift_IconPath = "UI/FuncIcon/icon_shift.png";                                 //下三功能“换向”图片                        （*）
 
     public const int GetFunc_Hint_Num = 3;                                                                  //能获取的“提示”功能的数量
-    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“提示”功能的数量
-    public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“提示”功能的数量
+    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“刷新”功能的数量
+    public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“转向”功能的数量
+    public const int GetFunc_Remove_Num = 2;                                                                //能获取的“移除”功能的数量
     public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(1, 10);                                      //获取功能时额外获取的金钱的数量
 
     public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";                              //老虎机未激活块背景路径

@@ -297,7 +297,7 @@ namespace XrCode
             }
             else
             {
-                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Shift);
+                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Remove);
             }
         }
         //中心按钮被点击
