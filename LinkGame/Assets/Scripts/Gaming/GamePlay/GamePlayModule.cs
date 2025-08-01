@@ -3491,25 +3491,29 @@ namespace XrCode
         //保存当前关卡样式
         private void SaveMaps()
         {
-            List<string> mapDataList = new List<string>();
-            List<string> frozenmapDataList = new List<string>();
-            for (int i1 = 1; i1 < row - 1; i1++)
+            STimerManager.Instance.CreateSDelay(0, () => 
             {
-                for (int j1 = 1; j1 < col - 1; j1++)
+                List<string> mapDataList = new List<string>();
+                List<string> frozenmapDataList = new List<string>();
+                for (int i1 = 1; i1 < row - 1; i1++)
                 {
-                    if (MAP[i1][j1] != -1)
+                    for (int j1 = 1; j1 < col - 1; j1++)
                     {
-                        mapDataList.Add($"{i1}_{j1}_{MAP[i1][j1]}");
-                    }
-                    if(MAP_FROZEN[i1][j1] != -1)
-                    {
-                        frozenmapDataList.Add($"{i1}_{j1}_{MAP_FROZEN[i1][j1]}");
+                        if (MAP[i1][j1] != -1)
+                        {
+                            mapDataList.Add($"{i1}_{j1}_{MAP[i1][j1]}");
+                        }
+                        if (MAP_FROZEN[i1][j1] != -1)
+                        {
+                            frozenmapDataList.Add($"{i1}_{j1}_{MAP_FROZEN[i1][j1]}");
+                        }
                     }
                 }
-            }
 
-            SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
-            SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
+                SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
+                SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
+            });
+            
         }
 
         #endregion
