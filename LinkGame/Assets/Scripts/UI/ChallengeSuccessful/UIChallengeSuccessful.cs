@@ -55,7 +55,7 @@ namespace XrCode
 
         private void OnClaimBtnClickHandle()
         {
-            FacadeAd.PlayRewardAd(() =>
+            FacadeAd.PlayRewardAd(EAdSource.ChallengeSuccessful,() =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
                 UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);

@@ -9,7 +9,7 @@ namespace XrCode
             FacadeAd.PlayRewardAd += PlayRewardAd;
         }
 
-        public void PlayRewardAd(Action successAction, Action<string> failAction = null)
+        public void PlayRewardAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
             successAction?.Invoke();
         }

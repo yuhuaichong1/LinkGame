@@ -9,6 +9,7 @@ namespace XrCode
     {
         private LanguageModule LanguageModule;
         private EFuncType eFuncType;
+        private EAdSource eAdSource;
         private Action btnAction;
 
         protected override void OnAwake() 
@@ -82,16 +83,19 @@ namespace XrCode
             {
                 case EFuncType.Tip:
                     addFunc = GameDefines.GetFunc_Hint_Num;
+                    eAdSource = EAdSource.FuncPopup_Hint;
                     break;
                 case EFuncType.Refush:
                     addFunc = GameDefines.GetFunc_Refresh_Num;
+                    eAdSource = EAdSource.FuncPopup_Refresh;
                     break;
                 case EFuncType.Shift:
                     addFunc = GameDefines.GetFunc_Shift_Num;
+                    eAdSource = EAdSource.FuncPopup_Remove;
                     break;
             }
             btnAction = () => {
-                FacadeAd.PlayRewardAd(() =>
+                FacadeAd.PlayRewardAd(eAdSource, () =>
                 {
                     FacadeEffect.PlayRewardEffect(new List<RewardItem>
                     {

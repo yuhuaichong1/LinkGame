@@ -33,7 +33,7 @@ namespace XrCode
 
             ShowAnim(mPlane);
         }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);        }	    private void OnClaimBtnClickHandle()        {
-            FacadeAd.PlayRewardAd(() =>
+            FacadeAd.PlayRewardAd(EAdSource.Congratulations, () =>
             {
                 PlayerFacade.AddWMoney(awesomeMoney);
                 FacadeEffect.PlayRewardEffect(new List<RewardItem>()

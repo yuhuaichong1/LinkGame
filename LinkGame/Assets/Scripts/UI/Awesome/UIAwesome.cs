@@ -29,7 +29,7 @@ namespace XrCode
 
             ShowAnim(mPlane);
         }
-        	    private void OnClaimBtnClickHandle()        {            FacadeAd.PlayRewardAd(() =>             {
+        	    private void OnClaimBtnClickHandle()        {            FacadeAd.PlayRewardAd(EAdSource.Awesome ,() =>             {
                 PlayerFacade.AddWMoney(awesomeMoney);
                 FacadeEffect.PlayRewardEffect(new List<RewardItem>() 
                 { 
