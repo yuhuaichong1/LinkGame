@@ -1457,6 +1457,10 @@
       <Project>{86209CBC-6D93-7749-D626-D47E5520015D}</Project>
       <Name>spine-unity</Name>
     </ProjectReference>
+    <ProjectReference Include="IngameDebugConsole.Editor.csproj">
+      <Project>{FB4FA627-5CC4-F3F1-4937-78DA3802FC30}</Project>
+      <Name>IngameDebugConsole.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="spine-unity-editor.csproj">
       <Project>{DBDEC694-1537-8708-D154-E70666B2B30B}</Project>
       <Name>spine-unity-editor</Name>
@@ -1464,6 +1468,10 @@
     <ProjectReference Include="spine-csharp.csproj">
       <Project>{7659278C-0751-E41E-C377-5DB7C455EB06}</Project>
       <Name>spine-csharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="IngameDebugConsole.Runtime.csproj">
+      <Project>{0F97FBEA-2570-5503-F5B3-F12CA0815591}</Project>
+      <Name>IngameDebugConsole.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

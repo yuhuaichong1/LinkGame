@@ -35,4 +35,10 @@ public abstract class PlayerPrefDefines
 
     public const string curStep = "LinkGame_curStep";                        //GuideModule_当前引导步骤
     public const string withdrawableUIcheck = "LinkGame_withdrawableUIcheck";//GuideModule_兑现相关界面仅执行一次
+
+    public const string ifContinue = "LinkGame_ifContinue";                  //GamePlayModule_是否继续游戏
+    public const string randomGoodIcon = "LinkGame_randomGoodIcon";          //GamePlayModule_继续游戏用，让图样随机的词典
+    public const string MAP = "LinkGame_MAP";                                //场景中的所有物体的id（包含障碍物，不包含隐藏物）
+    public const string MAP_FROZEN = "LinkGame_MAP_FROZEN";                  //场景中的所有物体是否为冰冻状态
+
 }

@@ -32,6 +32,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         WithdrawType = _buf.ReadInt();
         Reward = _buf.ReadFloat();
         SizeExtra = _buf.ReadFloat();
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Assistgood = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     Assistgood.Add(_k0, _v0);}}
         PostInit();
     }
 
@@ -96,6 +97,10 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 关卡缩放补正
     /// </summary>
     public float SizeExtra { get; protected set; }
+    /// <summary>
+    /// 工具物体的位置和种类
+    /// </summary>
+    public System.Collections.Generic.Dictionary<string, int> Assistgood { get; protected set; }
 
     public const int __ID__ = 1172697760;
     public override int GetTypeId() => __ID__;
@@ -147,6 +152,29 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         WithdrawType = reloadData.WithdrawType;
         Reward = reloadData.Reward;
         SizeExtra = reloadData.SizeExtra;
+        if(Assistgood==null)
+        {
+            Assistgood = reloadData.Assistgood;
+        }else
+        {
+            foreach (var rawDataKey in Assistgood.Keys.ToList())
+            {
+                if(!reloadData.Assistgood.ContainsKey(rawDataKey))
+                {
+                    Assistgood.Remove(rawDataKey);
+                }
+            }
+            foreach (var reload in reloadData.Assistgood)
+            {
+                if(Assistgood.ContainsKey(reload.Key))
+                {
+                    Assistgood[reload.Key] = reload.Value;
+                }else
+                {
+                    Assistgood.Add(reload.Key,reload.Value);
+                }
+            }
+        }
     }
 
     public override string ToString()
@@ -166,6 +194,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         + "WithdrawType:" + WithdrawType + ","
         + "Reward:" + Reward + ","
         + "SizeExtra:" + SizeExtra + ","
+        + "Assistgood:" + Bright.Common.StringUtil.CollectionToString(Assistgood) + ","
         + "}";
     }
     
