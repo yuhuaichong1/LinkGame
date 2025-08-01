@@ -49,7 +49,15 @@ namespace XrCode
         	    private void OnWithdrawBtnClickHandle()
         {
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-            UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+            if (Game.Instance.IsAb)
+            {
+                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+            }
+            else
+            {
+                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
+            }
+        
             PlayerFacade.AddWMoney(adRewardValue);
         }
 

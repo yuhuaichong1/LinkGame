@@ -43,7 +43,15 @@ public class GuideModule : BaseModule
         }
         else
         {
-            int backStep = ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
+            int backStep = 0;
+            if (Game.Instance.IsAb)
+            {
+                 backStep = ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
+            }
+            else
+            {
+                backStep = ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep).BackStep;
+            }
             curStep = backStep != 0 ? backStep : curStep;
         }
 
@@ -58,6 +66,7 @@ public class GuideModule : BaseModule
         if (Game.Instance.IsAb)
         {
             ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
+            Debug.LogError("当前部署:" + step);
             curGuideItems.step = step;
             curGuideItems.nextStep = guideData.NextStep;
             curGuideItems.note = guideData.Notes;
@@ -77,6 +86,7 @@ public class GuideModule : BaseModule
         else
         {
             ConfGuidesAct guideData = ConfigModule.Instance.Tables.TBGuidesAct.Get(step);
+            Debug.LogError("当前部署:" + step);
             curGuideItems.step = step;
             curGuideItems.nextStep = guideData.NextStep;
             curGuideItems.note = guideData.Notes;
