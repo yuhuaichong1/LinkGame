@@ -3233,11 +3233,6 @@ namespace XrCode
         //改变场景中的物品的信息2版本
         public bool ChangeGood(GameObject obj, Good good, Vec2 next_pos, float time_move)
         {
-            if (obj.GetComponent<TestMark>() != null)
-            {
-                Debug.LogError(obj.name + " --> nextPos：(" + next_pos.R + "," + next_pos.C + ")");
-            }
-
             if (MAP_FROZEN[good.POS.R][good.POS.C] == GameDefines.HID_MOVING_ID)
             {
                 GameObject hidObj = GetHidden(good.POS.R, good.POS.C);
