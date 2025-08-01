@@ -66,7 +66,6 @@ public class GuideModule : BaseModule
         if (Game.Instance.IsAb)
         {
             ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
-            Debug.LogError("当前部署:" + step);
             curGuideItems.step = step;
             curGuideItems.nextStep = guideData.NextStep;
             curGuideItems.note = guideData.Notes;
@@ -86,7 +85,6 @@ public class GuideModule : BaseModule
         else
         {
             ConfGuidesAct guideData = ConfigModule.Instance.Tables.TBGuidesAct.Get(step);
-            Debug.LogError("当前部署:" + step);
             curGuideItems.step = step;
             curGuideItems.nextStep = guideData.NextStep;
             curGuideItems.note = guideData.Notes;

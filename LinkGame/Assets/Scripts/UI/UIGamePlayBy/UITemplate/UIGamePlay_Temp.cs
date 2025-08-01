@@ -41,7 +41,9 @@ namespace XrCode
 		protected RectTransform mCurMoneyBtnRect;
 		protected Image mGamePlayMask;
 		protected RectTransform mCurMoneyIcon;
-
+		protected Text mCULText;
+		protected Slider mCULSlider;
+		protected Text mCULSText;
 		protected override void LoadPanel()
 		{
 			base.LoadPanel();
@@ -81,6 +83,9 @@ namespace XrCode
 			mCurMoneyBtnRect = mTransform.Find("Top/CurMoneyBtn").GetComponent<RectTransform>();
 			mGamePlayMask = mTransform.Find("GamePlayMask").GetComponent<Image>();
 			mCurMoneyIcon = mTransform.Find("Top/CurMoneyBtn/CurMoneyIcon").GetComponent<RectTransform>();
+			mCULText = mTransform.Find("Top/ContentBg/CULText").GetComponent<Text>();
+			mCULSlider = mTransform.Find("Top/ContentBg/CULSlider").GetComponent<Slider>();
+			mCULSText = mTransform.Find("Top/ContentBg/CULSlider/CULSText").GetComponent<Text>();
 		}
 
 		protected override void BindButtonEvent()

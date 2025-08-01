@@ -45,6 +45,7 @@ namespace XrCode
             GamePlayFacade.GetFlyMoneyTipOrgin += GetFlyMoneyTipOrgin;
             GamePlayFacade.GetFuncTarget += GetFuncTarget;
             GamePlayFacade.GetMapScale += GetMapScale;
+            GamePlayFacade.GetRemainPCTBack += SetProcess;
 
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
@@ -90,7 +91,7 @@ namespace XrCode
 
             GamePlayFacade.CreateLevel?.Invoke();
 
-            SetTipInfo();
+            //SetTipInfo();
 
             if (GamePlayFacade.GetIsTutorial())
             {
@@ -142,8 +143,23 @@ namespace XrCode
 
             mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
             mPrizeDrawBtn.gameObject.SetActive(GamePlayFacade.GetCurLevel() != 1 && GamePlayFacade.GetCurLevel() != 2);
-        }
 
+            int userLevel = GamePlayFacade.GetCurLevel();
+            mCULText.text = $"{LanguageModule.GetText("10052")}{userLevel}";
+            float proValue = GamePlayFacade.GetRemainPCT();
+            mCULSText.text = $"{proValue}%";
+            mCULSlider.value = proValue;
+
+
+        }
+        private void SetProcess()
+        {
+            int userLevel = GamePlayFacade.GetCurLevel();
+            mCULText.text = $"{LanguageModule.GetText("10052")}{userLevel}";
+            float proValue = GamePlayFacade.GetRemainPCT();
+            mCULSText.text = $"{proValue}%";
+            mCULSlider.value = proValue;
+        }
         //设置当前关卡的可显示信息
         private void SetTipInfo()
         {
@@ -195,7 +211,7 @@ namespace XrCode
 
         }
 
-        
+
         private void OnWithdrawalBtnClickHandle()
         {
 

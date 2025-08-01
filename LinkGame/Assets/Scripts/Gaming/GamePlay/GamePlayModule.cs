@@ -1,11 +1,12 @@
 using cfg;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using static UnityEngine.ParticleSystem;
-
+using Random = UnityEngine.Random;
 
 namespace XrCode
 {
@@ -104,6 +105,7 @@ namespace XrCode
         private string shakingSourceKey = null;
 
         private bool ifContinue;//是否继续关卡进度
+        private float _lastPCT = -1f;
 
         protected override void OnLoad()
         {
@@ -175,7 +177,7 @@ namespace XrCode
             {
                 LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
             }
-        
+
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -228,7 +230,7 @@ namespace XrCode
 
             ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
             randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
-            
+
         }
 
         /// <summary>
@@ -289,7 +291,7 @@ namespace XrCode
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
             obsTrans = GamePlayFacade.GetObsTrans?.Invoke();
 
-            if(ifContinue)
+            if (ifContinue)
             {
                 _contiuneMap();
             }
@@ -1725,7 +1727,7 @@ namespace XrCode
             }
 
             EatCountAddAndCallback();
-
+            GamePlayFacade.GetRemainPCTBack?.Invoke();
             //特效部分
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood1.transform, GamePlayFacade.GetFlyMoneyTarget());
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
@@ -3424,7 +3426,7 @@ namespace XrCode
                 randomGoodIcon.Add(oldIds[i], newIds[i]);
             }
 
-            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon ,randomGoodIcon);
+            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, randomGoodIcon);
         }
 
         private Queue<int> GetWithdrawableLevel()
@@ -3461,18 +3463,19 @@ namespace XrCode
         {
             float temp = (1 - 1f * remainGood / totalGood) * 100;
             string temp2 = temp.ToString("F2");
-            return float.Parse(temp2);
+            float currentPCT = float.Parse(temp2);
+            return currentPCT;
         }
 
         private void LoadMaps()
         {
-            if(!ifContinue) { return; }
+            if (!ifContinue) { return; }
 
             List<string> mapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP, true);
             List<string> frozenmapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP_FROZEN, true);
-            foreach(string item in mapDataList) 
+            foreach (string item in mapDataList)
             {
-                if(item != "")
+                if (item != "")
                 {
                     string[] strs = item.Split("_");
                     int r = int.Parse(strs[0]);
@@ -3508,7 +3511,7 @@ namespace XrCode
                     {
                         mapDataList.Add($"{i1}_{j1}_{MAP[i1][j1]}");
                     }
-                    if(MAP_FROZEN[i1][j1] != -1)
+                    if (MAP_FROZEN[i1][j1] != -1)
                     {
                         frozenmapDataList.Add($"{i1}_{j1}_{MAP_FROZEN[i1][j1]}");
                     }

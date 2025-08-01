@@ -92,7 +92,7 @@ namespace XrCode
             try
             {
                 LoopGridViewItem item = mChallengeScroll.NewListViewItem("ChallengeTaskItem");
-                Debug.LogError("一般Id是：" + index + "  " + ChallageTasks.Count);
+                //Debug.LogError("一般Id是：" + index + "  " + ChallageTasks.Count);
                 Task task = ChallageTasks[index];
                 TaskItemData dataMono = item.GetComponent<TaskItemData>();
                 dataMono.SetProgress(GamePlayFacade.GetCurLevel() - 1, task.Target);
