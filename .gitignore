@@ -1,8 +1,7 @@
-LinkGame/.vs/
-LinkGame/Assets/StreamingAssets/
-LinkGame/Library/
-LinkGame/Logs/
-LinkGame/UserSettings/
-LinkGame/Assets/StreamingAssets.meta
-LinkGame/Assets/Tools.meta
-LinkGame/.vsconfig
+Library
+Logs
+Temp
+UserSettings
+.vs
+Packages
+AssetBundles
