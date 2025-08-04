@@ -22,14 +22,14 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
-            awesomeMoney = UnityEngine.Random.Range(GameDefines.Awesome_ExtraMoney_Num.x, GameDefines.Awesome_ExtraMoney_Num.y);
+            awesomeMoney = GetWhole(GameDefines.Awesome_ExtraMoney_Num.x, GameDefines.Awesome_ExtraMoney_Num.y);
             awesomeMoney_Extra = awesomeMoney / 10;
             mMoneyText.text = FacadePayType.RegionalChange(awesomeMoney);
             mOnlyMoney.text = $"{LanguageModule.GetText("10057")} {FacadePayType.RegionalChange(awesomeMoney_Extra)}";
 
             ShowAnim(mPlane);
         }
-        	    private void OnClaimBtnClickHandle()        {            FacadeAd.PlayRewardAd(() =>             {
+        	    private void OnClaimBtnClickHandle()        {            FacadeAd.PlayRewardAd(EAdSource.Awesome ,() =>             {
                 PlayerFacade.AddWMoney(awesomeMoney);
                 FacadeEffect.PlayRewardEffect(new List<RewardItem>() 
                 { 
@@ -65,6 +65,20 @@ namespace XrCode
                 UIManager.Instance.CloseUI(EUIType.EUIAwesome);
             });
         }
+
+        private int GetWhole(float min, float max)
+        {
+            int minV = Mathf.CeilToInt(min / 10f) * 10;
+            int maxV = Mathf.FloorToInt(max / 10f) * 10;
+
+            int minIndex = minV / 10;
+            int maxIndex = maxV / 10;
+
+            int randomIndex = UnityEngine.Random.Range(minIndex, maxIndex + 1);
+
+            return randomIndex * 10;
+        }
+
         protected override void OnDisable() { }
         protected override void OnDispose() { }
     }

@@ -129,7 +129,15 @@ namespace XrCode
                     {
                         if (GamePlayFacade.GetNumberGoodCanEat() == 0)
                         {
-                            UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                            if (!GameDefines.IsAutoRefresh)
+                            {
+                                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                                
+                            }
+                            else
+                            {
+                                //GamePlayFacade.RefushFunc
+                            }
                         }
                         else
                         {
@@ -297,7 +305,7 @@ namespace XrCode
             }
             else
             {
-                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Shift);
+                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Remove);
             }
         }
         //中心按钮被点击
@@ -354,6 +362,7 @@ namespace XrCode
                     return mTipFuncIcon.transform;
                 case EFuncType.Refush:
                     return mRefushFuncIcon.transform;
+                case EFuncType.Remove:
                 case EFuncType.Shift:
                     return mRemoveFuncIcon.transform;
                 default:

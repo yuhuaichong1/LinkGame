@@ -12,7 +12,7 @@ using UnityEngine;
 
 public abstract class GameDefines
 {
-    public static string URL = "http://www.gamegt.top/xgame?appIndex=8";                                                              //后台网址
+    public static string URL = "http://www.gamegt.top/xgame?appIndex=8";                                    //后台网址
     public static string nameString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";     //随机名称数组
 
     public const int map_margin_bottom = 5;                                                                 //关卡显示区域下边距
@@ -41,14 +41,15 @@ public abstract class GameDefines
     public const ELanguageType Default_Language = ELanguageType.English;                                    //默认语言
     public const int Default_NANP = 1;                                                                      //默认国际长途电话区号
 
-    public const string Func_Hint_IconPath = "UI/FuncIcon/FuncIcon_Hint.png";                               //下三功能“提示”图片                        （*）
-    public const string Func_Refush_IconPath = "UI/FuncIcon/FuncIcon_Refush.png";                           //下三功能“刷新”图片                        （*）
-    public const string Func_Remove_IconPath = "UI/FuncIcon/FuncIcon_Remove.png";                           //下三功能“移除”图片                        （*）
-    public const string Func_Shift_IconPath = "UI/FuncIcon/FuncIcon_Shift.png";                             //下三功能“换向”图片                        （*）
+    public const string Func_Hint_IconPath = "UI/FuncIcon/icon_hint.png";                                   //下三功能“提示”图片                        （*）
+    public const string Func_Refush_IconPath = "UI/FuncIcon/icon_re.png";                                   //下三功能“刷新”图片                        （*）
+    public const string Func_Remove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                              //下三功能“移除”图片                        （*）
+    public const string Func_Shift_IconPath = "UI/FuncIcon/icon_shift.png";                                 //下三功能“换向”图片                        （*）
 
     public const int GetFunc_Hint_Num = 3;                                                                  //能获取的“提示”功能的数量
-    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“提示”功能的数量
-    public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“提示”功能的数量
+    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“刷新”功能的数量
+    public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“转向”功能的数量
+    public const int GetFunc_Remove_Num = 2;                                                                //能获取的“移除”功能的数量
     public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(1, 10);                                      //获取功能时额外获取的金钱的数量
 
     public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";                              //老虎机未激活块背景路径
@@ -72,14 +73,12 @@ public abstract class GameDefines
     public const float TL_Effect_StayTime = 1f;                                                             //“目标关卡提示”特效滞留时间
     public const float TL_Effect_YMoveTime = 1f;                                                            //“目标关卡提示”特效竖向移动时间
     public const string FlyMoney_ObjPath = "Prefabs/Effect/FlyMoney.prefab";                                //飞钱特效预制体
-    public const string FlyDiamond_ObjPath = "Prefabs/Effect/FlyDiamond.prefab";                                //飞钻石特效预制体
     public const float FlyMoney_ObjTime = 0.12f;                                                            //飞钱特效持续时间（非特殊情况请保持和FlyFunc_ObjTime一致）
     public const int FlyMoney_Effect_LinkCount = 3;                                                         //消除飞钱特效（总计生成数量 * 2个飞钱）
     public const int FlyMoney_Effect_RewardCount = 8;                                                       //奖励飞钱特效数量
     public const string FlyFunc_ObjPath = "Prefabs/Effect/FlyFunc.prefab";                                  //飞功能特效预制体
     public const float FlyFunc_ObjTime = 0.25f;                                                             //飞功能特效持续时间（非特殊情况请保持和FlyMoney_ObjTime一致）
     public const string FlyMoneyTip_ObjPath = "Prefabs/Effect/GetMoneyTip.prefab";                          //飞钱奖励提示的预制体
-    public const string FlyDiamondTip_ObjPath = "Prefabs/Effect/GetDiamondTip.prefab";                          //飞钻石奖励提示的预制体
     public const float FlyMoneyTip_ObjTime = 2f;                                                            //飞钱奖励提示特效持续时间
     public const string HidBreak_ObjPath = "Prefabs/Effect/HidBreak.prefab";                                //隐藏物体破除特效
 
@@ -92,8 +91,8 @@ public abstract class GameDefines
     public const string Reward_FuncHint_IconPath = "UI/FuncIcon/icon_hint.png";                             //奖励特效消除功能图片                        （*）
     public const string Reward_FuncRefresh_IconPath = "UI/FuncIcon/icon_re.png";                            //奖励特效刷新功能图片                        （*）
     public const string Reward_FuncShift_IconPath = "UI/FuncIcon/icon_shift.png";                           //奖励特效换向功能图片                        （*）
-    public const string Reward_FuncDiamondBox_IconPath = "UI/LuckMoment/diamondBox.png";                           //奖励钻石                    （*）
-    public const string Reward_FuncDiamond_IconPath = "UI/LuckMoment/diamond.png";                           //奖励钻石                    （*）
+    public const string Reward_FuncRemove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                           //奖励特效换向功能图片                        （*）
+
     public const float GoodShowTime = 0.1f;                                                                 //物品显示动画时间间隔
 
     public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
@@ -101,7 +100,7 @@ public abstract class GameDefines
     public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
     public const int Rate_Count_Max = 5;                                                                    //评论UI展示的最大值
 
-    public static Vector2 Awesome_ExtraMoney_Num = new Vector2(10, 50);                                     //Awesome界面随机钱区间
+    public static Vector2 Awesome_ExtraMoney_Num = new Vector2(30, 50);                                     //Awesome界面随机钱区间
 
     public static string Reddot_Name_Out;                                                                   //外部红点名称
     public static string Reddot_Name_Daily;                                                                 //日常任务红点名称
@@ -111,10 +110,13 @@ public abstract class GameDefines
 
     public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
     public static float HideAnimTime = 0.25f;                                                               //UI动画关闭持续时间
-    public static float IntervalTime = 60000f;                                                               //UI动画关闭持续时间
-    public static int FirstCount = 3;                                                            
-    public static int SedCount = 2;                                                         
-    public static bool ifIAA =true;                                                           
+
+    public static float IntervalTime = 60000f;                                                              //插屏间隔时间
+
+    public static int FirstCount = 3;                                                                       //
+    public static int SedCount = 2;                                                                         //
+    public static bool ifIAA = true;                                                                        //AB包切换
+    public static bool IsAutoRefresh = true;                                                                //无物可消时是否刷新
 }
 #endregion
 
@@ -162,9 +164,6 @@ public enum EUIType
     EUIChallengeFailed = 23,
     EUICongratfulations = 24,
     EUIWithdrawalSuccessful = 25,
-    EUIGamePlayBy = 26,
-    EUIDailyTasks = 27,
-    EUIChallengeTask = 28,
 }
 
 public enum ESceneType : byte
@@ -317,7 +316,7 @@ public enum EAdSource
 {
     Awesome,//中途额外奖励界面
     ChallengeSuccessful,//关卡结算界面
-    Congratfulations,//任务领取界面
+    Congratulations,//任务领取界面
     FuncPopup_Hint,//获取提示道具界面
     FuncPopup_Refresh,//获取刷新道具界面
     FuncPopup_Remove,//获取移除道具界面

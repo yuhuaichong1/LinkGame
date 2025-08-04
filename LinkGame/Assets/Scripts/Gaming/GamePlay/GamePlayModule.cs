@@ -168,7 +168,7 @@ namespace XrCode
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
 
-            LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+            LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -219,11 +219,14 @@ namespace XrCode
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
 
-            ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
-            randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
+            if(curLevel != 1)
+            {
+                ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
+                randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
 
-            totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
-            //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
+                totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
+                //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
+            }
         }
 
         /// <summary>
@@ -284,7 +287,7 @@ namespace XrCode
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
             obsTrans = GamePlayFacade.GetObsTrans?.Invoke();
 
-            if (ifContinue)
+            if(ifContinue)
             {
                 _contiuneMap();
 
@@ -592,7 +595,7 @@ namespace XrCode
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
             MAP_Goods[row][col] = obj;
 
-            if (!ifContinue)
+            if(!ifContinue)
                 totalGood += 1;
         }
 
@@ -1721,7 +1724,7 @@ namespace XrCode
             {
                 Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
             }
-            GamePlayFacade.GetRemainPCTBack?.Invoke();
+
             EatCountAddAndCallback();
 
             //特效部分
@@ -1754,7 +1757,6 @@ namespace XrCode
 
             if (curTopNoticeCount == GameDefines.TopNotice_Count_Max)
             {
-                if (GameDefines.ifIAA) return;
                 curTopNoticeCount = 0;
                 FacadeEffect.PlayRewardNoticeEffect();
             }
@@ -1763,7 +1765,6 @@ namespace XrCode
 
             if (curAwesomeCount == GameDefines.Awesome_Count_Max)
             {
-                if (GameDefines.ifIAA) return;
                 curAwesomeCount = 0;
                 UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
             }
@@ -1786,7 +1787,7 @@ namespace XrCode
         //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
         IEnumerator execute_check_paire(Vec2 pos1, Vec2 pos2)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(Time.deltaTime);
             RemoveGood(pos1);
             RemoveGood(pos2);
             UpdateHiddleState(pos1);
@@ -1840,7 +1841,7 @@ namespace XrCode
                     float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
                     STimerManager.Instance.CreateSDelay(delayTime, () =>
                     {
-                        UIManager.Instance.CloseUI(GameDefines.ifIAA ? EUIType.EUIGamePlayBy : EUIType.EUIGamePlay);
+                        UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
                         UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
 
                         FacadeTask.CheckLevelPass(curLevel);
@@ -2206,7 +2207,7 @@ namespace XrCode
         //数据逻辑更新完毕，开始更新关卡视图
         IEnumerator end_update_map(bool isOffline)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(Time.deltaTime);
             if (!isTutorial)
             {
                 //GameStatic.saveGame();
@@ -2224,11 +2225,17 @@ namespace XrCode
                 //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
             }
             int numberGoodCanEat = GetNumberGoodCanEat();
-            D.Log("剩余可消除对数 : " + numberGoodCanEat);
+            D.Log($"剩余可消除对数 : {numberGoodCanEat}");
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
-                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
-                //Game.Instance.StartCoroutine(StartResetMap());
+                if(GameDefines.IsAutoRefresh)
+                {
+                    Game.Instance.StartCoroutine(StartResetMap());
+                }
+                else
+                {
+                    UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                }
             }
             if (curMapState == EMapState.Eating)
                 ChangeMapState(EMapState.Playing);
@@ -2590,19 +2597,15 @@ namespace XrCode
         /// </summary>
         private void NextLevel()
         {
-            // 检查当前关卡是否需要处理可撤回逻辑
-            var withdrawType = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType : ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType;
-
-            if (withdrawType == 1)
+            if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
             {
-                curWLevel++;
+                curWLevel += 1;
                 withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
                 SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
             }
 
-            // 关卡前进
-            curLevel++;
+            curLevel += 1;
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
 
@@ -3239,11 +3242,6 @@ namespace XrCode
         //改变场景中的物品的信息2版本
         public bool ChangeGood(GameObject obj, Good good, Vec2 next_pos, float time_move)
         {
-            if (obj.GetComponent<TestMark>() != null)
-            {
-                Debug.LogError(obj.name + " --> nextPos：(" + next_pos.R + "," + next_pos.C + ")");
-            }
-
             if (MAP_FROZEN[good.POS.R][good.POS.C] == GameDefines.HID_MOVING_ID)
             {
                 GameObject hidObj = GetHidden(good.POS.R, good.POS.C);
@@ -3430,7 +3428,7 @@ namespace XrCode
                 randomGoodIcon.Add(oldIds[i], newIds[i]);
             }
 
-            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, randomGoodIcon);
+            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon ,randomGoodIcon);
         }
 
         private Queue<int> GetWithdrawableLevel()
@@ -3472,13 +3470,13 @@ namespace XrCode
 
         private void LoadMaps()
         {
-            if (!ifContinue) { return; }
+            if(!ifContinue) { return; }
 
             List<string> mapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP, true);
             List<string> frozenmapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP_FROZEN, true);
-            foreach (string item in mapDataList)
+            foreach(string item in mapDataList) 
             {
-                if (item != "")
+                if(item != "")
                 {
                     string[] strs = item.Split("_");
                     int r = int.Parse(strs[0]);
@@ -3504,7 +3502,7 @@ namespace XrCode
         //保存当前关卡样式
         private void SaveMaps()
         {
-            STimerManager.Instance.CreateSDelay(0, () =>
+            STimerManager.Instance.CreateSDelay(GoodDefine.moveTime, () => 
             {
                 List<string> mapDataList = new List<string>();
                 List<string> frozenmapDataList = new List<string>();
@@ -3526,11 +3524,10 @@ namespace XrCode
                 SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP, mapDataList);
                 SPlayerPrefs.SetList<string>(PlayerPrefDefines.MAP_FROZEN, frozenmapDataList);
 
-                Debug.LogError("totalGood  " + totalGood);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, totalGood);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
-
+            
         }
 
         #endregion

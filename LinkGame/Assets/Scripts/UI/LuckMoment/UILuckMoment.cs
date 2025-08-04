@@ -88,8 +88,23 @@ namespace XrCode
                 case 1:
                     return FacadePayType.RegionalChange(count);
                 case 2:
-                    return $"Func {reward}";
-                    return LanguageModule.GetText(((EFuncType)reward).ToString()); 
+                    string str = "Func";
+                    switch ((EFuncType)reward)
+                    {
+                        case EFuncType.Tip:
+                            str = "10017";
+                            break;
+                        case EFuncType.Refush:
+                            str = "10019";
+                            break;
+                        case EFuncType.Shift:
+                            str = "10018";
+                            break;
+                        case EFuncType.Remove:
+                            str = "10087";
+                            break;
+                    }
+                    return LanguageModule.GetText(str); 
                 case 3:
                     return "Withdraw";
                     //return LanguageModule.GetText("Withdraw");
@@ -164,7 +179,8 @@ namespace XrCode
                         switch (type) 
                         {
                             case ERewardType.Money:
-                                float Mcount = UnityEngine.Random.Range(1, confLuckMoment.Count);
+                                //float Mcount = UnityEngine.Random.Range(1, confLuckMoment.Count);
+                                float Mcount = confLuckMoment.Count;
                                 PlayerFacade.AddWMoney(Mcount);
                                 FacadeEffect.PlayRewardEffect(new List<RewardItem>()
                                 {

@@ -196,6 +196,8 @@ namespace XrCode
         //例子
         public void RecieveIAAMessage(string msg)
         {
+            //msg的消息为：{"code":200,"msg":"Success","data":true,"ext":"{\"adtime\":\"6000\",\"firstCount\":\"3\",\"sedCount\":\"2\",\"LevelWinPlayAd\":false}"}
+
             string content = msg.Replace("\n", "");
             if (content.StartsWith("["))
             {
@@ -209,7 +211,7 @@ namespace XrCode
             Notification notify = new Notification();
             notify.Content = content;
 
- 
+
             //游戏IAA判断
             if (notify["data"] != null)
             {
@@ -217,7 +219,9 @@ namespace XrCode
                 GameDefines.ifIAA = iaa;
                 PlayerPrefs.SetInt("GoodMatch_ifIAA", iaa ? 1 : 2);
             }
-            Debug.LogError(GameDefines.ifIAA + "当前是否开启");
+
+            Debug.LogError($"IAA 当前是否开启 {GameDefines.ifIAA}");
+
             Dictionary<string, object> iaaDic = notify["data"] as Dictionary<string, object>;
             if (notify["ext"] != null)
             {
@@ -241,9 +245,15 @@ namespace XrCode
                 {
                     GameDefines.SedCount = int.Parse(sc.ToString());
                 }
+
+                //是否自动刷新
+                if (adDic.TryGetValue("autoRefursh", out object ar))
+                {
+                    GameDefines.IsAutoRefresh = bool.Parse(ar.ToString());
+                }
             }
         }
-    }
 
+        #endregion
+    }
 }
-#endregion

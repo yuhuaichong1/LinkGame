@@ -192,45 +192,97 @@ namespace XrCode
 
             //TDAnalytics.Track("LG_Times_20_Ad", properties);
         }
-    
-        public void RegisterFinish()
-        {
 
+        /// <summary>
+        /// 注册成功，首次登录
+        /// </summary>
+        /// <param name="firstCheckId">首次事件校验</param>
+        /// <param name="regtime">注册时间</param>
+        public void RegisterFinish(string firstCheckId, DateTime regtime)
+        {
+            if (!isOpenTD) return;
+
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("#first_check_id", firstCheckId);
+            properties.Add("regtime", regtime);
+
+            //TDAnalytics.Track("LG_RegisterFinish", properties);
         }
 
+        /// <summary>
+        /// 加载开始
+        /// </summary>
         public void LoadingStart()
         {
+            if (!isOpenTD) return;
 
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            //TDAnalytics.Track("LG_LoadingStart", properties);
         }
 
+        /// <summary>
+        /// 加载完成
+        /// </summary>
         public void LoadFinish()
         {
+            if (!isOpenTD) return;
 
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            //TDAnalytics.Track("LG_LoadFinish", properties);
         }
 
+        /// <summary>
+        /// 进入主界面
+        /// </summary>
         public void EnterMainUI()
         {
+            if (!isOpenTD) return;
 
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            //TDAnalytics.Track("LG_EnterMainUI", properties);
         }
 
+        /// <summary>
+        /// 登录成功
+        /// </summary>
         public void LoginSuccess()
         {
+            if (!isOpenTD) return;
 
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            //TDAnalytics.Track("LG_LoginSuccess", properties);
         }
 
+        /// <summary>
+        /// 当前引导进度
+        /// </summary>
+        /// <param name="step">当前引导步骤</param>
         public void GuideStep(int step)
         {
             if (!isOpenTD) return;
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            properties.Add("step", step);
+            properties.Add("step", step * 100);
 
             //TDAnalytics.Track("LG_GuideStep", properties);
         }
 
+        /// <summary>
+        /// 点击btn
+        /// </summary>
+        /// <param name="buttonpath">btn对应路径</param>
         public void ButtonClick(string buttonpath)
         {
+            if (!isOpenTD) return;
 
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("buttonpath", buttonpath);
+
+            //TDAnalytics.Track("LG_ButtonClick", properties);
         }
     }
 }

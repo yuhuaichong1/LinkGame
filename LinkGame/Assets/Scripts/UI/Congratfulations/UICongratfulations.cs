@@ -13,16 +13,11 @@ namespace XrCode
         private float awesomeMoney_Extra;
         private LanguageModule LanguageModule;
 
-        protected override void OnAwake()
+        protected override void OnAwake() 
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
 
             LanguageModule = ModuleMgr.Instance.LanguageMod;
-            if (GameDefines.ifIAA)
-            {
-                mMoney.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamondBox_IconPath);
-                mMoney.SetNativeSize();
-            }
         }
 
         protected override void OnSetParam(params object[] args)
@@ -30,18 +25,15 @@ namespace XrCode
             awesomeMoney = (float)args[0];
         }
 
-        protected override void OnEnable()
+        protected override void OnEnable() 
         {
             awesomeMoney_Extra = awesomeMoney / 10;
             mMoneyText.text = FacadePayType.RegionalChange(awesomeMoney);
             mOnlyMoney.text = $"{ LanguageModule.GetText("10057")} { FacadePayType.RegionalChange(awesomeMoney_Extra)}";
 
             ShowAnim(mPlane);
-        }
-
-        private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);        }
-        private void OnClaimBtnClickHandle()        {
-            FacadeAd.PlayRewardAd(() =>
+        }	    private void OnExitBtnClickHandle()        {            UIManager.Instance.CloseUI(EUIType.EUICongratfulations);        }	    private void OnClaimBtnClickHandle()        {
+            FacadeAd.PlayRewardAd(EAdSource.Congratulations, () =>
             {
                 PlayerFacade.AddWMoney(awesomeMoney);
                 FacadeEffect.PlayRewardEffect(new List<RewardItem>()
@@ -58,11 +50,10 @@ namespace XrCode
                 });
 
                 FacadeTask.ReceiveDataRemove();
-                HideAnim(mPlane, () =>
+                HideAnim(mPlane, () => 
                 {
                     UIManager.Instance.CloseUI(EUIType.EUICongratfulations);
-                });            }, null);        }
-        private void OnOnlyMoneyBtnClickHandle()
+                });            }, null);        }	    private void OnOnlyMoneyBtnClickHandle()
         {
             PlayerFacade.AddWMoney(awesomeMoney_Extra);
             FacadeEffect.PlayRewardEffect(new List<RewardItem>()
