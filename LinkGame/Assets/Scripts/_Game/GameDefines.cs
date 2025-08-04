@@ -32,7 +32,8 @@ public abstract class GameDefines
 
     public static bool ifWithdrawal = true;                                                                 //是否提现
 
-    public const float Single_Link_Money = 0.01f;                                                            //单次消除金额
+    public const float Single_Link_Money = 0.01f;                                                           //单次消除金额
+    public const float Single_Link_Diamond = 10;                                                            //单次消除钻石数
 
     public const string Default_Channels = "0";                                                             //默认支付方式
     public const string Default_Mark = "$";                                                                 //默认货币符号

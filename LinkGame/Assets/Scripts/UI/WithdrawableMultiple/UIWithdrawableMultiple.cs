@@ -95,10 +95,10 @@ namespace XrCode
             switch(curLevel) 
             {
                 case 1:
-                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.Single_Link_Money * 6);
+                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money * 6);
                     break;
                 case 2:
-                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.Single_Link_Money * 12);
+                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money * 12);
                     break;
                 default:
                     ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * UnityEngine.Random.Range(20, 26), UnityEngine.Random.Range(2, 6), UnityEngine.Random.Range(3f, 10f));

@@ -1732,8 +1732,8 @@ namespace XrCode
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
             STimerManager.Instance.CreateSDelay(GameDefines.FlyEffect_Start_Delay, () =>
             {
-                FacadeEffect.PlayGetMoneyTipEffect(GameDefines.Single_Link_Money);
-                PlayerFacade.AddWMoney(GameDefines.Single_Link_Money);
+                FacadeEffect.PlayGetMoneyTipEffect(GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money);
+                PlayerFacade.AddWMoney(GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money);
                 GamePlayFacade.ChangeMoneyShow();
             });
 

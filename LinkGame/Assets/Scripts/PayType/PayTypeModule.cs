@@ -100,7 +100,7 @@ namespace XrCode
             }
             else
             {
-                return $"{Mathf.Round(value * 10)}";
+                return $"{Mathf.Round(value)}";
             }
         }
 

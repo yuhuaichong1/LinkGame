@@ -65,6 +65,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BclHelpers.cs" />
     <Compile Include="Assets\Scripts\UI\Awesome\UIAwesome.cs" />
     <Compile Include="Assets\Scripts\GameSDK\SDKBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UIGamePlayBy\UIGamePlayBy.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoSwipe.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\CompiledSerializer.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\NetObjectSerializer.cs" />
@@ -75,8 +76,9 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoDragMe.cs" />
     <Compile Include="Assets\Scripts\User\UserModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DefaultValueDecorator.cs" />
-    <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
+    <Compile Include="Assets\Gen\Code\ConfGuidesAct.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\BallRunPlayer.cs" />
+    <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Gen\Code\TBLuckMoment.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BufferExtension.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets\Scripts\Resource\Utils\PathUtil.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeTimeZone.cs" />
     <Compile Include="Assets\Scripts\PayType\PayTypeModule.cs" />
+    <Compile Include="Assets\Scripts\UI\UIChallengeTask\UIChallengeTask.cs" />
     <Compile Include="Assets\Scripts\NetWork\NetworkModule.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawalSuccessful\UITemplate\UIWithdrawalSuccessful_Temp.cs" />
     <Compile Include="Assets\Scripts\Notify\MiniJsonTool.cs" />
@@ -149,6 +152,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\FieldDecorator.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IComponent.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectPool.cs" />
+    <Compile Include="Assets\Scripts\UI\Test\UISettingTest.cs" />
     <Compile Include="Assets\Scripts\_Game\GameDefines.cs" />
     <Compile Include="Assets\Scripts\Notify\Notification.cs" />
     <Compile Include="Assets\Gen\Code\TBTask.cs" />
@@ -187,6 +191,7 @@
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleMod.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\TwoFingerGesture.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Components\DragEventListener.cs" />
+    <Compile Include="Assets\Gen\Code\TBLevelAct.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\SerializationContext.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UIChallengeSuccessful.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCAxis.cs" />
@@ -198,11 +203,13 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\_Medias\SliderText.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIgnoreAttribute.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\Extension\GameObjectExtension.cs" />
+    <Compile Include="Assets\Scripts\UI\UIDailyTasks\UITemplate\UIDailyTasks_Temp.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\Swipe.cs" />
     <Compile Include="Assets\Scripts\UI\LuckMoment\UITemplate\UILuckMoment_Temp.cs" />
     <Compile Include="Assets\Scripts\GameSystem\PathItem.cs" />
     <Compile Include="Assets\Gen\Code\ConfGuides.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawalInformation\UIWithdrawalInformation.cs" />
+    <Compile Include="Assets\Scripts\UI\Test\UITemplate\UISettingTest_Temp.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IExecute.cs" />
     <Compile Include="Assets\Gen\Code\TBPayRegion.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\EditorResourceLoader.cs" />
@@ -255,6 +262,8 @@
     <Compile Include="Assets\Scripts\Tools\SqlLite\SqLiteHelper.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadePayType.cs" />
     <Compile Include="Assets\Scripts\Reward\GetMoneyTipItem.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWithdraw\UITemplate\UIWithdraw_Temp.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWithdraw\UIWithdraw.cs" />
     <Compile Include="Assets\Scripts\Task\Task.cs" />
     <Compile Include="Assets\Scripts\UI\Popup\UITemplate\UIPopup_Temp.cs" />
     <Compile Include="Assets\Scripts\Reward\RewardItem.cs" />
@@ -279,6 +288,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ArrayDecorator.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoContractAttribute.cs" />
     <Compile Include="Assets\Gen\Code\ConfReddot.cs" />
+    <Compile Include="Assets\Gen\Code\TBGuidesAct.cs" />
     <Compile Include="Assets\Scripts\PlayerPref\PlayerPrefDefines.cs" />
     <Compile Include="Assets\Scripts\UI\Rate\UITemplate\UIRate_Temp.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\UIRibbonRewardItem.cs" />
@@ -300,6 +310,8 @@
     <Compile Include="Assets\Scripts\Task\TaskModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\IProtoTypeSerializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\StringUtil.cs" />
+    <Compile Include="Assets\Scripts\UI\UIGamePlayBy\UITemplate\UIGamePlay_Temp.cs" />
+    <Compile Include="Assets\Scripts\UI\UIChallengeTask\UITemplate\UIChallengeTask_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UriDecorator.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ExtensibleUtil.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\IProtoSerializer.cs" />
@@ -375,6 +387,7 @@
     <Compile Include="Assets\Scripts\UI\LuckMoment\LuckMomentItem.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\UIDailyTasks\UIDailyTasks.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridView.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\GoodDefine.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IObject.cs" />
@@ -436,6 +449,7 @@
     <Compile Include="Assets\Scripts\Tools\Utils\CalcUtil.cs" />
     <Compile Include="Assets\Gen\Code\ConfGoodIcon.cs" />
     <Compile Include="Assets\Scripts\SUIAnimLine\SUIACItem.cs" />
+    <Compile Include="Assets\Gen\Code\ConfLevelAct.cs" />
     <Compile Include="Assets\Gen\Code\ConfLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SystemTypeSerializer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCArea.cs" />
