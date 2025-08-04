@@ -9,6 +9,7 @@ namespace XrCode
 	{
 		protected Button mExitBtn;
 		protected Text mCurMoneyText;
+		protected Image CurMoneyIcon;
 		protected Toggle mDailyTasksToggle;
 		protected RectTransform mDTRd;
 		protected Toggle mChallengeTaskToggle;
@@ -25,6 +26,7 @@ namespace XrCode
 
 			mExitBtn = mTransform.Find("ExitBtn").GetComponent<Button>();
 			mCurMoneyText = mTransform.Find("CurMoneyBtn/CurMoneyText").GetComponent<Text>();
+			CurMoneyIcon = mTransform.Find("CurMoneyBtn/CurMoneyIcon").GetComponent<Image>();
 			mDailyTasksToggle = mTransform.Find("Content/ToggleGroup/DailyTasksToggle").GetComponent<Toggle>();
 			mDTRd = mTransform.Find("Content/ToggleGroup/DailyTasksToggle/DTRd").GetComponent<RectTransform>();
 			mChallengeTaskToggle = mTransform.Find("Content/ToggleGroup/ChallengeTaskToggle").GetComponent<Toggle>();

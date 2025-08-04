@@ -51,8 +51,8 @@ namespace XrCode
             rewardObjPool = new Stack<UIRibbonRewardItem>();
             flyMoneyTipPool = new Stack<GameObject>();
 
-            reward_MoneyIcon = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_Money_IconPath);
-            reward_FuncIconDic = new Dictionary<EFuncType, Sprite>()
+            reward_MoneyIcon = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.ifIAA ? GameDefines.Reward_FuncDiamondBox_IconPath : GameDefines.Reward_Money_IconPath); 
+           reward_FuncIconDic = new Dictionary<EFuncType, Sprite>()
             {
                 {EFuncType.Tip, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncHint_IconPath)},
                 {EFuncType.Refush, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncRefresh_IconPath)},

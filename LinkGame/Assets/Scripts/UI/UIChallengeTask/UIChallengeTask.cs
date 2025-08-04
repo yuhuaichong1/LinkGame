@@ -46,7 +46,7 @@ namespace XrCode
         {
             DailyTasks = FacadeTask.GetDailyTask();
             ChallageTasks = FacadeTask.GetChallageTask();
-
+            if (GameDefines.ifIAA) { CurMoneyIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath); };
             mDailyScroll.InitGridView(DailyTasks.Count, DailyTaskCallBack);
             mChallengeScroll.InitGridView(ChallageTasks.Count, ChallageTaskCallBack);
         }
