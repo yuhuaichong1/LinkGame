@@ -51,7 +51,7 @@ namespace XrCode
             mOnlyMoney.gameObject.SetActive(true);
             //if (!ifwithdraw)
             //{
-                rewardValue = rewardValue / 10;
+                rewardValue = adRewardValue / 10;
                 LayoutRebuilder.ForceRebuildLayoutImmediate(mParent);
                 mOnlyMoney.text = $"{LanguageModule.GetText("10057")} {FacadePayType.RegionalChange(rewardValue)}";
             //}
