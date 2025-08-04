@@ -78,7 +78,7 @@ namespace XrCode
             Task task = DailyTasks[index];
             TaskItemData dataMono = item.GetComponent<TaskItemData>();
             dataMono.SetProgress(GamePlayFacade.GetCurTotalLinkCount(), task.Target);
-            dataMono.SetMsg(task.Content, task.Id, task.Type);
+            dataMono.SetMsg(task.Content, task.Id, task.Type, task.Target);
             dataMono.ReceiveBtn.onClick.AddListener(() =>
             {
                 FacadeTask.GetDailyTask().Remove(task);
@@ -96,7 +96,7 @@ namespace XrCode
                 Task task = ChallageTasks[index];
                 TaskItemData dataMono = item.GetComponent<TaskItemData>();
                 dataMono.SetProgress(GamePlayFacade.GetCurLevel() - 1, task.Target);
-                dataMono.SetMsg(task.Content, task.Id, task.Type);
+                dataMono.SetMsg(task.Content, task.Id, task.Type, task.Target);
 
                 return item;
             }
