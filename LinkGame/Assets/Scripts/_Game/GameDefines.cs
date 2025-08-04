@@ -77,11 +77,12 @@ public abstract class GameDefines
     public const int FlyMoney_Effect_LinkCount = 3;                                                         //消除飞钱特效（总计生成数量 * 2个飞钱）
     public const int FlyMoney_Effect_RewardCount = 8;                                                       //奖励飞钱特效数量
     public const string FlyFunc_ObjPath = "Prefabs/Effect/FlyFunc.prefab";                                  //飞功能特效预制体
+    public const string FlyDiamond_ObjPath = "Prefabs/Effect/FlyDiamond.prefab";                                //飞钻石特效预制体
     public const float FlyFunc_ObjTime = 0.25f;                                                             //飞功能特效持续时间（非特殊情况请保持和FlyMoney_ObjTime一致）
     public const string FlyMoneyTip_ObjPath = "Prefabs/Effect/GetMoneyTip.prefab";                          //飞钱奖励提示的预制体
     public const float FlyMoneyTip_ObjTime = 2f;                                                            //飞钱奖励提示特效持续时间
     public const string HidBreak_ObjPath = "Prefabs/Effect/HidBreak.prefab";                                //隐藏物体破除特效
-
+    public const string FlyDiamondTip_ObjPath = "Prefabs/Effect/GetDiamondTip.prefab";                          //飞钻石奖励提示的预制体
     public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
     public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
 
@@ -92,9 +93,9 @@ public abstract class GameDefines
     public const string Reward_FuncRefresh_IconPath = "UI/FuncIcon/icon_re.png";                            //奖励特效刷新功能图片                        （*）
     public const string Reward_FuncShift_IconPath = "UI/FuncIcon/icon_shift.png";                           //奖励特效换向功能图片                        （*）
     public const string Reward_FuncRemove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                           //奖励特效换向功能图片                        （*）
-
+    public const string Reward_FuncDiamond_IconPath = "UI/LuckMoment/diamond.png";
     public const float GoodShowTime = 0.1f;                                                                 //物品显示动画时间间隔
-
+    public const string Reward_FuncDiamondBox_IconPath = "UI/LuckMoment/diamondBox.png";                           //奖励钻石                    （*）
     public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
     public const int TopNotice_Count_Max = 12;                                                              //顶部提示展示的最大值
     public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
@@ -164,6 +165,9 @@ public enum EUIType
     EUIChallengeFailed = 23,
     EUICongratfulations = 24,
     EUIWithdrawalSuccessful = 25,
+    EUIGamePlayBy=26,
+    EUIDailyTasks =27,
+    EUIChallengeTask=28
 }
 
 public enum ESceneType : byte

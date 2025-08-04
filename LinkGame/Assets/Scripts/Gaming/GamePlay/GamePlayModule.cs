@@ -1724,7 +1724,7 @@ namespace XrCode
             {
                 Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
             }
-
+            GamePlayFacade.GetRemainPCTBack();
             EatCountAddAndCallback();
 
             //特效部分
