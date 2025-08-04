@@ -147,7 +147,7 @@ namespace XrCode
             float proValue = GamePlayFacade.GetRemainPCT();
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
-       
+
 
         }
         private void SetProcess()
@@ -158,7 +158,7 @@ namespace XrCode
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
         }
- 
+
 
 
         private void OnWithdrawalBtnClickHandle()
@@ -402,11 +402,13 @@ namespace XrCode
         //提现目标特效以及UI生成
         private void WithdrawTipShow()
         {
-            FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () =>
-            {
-                mWithdrawTip.gameObject.SetActive(false);
-                TMDTipShow();
-            });
+            /*  FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () =>
+              {
+                  mWithdrawTip.gameObject.SetActive(false);
+                  TMDTipShow();
+              });*/
+            mWithdrawTip.gameObject.SetActive(false);
+            TMDTipShow();
         }
 
         //指明方向特效以及UI生成
@@ -418,17 +420,18 @@ namespace XrCode
             }
             else
             {
-                FacadeEffect.PlayTMDEffect(mCurDir.transform, curLevelDicIcon, () =>
-                {
-                    TMDTipShow2();
-                });
+                /*    FacadeEffect.PlayTMDEffect(mCurDir.transform, curLevelDicIcon, () =>
+                       {
+                           TMDTipShow2();
+                       });*/
+                TMDTipShow2();
             }
         }
         private void TMDTipShow2()
         {
             mCurDir.gameObject.SetActive(true);
             mGamePlayMask.gameObject.SetActive(false);
-            FacadeEffect.PlayRewardNoticeEffect();
+            //FacadeEffect.PlayRewardNoticeEffect();
         }
         private float GetMapScale()
         {

@@ -14,24 +14,26 @@ namespace XrCode
         float adRewardValue;
         float rewardValue;
 
-        protected override void OnAwake() 
+        protected override void OnAwake()
         {
             LanguageModule = new LanguageModule();
         }
         protected override void OnEnable()
         {
-             bool ifwithdraw;
+            bool ifwithdraw;
             if (!GameDefines.ifIAA)
             {
                 ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
                 rewardValue = level.Reward;
-                 ifwithdraw = level.WithdrawType == 1;
+                ifwithdraw = level.WithdrawType == 1;
+                WithdrawText.text = LanguageModule.GetText("10015");
             }
             else
             {
                 ConfLevelAct level = ConfigModule.Instance.Tables.TBLevelAct.Get(GamePlayFacade.GetCurLevel() - 1);
                 rewardValue = level.Reward;
-                 ifwithdraw = level.WithdrawType == 1;
+                ifwithdraw = level.WithdrawType == 1;
+                WithdrawText.text = LanguageModule.GetText("10038");
             }
             string str = FacadePayType.RegionalChange(rewardValue);
             mMoneyText.text = str;
@@ -55,7 +57,8 @@ namespace XrCode
                 FacadeGuide.SetWithdrawableUIcheck(true);
             }
         }
-        	    private void OnWithdrawBtnClickHandle()
+
+        private void OnWithdrawBtnClickHandle()
         {
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
             if (!GameDefines.ifIAA)
@@ -66,7 +69,7 @@ namespace XrCode
             {
                 UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
             }
-        
+
             PlayerFacade.AddWMoney(adRewardValue);
         }
 
