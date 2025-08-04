@@ -219,11 +219,14 @@ namespace XrCode
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
 
-            ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
-            randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
+            if(curLevel != 1)
+            {
+                ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
+                randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
 
-            totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
-            //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
+                totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
+                //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
+            }
         }
 
         /// <summary>
