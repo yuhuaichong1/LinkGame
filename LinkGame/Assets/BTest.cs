@@ -11,4 +11,12 @@ public class BTest : MonoBehaviour
             Debug.LogError(FacadeGuide.GetCurStep());
         }
     }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if(!focus) 
+        {
+            Debug.LogError("ÄãÏëÍËÓÎÏ·£¿");
+        }
+    }
 }

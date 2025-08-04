@@ -178,9 +178,9 @@
     <Compile Include="Assets\KwaiAds\Scripts\Common\IClientFactory.cs" />
     <Compile Include="Assets\Tools\LubanLib\ByteBuf.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeTask.cs" />
+    <Compile Include="Assets\Sample\TDAnalyticsDemo.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoTapMe.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\ConsoleBase.cs" />
-    <Compile Include="Assets\Sample\TDAnalyticsDemo.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\BooleanSerializer.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\ListView\LoopListViewItem2.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UILoading.cs" />
@@ -558,8 +558,8 @@
     <Compile Include="Assets\Scripts\UI\WithdrawableSingle\UITemplate\UIWithdrawableSingle_Temp.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\KwaiInterstitialAdController.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ComponentExtensions.cs" />
-    <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ProtoDecoratorBase.cs" />
     <Compile Include="Assets\XrSDK\Adjust\AdjustModule.cs" />
+    <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ProtoDecoratorBase.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Common\IAdLoadListener.cs" />
     <Compile Include="Assets\Scripts\UI\Task\UITask.cs" />
   </ItemGroup>

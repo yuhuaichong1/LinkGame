@@ -14,6 +14,11 @@ namespace XrCode
             successAction?.Invoke();
         }
 
+        public void PlayInterAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
+        {
+
+        }
+
         protected override void OnDispose() 
         {
         

@@ -65,8 +65,8 @@
     <Compile Include="Assets\Plugins\PC\Main\LightThinkingSDKInstance.cs" />
     <Compile Include="Assets\Plugins\PC\Main\ThinkingSDKInstance.cs" />
     <Compile Include="Assets\Plugins\PC\Time\ThinkingSDKTimeCalibration.cs" />
-    <Compile Include="Assets\Plugins\PC\TaskManager\ThinkingSDKTask.cs" />
     <Compile Include="Assets\Plugins\PC\Utils\ThinkingSDKAppInfo.cs" />
+    <Compile Include="Assets\Plugins\PC\TaskManager\ThinkingSDKTask.cs" />
     <Compile Include="Assets\Plugins\PC\Utils\ThinkingSDKTimeUtil.cs" />
     <Compile Include="Assets\Plugins\PC\DataModel\ThinkingSDKFirstEvent.cs" />
     <Compile Include="Assets\Plugins\PC\Utils\ThinkingSDKUtil.cs" />

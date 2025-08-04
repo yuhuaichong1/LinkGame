@@ -1,8 +1,10 @@
+using AdjustSdk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-//using ThinkingData.Analytics;
+using ThinkingData.Analytics;
+using ThinkingData.Analytics.Utils;
 using UnityEngine;
 using UnityEngine.Analytics;
 namespace XrCode
@@ -31,48 +33,44 @@ namespace XrCode
         //游戏加载
         public void GameLoad(string accoundId)
         {
-            //if (!isOpenTD) return;
-            ////设置公共事件属性以后，每个事件都会带有公共事件属性
-            //Dictionary<string, object> superProperties = new Dictionary<string, object>();
-            //superProperties["GameVersion"] = GameVersion;
-            //superProperties["GameAppId"] = GameAppId;
-            //if (this.accoundId != "")
-            //{
-            //    this.accoundId = accoundId;
-            //    //superProperties["accountId"] = accoundId;//字符串
-            //    TDAnalytics.Login(accoundId);
-            //}
-            //else
-            //{
-            //    this.accoundId = UnityEngine.Random.Range(1000000, 9999999).ToString();
-            //    PlayerPrefs.SetString("GoodMatch_accoundId", this.accoundId);
-            //    //superProperties["accountId"] = accoundId;//字符串
-            //    RegisterFinish(accoundId);
-            //}
-            //TDAnalytics.SetSuperProperties(superProperties);//设置公共事件属性
-            //TDAnalytics.UserSet(new Dictionary<string, object>() { { "accountId", this.accoundId }, { "GameVersion", GameVersion }, { "GameAppId", GameAppId } }); //设置用户属性
+            if (!isOpenTD) return;
+            //设置公共事件属性以后，每个事件都会带有公共事件属性
+            Dictionary<string, object> superProperties = new Dictionary<string, object>();
+            superProperties["GameVersion"] = GameVersion;
+            superProperties["GameAppId"] = GameAppId;
+            if (this.accoundId != "")
+            {
+                this.accoundId = accoundId;
+                //superProperties["accountId"] = accoundId;//字符串
+                TDAnalytics.Login(accoundId);
+            }
+            else
+            {
+                this.accoundId = UnityEngine.Random.Range(1000000, 9999999).ToString();
+                PlayerPrefs.SetString("GoodMatch_accoundId", this.accoundId);
+                //superProperties["accountId"] = accoundId;//字符串
+                RegisterFinish(accoundId, DateTime.Now);
+            }
+            TDAnalytics.SetSuperProperties(superProperties);//设置公共事件属性
 
-            //if (isOpenTD)
-            //{
-            //    TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppStart, new Dictionary<string, object>()
-            //{
-            //    { "accountId", this.accoundId }
-            //});
-            //    TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppEnd, new Dictionary<string, object>()
-            //{
-            //    { "accountId", this.accoundId }
-            //});
-            //}
+            TDAnalytics.UserSet(new Dictionary<string, object>() { { "accountId", this.accoundId }, { "GameVersion", GameVersion }, { "GameAppId", GameAppId } }); //设置用户属性
+
+            if (isOpenTD)
+            {
+                TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppStart, new Dictionary<string, object>()
+                {
+                    { "accountId", this.accoundId }
+                });
+                TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppEnd, new Dictionary<string, object>()
+                {
+                    { "accountId", this.accoundId }
+                });
+                TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppCrash, new Dictionary<string, object>() 
+                {
+                    { "accountId", this.accoundId }
+                });
+            }
         }
-
-        //例子，请勿调用
-        //public void Example(int ex)
-        //{
-        //    if (!isOpenTD) return;
-        //    Dictionary<string, object> properties = new Dictionary<string, object>();
-        //    properties.Add("ex", ex);
-        //    TDAnalytics.Track("ExampleKey", properties);
-        //}
 
         /// <summary>
         /// 广告开始播放
@@ -92,7 +90,7 @@ namespace XrCode
             properties.Add("platform", platform);
 
             //SetUserMD();
-            //TDAnalytics.Track("LG_AdStart", properties);
+            TDAnalytics.Track("LG_AdStart", properties);
         }
 
         /// <summary>
@@ -113,7 +111,7 @@ namespace XrCode
             properties.Add("platform", platform);
 
             //SetUserMD();
-            //TDAnalytics.Track("LG_AdFail", properties);
+            TDAnalytics.Track("LG_AdFail", properties);
         }
 
         /// <summary>
@@ -134,7 +132,7 @@ namespace XrCode
             properties.Add("platform", platform);
 
             //SetUserMD();
-            //TDAnalytics.Track("TGM_AdComplete", properties);
+            TDAnalytics.Track("TGM_AdComplete", properties);
         }
 
         /// <summary>
@@ -148,7 +146,7 @@ namespace XrCode
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("accu_revenue", accu_revenue);
 
-            //TDAnalytics.Track("LG_Times_5_Ad", properties);
+            TDAnalytics.Track("LG_Times_5_Ad", properties);
         }
 
         /// <summary>
@@ -162,7 +160,7 @@ namespace XrCode
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("accu_revenue", accu_revenue);
 
-            //TDAnalytics.Track("LG_Times_10_Ad", properties);
+            TDAnalytics.Track("LG_Times_10_Ad", properties);
         }
 
         /// <summary>
@@ -176,7 +174,7 @@ namespace XrCode
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("accu_revenue", accu_revenue);
 
-            //TDAnalytics.Track("LG_Times_15_Ad", properties);
+            TDAnalytics.Track("LG_Times_15_Ad", properties);
         }
 
         /// <summary>
@@ -190,7 +188,7 @@ namespace XrCode
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("accu_revenue", accu_revenue);
 
-            //TDAnalytics.Track("LG_Times_20_Ad", properties);
+            TDAnalytics.Track("LG_Times_20_Ad", properties);
         }
 
         /// <summary>
@@ -206,7 +204,7 @@ namespace XrCode
             properties.Add("#first_check_id", firstCheckId);
             properties.Add("regtime", regtime);
 
-            //TDAnalytics.Track("LG_RegisterFinish", properties);
+            TDAnalytics.Track("LG_RegisterFinish", properties);
         }
 
         /// <summary>
@@ -218,7 +216,7 @@ namespace XrCode
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
-            //TDAnalytics.Track("LG_LoadingStart", properties);
+            TDAnalytics.Track("LG_LoadingStart", properties);
         }
 
         /// <summary>
@@ -230,7 +228,7 @@ namespace XrCode
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
-            //TDAnalytics.Track("LG_LoadFinish", properties);
+            TDAnalytics.Track("LG_LoadFinish", properties);
         }
 
         /// <summary>
@@ -242,7 +240,7 @@ namespace XrCode
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
-            //TDAnalytics.Track("LG_EnterMainUI", properties);
+            TDAnalytics.Track("LG_EnterMainUI", properties);
         }
 
         /// <summary>
@@ -254,7 +252,7 @@ namespace XrCode
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
 
-            //TDAnalytics.Track("LG_LoginSuccess", properties);
+            TDAnalytics.Track("LG_LoginSuccess", properties);
         }
 
         /// <summary>
@@ -268,7 +266,7 @@ namespace XrCode
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("step", step * 100);
 
-            //TDAnalytics.Track("LG_GuideStep", properties);
+            TDAnalytics.Track("LG_GuideStep", properties);
         }
 
         /// <summary>
@@ -282,37 +280,121 @@ namespace XrCode
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("buttonpath", buttonpath);
 
-            //TDAnalytics.Track("LG_ButtonClick", properties);
+            TDAnalytics.Track("LG_ButtonClick", properties);
         }
 
-
-
-
-
-
+        //Kwai激励广告开始
         public void KwaiAdNameAndIncomeStart(string kAdName, float kAdIncome)
         {
             
         }
 
+        //Kwai激励广告结束
+        public void KwaiAdNameAndIncomeEnd(string kAdName, float kAdIncome)
+        {
+
+        }
+
+        //MAX插屏广告开始
         public void IAdNameAndIncomeStart(string adName, float adIncome)
         {
             
         }
 
+        //MAX插屏广告结束
         public void IAdNameAndIncomeEnd(string networkName, float revenue)
         {
             
         }
 
+        //MAX激励广告开始
         public void RAdNameAndIncomeStart(string rAdName, float rAdIncome)
         {
             
         }
 
+        //MAX激励广告结束
         public void RAdNameAndIncomeEnd(string networkName, float revenue)
         {
             
+        }
+
+
+        /// <summary>
+        /// 第一次注册和登录（第一次进入游戏）
+        /// </summary>
+        public void First_Register_And_Login()
+        {
+            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
+            {
+                {"register_time", DateTime.Now},
+                {"first_login_time", DateTime.Now}
+            });
+        }
+
+        /// <summary>
+        /// 每次登录时间
+        /// </summary>
+        public void Last_Login()
+        {
+            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
+            {
+                {"last_login_time", DateTime.Now}
+            });
+        }
+
+        /// <summary>
+        /// 登出
+        /// </summary>
+        public void LoginOut()
+        {
+            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
+            {
+                {"total_taptime", 1},
+                {"total_runtime", 1},
+                {"current_money", 1},
+                {"current_runtime", 1},
+            });
+        }
+
+        /// <summary>
+        /// 累计广告数据
+        /// </summary>
+        public void TotalAdData()
+        {
+            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
+            {
+                {"total_ad_num", 1},
+                {"total_ad_time", 1},
+                {"total_ad_revenue", 1},
+            });
+        }
+
+        /// <summary>
+        /// Adjust归因信息
+        /// </summary>
+        /// <param name="attribution">Adjust归因信息</param>
+        public void AdjustMsg(AdjustAttribution attribution)
+        {
+            //TDAnalytics.EnableThirdPartySharing(TDThirdPartyType.ADJUST);
+
+            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
+            {
+                {"trackerToken", attribution.TrackerToken},
+                {"trackerName", attribution.TrackerName},
+                {"network", attribution.Network},
+                {"campaign", attribution.Campaign},
+                {"adgroup", attribution.Adgroup},
+                {"creative", attribution.Creative},
+                {"clickLabel", attribution.ClickLabel},
+                {"costType", attribution.CostType},
+                {"costAmount", attribution.CostAmount},
+                {"costCurrency", attribution.CostCurrency},
+#if UNITY_ANDROID
+                {"fbInstallReferrer", attribution.FbInstallReferrer},
+#endif
+                //{"jsonResponse", },
+            });
         }
     }
 }
