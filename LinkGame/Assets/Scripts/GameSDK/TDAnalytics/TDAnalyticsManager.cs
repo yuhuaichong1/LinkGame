@@ -284,5 +284,35 @@ namespace XrCode
 
             //TDAnalytics.Track("LG_ButtonClick", properties);
         }
+
+
+
+
+
+
+        public void KwaiAdNameAndIncomeStart(string kAdName, float kAdIncome)
+        {
+            
+        }
+
+        public void IAdNameAndIncomeStart(string adName, float adIncome)
+        {
+            
+        }
+
+        public void IAdNameAndIncomeEnd(string networkName, float revenue)
+        {
+            
+        }
+
+        public void RAdNameAndIncomeStart(string rAdName, float rAdIncome)
+        {
+            
+        }
+
+        public void RAdNameAndIncomeEnd(string networkName, float revenue)
+        {
+            
+        }
     }
 }
