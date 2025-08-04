@@ -41,9 +41,9 @@ namespace XrCode
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             rewardItemObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.RibbonRewardItem_ObjPath);
-            flyMoneyObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.FlyMoney_ObjPath);
+            flyMoneyObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.ifIAA ? GameDefines.FlyDiamond_ObjPath : GameDefines.FlyMoney_ObjPath);
             flyFuncObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.FlyFunc_ObjPath);
-            flyMoneyTipObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.FlyMoneyTip_ObjPath);
+            flyMoneyTipObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.ifIAA ? GameDefines.FlyDiamondTip_ObjPath:GameDefines.FlyMoneyTip_ObjPath);
 
 
             flyMoneyPool = new Stack<GameObject>();

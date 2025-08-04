@@ -12,6 +12,7 @@ namespace XrCode
         protected Text mOnlyMoney;
         protected Text WithdrawText;
         protected Button mOnlyMoneyBtn;
+        protected Image mMoney;
         protected RectTransform mParent;
         protected ParticleSystem mParticle;
         protected override void LoadPanel()
@@ -19,6 +20,7 @@ namespace XrCode
             base.LoadPanel();
 
             mMoneyText = mTransform.Find("Plane/MoneyText").GetComponent<Text>();
+            mMoney = mTransform.Find("Plane/Image/Money").GetComponent<Image>();
             mWithdrawBtn = mTransform.Find("Plane/WithdrawBtn").GetComponent<Button>();
             WithdrawText = mTransform.Find("Plane/WithdrawBtn/Text").GetComponent<Text>();
             mClaimBtn = mTransform.Find("Plane/ClaimBtn").GetComponent<Button>();

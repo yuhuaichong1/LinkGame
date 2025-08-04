@@ -27,6 +27,7 @@ namespace XrCode
                 rewardValue = level.Reward;
                 ifwithdraw = level.WithdrawType == 1;
                 WithdrawText.text = LanguageModule.GetText("10015");
+                mMoney.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncQianBox_IconPath);
             }
             else
             {
@@ -34,6 +35,7 @@ namespace XrCode
                 rewardValue = level.Reward;
                 ifwithdraw = level.WithdrawType == 1;
                 WithdrawText.text = LanguageModule.GetText("10038");
+                mMoney.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamondBox_IconPath);
             }
             string str = FacadePayType.RegionalChange(rewardValue);
             mMoneyText.text = str;
