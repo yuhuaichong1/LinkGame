@@ -241,11 +241,21 @@ namespace XrCode
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
 
+                #region old(转向功能)
+                //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
+                //GamePlayFacade.ChangeRemoveCount.Invoke(-1);
+                //ChangeFuncRemoveCount();
 
+                //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
+                //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
+                //mCurDir.sprite = curLevelDicIcon;
+                //mCurDir.gameObject.SetActive(false);
+                //TMDTipShow();
+                #endregion
             }
             else
             {
-                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Shift);
+                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Remove);
             }
         }
         //中心按钮被点击
@@ -302,6 +312,7 @@ namespace XrCode
                     return mTipFuncIcon.transform;
                 case EFuncType.Refush:
                     return mRefushFuncIcon.transform;
+                case EFuncType.Remove:
                 case EFuncType.Shift:
                     return mRemoveFuncIcon.transform;
                 default:
