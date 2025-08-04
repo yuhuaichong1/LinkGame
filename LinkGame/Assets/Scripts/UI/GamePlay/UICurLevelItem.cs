@@ -27,14 +27,31 @@ public class UICurLevelItem : MonoBehaviour
     /// <param name="level">¹Ø¿¨</param>
     public void SetCurLevelInfo(int level)
     {
-        ConfLevel levelConf = ConfigModule.Instance.Tables.TBLevel.Get(level);
-        int curLevel = GamePlayFacade.GetCurLevel();
-        bool b = level < curLevel;
 
-        ItemGreyBg.gameObject.SetActive(!b);
-        ItemGreenBg.gameObject.SetActive(level <= curLevel);
-        finishIcon.SetActive(b);
-        curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("10011"), level);
-        wTip.SetActive(b ? false : ConfigModule.Instance.Tables.TBLevel.Get(level).WithdrawType == 1);
+        if (GameDefines.ifIAA)
+        {
+            ConfLevelAct levelConf = ConfigModule.Instance.Tables.TBLevelAct.Get(level);
+            int curLevel = GamePlayFacade.GetCurLevel();
+            bool b = level < curLevel;
+
+            ItemGreyBg.gameObject.SetActive(!b);
+            ItemGreenBg.gameObject.SetActive(level <= curLevel);
+            finishIcon.SetActive(b);
+            curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("10011"), level);
+            wTip.SetActive(b ? false : ConfigModule.Instance.Tables.TBLevelAct.Get(level).WithdrawType == 1);
+        }
+        else
+        {
+            ConfLevel levelConf = ConfigModule.Instance.Tables.TBLevel.Get(level);
+            int curLevel = GamePlayFacade.GetCurLevel();
+            bool b = level < curLevel;
+
+            ItemGreyBg.gameObject.SetActive(!b);
+            ItemGreenBg.gameObject.SetActive(level <= curLevel);
+            finishIcon.SetActive(b);
+            curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("10011"), level);
+            wTip.SetActive(b ? false : ConfigModule.Instance.Tables.TBLevel.Get(level).WithdrawType == 1);
+        }
+
     }
 }

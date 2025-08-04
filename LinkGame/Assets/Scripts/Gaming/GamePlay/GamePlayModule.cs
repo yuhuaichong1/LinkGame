@@ -168,7 +168,7 @@ namespace XrCode
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
 
-            LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+            LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -219,7 +219,7 @@ namespace XrCode
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
 
-            if(curLevel != 1)
+            if (curLevel != 1)
             {
                 ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
                 randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
@@ -287,7 +287,7 @@ namespace XrCode
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
             obsTrans = GamePlayFacade.GetObsTrans?.Invoke();
 
-            if(ifContinue)
+            if (ifContinue)
             {
                 _contiuneMap();
 
@@ -595,7 +595,7 @@ namespace XrCode
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
             MAP_Goods[row][col] = obj;
 
-            if(!ifContinue)
+            if (!ifContinue)
                 totalGood += 1;
         }
 
@@ -1757,6 +1757,7 @@ namespace XrCode
 
             if (curTopNoticeCount == GameDefines.TopNotice_Count_Max)
             {
+                if (GameDefines.ifIAA) return;
                 curTopNoticeCount = 0;
                 FacadeEffect.PlayRewardNoticeEffect();
             }
@@ -1765,6 +1766,7 @@ namespace XrCode
 
             if (curAwesomeCount == GameDefines.Awesome_Count_Max)
             {
+                if (GameDefines.ifIAA) return;
                 curAwesomeCount = 0;
                 UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
             }
@@ -2228,7 +2230,7 @@ namespace XrCode
             D.Log($"剩余可消除对数 : {numberGoodCanEat}");
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
-                if(GameDefines.IsAutoRefresh)
+                if (GameDefines.IsAutoRefresh)
                 {
                     Game.Instance.StartCoroutine(StartResetMap());
                 }
@@ -2597,14 +2599,27 @@ namespace XrCode
         /// </summary>
         private void NextLevel()
         {
-            if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
-            {
-                curWLevel += 1;
-                withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
-                SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
-                SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
-            }
 
+            if (GameDefines.ifIAA)
+            {
+                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType == 1)
+                {
+                    curWLevel += 1;
+                    withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
+                    SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
+                    SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                }
+            }
+            else
+            {
+                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+                {
+                    curWLevel += 1;
+                    withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
+                    SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
+                    SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                }
+            }
             curLevel += 1;
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
@@ -3428,7 +3443,7 @@ namespace XrCode
                 randomGoodIcon.Add(oldIds[i], newIds[i]);
             }
 
-            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon ,randomGoodIcon);
+            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, randomGoodIcon);
         }
 
         private Queue<int> GetWithdrawableLevel()
@@ -3470,13 +3485,13 @@ namespace XrCode
 
         private void LoadMaps()
         {
-            if(!ifContinue) { return; }
+            if (!ifContinue) { return; }
 
             List<string> mapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP, true);
             List<string> frozenmapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP_FROZEN, true);
-            foreach(string item in mapDataList) 
+            foreach (string item in mapDataList)
             {
-                if(item != "")
+                if (item != "")
                 {
                     string[] strs = item.Split("_");
                     int r = int.Parse(strs[0]);
@@ -3502,7 +3517,7 @@ namespace XrCode
         //保存当前关卡样式
         private void SaveMaps()
         {
-            STimerManager.Instance.CreateSDelay(GoodDefine.moveTime, () => 
+            STimerManager.Instance.CreateSDelay(GoodDefine.moveTime, () =>
             {
                 List<string> mapDataList = new List<string>();
                 List<string> frozenmapDataList = new List<string>();
@@ -3527,7 +3542,7 @@ namespace XrCode
                 SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, totalGood);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
-            
+
         }
 
         #endregion

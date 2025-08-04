@@ -35,6 +35,7 @@ namespace XrCode
                 ifwithdraw = level.WithdrawType == 1;
                 WithdrawText.text = LanguageModule.GetText("10038");
                 mMoney.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamondBox_IconPath);
+                mMoney.SetNativeSize();
             }
             string str = FacadePayType.RegionalChange(rewardValue);
             mMoneyText.text = str;

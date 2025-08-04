@@ -19,7 +19,7 @@ public class TaskItemData : MonoBehaviour
     public int TaskId;                    //任务Id
 
     private string errMsg;                //错误信息
-
+    private string DescTxt;
     void Awake()
     {
         ReceiveBtn.onClick.AddListener(OnReceiveBtnClick);
@@ -56,7 +56,7 @@ public class TaskItemData : MonoBehaviour
         Desc.text = desc;
         TaskId = taskId;
         TaskType = taskType;
-        if (GameDefines.ifIAA) { ReceiveIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath); };
+        //if (GameDefines.ifIAA) { ReceiveIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath); };
     }
 
     private void OnReceiveBtnClick()
