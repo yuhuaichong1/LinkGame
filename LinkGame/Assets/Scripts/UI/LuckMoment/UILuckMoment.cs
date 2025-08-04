@@ -55,7 +55,15 @@ namespace XrCode
             List<ConfLuckMoment> LMdata = ConfigModule.Instance.Tables.TBLuckMoment.DataList;
             foreach(ConfLuckMoment LM in LMdata)
             {
-                wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
+                if (LM.Type == 1&&GameDefines.ifIAA)
+                {
+                    wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath);
+                }
+                else
+                {
+                    wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
+                }
+            
                 wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
                 wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
 
