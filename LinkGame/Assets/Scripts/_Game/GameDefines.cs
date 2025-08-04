@@ -92,9 +92,7 @@ public abstract class GameDefines
     public const string Reward_FuncHint_IconPath = "UI/FuncIcon/icon_hint.png";                             //奖励特效消除功能图片                        （*）
     public const string Reward_FuncRefresh_IconPath = "UI/FuncIcon/icon_re.png";                            //奖励特效刷新功能图片                        （*）
     public const string Reward_FuncShift_IconPath = "UI/FuncIcon/icon_shift.png";                           //奖励特效换向功能图片                        （*）
-    public const string Reward_FuncDiamondBox_IconPath = "UI/Common/diamondBox.png";                           //奖励钻石                        （*）
-    public const string Reward_FuncQianBox_IconPath = "UI/Common/qian.png";                           //奖励                        （*）
-
+    public const string Reward_FuncDiamondBox_IconPath = "UI/LuckMoment/diamondBox.png";                           //奖励钻石                    （*）
     public const float GoodShowTime = 0.1f;                                                                 //物品显示动画时间间隔
 
     public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
