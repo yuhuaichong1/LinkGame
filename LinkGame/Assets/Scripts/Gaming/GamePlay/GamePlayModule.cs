@@ -1787,7 +1787,7 @@ namespace XrCode
         //同步更新一些列检测（包含是否消除冰冻、是否消除冰冻倒计时）
         IEnumerator execute_check_paire(Vec2 pos1, Vec2 pos2)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(Time.deltaTime);
             RemoveGood(pos1);
             RemoveGood(pos2);
             UpdateHiddleState(pos1);
@@ -2207,7 +2207,7 @@ namespace XrCode
         //数据逻辑更新完毕，开始更新关卡视图
         IEnumerator end_update_map(bool isOffline)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(Time.deltaTime);
             if (!isTutorial)
             {
                 //GameStatic.saveGame();
