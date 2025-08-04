@@ -61,14 +61,7 @@ namespace XrCode
         private void OnWithdrawBtnClickHandle()
         {
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-            if (!GameDefines.ifIAA)
-            {
-                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
-            }
-            else
-            {
-                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
-            }
+            UIManager.Instance.OpenSync<UIGamePlay>(GameDefines.ifIAA ? EUIType.EUIGamePlayBy : EUIType.EUIGamePlay);
 
             PlayerFacade.AddWMoney(adRewardValue);
         }
@@ -78,29 +71,14 @@ namespace XrCode
             FacadeAd.PlayRewardAd(() =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-                if (!GameDefines.ifIAA)
-                {
-                    UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
-                }
-                else
-                {
-                    UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
-                }
-                PlayerFacade.AddWMoney(adRewardValue);
+                UIManager.Instance.OpenSync<UIGamePlay>(GameDefines.ifIAA ? EUIType.EUIGamePlayBy : EUIType.EUIGamePlay);
             }, null);
         }
 
         private void OnOnlyMoneyBtnClickHandle()
         {
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-            if (!GameDefines.ifIAA)
-            {
-                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
-            }
-            else
-            {
-                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
-            }
+            UIManager.Instance.OpenSync<UIGamePlay>(GameDefines.ifIAA ? EUIType.EUIGamePlayBy : EUIType.EUIGamePlay);
             PlayerFacade.AddWMoney(rewardValue);
         }
 

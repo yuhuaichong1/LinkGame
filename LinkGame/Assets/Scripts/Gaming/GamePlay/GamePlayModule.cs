@@ -1840,7 +1840,7 @@ namespace XrCode
                     float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
                     STimerManager.Instance.CreateSDelay(delayTime, () =>
                     {
-                        UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
+                        UIManager.Instance.CloseUI(GameDefines.ifIAA ? EUIType.EUIGamePlayBy : EUIType.EUIGamePlay);
                         UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
 
                         FacadeTask.CheckLevelPass(curLevel);
