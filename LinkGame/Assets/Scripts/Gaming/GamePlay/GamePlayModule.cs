@@ -168,9 +168,7 @@ namespace XrCode
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
 
-            LevelDefines.maxLevel = Game.Instance.IsAb
-      ? ConfigModule.Instance.Tables.TBLevel.DataList.Count
-      : ConfigModule.Instance.Tables.TBLevelAct.DataList.Count;
+            LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -1756,6 +1754,7 @@ namespace XrCode
 
             if (curTopNoticeCount == GameDefines.TopNotice_Count_Max)
             {
+                if (GameDefines.ifIAA) return;
                 curTopNoticeCount = 0;
                 FacadeEffect.PlayRewardNoticeEffect();
             }
@@ -1764,6 +1763,7 @@ namespace XrCode
 
             if (curAwesomeCount == GameDefines.Awesome_Count_Max)
             {
+                if (GameDefines.ifIAA) return;
                 curAwesomeCount = 0;
                 UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
             }
@@ -2591,9 +2591,7 @@ namespace XrCode
         private void NextLevel()
         {
             // 检查当前关卡是否需要处理可撤回逻辑
-            var withdrawType = Game.Instance.IsAb
-                ? ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType
-                : ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType;
+            var withdrawType = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType : ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType;
 
             if (withdrawType == 1)
             {

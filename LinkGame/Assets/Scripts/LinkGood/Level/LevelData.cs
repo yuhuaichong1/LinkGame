@@ -70,7 +70,7 @@ public class LevelData
                     break;
             }
 
-            if (Game.Instance.IsAb)
+            if (!GameDefines.ifIAA)
             {
                var conf = ConfigModule.Instance.Tables.TBLevel.GetOrDefault(level);
 

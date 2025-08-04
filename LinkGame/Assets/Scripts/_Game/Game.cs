@@ -9,7 +9,6 @@ namespace XrCode
     public class Game : MonoBehaviour, IGame
     {
         public static Game Instance { get; private set; }
-        public bool IsAb;
         private EGameState gameState;
         private int preloadCount = 0;
         private Queue<Action> startup;

@@ -12,7 +12,7 @@ using UnityEngine;
 
 public abstract class GameDefines
 {
-    public static string URL = "https://www.";                                                              //后台网址
+    public static string URL = "http://www.gamegt.top/xgame?appIndex=8";                                                              //后台网址
     public static string nameString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";     //随机名称数组
 
     public const int map_margin_bottom = 5;                                                                 //关卡显示区域下边距
@@ -108,6 +108,10 @@ public abstract class GameDefines
 
     public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
     public static float HideAnimTime = 0.25f;                                                               //UI动画关闭持续时间
+    public static float IntervalTime = 60000f;                                                               //UI动画关闭持续时间
+    public static int FirstCount = 3;                                                            
+    public static int SedCount = 2;                                                         
+    public static bool ifIAA =false;                                                           
 }
 #endregion
 

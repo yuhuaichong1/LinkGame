@@ -7,7 +7,7 @@ public abstract class PlayerPrefDefines
 {
     private static string GetKey(string baseKey)
     {
-        if (Game.Instance != null && !Game.Instance.IsAb)
+        if (GameDefines.ifIAA)
         {
             return baseKey + "Act";
         }

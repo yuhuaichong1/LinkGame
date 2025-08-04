@@ -147,7 +147,7 @@ namespace XrCode
             float proValue = GamePlayFacade.GetRemainPCT();
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
-
+       
 
         }
         private void SetProcess()
@@ -404,7 +404,7 @@ namespace XrCode
         {
             FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () =>
             {
-                mWithdrawTip.gameObject.SetActive(true);
+                mWithdrawTip.gameObject.SetActive(false);
                 TMDTipShow();
             });
         }

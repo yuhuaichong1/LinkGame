@@ -196,48 +196,54 @@ namespace XrCode
         //例子
         public void RecieveIAAMessage(string msg)
         {
-            #region 范例
-            //msg的消息为：{"code":200,"msg":"Success","data":true,"ext":"{\"adtime\":\"6000\",\"firstCount\":\"3\",\"sedCount\":\"2\",\"LevelWinPlayAd\":false}"}
+            string content = msg.Replace("\n", "");
+            if (content.StartsWith("["))
+            {
+                content = content.Remove(0, 1);
+            }
+            if (content.EndsWith("]"))
+            {
+                content = content.Remove(content.Length - 1, 1);
+            }
 
-            //string content = msg.Replace("\n", "");
-            //if (content.StartsWith("["))
-            //{
-            //    content = content.Remove(0, 1);
-            //}
-            //if (content.EndsWith("]"))
-            //{
-            //    content = content.Remove(content.Length - 1, 1);
-            //}
+            Notification notify = new Notification();
+            notify.Content = content;
 
-            //Notification notify = new Notification();
-            //notify.Content = content;
-
-
+ 
             //游戏IAA判断
-            //if (notify["data"] != null)
-            //{
-            //    bool iaa = !bool.Parse(notify["data"].ToString());
-            //}
+            if (notify["data"] != null)
+            {
+                bool iaa = bool.Parse(notify["data"].ToString());
+                GameDefines.ifIAA = iaa;
+                PlayerPrefs.SetInt("GoodMatch_ifIAA", iaa ? 1 : 2);
+            }
+            Debug.LogError(GameDefines.ifIAA + "当前是否开启");
+            Dictionary<string, object> iaaDic = notify["data"] as Dictionary<string, object>;
+            if (notify["ext"] != null)
+            {
+                Notification notify1 = new Notification();
+                notify1.Content = notify["ext"];
+                Dictionary<string, object> adDic = notify1.DicData;
 
-            //Dictionary<string, object> iaaDic = notify["data"] as Dictionary<string, object>;
-            //if (notify["ext"] != null)
-            //{
-            //    Notification notify1 = new Notification();
-            //    notify1.Content = notify["ext"];
-            //    Dictionary<string, object> adDic = notify1.DicData;
+                // 插屏广告间隔时间
+                if (adDic.TryGetValue("adtime", out object at))
+                {
+                    GameDefines.IntervalTime = int.Parse(at.ToString());
+                }
+                //第一次拒绝广告次数
+                if (adDic.TryGetValue("firstCount", out object fc))
+                {
+                    GameDefines.FirstCount = int.Parse(fc.ToString());
+                }
 
-            //    if (adDic.TryGetValue("adtime", out object at))
-            //    {
-            //        GameDefines.IntervalTime = int.Parse(at.ToString());
-            //    }
-            //    if (adDic.TryGetValue("firstCount", out object fc))
-            //    {
-            //        GameDefines.FirstCount = int.Parse(fc.ToString());
-            //    }
-            //}
-            #endregion
+                //第二次拒绝（含）之后广告次数
+                if (adDic.TryGetValue("sedCount", out object sc))
+                {
+                    GameDefines.SedCount = int.Parse(sc.ToString());
+                }
+            }
         }
-
-        #endregion
     }
+
 }
+#endregion

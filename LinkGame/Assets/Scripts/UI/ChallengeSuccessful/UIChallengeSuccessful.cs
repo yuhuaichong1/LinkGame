@@ -21,7 +21,7 @@ namespace XrCode
         protected override void OnEnable()
         {
              bool ifwithdraw;
-            if (Game.Instance.IsAb)
+            if (!GameDefines.ifIAA)
             {
                 ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
                 rewardValue = level.Reward;
@@ -58,7 +58,7 @@ namespace XrCode
         	    private void OnWithdrawBtnClickHandle()
         {
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-            if (Game.Instance.IsAb)
+            if (!GameDefines.ifIAA)
             {
                 UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
             }

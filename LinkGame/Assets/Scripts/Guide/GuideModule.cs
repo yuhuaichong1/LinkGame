@@ -40,9 +40,7 @@ public class GuideModule : BaseModule
         if (curStep == 0) curStep = GameDefines.firstGuideId;
         else
         {
-            var backStep = Game.Instance.IsAb
-                ? ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep
-                : ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep).BackStep;
+            var backStep = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep).BackStep : ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
             curStep = backStep != 0 ? backStep : curStep;
         }
 
@@ -53,7 +51,7 @@ public class GuideModule : BaseModule
     private void SetGuide(int step)
     {
         curStep = step;
-        if (Game.Instance.IsAb)
+        if (!GameDefines.ifIAA)
         {
             ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
             curGuideItems.step = step;
@@ -98,12 +96,12 @@ public class GuideModule : BaseModule
     /// </summary>
     private void NextStep()
     {
-        if(curGuideItems.ifNextStep && !CheckGuideEnd())
+        if (curGuideItems.ifNextStep && !CheckGuideEnd())
         {
             bool orginBool = curGuideItems.ifNextPlay;
             curStep = curGuideItems.nextStep;
             SetGuide(curStep);
-            if (orginBool) 
+            if (orginBool)
             {
                 FacadeGuide.PlayGuide();
             }
@@ -150,9 +148,9 @@ public class GuideModule : BaseModule
     /// <param name="pathData">路径（可能是其他类型）</param>
     /// <param name="item">当前引导项目</param>
     /// <returns>目标路径</returns>
-    private string GetClickRectTrans(string pathData) 
-    { 
-        switch(pathData) 
+    private string GetClickRectTrans(string pathData)
+    {
+        switch (pathData)
         {
             case "handPos":
                 return curGuideItems.handPos;
@@ -168,7 +166,7 @@ public class GuideModule : BaseModule
         return curGuideItems;
     }
 
-    private int GetCurStep() 
+    private int GetCurStep()
     {
         return curStep;
     }
@@ -200,9 +198,7 @@ public class GuideModule : BaseModule
     /// <returns>引导是否结束</returns>
     private bool CheckGuideEnd()
     {
-        var nextStep = Game.Instance.IsAb
-               ? ConfigModule.Instance.Tables.TBGuides.Get(curStep)?.NextStep ?? 0
-               : ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep)?.NextStep ?? 0;
+        var nextStep = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep)?.NextStep ?? 0 : ConfigModule.Instance.Tables.TBGuides.Get(curStep)?.NextStep ?? 0;
         var isEnd = nextStep == 0;
         if (isEnd)
         {
