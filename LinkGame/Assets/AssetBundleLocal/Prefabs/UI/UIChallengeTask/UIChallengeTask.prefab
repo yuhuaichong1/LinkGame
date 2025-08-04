@@ -283,6 +283,7 @@ MonoBehaviour:
   ProgressText: {fileID: 8160230766257612802}
   ReceiveBtn: {fileID: 5330965092606704873}
   InProgress: {fileID: 6003555701448463184}
+  ReceiveIcon: {fileID: 2782839624030154098}
   TaskType: 0
   TaskId: 0
 --- !u!1 &407571750157184221
@@ -4620,6 +4621,7 @@ MonoBehaviour:
   ProgressText: {fileID: 4283782584748152987}
   ReceiveBtn: {fileID: 2702286758391526258}
   InProgress: {fileID: 6827081185257021120}
+  ReceiveIcon: {fileID: 0}
   TaskType: 0
   TaskId: 0
 --- !u!1 &8183767409285407791
