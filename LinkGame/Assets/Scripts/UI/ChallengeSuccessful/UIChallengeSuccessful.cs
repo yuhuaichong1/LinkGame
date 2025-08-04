@@ -80,7 +80,7 @@ namespace XrCode
             FacadeAd.PlayRewardAd(EAdSource.ChallengeSuccessful, () =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+                UIManager.Instance.OpenSync<UIGamePlay>(GameDefines.ifIAA ? EUIType.EUIGamePlayBy : EUIType.EUIGamePlay);
                 PlayerFacade.AddWMoney(adRewardValue);
                 GamePlayFacade.ChangeMoneyShow();
             }, null);
