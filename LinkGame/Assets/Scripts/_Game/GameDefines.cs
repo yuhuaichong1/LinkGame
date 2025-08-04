@@ -12,7 +12,7 @@ using UnityEngine;
 
 public abstract class GameDefines
 {
-    public static string URL = "https://www.";                                                              //后台网址
+    public static string URL = "http://www.gamegt.top/xgame?appIndex=8";                                    //后台网址
     public static string nameString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";     //随机名称数组
 
     public const int map_margin_bottom = 5;                                                                 //关卡显示区域下边距
@@ -100,7 +100,7 @@ public abstract class GameDefines
     public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
     public const int Rate_Count_Max = 5;                                                                    //评论UI展示的最大值
 
-    public static Vector2 Awesome_ExtraMoney_Num = new Vector2(10, 50);                                     //Awesome界面随机钱区间
+    public static Vector2 Awesome_ExtraMoney_Num = new Vector2(30, 50);                                     //Awesome界面随机钱区间
 
     public static string Reddot_Name_Out;                                                                   //外部红点名称
     public static string Reddot_Name_Daily;                                                                 //日常任务红点名称
@@ -110,6 +110,13 @@ public abstract class GameDefines
 
     public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
     public static float HideAnimTime = 0.25f;                                                               //UI动画关闭持续时间
+
+    public static float IntervalTime = 60000f;                                                              //插屏间隔时间
+
+    public static int FirstCount = 3;                                                                       //
+    public static int SedCount = 2;                                                                         //
+    public static bool ifIAA = true;                                                                        //AB包切换
+    public static bool IsAutoRefresh = true;                                                                //无物可消时是否刷新
 }
 #endregion
 

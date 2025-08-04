@@ -129,7 +129,15 @@ namespace XrCode
                     {
                         if (GamePlayFacade.GetNumberGoodCanEat() == 0)
                         {
-                            UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                            if (!GameDefines.IsAutoRefresh)
+                            {
+                                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                                
+                            }
+                            else
+                            {
+                                //GamePlayFacade.RefushFunc
+                            }
                         }
                         else
                         {

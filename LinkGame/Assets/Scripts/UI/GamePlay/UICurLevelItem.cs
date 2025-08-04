@@ -32,7 +32,7 @@ public class UICurLevelItem : MonoBehaviour
         bool b = level < curLevel;
 
         ItemGreyBg.gameObject.SetActive(!b);
-        ItemGreenBg.gameObject.SetActive(b);
+        ItemGreenBg.gameObject.SetActive(level <= curLevel);
         finishIcon.SetActive(b);
         curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("10011"), level);
         wTip.SetActive(b ? false : ConfigModule.Instance.Tables.TBLevel.Get(level).WithdrawType == 1);

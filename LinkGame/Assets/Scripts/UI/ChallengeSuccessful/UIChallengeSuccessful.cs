@@ -21,21 +21,24 @@ namespace XrCode
         protected override void OnEnable()
         {
             ConfLevel level = ConfigModule.Instance.Tables.TBLevel.Get(GamePlayFacade.GetCurLevel() - 1);
-            rewardValue = level.Reward;
+            adRewardValue = level.Reward;
             bool ifwithdraw = level.WithdrawType == 1;
 
-            string str = FacadePayType.RegionalChange(rewardValue);
+            string str = FacadePayType.RegionalChange(adRewardValue);
             mMoneyText.text = str;
 
-            mWithdrawBtn.gameObject.SetActive(ifwithdraw);
-            mClaimBtn.gameObject.SetActive(!ifwithdraw);
-            mOnlyMoney.gameObject.SetActive(!ifwithdraw);
-            if (!ifwithdraw)
-            {
-                rewardValue = rewardValue / 10;
+            //mWithdrawBtn.gameObject.SetActive(ifwithdraw);
+            //mClaimBtn.gameObject.SetActive(!ifwithdraw);
+            //mOnlyMoney.gameObject.SetActive(!ifwithdraw);
+            mWithdrawBtn.gameObject.SetActive(false);
+            mClaimBtn.gameObject.SetActive(true);
+            mOnlyMoney.gameObject.SetActive(true);
+            //if (!ifwithdraw)
+            //{
+                rewardValue = adRewardValue / 10;
                 LayoutRebuilder.ForceRebuildLayoutImmediate(mParent);
                 mOnlyMoney.text = $"{LanguageModule.GetText("10057")} {FacadePayType.RegionalChange(rewardValue)}";
-            }
+            //}
 
             mParticle.Play();
 
@@ -51,6 +54,7 @@ namespace XrCode
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
             UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
             PlayerFacade.AddWMoney(adRewardValue);
+            GamePlayFacade.ChangeMoneyShow();
         }
 
         private void OnClaimBtnClickHandle()
@@ -60,6 +64,7 @@ namespace XrCode
                 UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
                 UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
                 PlayerFacade.AddWMoney(adRewardValue);
+                GamePlayFacade.ChangeMoneyShow();
             }, null);
         }
 
@@ -68,6 +73,7 @@ namespace XrCode
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
             UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
             PlayerFacade.AddWMoney(rewardValue);
+            GamePlayFacade.ChangeMoneyShow();
         }
 
         protected override void OnDisable() { }

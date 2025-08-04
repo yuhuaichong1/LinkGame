@@ -219,11 +219,14 @@ namespace XrCode
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
 
-            ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
-            randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
+            if(curLevel != 1)
+            {
+                ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
+                randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
 
-            totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
-            //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
+                totalGood = SPlayerPrefs.GetInt(PlayerPrefDefines.totalGood);
+                //remainGood = SPlayerPrefs.GetInt(PlayerPrefDefines.remainGood);
+            }
         }
 
         /// <summary>
@@ -2222,11 +2225,17 @@ namespace XrCode
                 //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 0, GameStatic.currentScore, false);
             }
             int numberGoodCanEat = GetNumberGoodCanEat();
-            D.Log("剩余可消除对数 : " + numberGoodCanEat);
+            D.Log($"剩余可消除对数 : {numberGoodCanEat}");
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
-                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
-                //Game.Instance.StartCoroutine(StartResetMap());
+                if(GameDefines.IsAutoRefresh)
+                {
+                    Game.Instance.StartCoroutine(StartResetMap());
+                }
+                else
+                {
+                    UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                }
             }
             if (curMapState == EMapState.Eating)
                 ChangeMapState(EMapState.Playing);
