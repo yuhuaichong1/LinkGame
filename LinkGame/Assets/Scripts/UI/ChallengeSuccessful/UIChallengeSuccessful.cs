@@ -78,7 +78,14 @@ namespace XrCode
             FacadeAd.PlayRewardAd(() =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+                if (!GameDefines.ifIAA)
+                {
+                    UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+                }
+                else
+                {
+                    UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
+                }
                 PlayerFacade.AddWMoney(adRewardValue);
             }, null);
         }
@@ -86,7 +93,14 @@ namespace XrCode
         private void OnOnlyMoneyBtnClickHandle()
         {
             UIManager.Instance.CloseUI(EUIType.EUIChallengeSuccessful);
-            UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+            if (!GameDefines.ifIAA)
+            {
+                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlay);
+            }
+            else
+            {
+                UIManager.Instance.OpenSync<UIGamePlay>(EUIType.EUIGamePlayBy);
+            }
             PlayerFacade.AddWMoney(rewardValue);
         }
 
