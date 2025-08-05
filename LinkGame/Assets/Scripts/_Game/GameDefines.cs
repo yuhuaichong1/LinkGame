@@ -122,7 +122,7 @@ public abstract class GameDefines
 
     public static int FirstCount = 3;                                                                       //
     public static int SedCount = 2;                                                                         //
-    public static bool ifIAA = false;                                                                        //AB包切换
+    public static bool ifIAA = true;                                                                        //AB包切换
     public static bool IsAutoRefresh = true;                                                                //无物可消时是否刷新
 }
 #endregion
