@@ -314,6 +314,7 @@ public enum EAdtype
 //广告来源
 public enum EAdSource 
 {
+    Unknown,
     Awesome,//中途额外奖励界面
     ChallengeSuccessful,//关卡结算界面
     Congratulations,//任务领取界面

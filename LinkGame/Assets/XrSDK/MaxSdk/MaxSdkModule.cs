@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XrCode;
 using ThinkingData.Analytics;
+using static MaxSdkBase;
 
 namespace XrSDK
 {
@@ -47,12 +48,12 @@ namespace XrSDK
             //showRewardedButton.onClick.AddListener(ShowRewardedAd);
             //showBannerButton.onClick.AddListener(ToggleBannerVisibility);
             //showMRecButton.onClick.AddListener(ToggleMRecVisibility);
-            //mediationDebuggerButton.onClick.AddListener(MaxSdk.ShowMediationDebugger);
+            //mediationDgerButton.onClick.AddListener(MaxSdk.ShowMediationDger);
 
             MaxSdkCallbacks.OnSdkInitializedEvent += sdkConfiguration =>
             {
                 // AppLovin SDK is initialized, configure and start loading ads.
-                Debug.Log("MAX SDK Initialized");
+                D.Log("MAX SDK Initialized");
 
                 if (!string.IsNullOrEmpty(interstitialAdUnitId)) InitializeInterstitialAds();
                 if (!string.IsNullOrEmpty(rewardedAdUnitId)) InitializeRewardedAds();
@@ -63,7 +64,7 @@ namespace XrSDK
                 //AdjustConfig adjustConfig = new AdjustConfig("YourAppToken", AdjustEnvironment.Sandbox);
                 //Adjust.start(adjustConfig);
 
-                //MaxSdk.ShowMediationDebugger();
+                //MaxSdk.ShowMediationDger();
             };
             ConnectTD();
             MaxSdk.SetSdkKey(maxSdkKey);
@@ -77,8 +78,10 @@ namespace XrSDK
             // Attach callbacks
             MaxSdkCallbacks.Interstitial.OnAdLoadedEvent += OnInterstitialLoadedEvent;
             MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent += OnInterstitialFailedEvent;
-            MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += OnInterstitialDismissedEvent;
+            MaxSdkCallbacks.Interstitial.OnAdDisplayedEvent += OnInterstitialDisplayedEvent;
             MaxSdkCallbacks.Interstitial.OnAdDisplayFailedEvent += InterstitialFailedToDisplayEvent;
+            MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += OnInterstitialDismissedEvent;
+            MaxSdkCallbacks.Interstitial.OnAdClickedEvent += OnInterstitialClickedEvent;
             MaxSdkCallbacks.Interstitial.OnAdRevenuePaidEvent += OnInterstitialRevenuePaidEvent;
 
             MaxSdkDefines.ShowInterstitial += ShowInterstitial;
@@ -114,13 +117,22 @@ namespace XrSDK
         {
             // Interstitial ad is ready to be shown. MaxSdk.IsInterstitialReady(interstitialAdUnitId) will now return 'true'
             //interstitialStatusText.text = "Loaded";
-            Debug.Log("Interstitial loaded");
+            D.Log("Interstitial loaded");
             // Reset retry attempt
             interstitialRetryAttempt = 0;
             MaxSdkDefines.InterstitialLoadedEvent?.Invoke();
 
             IAdIncome = adInfo.Revenue;
             IAdName = adInfo.NetworkName;
+
+            MaxSdkDefines.OnInterstitialLoadedEvent?.Invoke(adUnitId, adInfo);
+        }
+
+        private void OnInterstitialDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo info)
+        {
+            D.Log("Interstitial ad displayed");
+
+            MaxSdkDefines.OnInterstitialDisplayedEvent?.Invoke(adUnitId, info);
         }
 
         private void OnInterstitialFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
@@ -130,34 +142,47 @@ namespace XrSDK
             double retryDelay = Math.Pow(2, Math.Min(6, interstitialRetryAttempt));
 
             //interstitialStatusText.text = "Load failed: " + errorInfo.Code + "\nRetrying in " + retryDelay + "s...";
-            Debug.Log("Interstitial failed to load with error code: " + errorInfo.Code);
+            D.Log("Interstitial failed to load with error code: " + errorInfo.Code);
             //广播插屏广告加载失败事件
             MaxSdkDefines.InterstitialFailedEvent?.Invoke(adUnitId, errorInfo.Code);
             MonoInst.Instance.Invoke("LoadInterstitial", (float)retryDelay);
+
+            MaxSdkDefines.OnInterstitialLoadFailedEvent?.Invoke(adUnitId, errorInfo);
         }
 
         private void InterstitialFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
             // Interstitial ad failed to display. We recommend loading the next ad
-            Debug.Log("Interstitial failed to display with error code: " + errorInfo.Code);
+            D.Log("Interstitial failed to display with error code: " + errorInfo.Code);
             //广播插屏广告展示失败事件
             MaxSdkDefines.InterstitialFailedToDisplayEvent?.Invoke(adUnitId, errorInfo.Code);
             LoadInterstitial();
+
+            MaxSdkDefines.OnInterstitialFailedToDisplayEvent?.Invoke(adUnitId, errorInfo, adInfo);
         }
 
         private void OnInterstitialDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // Interstitial ad is hidden. Pre-load the next ad
-            Debug.Log("Interstitial dismissed");
+            D.Log("Interstitial ad dismissed");
             //广播插屏广告关闭事件
             MaxSdkDefines.InterstitialDismissedEvent?.Invoke(adInfo.Revenue);
             LoadInterstitial();
+
+            MaxSdkDefines.OnInterstitialDismissedEvent?.Invoke(adUnitId, adInfo);
+        }
+
+        private void OnInterstitialClickedEvent(string adUnitId, MaxSdkBase.AdInfo info)
+        {
+            D.Log("Interstitial ad clicked");
+
+            MaxSdkDefines.OnInterstitialClickedEvent?.Invoke(adUnitId, info);
         }
 
         private void OnInterstitialRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // Interstitial ad revenue paid. Use this callback to track user revenue.
-            Debug.Log("Interstitial revenue paid");
+            D.Log("Interstitial ad revenue paid");
 
             // Ad revenue
             double revenue = adInfo.Revenue;
@@ -171,6 +196,8 @@ namespace XrSDK
             TrackAdRevenue(adInfo);
 
             ModuleMgr.Instance.TDAnalyticsManager.IAdNameAndIncomeEnd(adInfo.NetworkName, (float)adInfo.Revenue);
+
+            MaxSdkDefines.OnInterstitialRevenuePaidEvent?.Invoke(adUnitId, adInfo);
         }
 
         #endregion
@@ -223,7 +250,7 @@ namespace XrSDK
         private void OnRewardedAdLoadedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // Rewarded ad is ready to be shown. MaxSdk.IsRewardedAdReady(rewardedAdUnitId) will now return 'true'
-            Debug.Log("Rewarded ad loaded");
+            D.Log("Rewarded ad loaded");
 
             // Reset retry attempt
             rewardedRetryAttempt = 0;
@@ -234,7 +261,9 @@ namespace XrSDK
             RAdIncome = adInfo.Revenue;
             RAdName = adInfo.NetworkName;
 
-            Debug.LogError("广告加载完毕：" + adInfo.DspName + " | " + adInfo.Revenue);
+            D.Error("广告加载完毕：" + adInfo.DspName + " | " + adInfo.Revenue);
+
+            MaxSdkDefines.OnRewardedAdLoadedEvent?.Invoke(adUnitId, adInfo);
         }
 
         private void OnRewardedAdFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
@@ -243,54 +272,65 @@ namespace XrSDK
             rewardedRetryAttempt++;
             double retryDelay = Math.Pow(2, Math.Min(6, rewardedRetryAttempt));
 
-            Debug.Log("Rewarded ad failed to load with error code: " + errorInfo.Code);
+            D.Log("Rewarded ad failed to load with error code: " + errorInfo.Code);
 
             MonoInst.Instance.Invoke("LoadRewardedAd", (float)retryDelay);
             //广播激励视频加载失败事件
             MaxSdkDefines.RewardedAdFailedEvent?.Invoke(adUnitId, errorInfo.Code);
+
+            MaxSdkDefines.OnRewardedAdLoadFailedEvent?.Invoke(adUnitId, errorInfo);
         }
 
         private void OnRewardedAdFailedToDisplayEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo, MaxSdkBase.AdInfo adInfo)
         {
             // Rewarded ad failed to display. We recommend loading the next ad
-            Debug.Log("Rewarded ad failed to display with error code: " + errorInfo.Code);
+            D.Log("Rewarded ad failed to display with error code: " + errorInfo.Code);
             LoadRewardedAd();
             //广播激励视频显示失败事件
             MaxSdkDefines.RewardedAdFailedToDisplayEvent?.Invoke(adUnitId, errorInfo.Code);
 
+            MaxSdkDefines.OnRewardedAdFailedToDisplayEvent?.Invoke(adUnitId, errorInfo, adInfo);
         }
 
         private void OnRewardedAdDisplayedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            Debug.Log("Rewarded ad displayed");
+            D.Log("Rewarded ad displayed");
+
+            MaxSdkDefines.OnRewardedAdDisplayedEvent?.Invoke(adUnitId, adInfo);
         }
 
         private void OnRewardedAdClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            Debug.Log("Rewarded ad clicked");
+            D.Log("Rewarded ad clicked");
+
+            MaxSdkDefines.OnRewardAdClickedEvent?.Invoke(adUnitId, adInfo);
         }
 
         private void OnRewardedAdDismissedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // Rewarded ad is hidden. Pre-load the next ad
-            Debug.Log("Rewarded ad dismissed");
+            D.Log("Rewarded ad dismissed");
             LoadRewardedAd();
             MaxSdkDefines.RewardedAdDismissedEvent?.Invoke();
+
+            MaxSdkDefines.OnRewardAdHiddenEvent?.Invoke(adUnitId, adInfo);
         }
 
         private void OnRewardedAdReceivedRewardEvent(string adUnitId, MaxSdk.Reward reward, MaxSdkBase.AdInfo adInfo)
         {
             // Rewarded ad was displayed and user should receive the reward
-            Debug.Log("Rewarded ad received reward");
+            D.Log("Rewarded ad received reward");
             MaxSdkDefines.RewardedAdReceivedRewardEvent?.Invoke(adInfo.Revenue);
 
             ModuleMgr.Instance.TDAnalyticsManager.RAdNameAndIncomeEnd(adInfo.NetworkName, (float)adInfo.Revenue);
+
+            MaxSdkDefines.OnRewardAdReceivedRewardEvent?.Invoke(adUnitId, reward, adInfo);
         }
 
         private void OnRewardedAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // Rewarded ad revenue paid. Use this callback to track user revenue.
-            Debug.Log("Rewarded ad revenue paid");
+            D.Log("Rewarded ad revenue paid");
 
             // Ad revenue
             double revenue = adInfo.Revenue;
@@ -302,6 +342,8 @@ namespace XrSDK
             string placement = adInfo.Placement; // The placement this ad's postbacks are tied to
 
             TrackAdRevenue(adInfo);
+
+            MaxSdkDefines.OnRewardAdRevenuePaidEvent?.Invoke(adUnitId, adInfo);
         }
 
         #endregion
@@ -346,7 +388,7 @@ namespace XrSDK
         {
             // Banner ad is ready to be shown.
             // If you have already called MaxSdk.ShowBanner(BannerAdUnitId) it will automatically be shown on the next ad refresh.
-            Debug.Log("Banner ad loaded");
+            D.Log("Banner ad loaded");
             //横幅广告加载完成
             MaxSdkDefines.BannerAdLoadedEvent?.Invoke();
         }
@@ -354,7 +396,7 @@ namespace XrSDK
         private void OnBannerAdFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
             // Banner ad failed to load. MAX will automatically try loading a new ad internally.
-            Debug.Log("Banner ad failed to load with error code: " + errorInfo.Code);
+            D.Log("Banner ad failed to load with error code: " + errorInfo.Code);
             //横幅广告加载失败
             MaxSdkDefines.BannerAdFailedEvent?.Invoke(adUnitId, errorInfo.Code);
 
@@ -362,13 +404,13 @@ namespace XrSDK
 
         private void OnBannerAdClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            Debug.Log("Banner ad clicked");
+            D.Log("Banner ad clicked");
         }
 
         private void OnBannerAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // Banner ad revenue paid. Use this callback to track user revenue.
-            Debug.Log("Banner ad revenue paid");
+            D.Log("Banner ad revenue paid");
 
             // Ad revenue
             double revenue = adInfo.Revenue;
@@ -420,7 +462,7 @@ namespace XrSDK
         {
             // MRec ad is ready to be shown.
             // If you have already called MaxSdk.ShowMRec(MRecAdUnitId) it will automatically be shown on the next MRec refresh.
-            Debug.Log("MRec ad loaded");
+            D.Log("MRec ad loaded");
             //MRec 广告加载完成
             MaxSdkDefines.MRecAdLoadedEvent?.Invoke();
         }
@@ -428,20 +470,20 @@ namespace XrSDK
         private void OnMRecAdFailedEvent(string adUnitId, MaxSdkBase.ErrorInfo errorInfo)
         {
             // MRec ad failed to load. MAX will automatically try loading a new ad internally.
-            Debug.Log("MRec ad failed to load with error code: " + errorInfo.Code);
+            D.Log("MRec ad failed to load with error code: " + errorInfo.Code);
             //MRec 广告加载失败
             MaxSdkDefines.MRecAdFailedEvent?.Invoke(adUnitId, errorInfo.Code);
         }
 
         private void OnMRecAdClickedEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
-            Debug.Log("MRec ad clicked");
+            D.Log("MRec ad clicked");
         }
 
         private void OnMRecAdRevenuePaidEvent(string adUnitId, MaxSdkBase.AdInfo adInfo)
         {
             // MRec ad revenue paid. Use this callback to track user revenue.
-            Debug.Log("MRec ad revenue paid");
+            D.Log("MRec ad revenue paid");
 
             // Ad revenue
             double revenue = adInfo.Revenue;

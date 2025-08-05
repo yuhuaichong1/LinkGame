@@ -54,4 +54,7 @@ public abstract class PlayerPrefDefines
     public static string totalGood => GetKey("LinkGame_totalGood");                    //场景中的物体的总数
     public static string remainGood => GetKey("LinkGame_remainGood");                  //场景中剩余物体数量
 
+    public static string totalAdwatch => GetKey("LinkGame_totalAdwatch");              //累计广告次数
+    public static string totalAdRevenue => GetKey("LinkGame_totalAdwatch");            //累计广告收入
+
 }

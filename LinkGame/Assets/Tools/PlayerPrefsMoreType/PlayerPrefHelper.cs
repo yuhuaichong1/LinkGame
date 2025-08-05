@@ -58,6 +58,25 @@ public static class SPlayerPrefs
     }
 
     /// <summary>
+    /// ¥Ê¥¢Double
+    /// </summary>
+    /// <param name="key">Key</param>
+    /// <param name="value">¥Ê¥¢÷µ</param>
+    public static void SetDouble(string key, double value)
+    {
+        PlayerPrefs.SetString(key, value.ToString());
+    }
+
+    /// <summary>
+    /// ∂¡»°Double
+    /// </summary>
+    /// <param name="key">Key</param>
+    public static double GetDouble(string key)
+    {
+        return double.Parse(PlayerPrefs.GetString(key));
+    }
+
+    /// <summary>
     /// ¥Ê¥¢List
     /// </summary>
     /// <typeparam name="T">List¿‡–Õ</typeparam>

@@ -99,14 +99,14 @@ namespace XrCode
         /// <param name="diasource">广告位</param>
         /// <param name="ecpm">ecpm</param>
         /// <param name="platform">广告平台</param>
-        public void AdFail(EAdtype adtype, EAdSource diasource, float ecpm, string platform)
+        public void AdFail(EAdtype adtype, EAdSource diasource, string errmsg, string platform)
         {
             if (!isOpenTD) return;
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
             properties.Add("adtype", adtype.ToString());
             properties.Add("diasource", diasource.ToString());
-            properties.Add("ecpm", ecpm);
+            properties.Add("errmsg", errmsg);
             properties.Add("platform", platform);
 
             //SetUserMD();

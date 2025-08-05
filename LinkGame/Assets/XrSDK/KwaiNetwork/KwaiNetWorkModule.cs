@@ -205,7 +205,7 @@ public class KwaiNetWorkModule : BaseModule
         // 受国内环境限制，国内无法请求到海外广告，需要加白。可以将trackId反馈给对接同学进行加白。
         public void OnAdLoadFailed(string trackId, int code, string msg)
         {
-            Debug.LogError($"RewardAdLoadListener#OnAdLoadFailed , trackId:{trackId}, code:{code}, msg:{msg}");
+            D.Error($"RewardAdLoadListener#OnAdLoadFailed , trackId:{trackId}, code:{code}, msg:{msg}");
 
             KwaiNetWorkDefines.KNW_OnRAdLoadFailed?.Invoke(trackId, code, msg);
         }
