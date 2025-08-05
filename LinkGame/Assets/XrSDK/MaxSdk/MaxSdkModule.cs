@@ -100,7 +100,6 @@ namespace XrSDK
         {
             if (MaxSdk.IsInterstitialReady(interstitialAdUnitId))
             {
-                MaxSdkDefines.PauseInterTimer();
                 //interstitialStatusText.text = "Showing";
                 MaxSdk.ShowInterstitial(interstitialAdUnitId);
 
@@ -120,7 +119,6 @@ namespace XrSDK
             D.Log("Interstitial loaded");
             // Reset retry attempt
             interstitialRetryAttempt = 0;
-            MaxSdkDefines.InterstitialLoadedEvent?.Invoke();
 
             IAdIncome = adInfo.Revenue;
             IAdName = adInfo.NetworkName;
@@ -144,7 +142,6 @@ namespace XrSDK
             //interstitialStatusText.text = "Load failed: " + errorInfo.Code + "\nRetrying in " + retryDelay + "s...";
             D.Log("Interstitial failed to load with error code: " + errorInfo.Code);
             //广播插屏广告加载失败事件
-            MaxSdkDefines.InterstitialFailedEvent?.Invoke(adUnitId, errorInfo.Code);
             MonoInst.Instance.Invoke("LoadInterstitial", (float)retryDelay);
 
             MaxSdkDefines.OnInterstitialLoadFailedEvent?.Invoke(adUnitId, errorInfo);
@@ -155,7 +152,6 @@ namespace XrSDK
             // Interstitial ad failed to display. We recommend loading the next ad
             D.Log("Interstitial failed to display with error code: " + errorInfo.Code);
             //广播插屏广告展示失败事件
-            MaxSdkDefines.InterstitialFailedToDisplayEvent?.Invoke(adUnitId, errorInfo.Code);
             LoadInterstitial();
 
             MaxSdkDefines.OnInterstitialFailedToDisplayEvent?.Invoke(adUnitId, errorInfo, adInfo);
@@ -166,7 +162,6 @@ namespace XrSDK
             // Interstitial ad is hidden. Pre-load the next ad
             D.Log("Interstitial ad dismissed");
             //广播插屏广告关闭事件
-            MaxSdkDefines.InterstitialDismissedEvent?.Invoke(adInfo.Revenue);
             LoadInterstitial();
 
             MaxSdkDefines.OnInterstitialDismissedEvent?.Invoke(adUnitId, adInfo);
@@ -236,13 +231,12 @@ namespace XrSDK
             if (MaxSdk.IsRewardedAdReady(rewardedAdUnitId))
             {
                 MaxSdk.ShowRewardedAd(rewardedAdUnitId);
-                MaxSdkDefines.PauseInterTimer();
 
                 ModuleMgr.Instance.TDAnalyticsManager.RAdNameAndIncomeStart(RAdName, (float)RAdIncome);
             }
             else
             {
-                MaxSdkDefines.failShowAdButReward?.Invoke();
+                MaxSdkDefines.RewardAdNotReadyEvent?.Invoke();
                 LoadRewardedAd();
             }
         }
@@ -276,8 +270,6 @@ namespace XrSDK
 
             MonoInst.Instance.Invoke("LoadRewardedAd", (float)retryDelay);
             //广播激励视频加载失败事件
-            MaxSdkDefines.RewardedAdFailedEvent?.Invoke(adUnitId, errorInfo.Code);
-
             MaxSdkDefines.OnRewardedAdLoadFailedEvent?.Invoke(adUnitId, errorInfo);
         }
 
@@ -287,8 +279,6 @@ namespace XrSDK
             D.Log("Rewarded ad failed to display with error code: " + errorInfo.Code);
             LoadRewardedAd();
             //广播激励视频显示失败事件
-            MaxSdkDefines.RewardedAdFailedToDisplayEvent?.Invoke(adUnitId, errorInfo.Code);
-
             MaxSdkDefines.OnRewardedAdFailedToDisplayEvent?.Invoke(adUnitId, errorInfo, adInfo);
         }
 
@@ -311,8 +301,6 @@ namespace XrSDK
             // Rewarded ad is hidden. Pre-load the next ad
             D.Log("Rewarded ad dismissed");
             LoadRewardedAd();
-            MaxSdkDefines.RewardedAdDismissedEvent?.Invoke();
-
             MaxSdkDefines.OnRewardAdHiddenEvent?.Invoke(adUnitId, adInfo);
         }
 
@@ -320,8 +308,6 @@ namespace XrSDK
         {
             // Rewarded ad was displayed and user should receive the reward
             D.Log("Rewarded ad received reward");
-            MaxSdkDefines.RewardedAdReceivedRewardEvent?.Invoke(adInfo.Revenue);
-
             ModuleMgr.Instance.TDAnalyticsManager.RAdNameAndIncomeEnd(adInfo.NetworkName, (float)adInfo.Revenue);
 
             MaxSdkDefines.OnRewardAdReceivedRewardEvent?.Invoke(adUnitId, reward, adInfo);
