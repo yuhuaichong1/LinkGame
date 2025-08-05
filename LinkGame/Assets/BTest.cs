@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BTest : MonoBehaviour
 {
+    void Start()
+    {
+       
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))

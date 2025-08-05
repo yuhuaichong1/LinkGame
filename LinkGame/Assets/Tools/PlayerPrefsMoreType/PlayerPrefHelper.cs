@@ -71,9 +71,15 @@ public static class SPlayerPrefs
     /// ∂¡»°Double
     /// </summary>
     /// <param name="key">Key</param>
-    public static double GetDouble(string key)
+    public static double GetDouble(string key, bool ifdefault = false)
     {
-        return double.Parse(PlayerPrefs.GetString(key));
+        string temp = PlayerPrefs.GetString(key);
+        double value;
+        if (temp == "" && ifdefault)
+            value = 0;
+        else
+            value = double.Parse(temp);
+        return value;
     }
 
     /// <summary>

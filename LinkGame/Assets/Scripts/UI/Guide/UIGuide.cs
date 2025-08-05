@@ -9,12 +9,15 @@ namespace XrCode
     public partial class UIGuide : BaseUI
     {
         private Action clickAction;
+        private TDAnalyticsManager TDAnalyticsManager;
 
         private Dictionary<int, int> level1GuideGoodDic;
         private Dictionary<string, RectTransform> posTrans;
 
         protected override void OnAwake() 
         {
+            TDAnalyticsManager = ModuleMgr.Instance.TDAnalyticsManager;
+
             FacadeGuide.PlayGuide += PlayGuide;
             FacadeGuide.CloseGuide += CloseGuide;
         }
@@ -108,8 +111,10 @@ namespace XrCode
 
         private void PlayGuide()
         {
-            mGuidePlane.gameObject.SetActive(true);
+            TDAnalyticsManager.GuideStep(FacadeGuide.GetCurStep());
 
+            mGuidePlane.gameObject.SetActive(true);
+            
             SetGuideShow();
         }
 

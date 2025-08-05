@@ -76,6 +76,8 @@ namespace XrCode
         /// </summary>
         IEnumerator StartLoad(string name)
         {
+            ModuleMgr.Instance.TDAnalyticsManager.LoadingStart();
+
             D.Log($"[SceneMod]: 加载场景 {name}");
 
             // 创建进度控制器

@@ -84,7 +84,7 @@ namespace XrCode
                 // 自己实现的一个计时器
                 TimerManager.Instance.CreateTimer(mCoolDownDur, () => { enableBtn = true; }, 0);
 
-                //ModuleMgr.Instance.TDAnalyticsManager.ButtonClick(eventData.selectedObject);
+                ModuleMgr.Instance.TDAnalyticsManager.ButtonClick(eventData.selectedObject);
             }
         }
 

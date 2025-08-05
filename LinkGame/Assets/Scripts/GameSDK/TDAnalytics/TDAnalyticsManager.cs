@@ -24,6 +24,10 @@ namespace XrCode
         //游戏编号，区分上线平台
         private string GameAppId = "405001";
 
+        
+        private DateTime AdTime;//广告时长统计
+        private DateTime loginTime;//登录时的时间
+
         protected override void OnLoad()
         {
             //GameLoad(PlayerPrefs.GetString("accoundId"));
@@ -46,7 +50,7 @@ namespace XrCode
             else
             {
                 this.accoundId = UnityEngine.Random.Range(1000000, 9999999).ToString();
-                PlayerPrefs.SetString("GoodMatch_accoundId", this.accoundId);
+                SPlayerPrefs.SetString("GoodMatch_accoundId", this.accoundId);
                 //superProperties["accountId"] = accoundId;//字符串
                 RegisterFinish(accoundId, DateTime.Now);
             }
@@ -62,13 +66,15 @@ namespace XrCode
                 });
                 TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppEnd, new Dictionary<string, object>()
                 {
-                    { "accountId", this.accoundId }
+                    { "accountId", this.accoundId },
                 });
                 TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppCrash, new Dictionary<string, object>() 
                 {
                     { "accountId", this.accoundId }
                 });
             }
+
+            loginTime = DateTime.Now;
         }
 
         /// <summary>
@@ -90,6 +96,8 @@ namespace XrCode
 
             //SetUserMD();
             TDAnalytics.Track("LG_AdStart", properties);
+
+            AdTime = DateTime.Now;
         }
 
         /// <summary>
@@ -132,6 +140,10 @@ namespace XrCode
 
             //SetUserMD();
             TDAnalytics.Track("TGM_AdComplete", properties);
+
+            TotalAdData((int)Math.Round((DateTime.Now - AdTime).TotalSeconds), ecpm / 1000);
+
+
         }
 
         /// <summary>
@@ -198,9 +210,10 @@ namespace XrCode
         public void RegisterFinish(string firstCheckId, DateTime regtime)
         {
             if (!isOpenTD) return;
-
+            
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            properties.Add("#first_check_id", firstCheckId);
+            //properties.Add("#first_check_id", firstCheckId);
+            properties.Add("#first_check_id", SystemInfo.deviceUniqueIdentifier);
             properties.Add("regtime", regtime);
 
             TDAnalytics.Track("LG_RegisterFinish", properties);
@@ -250,8 +263,13 @@ namespace XrCode
             if (!isOpenTD) return;
 
             Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("data", GameDefines.ifIAA);
 
             TDAnalytics.Track("LG_LoginSuccess", properties);
+
+            First_Register_And_Login();
+            Last_Login();
+
         }
 
         /// <summary>
@@ -272,12 +290,21 @@ namespace XrCode
         /// 点击btn
         /// </summary>
         /// <param name="buttonpath">btn对应路径</param>
-        public void ButtonClick(string buttonpath)
+        public void ButtonClick(GameObject buttonObj)
         {
             if (!isOpenTD) return;
-
+            if (buttonObj == null) return;
+            List<string> pathList = new List<string>();
+            pathList.Add(buttonObj.name);
+            Transform trans = buttonObj.transform.parent;
+            while (trans.parent != null)
+            {
+                pathList.Add(trans.gameObject.name);
+                trans = trans.parent;
+            }
+            pathList.Reverse();
             Dictionary<string, object> properties = new Dictionary<string, object>();
-            properties.Add("buttonpath", buttonpath);
+            properties.Add("buttonPath", string.Join("/", pathList));
 
             TDAnalytics.Track("LG_ButtonClick", properties);
         }
@@ -347,25 +374,29 @@ namespace XrCode
         /// </summary>
         public void LoginOut()
         {
-            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
+            TDAnalytics.UserAdd(new Dictionary<string, object>()
             {
-                {"total_taptime", 1},
-                {"total_runtime", 1},
-                {"current_money", 1},
-                {"current_runtime", 1},
+                //{ "total_taptime", 1},
+                { "total_runtime", (int)Math.Round((DateTime.Now - AdTime).TotalSeconds)},
+            });
+
+            TDAnalytics.UserSet(new Dictionary<string, object>()
+            {
+                {"current_money", PlayerFacade.GetWMoney()},
+                {"current_runtime", (int)Math.Round((DateTime.Now - AdTime).TotalSeconds)},
             });
         }
 
         /// <summary>
         /// 累计广告数据
         /// </summary>
-        public void TotalAdData()
+        public void TotalAdData(float time, float revenue)
         {
             TDAnalytics.UserSetOnce(new Dictionary<string, object>()
             {
                 {"total_ad_num", 1},
-                {"total_ad_time", 1},
-                {"total_ad_revenue", 1},
+                {"total_ad_time", time},
+                {"total_ad_revenue", revenue},
             });
         }
 
@@ -376,6 +407,19 @@ namespace XrCode
         public void SolarEngineMsg(Dictionary<string, object> msg)
         {
             TDAnalytics.UserSetOnce(msg);
+        }
+    }
+
+    public class LoginOut2 : TDAutoTrackEventHandler
+    {
+        public Dictionary<string, object> GetAutoTrackEventProperties(int type, Dictionary<string, object> properties)
+        {
+            ModuleMgr.Instance.TDAnalyticsManager.LoginOut();
+
+            return new Dictionary<string, object>()
+            {
+                {"AutoTrackEventProperty", DateTime.Today}
+            };
         }
     }
 }

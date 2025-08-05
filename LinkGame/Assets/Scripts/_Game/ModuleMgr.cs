@@ -92,11 +92,12 @@ namespace XrCode
             guideModule.Load();
             tDAnalyticsManager.Load();
             sceneMod.Load();
-            adModule.Load();
             taskModule.Load();
             playerModule.Load();
             payTypeModule.Load();
+            adModule.Load();
             sceneMod.LoadScene(ESceneType.MainScene);
+            ModuleMgr.Instance.TDAnalyticsManager.LoadFinish();
         }
 
         public void Update()

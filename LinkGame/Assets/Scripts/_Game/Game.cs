@@ -92,6 +92,7 @@ namespace XrCode
             if (preloadCount == 0)
             {
                 D.Error("[Game]: 资源加载完成");
+
                 ModuleMgr.Instance.Start();
                 gameState = EGameState.Run;
             }

@@ -40,7 +40,7 @@ namespace XrCode
         private void LoadData()
         {
             totalAdwatch = SPlayerPrefs.GetInt(PlayerPrefDefines.totalAdwatch);
-            totalAdRevenue = SPlayerPrefs.GetDouble(PlayerPrefDefines.totalAdRevenue);
+            totalAdRevenue = SPlayerPrefs.GetDouble(PlayerPrefDefines.totalAdRevenue, true);
         }
 
         //广告回调添加
@@ -135,6 +135,9 @@ namespace XrCode
         //播放激励广告
         private void PlayRewardAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
+            successAction?.Invoke();
+            return;
+
             this.eAdSource = eAdSource;
             maxEcpm = MaxSdkDefines.GetRewardedAdRevenue();
             kwaiEcpm = KwaiNetWorkDefines.GetRewardedAdECPM();
@@ -161,6 +164,9 @@ namespace XrCode
         //播放插屏广告
         private void PlayInterAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
+            successAction?.Invoke();
+            return;
+
             this.eAdSource = eAdSource;
             successfulAction = successAction;
             failedAction = failAction;
