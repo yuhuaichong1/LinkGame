@@ -14,6 +14,7 @@ namespace XrCode
         private int decimals;//显示暴保留小数点
         private float exchangeRate;//汇率
         private int NANP;//国际长途电话区号
+        private string countryCode;//国家码
 
         protected override void OnLoad()
         {
@@ -24,6 +25,7 @@ namespace XrCode
             FacadePayType.GetPayItems += GetPayItems;
             FacadePayType.RegionalChange += RegionalChange;
             FacadePayType.GetNANP += GetNANP;
+            FacadePayType.GetCountryCode += GetCountryCode;
 
             CountryCodeToInfo();
         }
@@ -33,7 +35,7 @@ namespace XrCode
         private void CountryCodeToInfo()
         {
             CultureInfo currentCulture = CultureInfo.CurrentCulture;
-            string countryCode = currentCulture.Name.Split("-")[1];
+            countryCode = currentCulture.Name.Split("-")[1];
             List<ConfPayRegion> payRegionList = ConfigModule.Instance.Tables.TBPayRegion.DataList;
             foreach (ConfPayRegion payRegion in payRegionList) 
             {
@@ -107,6 +109,10 @@ namespace XrCode
         private int GetNANP()
         {
             return NANP;
+        }
+        private string GetCountryCode()
+        {
+            return countryCode;
         }
     }
 }

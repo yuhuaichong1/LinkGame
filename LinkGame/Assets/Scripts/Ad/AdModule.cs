@@ -1,4 +1,5 @@
 using System;
+using static MaxSdkBase;
 
 namespace XrCode
 {
@@ -16,25 +17,33 @@ namespace XrCode
         private double totalAdRevenue;//累计广告收益
         private int currentAdwatch;//当局广告观看次数
 
+        private string countryCode;//国家码
+        private string notReadyStr;//未准备好错误字段
+
         protected override void OnLoad() 
         {
             TDAnalyticsManager = ModuleMgr.Instance.TDAnalyticsManager;
 
             FacadeAd.PlayRewardAd += PlayRewardAd;
             FacadeAd.PlayInterAd += PlayInterAd;
-            FacadeAd.GetAdSource = GetAdSource;
+            FacadeAd.GetAdSource += GetAdSource;
+
+            countryCode = FacadePayType.GetCountryCode();
+            notReadyStr = ModuleMgr.Instance.LanguageMod.GetText("10074");
 
             LoadData();
 
             AdCallback();
         }
 
+        //加载数据
         private void LoadData()
         {
             totalAdwatch = SPlayerPrefs.GetInt(PlayerPrefDefines.totalAdwatch);
             totalAdRevenue = SPlayerPrefs.GetDouble(PlayerPrefDefines.totalAdRevenue);
         }
 
+        //广告回调添加
         private void AdCallback()
         {
             #region MAX激励广告
@@ -47,13 +56,18 @@ namespace XrCode
                 string str = $"{ErrorInfo.Code} : {ErrorInfo.Message}";
                 D.Error(str);
                 TDAnalyticsManager.AdFail(EAdtype.Reward, this.eAdSource, str, AdInfo.NetworkName);
+
                 failedAction?.Invoke(ErrorInfo.Message);
             };
             MaxSdkDefines.OnRewardAdRevenuePaidEvent = (adUnitId, AdInfo) =>
             {
                 TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName);
+
                 currentAdwatch += 1;
                 totalAdwatch += 1;
+                totalAdRevenue += AdInfo.Revenue;
+                CheckAdTotalData();
+
                 successfulAction?.Invoke();
             };
             #endregion
@@ -68,13 +82,18 @@ namespace XrCode
                 string str = $"{code} : {msg}";
                 D.Error(str);
                 TDAnalyticsManager.AdFail(EAdtype.Reward, this.eAdSource, str, KwaiNetWorkDefines.GetRewardedAdName());
+
                 failedAction?.Invoke(msg);
             };
             KwaiNetWorkDefines.KNW_OnRAdPlayComplete = () =>
             {
                 TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName());
+
                 currentAdwatch += 1;
                 totalAdwatch += 1;
+                totalAdRevenue += kwaiEcpm / 1000;
+                CheckAdTotalData();
+
                 successfulAction?.Invoke();
             };
             #endregion
@@ -89,19 +108,32 @@ namespace XrCode
                 string str = $"{ErrorInfo.Code} : {ErrorInfo.Message}";
                 D.Error(str);
                 TDAnalyticsManager.AdFail(EAdtype.Interstitial, this.eAdSource, str, AdInfo.NetworkName);
+
                 failedAction?.Invoke(ErrorInfo.Message);
             };
             MaxSdkDefines.OnInterstitialRevenuePaidEvent = (adUnitId, AdInfo) =>
             {
                 TDAnalyticsManager.AdComplete(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName);
+
                 currentAdwatch += 1;
                 totalAdwatch += 1;
+                totalAdRevenue += AdInfo.Revenue;
+                CheckAdTotalData();
+
                 successfulAction?.Invoke();
+            };
+            #endregion
+
+            #region 其他
+            MaxSdkDefines.RewardAdNotReadyEvent += () =>
+            {
+                UIManager.Instance.OpenNotice(notReadyStr);
             };
             #endregion
         }
 
-        public void PlayRewardAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
+        //播放激励广告
+        private void PlayRewardAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
             this.eAdSource = eAdSource;
             maxEcpm = MaxSdkDefines.GetRewardedAdRevenue();
@@ -109,17 +141,25 @@ namespace XrCode
             successfulAction = successAction;
             failedAction = failAction;
 
-            if (maxEcpm >= kwaiEcpm)
+            if(countryCode == "BR")
             {
-                MaxSdkDefines.ShowRewardedAd();
+                if (maxEcpm >= kwaiEcpm)
+                {
+                    MaxSdkDefines.ShowRewardedAd();
+                }
+                else
+                {
+                    KwaiNetWorkDefines.KNW_ShowRewardedAd();
+                }
             }
             else
             {
-                KwaiNetWorkDefines.KNW_ShowRewardedAd();
+                MaxSdkDefines.ShowRewardedAd();
             }
         }
 
-        public void PlayInterAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
+        //播放插屏广告
+        private void PlayInterAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
             this.eAdSource = eAdSource;
             successfulAction = successAction;
@@ -128,12 +168,36 @@ namespace XrCode
             MaxSdkDefines.ShowInterstitial();
         }
 
+        private void CheckAdTotalData()
+        {
+            switch(totalAdwatch)
+            {
+                case 5:
+                    TDAnalyticsManager.Times_5_Ad(totalAdRevenue);
+                    break;
+                case 10:
+                    TDAnalyticsManager.Times_10_Ad(totalAdRevenue);
+                    break;
+                case 15:
+                    TDAnalyticsManager.Times_15_Ad(totalAdRevenue);
+                    break;
+                case 20:
+                    TDAnalyticsManager.Times_20_Ad(totalAdRevenue);
+                    break;
+            }
+
+            SPlayerPrefs.SetInt(PlayerPrefDefines.totalAdwatch, totalAdwatch);
+            SPlayerPrefs.SetDouble(PlayerPrefDefines.totalAdRevenue, totalAdRevenue);
+        }
+
+
+
         protected override void OnDispose() 
         {
         
         }
 
-
+        //得到广告源
         private EAdSource GetAdSource()
         {
             return eAdSource;

@@ -138,7 +138,7 @@ namespace XrCode
         /// 5次广告收入成功时累计收入
         /// </summary>
         /// <param name="accu_revenue">累计值</param>
-        public void Times_5_Ad(float accu_revenue)
+        public void Times_5_Ad(double accu_revenue)
         {
             if (!isOpenTD) return;
 
@@ -152,7 +152,7 @@ namespace XrCode
         /// 10次广告收入成功时累计收入
         /// </summary>
         /// <param name="accu_revenue">累计值</param>
-        public void Times_10_Ad(float accu_revenue)
+        public void Times_10_Ad(double accu_revenue)
         {
             if (!isOpenTD) return;
 
@@ -166,7 +166,7 @@ namespace XrCode
         /// 15次广告收入成功时累计收入
         /// </summary>
         /// <param name="accu_revenue">累计值</param>
-        public void Times_15_Ad(float accu_revenue)
+        public void Times_15_Ad(double accu_revenue)
         {
             if (!isOpenTD) return;
 
@@ -180,7 +180,7 @@ namespace XrCode
         /// 20次广告收入成功时累计收入
         /// </summary>
         /// <param name="accu_revenue">累计值</param>
-        public void Times_20_Ad(float accu_revenue)
+        public void Times_20_Ad(double accu_revenue)
         {
             if (!isOpenTD) return;
 
