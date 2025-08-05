@@ -18,6 +18,9 @@ dependencyResolutionManagement {
         mavenCentral()
 // Android Resolver Repos Start
         def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
+        maven {
+            url "https://maven-android.solar-engine.com/repository/se_sdk_for_android/" // Assets/SolarEngineNet/Android/Editor/Dependencies.xml:8
+        }
         mavenLocal()
 // Android Resolver Repos End
         flatDir {

@@ -18,20 +18,25 @@ namespace XrSDK
         public bool IsKidsAppEnabled;               //是否支持Kids App应用（仅海外版设置有效）
         public bool IsEnable2GReporting;            //是否允许2G上报数据
         public bool DeferredDeeplinkenable;         //是否开启延迟deeplink
-        public int AttAuthorizationWaitingInterval; //ATT 授权等待时间（仅IOS）
-        public string FbAppID = "123";              //需要用到meta归因，此处设置meta appid（仅Android）
+        [Space]
+        [Header("Android")]
+        public string FbAppID;                      //需要用到meta归因，此处设置meta appid（仅Android）
         public bool AdPersonalizationEnabled;       //用户是否允许Google将其数据用于个性化广告（仅Android）
         public bool AdUserDataEnabled;              //用户是否同意将其数据发送到Google（仅Android）
-        public string Caid = "123";                 //iOS caid（仅IOS）
         [Space]
-        [Header("SECustomDomain")]
-        public bool Enable;                         //
-        public string ReceiverDomain = "123";       //
-        public string RuleDomain = "123";           //
-        public string ReceiverTcpHost = "123";      //
-        public string GatewayTcpHost = "123";       //
+        [Header("IOS")]
+        public string Caid;                         //iOS caid（仅IOS）
+        public int AttAuthorizationWaitingInterval; //ATT 授权等待时间（仅IOS）
+        //public bool OdmInfoEnable;                  //iOS odmInfo（仅IOS,仅非中国大陆设置有效）
 
-        public bool OdmInfoEnable;                  //iOS odmInfo（仅IOS,仅非中国大陆设置有效）
+        [Space]
+        [Header("SE Custom Domain")]
+        public bool Enable;                         //
+        public string ReceiverDomain;               //
+        public string RuleDomain;                   //
+        public string ReceiverTcpHost;              //
+        public string GatewayTcpHost;               //
+
 
         public override string ModuleName => "SolarEngine";
 
@@ -57,7 +62,7 @@ namespace XrSDK
             data.ruleDomain = RuleDomain;
             data.receiverTcpHost = ReceiverTcpHost;
             data.gatewayTcpHost = GatewayTcpHost;
-            data.odmInfoEnable = OdmInfoEnable;
+            //data.odmInfoEnable = OdmInfoEnable;
 
             SolarEngineModule module = new SolarEngineModule(data);
             module.Load();

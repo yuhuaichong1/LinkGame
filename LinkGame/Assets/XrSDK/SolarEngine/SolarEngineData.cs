@@ -13,18 +13,18 @@ public class SolarEngineData
     public bool isKidsAppEnabled;               //是否支持Kids App应用（仅海外版设置有效）
     public bool isEnable2GReporting;            //是否允许2G上报数据
     public bool deferredDeeplinkenable;         //是否开启延迟deeplink
-    public int attAuthorizationWaitingInterval; //ATT 授权等待时间（仅IOS）
-    public string fbAppID = "123";              //需要用到meta归因，此处设置meta appid（仅Android）
+    
+    public string fbAppID;                      //需要用到meta归因，此处设置meta appid（仅Android）
     public bool adPersonalizationEnabled;       //用户是否允许Google将其数据用于个性化广告（仅Android）
     public bool adUserDataEnabled;              //用户是否同意将其数据发送到Google（仅Android）
-    public string caid = "123";                 //iOS caid（仅IOS）
-                                                
+
+    public string caid;                         //iOS caid（仅IOS）
+    public int attAuthorizationWaitingInterval; //ATT 授权等待时间（仅IOS）
+    //public bool odmInfoEnable;                  //iOS odmInfo（仅IOS,仅非中国大陆设置有效）
+
     public bool enable;                         //
-    public string receiverDomain = "123";       //
-    public string ruleDomain = "123";           //
-    public string receiverTcpHost = "123";      //
-    public string gatewayTcpHost = "123";       //
-
-    public bool odmInfoEnable;                  //iOS odmInfo（仅IOS,仅非中国大陆设置有效）
-
+    public string receiverDomain;               //
+    public string ruleDomain;                   //
+    public string receiverTcpHost;              //
+    public string gatewayTcpHost;               //
 }

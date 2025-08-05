@@ -32,6 +32,7 @@ MonoBehaviour:
   - {fileID: -1976966866696985819}
   - {fileID: 5501959019314608257}
   - {fileID: 3237478037978304524}
+  - {fileID: 5524535533624070907}
 --- !u!114 &3237478037978304524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,3 +77,34 @@ MonoBehaviour:
   RewardedAdUnitId_Ios: bd43c0c14a81ed3f
   BannerAdUnitId_Ios: 
   MRecAdUnitId_Ios: 
+--- !u!114 &5524535533624070907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb546da44e444f2448f3311535d9d4e9, type: 3}
+  m_Name: XrSDK.SolarEngineModulePendant
+  m_EditorClassIdentifier: 
+  moduleName: 
+  AppKey: 
+  IsDebugModel: 0
+  LogEnabled: 0
+  IsGDPRArea: 0
+  IsCoppaEnabled: 0
+  IsKidsAppEnabled: 0
+  IsEnable2GReporting: 0
+  DeferredDeeplinkenable: 0
+  FbAppID: 
+  AdPersonalizationEnabled: 0
+  AdUserDataEnabled: 0
+  Caid: 
+  AttAuthorizationWaitingInterval: 0
+  Enable: 0
+  ReceiverDomain: 
+  RuleDomain: 
+  ReceiverTcpHost: 
+  GatewayTcpHost: 
