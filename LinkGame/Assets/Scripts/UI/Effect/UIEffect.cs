@@ -36,14 +36,14 @@ namespace XrCode
         private Sprite reward_MoneyIcon;//奖励特效物体三叠钱的图片
         private Dictionary<EFuncType, Sprite> reward_FuncIconDic;//功能类型<==>功能图片（飞功能预制体用）
 
-        protected override void OnAwake() 
+        protected override void OnAwake()
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             rewardItemObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.RibbonRewardItem_ObjPath);
-            flyMoneyObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.FlyMoney_ObjPath);
+            flyMoneyObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.ifIAA ? GameDefines.FlyDiamond_ObjPath : GameDefines.FlyMoney_ObjPath);
             flyFuncObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.FlyFunc_ObjPath);
-            flyMoneyTipObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.FlyMoneyTip_ObjPath);
+            flyMoneyTipObj = ResourceMod.Instance.SyncLoad<GameObject>(GameDefines.ifIAA ? GameDefines.FlyDiamondTip_ObjPath:GameDefines.FlyMoneyTip_ObjPath);
 
 
             flyMoneyPool = new Stack<GameObject>();
@@ -51,8 +51,8 @@ namespace XrCode
             rewardObjPool = new Stack<UIRibbonRewardItem>();
             flyMoneyTipPool = new Stack<GameObject>();
 
-            reward_MoneyIcon = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_Money_IconPath);
-            reward_FuncIconDic = new Dictionary<EFuncType, Sprite>() 
+            reward_MoneyIcon = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.ifIAA ? GameDefines.Reward_FuncDiamondBox_IconPath : GameDefines.Reward_Money_IconPath); 
+           reward_FuncIconDic = new Dictionary<EFuncType, Sprite>()
             {
                 {EFuncType.Tip, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncHint_IconPath)},
                 {EFuncType.Refush, ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncRefresh_IconPath)},
@@ -62,7 +62,7 @@ namespace XrCode
 
             List<PayItem> temp = FacadePayType.GetPayItems();
             icons = new List<Sprite>();
-            foreach (PayItem item in temp) 
+            foreach (PayItem item in temp)
             {
                 icons.Add(item.icon);
             }
@@ -80,7 +80,7 @@ namespace XrCode
             mTileMoveDir.gameObject.SetActive(false);
             mMask.gameObject.SetActive(false);
             mReward.gameObject.SetActive(false);
-            mLevelTarget.anchoredPosition = new Vector2 (-mLevelTarget.rect.width, 0);
+            mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 
             Vector2 referenceResolution = UIManager.Instance.GetCanvasReferenceResolution();
 
@@ -95,7 +95,7 @@ namespace XrCode
             FlyMoneyTipOrginY = GamePlayFacade.GetFlyMoneyTipOrgin();
             FlyMoneyTipTargetY = FlyMoneyTipOrginY.position.y + 0.4f;
         }
-        protected override void OnEnable() 
+        protected override void OnEnable()
         {
 
         }
@@ -110,7 +110,7 @@ namespace XrCode
             DG.Tweening.Sequence sequence = DOTween.Sequence();
             sequence.Append(mLeftCloud.DOLocalMoveX(LeftCloudMovePosX, 1).SetEase(Ease.OutBack));
             sequence.Join(mRightCloud.DOLocalMoveX(RightCloudMovePosX, 1).SetEase(Ease.OutBack));
-            sequence.AppendCallback(()=> { refushAction.Invoke(); });
+            sequence.AppendCallback(() => { refushAction.Invoke(); });
             sequence.AppendInterval(1);
             sequence.Append(mLeftCloud.DOLocalMoveX(LeftCloudOrignPosX, 1)); // 564
             sequence.Join(mRightCloud.DOLocalMoveX(RightCloudOrignPosX, 1));
@@ -155,7 +155,7 @@ namespace XrCode
             List<UIRibbonRewardItem> yurrItem = new List<UIRibbonRewardItem>();
 
             DG.Tweening.Sequence sequence = DOTween.Sequence();
-            sequence.AppendCallback(() => 
+            sequence.AppendCallback(() =>
             {
                 foreach (RewardItem item in items)
                 {
@@ -168,18 +168,18 @@ namespace XrCode
                         case ERewardType.Money:
                             urr.Icon.sprite = reward_MoneyIcon;
                             urr.Count.text = FacadePayType.RegionalChange(item.count);
-                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - GameDefines.FlyEffect_Start_Delay, () => 
-                            { 
-                                PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_RewardCount, urr.Icon.transform, GamePlayFacade.GetFlyMoneyTarget()); 
+                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - GameDefines.FlyEffect_Start_Delay, () =>
+                            {
+                                PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_RewardCount, urr.Icon.transform, GamePlayFacade.GetFlyMoneyTarget());
                             });
                             break;
                         case ERewardType.Func:
                             EFuncType funcType = (EFuncType)item.extra;
                             urr.Icon.sprite = reward_FuncIconDic[funcType];
                             urr.Count.text = item.count.ToString();
-                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - GameDefines.FlyEffect_Start_Delay, () => 
-                            { 
-                                PlayFlyFuncEffect(urr.Icon.transform, GamePlayFacade.GetFuncTarget(funcType), GameDefines.FlyEffect_Start_Delay, funcType); 
+                            STimerManager.Instance.CreateSDelay(GameDefines.Reward_StayTime - GameDefines.FlyEffect_Start_Delay, () =>
+                            {
+                                PlayFlyFuncEffect(urr.Icon.transform, GamePlayFacade.GetFuncTarget(funcType), GameDefines.FlyEffect_Start_Delay, funcType);
                             });
                             break;
                     }
@@ -188,16 +188,16 @@ namespace XrCode
             });
             sequence.AppendInterval(GameDefines.Reward_StayTime);
             sequence.AppendCallback(() =>
-            {  
-                foreach(UIRibbonRewardItem item in yurrItem) 
-                { 
+            {
+                foreach (UIRibbonRewardItem item in yurrItem)
+                {
                     rewardObjPool.Push(item);
                     item.gameObject.SetActive(false);
                 }
                 mReward.gameObject.SetActive(false);
             });
 
-            sequence.Play().OnComplete(()=> { finishAction.Invoke(); });
+            sequence.Play().OnComplete(() => { finishAction.Invoke(); });
 
         }
 
@@ -209,7 +209,7 @@ namespace XrCode
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
             int diff = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(GamePlayFacade.GetCurWLevel()).Level - GamePlayFacade.GetCurLevel();
-            mLevelTargetText.text = diff ==0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff + 1);
+            mLevelTargetText.text = diff == 0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff + 1);
             mLevelTarget.localScale = Vector3.one;
             mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 
@@ -229,7 +229,7 @@ namespace XrCode
         /// <param name="targetPos">目标位置</param>
         private void PlayPluralFlyMoney(int count, Transform orginPos, Transform targetPos)
         {
-            for (int i = 0; i < count; i ++)
+            for (int i = 0; i < count; i++)
             {
                 Vector2 Opos = orginPos.position + new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-0.5f, 0.5f), 0);
                 PlayFlyMoneyEffect(Opos, targetPos, GameDefines.FlyEffect_Start_Delay + i * GameDefines.FlyMoney_ObjTime);
@@ -244,10 +244,10 @@ namespace XrCode
         /// <param name="delayTime">动画延迟播放时间</param>
         private void PlayFlyMoneyEffect(Transform orginPos, Transform targetPos, float delayTime)
         {
-            GameObject obj = flyMoneyPool.Count != 0? flyMoneyPool.Pop() : GameObject.Instantiate(flyMoneyObj, mFlyIconParent);
+            GameObject obj = flyMoneyPool.Count != 0 ? flyMoneyPool.Pop() : GameObject.Instantiate(flyMoneyObj, mFlyIconParent);
             obj.SetActive(true);
             obj.transform.position = orginPos.position;
-            obj.transform.DOMove(targetPos.position, GameDefines.FlyMoney_ObjTime).OnComplete(() => 
+            obj.transform.DOMove(targetPos.position, GameDefines.FlyMoney_ObjTime).OnComplete(() =>
             {
                 obj.gameObject.SetActive(false);
                 flyMoneyPool.Push(obj);
@@ -336,7 +336,7 @@ namespace XrCode
             DG.Tweening.Sequence sequence = DOTween.Sequence();
             sequence.Append(mTMDIconRect.DOPunchRotation(new Vector3(0, 0, 20), GameDefines.TMDIcon_RoteTime, 12, 0));
             sequence.Append(mTMDIconRect.DOMove(targetPos.position, GameDefines.TMDIcon_MoveTime));
-            sequence.Play().OnComplete(() => 
+            sequence.Play().OnComplete(() =>
             {
                 mTileMoveDir.gameObject.SetActive(false);
                 TDMAction.Invoke();
@@ -353,14 +353,14 @@ namespace XrCode
             sequence.Append(GamePlayFacade.GetFlyMoneyTipOrgin().DOScale(1f, GameDefines.FlyMoney_ObjTime / 2));
         }
 
-        protected override void OnDisable() 
+        protected override void OnDisable()
         {
-            
+
         }
 
-        protected override void OnDispose() 
+        protected override void OnDispose()
         {
-            
+
         }
     }
 }

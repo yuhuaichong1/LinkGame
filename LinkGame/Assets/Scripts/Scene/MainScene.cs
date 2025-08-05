@@ -8,10 +8,10 @@
         protected override void OnLoad()
         {
             //UIManager.Instance.OpenAsync<UIMainCity>(EUIType.EUIMainCity);
-            UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, (BaseUI) =>
-            {
-                
-            });
+            if (!GameDefines.ifIAA)
+                UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, _ => { });
+            else
+                UIManager.Instance.OpenAsync<UIGamePlayBy>(EUIType.EUIGamePlayBy, _ => { });
         }
 
         protected override void OnUpdate()

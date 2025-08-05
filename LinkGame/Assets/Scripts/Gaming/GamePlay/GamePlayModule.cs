@@ -1,6 +1,7 @@
 using cfg;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
@@ -104,7 +105,8 @@ namespace XrCode
         private string shakingSourceKey = null;
 
         private bool ifContinue;//是否继续关卡进度
-
+        private List<Vec2> emptyGridPositions = new List<Vec2>();
+        private Dictionary<string, int> currentEmptyGridMap = new Dictionary<string, int>();
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -168,7 +170,7 @@ namespace XrCode
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
 
-            LevelDefines.maxLevel = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
+            LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
             goodIcons = new Dictionary<int, Sprite>();
             SetGoodIcon();
@@ -219,7 +221,7 @@ namespace XrCode
                 SPlayerPrefs.SetBool(PlayerPrefDefines.isTutorial, isTutorial);
             }
 
-            if(curLevel != 1)
+            if (curLevel != 1)
             {
                 ifContinue = SPlayerPrefs.GetBool(PlayerPrefDefines.ifContinue);
                 randomGoodIcon = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, true);
@@ -287,7 +289,7 @@ namespace XrCode
             mapTrans = GamePlayFacade.GetMapTrans?.Invoke();
             obsTrans = GamePlayFacade.GetObsTrans?.Invoke();
 
-            if(ifContinue)
+            if (ifContinue)
             {
                 _contiuneMap();
 
@@ -358,7 +360,8 @@ namespace XrCode
             D.Log("khoi tao map");
         }
 
-        //随机生成物体序列并于场景中生成
+
+
         private void _randomMap()
         {
             D.Log("::::Random MAP::::");
@@ -370,76 +373,132 @@ namespace XrCode
             list_block_frozen = curLevelData.list_block_frozen_fixed;
             list_moving_frozen = curLevelData.list_block_frozen_moving;
 
-            int total_good = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_good_fixed.Count;
-            int total_good_type = curLevelData.GoodKinds;
-            //int number_good_4 = (total_good - 2 * total_good_type) / 2;
-            //int number_good_2 = total_good_type - number_good_4;
-            int number_good_average = total_good / 2 / total_good_type;
-            int number_good_remainder = (total_good - (number_good_average * 2 * total_good_type)) / 2;
+            emptyGridPositions.Clear();
+            currentEmptyGridMap.Clear();
+            if (curLevelData.levelDirEnum == 0 && GameDefines.ifIAA)
+            {
+                var conf = ConfigModule.Instance.Tables.TBLevelAct.GetOrDefault(curLevel);
+                if (conf != null && conf.EmptyGridMap != null)
+                {
+                    currentEmptyGridMap = new Dictionary<string, int>(conf.EmptyGridMap);
+                    ParseEmptyGridMapFromDict();
+                }
+            }
 
+            int emptyCount = emptyGridPositions.Count;
+
+            // 处理固定物品，确保每个ID数量为偶数
+            Dictionary<int, List<Vector3>> fixedGoodsById = new Dictionary<int, List<Vector3>>();
+            foreach (Vector3 good in list_good_fixed)
+            {
+                int p_row = (int)good.x;
+                int p_col = (int)good.y;
+                int p_id = (int)good.z;
+                Vec2 pos = new Vec2(p_row, p_col);
+
+                if (IsEmptyGrid(pos)) continue; // 跳过空白格子
+
+                if (!fixedGoodsById.ContainsKey(p_id))
+                {
+                    fixedGoodsById[p_id] = new List<Vector3>();
+                }
+                fixedGoodsById[p_id].Add(good);
+            }
+
+            // 过滤固定物品：每个ID保留偶数个
+            List<Vector3> validFixedGoods = new List<Vector3>();
+            foreach (var kvp in fixedGoodsById)
+            {
+                List<Vector3> idGoods = kvp.Value;
+                int id = kvp.Key;
+
+                if (idGoods.Count % 2 != 0)
+                {
+                    Debug.LogWarning($"固定物品ID {id} 数量为奇数({idGoods.Count})，移除最后一个");
+                    idGoods.RemoveAt(idGoods.Count - 1);
+                }
+
+                if (idGoods.Count >= 2)
+                {
+                    validFixedGoods.AddRange(idGoods);
+                }
+                else if (idGoods.Count == 1)
+                {
+                    Debug.LogWarning($"固定物品ID {id} 仅剩1个，无法配对，已忽略");
+                }
+            }
+            int validFixedCount = validFixedGoods.Count;
+
+            // 计算可放置随机物品的总数量
+            int totalCells = (row - 2) * (col - 2);
+            int occupiedByObstacles = list_obs_fixed.Count + list_obs_moving.Count;
+            int availableCells = totalCells - occupiedByObstacles - emptyCount - validFixedCount;
+
+            // 确保可用格子为偶数
+            if (availableCells % 2 != 0)
+            {
+                availableCells--;
+                emptyCount++;
+                D.Log($"可用格子数调整为偶数: {availableCells}（补充1个空白格子）");
+            }
+            int totalRandomGoods = availableCells;
+
+            // 生成随机物品列表，确保每个ID数量为偶数
+            int totalGoodTypes = curLevelData.GoodKinds;
+            if (totalGoodTypes > totalRandomGoods / 2)
+            {
+                totalGoodTypes = totalRandomGoods / 2;
+                Debug.LogWarning($"物品种类({curLevelData.GoodKinds})超过最大可能对数，调整为{totalGoodTypes}");
+            }
+
+            int basePairsPerType = totalRandomGoods / 2 / totalGoodTypes;
+            int remainingPairs = (totalRandomGoods / 2) % totalGoodTypes;
+
+            Dictionary<int, int> randomGoodsCount = new Dictionary<int, int>();
+            for (int i = 0; i < totalGoodTypes; i++)
+            {
+                randomGoodsCount[i] = basePairsPerType * 2;
+            }
+            for (int i = 0; i < remainingPairs; i++)
+            {
+                randomGoodsCount[i] += 2;
+            }
+
+            // 生成并打乱随机物品列表
             ArrayList list_good = new ArrayList();
-            for (int i = 0; i < total_good_type; i++)
+            foreach (var kvp in randomGoodsCount)
             {
-                for (int j = 0; j < number_good_average * 2; j++)
+                int type = kvp.Key;
+                int count = kvp.Value;
+                for (int i = 0; i < count; i++)
                 {
-                    list_good.Add(i);
+                    list_good.Add(type);
                 }
             }
-            for (int i = 0; i < number_good_remainder; i++)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    list_good.Add(i);
-                }
-            }
-            #region old
-            //ArrayList list_good = new ArrayList();
-            //for (int i = 0; i < number_good_4; i++)
-            //{
-            //    for (int j = 0; j < 4; j++)
-            //    {
-            //        list_good.Add(i);
-            //    }
-            //}
-            //for (int i = number_good_4; i < number_good_4 + number_good_2; i++)
-            //{
-            //    for (int j = 0; j < 2; j++)
-            //    {
-            //        list_good.Add(i);
-            //    }
-            //}
-            #endregion
-
+            ShuffleList(list_good);
             int list_pk_count = list_good.Count;
-            int temp2 = (row - 2) * (col - 2) - list_obs_fixed.Count - list_obs_moving.Count - list_pk_count - list_good_fixed.Count;
-            if (temp2 % 2 != 0)
-            {
-                D.Log("Amount of good must be even");
-                return;
-            }
-            int max_id = (int)list_good[list_pk_count - 1];
-            for (int i = 0; i < temp2; i++)
-            {
-                list_good.Add(max_id + 1);
-            }
-            list_pk_count = list_good.Count;
+
+            // 放置固定障碍物（跳过空白格子）
             for (int i = 0; i < list_obs_fixed.Count; i++)
             {
                 Vec2 pos = (Vec2)list_obs_fixed[i];
+                if (IsEmptyGrid(pos)) continue;
                 AddSpecialItem(GameDefines.OBS_FIXED_ID, pos.R, pos.C);
                 MAP[pos.R][pos.C] = GameDefines.OBS_FIXED_ID;
             }
 
+            // 放置移动障碍物（跳过空白格子）
             for (int i = 0; i < list_obs_moving.Count; i++)
             {
                 Vec2 pos = (Vec2)list_obs_moving[i];
+                if (IsEmptyGrid(pos)) continue;
                 AddSpecialItem(GameDefines.OBS_MOVING_ID, pos.R, pos.C);
                 MAP[pos.R][pos.C] = GameDefines.OBS_MOVING_ID;
             }
 
-            for (int i = 0; i < list_good_fixed.Count; i++)
+            // 放置有效固定物品
+            foreach (Vector3 good in validFixedGoods)
             {
-                Vector3 good = (Vector3)list_good_fixed[i];
                 int p_row = (int)good.x;
                 int p_col = (int)good.y;
                 int p_id = (int)good.z;
@@ -447,11 +506,13 @@ namespace XrCode
                 MAP[p_row][p_col] = p_id;
             }
 
+            // 放置随机物品（跳过空白格子）
             for (int i = row - 2; i > 0; i--)
             {
                 for (int j = 1; j < col - 1; j++)
                 {
-                    if (MAP[i][j] == -1)
+                    Vec2 pos = new Vec2(i, j);
+                    if (MAP[i][j] == -1 && !IsEmptyGrid(pos) && list_pk_count > 0)
                     {
                         int r = (int)(UnityEngine.Random.value * list_pk_count);
                         int type = (int)list_good[r];
@@ -460,21 +521,28 @@ namespace XrCode
                         list_good.RemoveAt(r);
                         list_pk_count--;
                     }
-                    GetGoodClass(i, j).setOrder();
+                    if (MAP[i][j] != -1)
+                    {
+                        GetGoodClass(i, j).setOrder();
+                    }
                 }
             }
 
+            // 放置冰冻物体（跳过空白格子）
             for (int i = 0; i < list_block_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_block_frozen[i];
+                if (IsEmptyGrid(pos)) continue;
                 AddSpecialItem(GameDefines.HID_FIXED_ID, GameDefines.HFName, pos.R, pos.C);
             }
             for (int i = 0; i < list_moving_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_moving_frozen[i];
+                if (IsEmptyGrid(pos)) continue;
                 AddSpecialItem(GameDefines.HID_MOVING_ID, GameDefines.HMName, pos.R, pos.C);
             }
 
+            // 生成自动生成的物体
             for (int i = 0; i < curLevelData.list_auto_gen.Count; i++)
             {
                 AutoGenData auto_gen_data = (AutoGenData)curLevelData.list_auto_gen[i];
@@ -483,9 +551,11 @@ namespace XrCode
 
             UpdateListHiddle();
 
+            // 检查是否有可配对物品，无则重置
             int numbergoodCanEat = GetNumberGoodCanEat();
             if (numbergoodCanEat == 0)
             {
+                Debug.LogWarning("无可用配对物品，重置地图");
                 _resetMap();
             }
             else
@@ -494,11 +564,72 @@ namespace XrCode
             }
         }
 
+        /// <summary>
+        /// 从Dictionary<string, int>解析空白格子坐标列表
+        /// </summary>
+        private void ParseEmptyGridMapFromDict()
+        {
+            emptyGridPositions.Clear();
+            if (currentEmptyGridMap == null || currentEmptyGridMap.Count == 0)
+                return;
+
+            foreach (var kvp in currentEmptyGridMap)
+            {
+                string coordKey = kvp.Key; // 格式如 "1_1"
+                                           // 解析行和列
+                string[] rowCol = coordKey.Split('_');
+                if (rowCol.Length != 2
+                    || !int.TryParse(rowCol[0], out int row)
+                    || !int.TryParse(rowCol[1], out int col))
+                {
+                    Debug.LogWarning($"无效的坐标格式：{coordKey}，正确格式应为「行_列」（如 1_1）");
+                    continue;
+                }
+
+                // 验证坐标有效性（基于当前地图尺寸）
+                if (row < 1 || row >= this.row - 1 || col < 1 || col >= this.col - 1)
+                {
+                    Debug.LogWarning($"坐标超出地图范围：{coordKey}（有效范围：行1~{this.row - 2}，列1~{this.col - 2}）");
+                    continue;
+                }
+
+                // 添加到坐标列表（去重）
+                Vec2 newPos = new Vec2(row, col);
+                if (!emptyGridPositions.Exists(p => p.R == newPos.R && p.C == newPos.C))
+                {
+                    emptyGridPositions.Add(newPos);
+                }
+                else
+                {
+                    Debug.LogWarning($"重复的空白格子坐标：{coordKey}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 检查坐标是否为空白格子
+        /// </summary>
+        private bool IsEmptyGrid(Vec2 pos)
+        {
+            return emptyGridPositions.Any(p => p.R == pos.R && p.C == pos.C);
+        }
+
+
         //固定生成物体序列并于场景中生成
         private void _fixedMap()
         {
             D.Log("::::Fixed MAP::::");
             curMapState = EMapState.None;
+
+            if (curLevelData.levelDirEnum == 0&&GameDefines.ifIAA)
+            {
+                var conf = ConfigModule.Instance.Tables.TBLevelAct.GetOrDefault(curLevel);
+                if (conf != null && conf.EmptyGridMap != null)
+                {
+                    currentEmptyGridMap = new Dictionary<string, int>(conf.EmptyGridMap);
+                    ParseEmptyGridMapFromDict();
+                }
+            }
 
             ArrayList list_good_fixed = curLevelData.list_block_good_fixed;
             ArrayList list_obs_fixed = curLevelData.list_block_stone_fixed;
@@ -506,22 +637,78 @@ namespace XrCode
             list_block_frozen = curLevelData.list_block_frozen_fixed;
             list_moving_frozen = curLevelData.list_block_frozen_moving;
 
+            // 处理固定障碍物，空白格子跳过
             for (int i = 0; i < list_obs_fixed.Count; i++)
             {
                 Vec2 pos = (Vec2)list_obs_fixed[i];
+                if (IsEmptyGrid(pos)) continue; // 空白格子跳过
                 AddSpecialItem(GameDefines.OBS_FIXED_ID, pos.R, pos.C);
                 MAP[pos.R][pos.C] = GameDefines.OBS_FIXED_ID;
             }
 
+            // 处理移动障碍物，空白格子跳过
             for (int i = 0; i < list_obs_moving.Count; i++)
             {
                 Vec2 pos = (Vec2)list_obs_moving[i];
+                if (IsEmptyGrid(pos)) continue; // 空白格子跳过
                 AddSpecialItem(GameDefines.OBS_MOVING_ID, pos.R, pos.C);
                 MAP[pos.R][pos.C] = GameDefines.OBS_MOVING_ID;
             }
 
+            // 处理固定物品，确保每个ID的物品数量为偶数
             ArrayList list_fixedLevel_good = curLevelData.list_fixedLevel_good;
+            // 按ID分组存储有效物品（非空白格子）
+            Dictionary<int, List<FixedLevelGood>> goodsById = new Dictionary<int, List<FixedLevelGood>>();
+
             foreach (FixedLevelGood good in list_fixedLevel_good)
+            {
+                int p_row = (int)good.X;
+                int p_col = (int)good.Y;
+                Vec2 pos = new Vec2(p_row, p_col);
+                if (IsEmptyGrid(pos)) continue; // 空白格子跳过
+
+                int goodId = (int)good.id;
+                if (!goodsById.ContainsKey(goodId))
+                {
+                    goodsById[goodId] = new List<FixedLevelGood>();
+                }
+                goodsById[goodId].Add(good);
+            }
+
+            // 确保每个ID的物品数量为偶数（核心修改）
+            List<FixedLevelGood> validGoods = new List<FixedLevelGood>();
+            foreach (var kvp in goodsById)
+            {
+                List<FixedLevelGood> idGoods = kvp.Value;
+                int id = kvp.Key;
+
+                // 若数量为奇数，移除最后一个使之为偶数
+                if (idGoods.Count % 2 != 0)
+                {
+                    Debug.LogWarning($"物品ID {id} 数量为奇数({idGoods.Count})，移除最后一个以保证成对");
+                    idGoods.RemoveAt(idGoods.Count - 1);
+                }
+
+                // 只添加数量≥2的物品（确保至少一对）
+                if (idGoods.Count >= 2)
+                {
+                    validGoods.AddRange(idGoods);
+                }
+                else if (idGoods.Count == 1)
+                {
+                    Debug.LogWarning($"物品ID {id} 仅剩1个，无法配对，已忽略");
+                }
+            }
+
+            // 最终校验总数量是否为偶数（理论上必然为偶数，做二次确认）
+            if (validGoods.Count % 2 != 0)
+            {
+                Debug.LogWarning($"总物品数量为奇数({validGoods.Count})，移除最后一个");
+                validGoods.RemoveAt(validGoods.Count - 1);
+            }
+
+            // 生成有效物品
+            foreach (FixedLevelGood good in validGoods)
             {
                 int p_row = (int)good.X;
                 int p_col = (int)good.Y;
@@ -530,14 +717,19 @@ namespace XrCode
                 MAP[p_row][p_col] = p_id;
             }
 
+            // 处理固定冻结块，空白格子跳过
             for (int i = 0; i < list_block_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_block_frozen[i];
+                if (IsEmptyGrid(pos)) continue; // 空白格子跳过
                 AddSpecialItem(GameDefines.HID_FIXED_ID, GameDefines.HFName, pos.R, pos.C);
             }
+
+            // 处理移动冻结块，空白格子跳过
             for (int i = 0; i < list_moving_frozen.Count; i++)
             {
                 Vec2 pos = (Vec2)list_moving_frozen[i];
+                if (IsEmptyGrid(pos)) continue; // 空白格子跳过
                 AddSpecialItem(GameDefines.HID_MOVING_ID, GameDefines.HMName, pos.R, pos.C);
             }
 
@@ -549,8 +741,34 @@ namespace XrCode
 
             UpdateListHiddle();
 
-            ChangeMapState(EMapState.Playing);
+            // 检查是否有可配对的物品，无则重置
+            int numberGoodCanEat = GetNumberGoodCanEat();
+            if (numberGoodCanEat == 0)
+            {
+                Debug.LogWarning("无可用配对物品，重置地图");
+                _resetMap();
+            }
+            else
+            {
+                ChangeMapState(EMapState.Playing);
+            }
         }
+
+
+        /// <summary>
+        /// 打乱列表顺序（确保随机性）
+        /// </summary>
+        private void ShuffleList(ArrayList list)
+        {
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int j = UnityEngine.Random.Range(0, i + 1);
+                object temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+        }
+
 
         private void _contiuneMap()
         {
@@ -595,7 +813,7 @@ namespace XrCode
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
             MAP_Goods[row][col] = obj;
 
-            if(!ifContinue)
+            if (!ifContinue)
                 totalGood += 1;
         }
 
@@ -1725,6 +1943,7 @@ namespace XrCode
                 Game.Instance.StartCoroutine(execute_check_paire_online(pos1, pos2));
             }
 
+            GamePlayFacade.GetRemainPCTBack?.Invoke();
             EatCountAddAndCallback();
 
             //特效部分
@@ -1732,8 +1951,8 @@ namespace XrCode
             FacadeEffect.PlayPluralFlyMoney(GameDefines.FlyMoney_Effect_LinkCount, eatGood2.transform, GamePlayFacade.GetFlyMoneyTarget());
             STimerManager.Instance.CreateSDelay(GameDefines.FlyEffect_Start_Delay, () =>
             {
-                FacadeEffect.PlayGetMoneyTipEffect(GameDefines.Single_Link_Money);
-                PlayerFacade.AddWMoney(GameDefines.Single_Link_Money);
+                FacadeEffect.PlayGetMoneyTipEffect(GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money);
+                PlayerFacade.AddWMoney(GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money);
                 GamePlayFacade.ChangeMoneyShow();
             });
 
@@ -1757,6 +1976,7 @@ namespace XrCode
 
             if (curTopNoticeCount == GameDefines.TopNotice_Count_Max)
             {
+                if (GameDefines.ifIAA) return;
                 curTopNoticeCount = 0;
                 FacadeEffect.PlayRewardNoticeEffect();
             }
@@ -1765,6 +1985,7 @@ namespace XrCode
 
             if (curAwesomeCount == GameDefines.Awesome_Count_Max)
             {
+                if (GameDefines.ifIAA) return;
                 curAwesomeCount = 0;
                 UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
             }
@@ -2228,7 +2449,7 @@ namespace XrCode
             D.Log($"剩余可消除对数 : {numberGoodCanEat}");
             if (!isReseting && numberGoodCanEat == 0 && numberGoodRemain > 0)
             {
-                if(GameDefines.IsAutoRefresh)
+                if (GameDefines.IsAutoRefresh)
                 {
                     Game.Instance.StartCoroutine(StartResetMap());
                 }
@@ -2597,14 +2818,27 @@ namespace XrCode
         /// </summary>
         private void NextLevel()
         {
-            if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
-            {
-                curWLevel += 1;
-                withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
-                SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
-                SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
-            }
 
+            if (GameDefines.ifIAA)
+            {
+                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType == 1)
+                {
+                    curWLevel += 1;
+                    withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
+                    SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
+                    SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                }
+            }
+            else
+            {
+                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+                {
+                    curWLevel += 1;
+                    withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
+                    SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
+                    SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                }
+            }
             curLevel += 1;
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
@@ -3428,7 +3662,7 @@ namespace XrCode
                 randomGoodIcon.Add(oldIds[i], newIds[i]);
             }
 
-            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon ,randomGoodIcon);
+            SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, randomGoodIcon);
         }
 
         private Queue<int> GetWithdrawableLevel()
@@ -3470,13 +3704,13 @@ namespace XrCode
 
         private void LoadMaps()
         {
-            if(!ifContinue) { return; }
+            if (!ifContinue) { return; }
 
             List<string> mapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP, true);
             List<string> frozenmapDataList = SPlayerPrefs.GetList<string>(PlayerPrefDefines.MAP_FROZEN, true);
-            foreach(string item in mapDataList) 
+            foreach (string item in mapDataList)
             {
-                if(item != "")
+                if (item != "")
                 {
                     string[] strs = item.Split("_");
                     int r = int.Parse(strs[0]);
@@ -3502,7 +3736,7 @@ namespace XrCode
         //保存当前关卡样式
         private void SaveMaps()
         {
-            STimerManager.Instance.CreateSDelay(GoodDefine.moveTime, () => 
+            STimerManager.Instance.CreateSDelay(GoodDefine.moveTime, () =>
             {
                 List<string> mapDataList = new List<string>();
                 List<string> frozenmapDataList = new List<string>();
@@ -3527,7 +3761,7 @@ namespace XrCode
                 SPlayerPrefs.SetInt(PlayerPrefDefines.totalGood, totalGood);
                 SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
-            
+
         }
 
         #endregion
