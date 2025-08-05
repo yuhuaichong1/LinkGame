@@ -74,12 +74,27 @@ namespace XrCode
 
             UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
 
-            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Out, (kind, num) =>
+
+
+
+            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_ChallengeOutBy, (kind, num) =>
             {
                 mReddotText.text = num.ToString();
                 mReddot.gameObject.SetActive(num != 0);
             }, SetRDNodeKind.Add);
-            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_Out, true);
+            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_ChallengeOutBy, true);
+
+
+
+
+            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_DailyOutBy, (kind, num) =>
+            {
+                mReddotTextWithdrawal.text = num.ToString();
+                mReddotWithdrawal.gameObject.SetActive(num != 0);
+            }, SetRDNodeKind.Add);
+            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_DailyOutBy, true);
+
+
         }
         protected override void OnEnable()
         {

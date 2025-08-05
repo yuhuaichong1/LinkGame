@@ -108,6 +108,11 @@ public abstract class GameDefines
     public static string Reddot_Name_Daily;                                                                 //日常任务红点名称
     public static string Reddot_Name_Challenge;                                                             //挑战任务红点名称
 
+    public static string Reddot_Name_DailyOutBy;                                                             //外部每日任务红点名称
+    public static string Reddot_Name_DailyBy;                                                             //每日任务红点名称
+    public static string Reddot_Name_ChallengeOutBy;                                                             //外部挑战任务红点名称
+    public static string Reddot_Name_ChallengeBy;                                                             //外部挑战任务红点名称
+
     public static int firstGuideId = 10001;                                                                 //起始引导步骤序号
 
     public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
@@ -117,7 +122,7 @@ public abstract class GameDefines
 
     public static int FirstCount = 3;                                                                       //
     public static int SedCount = 2;                                                                         //
-    public static bool ifIAA = true;                                                                        //AB包切换
+    public static bool ifIAA = false;                                                                        //AB包切换
     public static bool IsAutoRefresh = true;                                                                //无物可消时是否刷新
 }
 #endregion

@@ -10,7 +10,11 @@ namespace XrCode
 		protected Button mPrizeDrawBtn;
 		protected Button mTaskBtn;
 		protected RectTransform mReddot;
-		protected Text mReddotText;
+		protected Text mReddotText;		
+		
+		protected RectTransform mReddotWithdrawal;
+		protected Text mReddotTextWithdrawal;
+
 		protected Button mSettingBtn;
 		protected Text mCurMoneyText;
 		protected RectTransform mWithdrawTip;
@@ -53,6 +57,10 @@ namespace XrCode
 			mTaskBtn = mTransform.Find("Top/TaskBtn").GetComponent<Button>();
 			mReddot = mTransform.Find("Top/TaskBtn/Reddot").GetComponent<RectTransform>();
 			mReddotText = mTransform.Find("Top/TaskBtn/Reddot/ReddotText").GetComponent<Text>();
+
+			mReddotWithdrawal = mTransform.Find("Top/WithdrawalBtn/Reddot").GetComponent<RectTransform>();
+			mReddotTextWithdrawal = mTransform.Find("Top/WithdrawalBtn/Reddot/ReddotText").GetComponent<Text>();
+
 			mSettingBtn = mTransform.Find("Top/SettingBtn").GetComponent<Button>();
 			mCurMoneyText = mTransform.Find("Top/CurMoneyBtn/CurMoneyText").GetComponent<Text>();
 			mWithdrawTip = mTransform.Find("Top/WithdrawTip").GetComponent<RectTransform>();

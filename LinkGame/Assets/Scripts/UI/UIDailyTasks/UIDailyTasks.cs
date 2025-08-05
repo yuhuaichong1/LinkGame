@@ -15,7 +15,7 @@ namespace XrCode
         protected override void OnAwake()
         {
             FacadeTask.RefreshDailyTask += RefreshDailyTask;
-            FacadeTask.RefreshChallageTask += RefreshChallageTask;
+
             FacadeTask.CurMoneyTextShow += CurMoneyTextShow;
 
             GetTaskInfo();
@@ -25,11 +25,7 @@ namespace XrCode
                 mDTRd.gameObject.SetActive(num != 0);
             }, SetRDNodeKind.Add);
             FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_Daily, true);
-            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Challenge, (kind, num) =>
-            {
-                mCTRd.gameObject.SetActive(num != 0);
-            }, SetRDNodeKind.Add);
-            FacadeRedDot.RefushRDNode_ByName(GameDefines.Reddot_Name_Challenge, true);
+
         }
 
         protected override void OnEnable()
@@ -45,10 +41,10 @@ namespace XrCode
         private void GetTaskInfo()
         {
             DailyTasks = FacadeTask.GetDailyTask();
-            ChallageTasks = FacadeTask.GetChallageTask();
+
             if (GameDefines.ifIAA) { CurMoneyIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath); };
             mDailyScroll.InitGridView(DailyTasks.Count, DailyTaskCallBack);
-            mChallengeScroll.InitGridView(ChallageTasks.Count, ChallageTaskCallBack);
+
         }
 
 
