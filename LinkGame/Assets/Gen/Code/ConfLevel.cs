@@ -24,7 +24,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         GoodKinds = _buf.ReadInt();
         MoveDic = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FixedGridMap = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     FixedGridMap.Add(_k0, _v0);}}
-        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EmptyGridMap = new System.Collections.Generic.Dictionary<int, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { int _k0;  _k0 = _buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     EmptyGridMap.Add(_k0, _v0);}}
+        {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EmptyGridMap = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     EmptyGridMap.Add(_k0, _v0);}}
         HiddleGoodMove = _buf.ReadString();
         HiddleGoodStay = _buf.ReadString();
         ObstacleMove = _buf.ReadString();
@@ -69,7 +69,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// <summary>
     /// 当关卡类型为固定关卡时，物品的排序
     /// </summary>
-    public System.Collections.Generic.Dictionary<int, int> EmptyGridMap { get; protected set; }
+    public System.Collections.Generic.Dictionary<string, int> EmptyGridMap { get; protected set; }
     /// <summary>
     /// 可移动的隐藏物的位置
     /// </summary>
