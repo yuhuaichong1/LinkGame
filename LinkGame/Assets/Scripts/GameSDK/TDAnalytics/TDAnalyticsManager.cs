@@ -1,4 +1,3 @@
-using AdjustSdk;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -371,30 +370,12 @@ namespace XrCode
         }
 
         /// <summary>
-        /// Adjust归因信息
+        /// 热力引擎归因信息
         /// </summary>
         /// <param name="attribution">Adjust归因信息</param>
-        public void AdjustMsg(AdjustAttribution attribution)
+        public void SolarEngineMsg(Dictionary<string, object> msg)
         {
-            //TDAnalytics.EnableThirdPartySharing(TDThirdPartyType.ADJUST);
-
-            TDAnalytics.UserSetOnce(new Dictionary<string, object>()
-            {
-                {"trackerToken", attribution.TrackerToken},
-                {"trackerName", attribution.TrackerName},
-                {"network", attribution.Network},
-                {"campaign", attribution.Campaign},
-                {"adgroup", attribution.Adgroup},
-                {"creative", attribution.Creative},
-                {"clickLabel", attribution.ClickLabel},
-                {"costType", attribution.CostType},
-                {"costAmount", attribution.CostAmount},
-                {"costCurrency", attribution.CostCurrency},
-#if UNITY_ANDROID
-                {"fbInstallReferrer", attribution.FbInstallReferrer},
-#endif
-                //{"jsonResponse", },
-            });
+            TDAnalytics.UserSetOnce(msg);
         }
     }
 }

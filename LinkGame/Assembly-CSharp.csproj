@@ -73,15 +73,17 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\CompiledSerializer.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\IRewardAdLoadListener.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\NetObjectSerializer.cs" />
+    <Compile Include="Assets\XrSDK\SolarEngine\SolarEngineModulePendant.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializer.cs" />
     <Compile Include="Assets\Scripts\UI\Guide\UIGuide.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\CallbackSet.cs" />
     <Compile Include="Assets\Scripts\UI\Recover\UITemplate\UIRecover_Temp.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Util\SolarRuntimeSettings.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoDragMe.cs" />
     <Compile Include="Assets\Scripts\User\UserModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DefaultValueDecorator.cs" />
-    <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\BallRunPlayer.cs" />
+    <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Gen\Code\TBLuckMoment.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\KwaiRequest.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\BaseResourceLoader.cs" />
     <Compile Include="Assets\Scripts\Resource\Utils\PathUtil.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeTimeZone.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEnginePCWrapper.cs" />
     <Compile Include="Assets\Scripts\PayType\PayTypeModule.cs" />
     <Compile Include="Assets\Scripts\NetWork\NetworkModule.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsGraphAPIManager.cs" />
@@ -107,6 +110,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\Ball.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IGame.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\ValueMember.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Util\SolarEngineUtil.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsInitManager.cs" />
     <Compile Include="Assets\Scripts\_Game\Singleton.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\MetaType.cs" />
@@ -119,7 +123,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\IExtensible.cs" />
     <Compile Include="Assets\Scripts\TimeZone\TimeZoneModule.cs" />
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\AssetBundleResourceLoader.cs" />
-    <Compile Include="Assets\XrSDK\Adjust\AdjustModulePendant.cs" />
+    <Compile Include="Assets\SolarEngineSDK\RemoteConfigWrapper\SESDKRemoteConfigPCWrapper.cs" />
     <Compile Include="Assets\Tools\ListShuffle\ListShuffle.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\Constants.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Behaviours\UIPanelBehaviour.cs" />
@@ -145,6 +149,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\LoadLevelScript.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DateTimeSerializer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\ControlEventInput\ControlUIEvent.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEngineMiniGameWrapper.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Common\IClientBidding.cs" />
     <Compile Include="Assets\Gen\Code\ConfLevelDicIcon.cs" />
     <Compile Include="Assets\Gen\Code\TbUIRes.cs" />
@@ -158,14 +163,16 @@
     <Compile Include="Assets\Gen\Code\ConfLinkLine.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\SubItemToken.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UICompatibility\UICompatibility.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsExampleTabsManager.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\GridView\LoopGridViewItem.cs" />
+    <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsExampleTabsManager.cs" />
     <Compile Include="Assets\Tools\SMovingToggle\SMTAnimType.cs" />
     <Compile Include="Assets\Scripts\Scene\BaseScene.cs" />
     <Compile Include="Assets\Scripts\Tools\Json\Hash128Converter.cs" />
+    <Compile Include="Assets\SolarEngineSDK\RemoteConfigWrapper\SESDKRemoteConfig.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BufferPool.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UICompatibility\GlobalEasyTouchEvent.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\FieldDecorator.cs" />
+    <Compile Include="Assets\SolarEngineSDK\RemoteConfigWrapper\SESDKRemoteConfigAndroidWrapper.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IComponent.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectPool.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\UploadToMediaLibrary.cs" />
@@ -178,9 +185,9 @@
     <Compile Include="Assets\KwaiAds\Scripts\Common\IClientFactory.cs" />
     <Compile Include="Assets\Tools\LubanLib\ByteBuf.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeTask.cs" />
-    <Compile Include="Assets\Sample\TDAnalyticsDemo.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoTapMe.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\ConsoleBase.cs" />
+    <Compile Include="Assets\Sample\TDAnalyticsDemo.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\BooleanSerializer.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\ListView\LoopListViewItem2.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UILoading.cs" />
@@ -192,14 +199,14 @@
     <Compile Include="Assets\Scripts\UI\Task\UITemplate\UITask_Temp.cs" />
     <Compile Include="Assets\Tools\SafeArea\SUISafeArea.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeGuide.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsPhysicalGamepadManager.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCInput.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Common\IKwaiAdController.cs" />
+    <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsPhysicalGamepadManager.cs" />
     <Compile Include="Assets\XrSDK\Facebook\FacebookPendant.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeEffect.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\PinchMe.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsVirtualGamepadManager.cs" />
     <Compile Include="Assets\Gen\Code\ConfTask.cs" />
+    <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsVirtualGamepadManager.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILateUpdate.cs" />
     <Compile Include="Assets\Scripts\UI\ViewSiblingIndex.cs" />
     <Compile Include="Assets\Gen\Code\ConfObstacleIcon.cs" />
@@ -216,8 +223,8 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoLongTapMe.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsShareManager.cs" />
     <Compile Include="Assets\Gen\Code\TBGoodIcon.cs" />
-    <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\Pay.cs" />
     <Compile Include="Assets\Scripts\UI\Effect\UIEffect.cs" />
+    <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\Pay.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetBundleMod.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\TwoFingerGesture.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\UIInputHelper.cs" />
@@ -225,6 +232,7 @@
     <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\IRewardAdController.cs" />
     <Compile Include="Assets\XrSDK\MaxSdk\MaxSdkData.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\SerializationContext.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\ByteDanceCloudAdapter.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeSuccessful\UIChallengeSuccessful.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCAxis.cs" />
     <Compile Include="Assets\Scripts\UI\LuckMoment\UILuckMoment.cs" />
@@ -233,7 +241,6 @@
     <Compile Include="Assets\Scripts\UI\UserLevel\UITemplate\UIUserLevel_Temp.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoadRequest.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\_Medias\SliderText.cs" />
-    <Compile Include="Assets\XrSDK\Adjust\AdjustDefines.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoIgnoreAttribute.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\Extension\GameObjectExtension.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\Swipe.cs" />
@@ -246,12 +253,14 @@
     <Compile Include="Assets\Scripts\Resource\ResourceLoader\EditorResourceLoader.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\MenuBase.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\MainMenu.cs" />
+    <Compile Include="Assets\SolarEngineSDK\RemoteConfigWrapper\SESDKRemoteConfigOpenHarmonyWrapper.cs" />
     <Compile Include="Assets\Scripts\UI\EnterInfo\UITemplate\UIEnterInfo_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SByteSerializer.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\CloudAndroid\Scripts\UIState.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\AccessTokenMenu.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\UtilityTool.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoDoubleTapMe.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Util\SolarEngineConstant.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DoubleSerializer.cs" />
     <Compile Include="Assets\Scripts\MiniComponent\DoTween\LoopMoveUpDown.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Behaviours\UIViewBehaviour.cs" />
@@ -273,7 +282,6 @@
     <Compile Include="Assets\Scripts\MultiLanguages\LanguageModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Compiler\CompilerDelegates.cs" />
     <Compile Include="Assets\XrSDK\Scripts\RuntimeEditorUtils.cs" />
-    <Compile Include="Assets\XrSDK\Adjust\AdjustData.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\BasicList.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\BaseFinger.cs" />
     <Compile Include="Assets\Gen\Code\ConfLanguage.cs" />
@@ -281,6 +289,7 @@
     <Compile Include="Assets\Scripts\_Game\MonoSingleton.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\NetObjectCache.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\OneFinger\TapMe.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEngineAndroidWrapper.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IEntity.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\Good.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\XmlProtoSerializer.cs" />
@@ -306,6 +315,8 @@
     <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsSoftKeyboardManager.cs" />
     <Compile Include="Assets\Scripts\Task\Task.cs" />
     <Compile Include="Assets\Scripts\UI\Popup\UITemplate\UIPopup_Temp.cs" />
+    <Compile Include="Assets\SolarEngineSDK\RemoteConfigWrapper\SESDKRemoteConfigMiniGameWrapper.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEngineOpenHarmonyWrapper.cs" />
     <Compile Include="Assets\Scripts\Reward\RewardItem.cs" />
     <Compile Include="Assets\XrSDK\MaxSdk\MaxSdkModule.cs" />
     <Compile Include="Assets\Scripts\UI\GamePlay\UITemplate\UIGamePlay_Temp.cs" />
@@ -332,8 +343,10 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoContractAttribute.cs" />
     <Compile Include="Assets\Gen\Code\ConfReddot.cs" />
     <Compile Include="Assets\Scripts\PlayerPref\PlayerPrefDefines.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEngineiOSWrapper.cs" />
     <Compile Include="Assets\Scripts\UI\Rate\UITemplate\UIRate_Temp.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\UIRibbonRewardItem.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\ByteDanceAdapter.cs" />
     <Compile Include="Assets\Gen\Code\ConfWithdrawableLevels.cs" />
     <Compile Include="Assets\Scripts\UI\Common\LoadingView.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IFixedUpdate.cs" />
@@ -347,8 +360,8 @@
     <Compile Include="Assets\Gen\Code\TBUserLevel.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsLogsManager.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Compiler\CompilerContext.cs" />
-    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\AndroidPlatformTool.cs" />
     <Compile Include="Assets\Scripts\Notify\NotifyDefine.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\AndroidPlatformTool.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TooglePickMethodUI.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\AdvancedExamples\AutoSelect\MultiLayerUI.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\FileUtil.cs" />
@@ -371,6 +384,7 @@
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\GridView\LoopGridItemPool.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\AndroidClientFactory.cs" />
     <Compile Include="Assets\Scripts\_Game\Game.cs" />
+    <Compile Include="Assets\SolarEngineSDK\RemoteConfigWrapper\SESDKRemoteConfigiOSWrapper.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\CallbackAttributes.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\KeyValuePairDecorator.cs" />
     <Compile Include="Assets\Scripts\UI\Setting\UITemplate\UISetting_Temp.cs" />
@@ -403,8 +417,10 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\GuidSerializer.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Common\ISDK.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TypeSerializer.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\TencentAdvertisingGameSDK.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\AppLinks.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\EasyTouch.cs" />
+    <Compile Include="Assets\XrSDK\SolarEngine\SolarEngineData.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\Reward\IRewardAdListener.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UITwistPinch\UITwist.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\FPSExample\ImpactEffect.cs" />
@@ -446,6 +462,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\Int64Serializer.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\CloudAndroid\Scripts\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\UI\LuckMoment\LuckMomentItem.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Util\SolarEngineGlobalInfo.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\IInterstitialAdListener.cs" />
     <Compile Include="Assets\Tools\HoleMask\Script\SHoleMaskEnum.cs" />
     <Compile Include="Assets\Scripts\Resource\AssetBundle\AssetLoader.cs" />
@@ -468,22 +485,28 @@
     <Compile Include="Assets\Scripts\UI\WithdrawalChannel\UIWithdrawalChannel.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\KwaiInterstitialAdRequest.cs" />
     <Compile Include="Assets\Gen\Code\TBPayChannel.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\WeChatAdapter.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\LanguageText.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioDefines.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SubItemSerializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\DontDestroy.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEngine.cs" />
     <Compile Include="Assets\Gen\Code\ConfUIRes.cs" />
     <Compile Include="Assets\Tools\XrCode\Runtime\UI\Components\PointerEventListener.cs" />
     <Compile Include="Assets\Gen\Code\ConfAudio.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\TournamentsMenu.cs" />
+    <Compile Include="Assets\XrSDK\SolarEngine\SolarEngineDefines.cs" />
     <Compile Include="Assets\Scripts\GameSDK\GameSDKManger.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\FixedLevelGood.cs" />
     <Compile Include="Assets\Scripts\UI\Recover\UIRecover.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UITwistPinch\UIPinch.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\AdapterTool.cs" />
     <Compile Include="Assets\Scripts\_Game\EarthRotation.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\Windows\FBWindowsA2UNotificationsManager.cs" />
     <Compile Include="Assets\Scripts\UI\Base\Entity.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\KuaiShouAdapter.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\ArabicSupport.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\CustomEditorAdapter.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\Interstitial\IInterstitialAdController.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Api\KwaiAdConfig.cs" />
     <Compile Include="Assets\Scripts\UI\Setting\UISetting.cs" />
@@ -524,6 +547,7 @@
     <Compile Include="Assets\Gen\Code\ConfLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\SystemTypeSerializer.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCArea.cs" />
+    <Compile Include="Assets\SolarEngineSDK\SolarEngineWrapper\SolarEngineWindowsWrapper.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\ProtobufUtil.cs" />
     <Compile Include="Assets\Scripts\Reddot\RedDotModule.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\UnityUI\UICompatibility\UIWindow.cs" />
@@ -536,6 +560,7 @@
     <Compile Include="Assets\XrSDK\KwaiNetwork\KwaiNetWorkDefines.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\WithdrawMItem.cs" />
     <Compile Include="Assets\Scripts\LinkGood\Level\AutoGenData.cs" />
+    <Compile Include="Assets\SolarEngineSDK\Platform\ByteDanceStarkSDKAdapter.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ImplicitFields.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\Gesture.cs" />
     <Compile Include="Assets\XrSDK\Scripts\RegisterModuleAttribute.cs" />
@@ -555,13 +580,13 @@
     <Compile Include="Assets\FacebookSDK\Examples\Mobile\Scripts\SubMenus\Subscription.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\CloudAndroid\Scripts\SavePage.cs" />
     <Compile Include="Assets\FacebookSDK\Examples\CloudAndroid\Scripts\AdsPage.cs" />
+    <Compile Include="Assets\XrSDK\SolarEngine\SolarEngineModule.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableSingle\UITemplate\UIWithdrawableSingle_Temp.cs" />
     <Compile Include="Assets\KwaiAds\Scripts\Platform\Android\KwaiInterstitialAdController.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ComponentExtensions.cs" />
-    <Compile Include="Assets\XrSDK\Adjust\AdjustModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ProtoDecoratorBase.cs" />
-    <Compile Include="Assets\KwaiAds\Scripts\Common\IAdLoadListener.cs" />
     <Compile Include="Assets\Scripts\UI\Task\UITask.cs" />
+    <Compile Include="Assets\KwaiAds\Scripts\Common\IAdLoadListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Tools\EasyTouchBundle\Readme.txt" />
@@ -575,7 +600,6 @@
     <None Include="Assets\FacebookSDK\Plugins\Windows\LibFBGManaged.dll" />
     <None Include="Assets\FacebookSDK\link.xml" />
     <None Include="Assets\FacebookSDK\Plugins\iOS\Facebook.Unity.IOS.dll" />
-    <None Include="Assets\Adjust\Native\Android\AdjustAndroidManifest.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Readme.txt" />
     <None Include="Assets\FacebookSDK\Plugins\Windows\x64\libssl-3-x64.dll" />
@@ -591,6 +615,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\FacebookSDK\Plugins\Canvas\Facebook.Unity.Canvas.dll" />
     <None Include="Assets\FacebookSDK\Plugins\Windows\x86\libssl-3.dll" />
+    <None Include="Assets\SolarEngine\MainLand\se_mainland.txt" />
     <None Include="Assets\Materials\Guide\SGPMask.shader" />
     <None Include="Assets\FacebookSDK\Plugins\Windows\x86\cpprest_2_10.dll" />
     <None Include="Assets\Tools\SqlLite\Plugins\sqlite3.dll" />
@@ -948,28 +973,12 @@
       <HintPath>D:\Unitty\2022.3.52f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="LibFBGManaged">
-      <HintPath>Assets\FacebookSDK\Plugins\Windows\LibFBGManaged.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="ReportGeneratorMerged">
       <HintPath>Library\PackageCache\com.unity.testtools.codecoverage@1.2.6\lib\ReportGenerator\ReportGeneratorMerged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Facebook.Unity.Settings">
-      <HintPath>Assets\FacebookSDK\Plugins\Settings\Facebook.Unity.Settings.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Mono.Data.Sqlite">
       <HintPath>Assets\Tools\SqlLite\Plugins\Mono.Data.Sqlite.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Facebook.Unity.Canvas">
-      <HintPath>Assets\FacebookSDK\Plugins\Canvas\Facebook.Unity.Canvas.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Facebook.Unity">
-      <HintPath>Assets\FacebookSDK\Plugins\Facebook.Unity.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTween">
@@ -980,20 +989,52 @@
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="XInputDotNetPure">
-      <HintPath>Assets\FacebookSDK\Plugins\Windows\XInputDotNetPure.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Facebook.Unity.Canvas">
+      <HintPath>Assets\FacebookSDK\Plugins\Canvas\Facebook.Unity.Canvas.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Facebook.Unity.Android">
       <HintPath>Assets\FacebookSDK\Plugins\Android\Facebook.Unity.Android.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1\Runtime\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="XInputDotNetPure">
+      <HintPath>Assets\FacebookSDK\Plugins\Windows\XInputDotNetPure.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Facebook.Unity.Windows">
       <HintPath>Assets\FacebookSDK\Plugins\Windows\Facebook.Unity.Windows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="LibFBGManaged">
+      <HintPath>Assets\FacebookSDK\Plugins\Windows\LibFBGManaged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Facebook.Unity">
+      <HintPath>Assets\FacebookSDK\Plugins\Facebook.Unity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Facebook.Unity.Settings">
+      <HintPath>Assets\FacebookSDK\Plugins\Settings\Facebook.Unity.Settings.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MiniGameRemoteConfig">
+      <HintPath>Assets\Plugins\SolarEngine\MiniGame\MiniGameRemoteConfig.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SolarEngineMiniGames">
+      <HintPath>Assets\Plugins\SolarEngine\MiniGame\SolarEngineMiniGames.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SolarEngineUnityTool">
+      <HintPath>Assets\Plugins\SolarEngine\MiniGame\SolarEngineUnityTool.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="solarenginewindows">
+      <HintPath>Assets\Plugins\SolarEngine\Windows\solarenginewindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
@@ -1614,10 +1655,6 @@
       <Project>{00592EDB-94A4-AD0C-382C-4D6B454B6851}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="AdjustSdk.Editor.csproj">
-      <Project>{410B7C3F-B083-F184-BDDA-6BC8385676AE}</Project>
-      <Name>AdjustSdk.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="IngameDebugConsole.Editor.csproj">
       <Project>{FB4FA627-5CC4-F3F1-4937-78DA3802FC30}</Project>
       <Name>IngameDebugConsole.Editor</Name>
@@ -1641,10 +1678,6 @@
     <ProjectReference Include="spine-unity-editor.csproj">
       <Project>{DBDEC694-1537-8708-D154-E70666B2B30B}</Project>
       <Name>spine-unity-editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="AdjustSdk.Scripts.csproj">
-      <Project>{BE897FB8-E6F4-9C84-CBA1-2F4F65EBD892}</Project>
-      <Name>AdjustSdk.Scripts</Name>
     </ProjectReference>
     <ProjectReference Include="IngameDebugConsole.Runtime.csproj">
       <Project>{0F97FBEA-2570-5503-F5B3-F12CA0815591}</Project>

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using XrCode;
 using ThinkingData.Analytics;
-using AdjustSdk;
 
 namespace XrSDK
 {
@@ -460,14 +459,7 @@ namespace XrSDK
 
         private void TrackAdRevenue(MaxSdkBase.AdInfo adInfo)
         {
-            AdjustAdRevenue adjustAdRevenue = new AdjustAdRevenue("applovin_max_sdk");
-
-            adjustAdRevenue.SetRevenue(adInfo.Revenue, "USD");
-            adjustAdRevenue.AdRevenueNetwork = adInfo.NetworkName;
-            adjustAdRevenue.AdRevenueUnit = adInfo.AdUnitIdentifier;
-            adjustAdRevenue.AdRevenuePlacement = adInfo.Placement;
-
-            Adjust.TrackAdRevenue(adjustAdRevenue);
+            return;
         }
 
 
