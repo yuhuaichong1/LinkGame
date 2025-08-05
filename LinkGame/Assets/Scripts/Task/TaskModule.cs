@@ -60,13 +60,19 @@ namespace XrCode
                     {
                         DailyTask.Add(temp.Sn, task);
                         if (task.taskStatus == ETaskStatus.Receive)
+                        {
                             FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
+                            FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_DailyBy, 1);
+                        }
                     }
                     else
                     {
                         ChallengeTask.Add(temp.Sn, task);
                         if (task.taskStatus == ETaskStatus.Receive)
+                        {
                             FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
+                            FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_ChallengeBy, 1);
+                        }
                     }
 
                     curDailyRDId = SPlayerPrefs.GetInt(PlayerPrefDefines.curDailyRDId);
