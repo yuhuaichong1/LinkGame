@@ -22,7 +22,7 @@ namespace XrCode
         //游戏版本
         private string GameVersion = "1.0.0.0";
         //游戏编号，区分上线平台
-        private string GameAppId = "405001";
+        private string GameAppId = "505001";
 
         
         private DateTime AdTime;//广告时长统计
@@ -377,13 +377,13 @@ namespace XrCode
             TDAnalytics.UserAdd(new Dictionary<string, object>()
             {
                 //{ "total_taptime", 1},
-                { "total_runtime", (int)Math.Round((DateTime.Now - AdTime).TotalSeconds)},
+                { "total_runtime", (int)Math.Round((DateTime.Now - loginTime).TotalSeconds)},
             });
 
             TDAnalytics.UserSet(new Dictionary<string, object>()
             {
                 {"current_money", PlayerFacade.GetWMoney()},
-                {"current_runtime", (int)Math.Round((DateTime.Now - AdTime).TotalSeconds)},
+                {"current_runtime", (int)Math.Round((DateTime.Now - loginTime).TotalSeconds)},
             });
         }
 
