@@ -158,8 +158,8 @@ namespace XrCode
             mPrizeDrawBtn.gameObject.SetActive(GamePlayFacade.GetCurLevel() != 1 && GamePlayFacade.GetCurLevel() != 2);
 
             int userLevel = GamePlayFacade.GetCurLevel();
-            mCULText.text = $"{LanguageModule.GetText("10052")}{userLevel}";
             float proValue = GamePlayFacade.GetRemainPCT();
+            mCULText.text = string.Format(LanguageModule.GetText("10081"), (int)proValue) + "%";
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
 
@@ -168,8 +168,8 @@ namespace XrCode
         private void SetProcess()
         {
             int userLevel = GamePlayFacade.GetCurLevel();
-            mCULText.text = $"{LanguageModule.GetText("10052")}{userLevel}";
             float proValue = GamePlayFacade.GetRemainPCT();
+            mCULText.text = string.Format(LanguageModule.GetText("10081"), (int)proValue) + "%";
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
         }
