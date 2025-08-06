@@ -2821,7 +2821,7 @@ namespace XrCode
 
             if (GameDefines.ifIAA)
             {
-                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType == 1)
+                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType != 0)
                 {
                     curWLevel += 1;
                     withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
@@ -2831,7 +2831,7 @@ namespace XrCode
             }
             else
             {
-                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType != 0)
                 {
                     curWLevel += 1;
                     withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);

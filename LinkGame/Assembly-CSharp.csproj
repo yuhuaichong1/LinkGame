@@ -393,6 +393,7 @@
     <Compile Include="Assets\Scripts\LinkGood\Level\ConstraintData.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
     <Compile Include="Assets\Tools\PlayerPrefsMoreType\PlayerPrefHelper.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWithdrawalSure\UITemplate\UIWithdrawalSure_Temp.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UITemplate\UILoading_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\StringSerializer.cs" />
@@ -439,6 +440,7 @@
     <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
     <Compile Include="Assets\Scripts\UI\FuncPopup\UITemplate\UIFuncPopup_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt32Serializer.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWithdrawalSure\UIWithdrawalSure.cs" />
     <Compile Include="Assets\Gen\Code\TBWithdrawableLevels.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectManager.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeFailed\UITemplate\UIChallengeFailed_Temp.cs" />
