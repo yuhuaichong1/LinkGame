@@ -13,6 +13,7 @@ public class UICurLevelItem : MonoBehaviour
     public GameObject finishIcon;//完成图片（已完成的关卡）
     public LanguageText curLevelText;//当前关卡（未完成的关卡）
     public GameObject wTip;//当前关卡是否兑现
+    public Text wText;//兑现文字是否为双倍
 
     private LanguageModule LanguageModule;
 
@@ -30,7 +31,6 @@ public class UICurLevelItem : MonoBehaviour
 
         if (GameDefines.ifIAA)
         {
-            ConfLevelAct levelConf = ConfigModule.Instance.Tables.TBLevelAct.Get(level);
             int curLevel = GamePlayFacade.GetCurLevel();
             bool b = level < curLevel;
 
@@ -42,7 +42,6 @@ public class UICurLevelItem : MonoBehaviour
         }
         else
         {
-            ConfLevel levelConf = ConfigModule.Instance.Tables.TBLevel.Get(level);
             int curLevel = GamePlayFacade.GetCurLevel();
             bool b = level < curLevel;
 
@@ -50,7 +49,25 @@ public class UICurLevelItem : MonoBehaviour
             ItemGreenBg.gameObject.SetActive(level <= curLevel);
             finishIcon.SetActive(b);
             curLevelText.text = b ? "" : string.Format(LanguageModule.GetText("10011"), level);
-            wTip.SetActive(b ? false : ConfigModule.Instance.Tables.TBLevel.Get(level).WithdrawType == 1);
+            if (b)
+                wTip.SetActive(false);
+            else
+            {
+                switch (ConfigModule.Instance.Tables.TBLevel.Get(level).WithdrawType)
+                {
+                    case 0:
+                        wTip.SetActive(false);
+                        break;
+                    case 1:
+                        wTip.SetActive(true);
+                        wText.text = LanguageModule.GetText("10015");
+                        break;
+                    case 2:
+                        wTip.SetActive(true);
+                        wText.text = LanguageModule.GetText("10098");
+                        break;
+                }
+            }
         }
 
     }

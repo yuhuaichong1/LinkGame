@@ -182,11 +182,21 @@ namespace XrCode
             {
                 int target = GetNextTarget(curLevel);
                 levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, target};
+                int wType = ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType;
                 if (WLevels.Contains(curLevel))
-                    mWithdrawTipText.text = LanguageModule.GetText("10012");
+                {
+                    if(wType == 1)
+                        mWithdrawTipText.text = LanguageModule.GetText("10012");
+                    else//wType == 2
+                        mWithdrawTipText.text = LanguageModule.GetText("10012");
+                }
                 else
-                    mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
-                    
+                {
+                    if (wType == 1)
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
+                    else//wType == 2
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10100"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
+                }
             }
             mCurLevelItem1.SetCurLevelInfo(levels[0]);
             mCurLevelItem2.SetCurLevelInfo(levels[1]);
@@ -523,7 +533,7 @@ namespace XrCode
 
             for (int i = 0; i < WLevels.Count; i++) 
             {
-                if (WLevels[i] >= curLevel)
+                if (WLevels[i] > curLevel)
                 {
                     if (WLevels[i] == curLevel + 1)
                         target = WLevels[i + 1];

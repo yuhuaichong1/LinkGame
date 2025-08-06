@@ -208,6 +208,7 @@ namespace XrCode
         /// <param name="targetAction">移动完成后的回调</param>
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
+            Debug.LogError("====>" + GamePlayFacade.GetCurWLevel());
             int diff = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(GamePlayFacade.GetCurWLevel()).Level - GamePlayFacade.GetCurLevel();
             mLevelTargetText.text = diff == 0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff + 1);
             mLevelTarget.localScale = Vector3.one;
