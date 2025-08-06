@@ -39,6 +39,7 @@ namespace cfg
 		public TBObstacleIcon TBObstacleIcon {get; private set;}
 		public TBGuidesAct TBGuidesAct {get; private set;}
 		public TBLevelAct TBLevelAct {get; private set;}
+		public TBGoodWeight TBGoodWeight {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -90,6 +91,8 @@ namespace cfg
 			tables.Add("TBGuidesAct", TBGuidesAct);
 			TBLevelAct = new TBLevelAct(loader("tblevelact")); 
 			tables.Add("TBLevelAct", TBLevelAct);
+			TBGoodWeight = new TBGoodWeight(loader("tbgoodweight")); 
+			tables.Add("TBGoodWeight", TBGoodWeight);
 	
 			PostInit();
 			ResolveAllTable();
@@ -140,6 +143,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBGuidesActDataFinish);
 			configNames.Enqueue("tblevelact");
             configCbFuncs.Enqueue(OnTBLevelActDataFinish);
+			configNames.Enqueue("tbgoodweight");
+            configCbFuncs.Enqueue(OnTBGoodWeightDataFinish);
 
             LoadAllConfig();
         }
@@ -201,6 +206,7 @@ namespace cfg
 			TBObstacleIcon.TranslateText(translator); 
 			TBGuidesAct.TranslateText(translator); 
 			TBLevelAct.TranslateText(translator); 
+			TBGoodWeight.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -227,6 +233,7 @@ namespace cfg
 			TBObstacleIcon.Resolve(tables);
 			TBGuidesAct.Resolve(tables);
 			TBLevelAct.Resolve(tables);
+			TBGoodWeight.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -294,6 +301,9 @@ namespace cfg
 					break;
 				case "TBLevelAct":
 					TBLevelAct.Reload(_loader("TBLevelAct"));
+					break;
+				case "TBGoodWeight":
+					TBGoodWeight.Reload(_loader("TBGoodWeight"));
 					break;
 			}
 	
@@ -408,6 +418,11 @@ namespace cfg
 		{
 			TBLevelAct = new TBLevelAct(buf);
 			tables.Add("TBLevelAct", TBLevelAct);
+		}
+		public void OnTBGoodWeightDataFinish(ByteBuf buf)
+		{
+			TBGoodWeight = new TBGoodWeight(buf);
+			tables.Add("TBGoodWeight", TBGoodWeight);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()
