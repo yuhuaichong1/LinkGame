@@ -14,19 +14,18 @@ using System.Linq;
 namespace cfg
 {
 
-public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase 
+public sealed partial class ConfGoodWeight :  Bright.Config.BeanBase 
 {
-    public ConfGoodIcon(ByteBuf _buf) 
+    public ConfGoodWeight(ByteBuf _buf) 
     {
         Sn = _buf.ReadInt();
-        Type = _buf.ReadInt();
-        GoodPath = _buf.ReadString();
+        Weight = _buf.ReadInt();
         PostInit();
     }
 
-    public static ConfGoodIcon DeserializeConfGoodIcon(ByteBuf _buf)
+    public static ConfGoodWeight DeserializeConfGoodWeight(ByteBuf _buf)
     {
-        return new ConfGoodIcon(_buf);
+        return new ConfGoodWeight(_buf);
     }
 
     /// <summary>
@@ -34,15 +33,11 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     /// </summary>
     public int Sn { get; protected set; }
     /// <summary>
-    /// 物品类型
+    /// 物品权重
     /// </summary>
-    public int Type { get; protected set; }
-    /// <summary>
-    /// 物品路径
-    /// </summary>
-    public string GoodPath { get; protected set; }
+    public int Weight { get; protected set; }
 
-    public const int __ID__ = 533696058;
+    public const int __ID__ = -2111690759;
     public override int GetTypeId() => __ID__;
 
     public  void Resolve(Dictionary<string, object> _tables)
@@ -54,19 +49,17 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     {
     }
 
-    public void Reload(ConfGoodIcon reloadData)
+    public void Reload(ConfGoodWeight reloadData)
     {
         Sn = reloadData.Sn;
-        Type = reloadData.Type;
-        GoodPath = reloadData.GoodPath;
+        Weight = reloadData.Weight;
     }
 
     public override string ToString()
     {
         return "{ "
         + "Sn:" + Sn + ","
-        + "Type:" + Type + ","
-        + "GoodPath:" + GoodPath + ","
+        + "Weight:" + Weight + ","
         + "}";
     }
     
