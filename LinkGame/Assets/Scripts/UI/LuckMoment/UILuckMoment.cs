@@ -71,8 +71,6 @@ namespace XrCode
             }
 
             preRewardId = -1;
-
-            proDic = new Dictionary<int, int>();
         }
         protected override void OnEnable() 
         {

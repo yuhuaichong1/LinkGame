@@ -2976,9 +2976,6 @@ namespace XrCode
         }
 
 
-
-
-
         private void ShakeSameKindGood(int tagetId, int sourceRow, int sourceCol)
         {
             shakingSourceKey = $"{sourceRow}_{sourceCol}";
