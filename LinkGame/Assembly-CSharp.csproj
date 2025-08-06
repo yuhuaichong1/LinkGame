@@ -76,9 +76,9 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoDragMe.cs" />
     <Compile Include="Assets\Scripts\User\UserModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DefaultValueDecorator.cs" />
-    <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
-    <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\BallRunPlayer.cs" />
     <Compile Include="Assets\Gen\Code\ConfGuidesAct.cs" />
+    <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\BallRunPlayer.cs" />
+    <Compile Include="Assets\Tools\Plugins\protobuf-net\ServiceModel\ProtoOperationBehavior.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RunBall\ThirdPersonCamera.cs" />
     <Compile Include="Assets\Gen\Code\TBLuckMoment.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\BufferExtension.cs" />
@@ -90,8 +90,8 @@
     <Compile Include="Assets\Scripts\Resource\Utils\PathUtil.cs" />
     <Compile Include="Assets\Scripts\Facade\FacadeTimeZone.cs" />
     <Compile Include="Assets\Scripts\PayType\PayTypeModule.cs" />
-    <Compile Include="Assets\Scripts\NetWork\NetworkModule.cs" />
     <Compile Include="Assets\Scripts\UI\UIChallengeTask\UIChallengeTask.cs" />
+    <Compile Include="Assets\Scripts\NetWork\NetworkModule.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawalSuccessful\UITemplate\UIWithdrawalSuccessful_Temp.cs" />
     <Compile Include="Assets\Scripts\Notify\MiniJsonTool.cs" />
     <Compile Include="Assets\Gen\Code\TBLoadingTitleSprite.cs" />
@@ -288,8 +288,8 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ArrayDecorator.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoContractAttribute.cs" />
     <Compile Include="Assets\Gen\Code\ConfReddot.cs" />
-    <Compile Include="Assets\Scripts\PlayerPref\PlayerPrefDefines.cs" />
     <Compile Include="Assets\Gen\Code\TBGuidesAct.cs" />
+    <Compile Include="Assets\Scripts\PlayerPref\PlayerPrefDefines.cs" />
     <Compile Include="Assets\Scripts\UI\Rate\UITemplate\UIRate_Temp.cs" />
     <Compile Include="Assets\Scripts\Gaming\GamePlay\UIRibbonRewardItem.cs" />
     <Compile Include="Assets\Gen\Code\ConfWithdrawableLevels.cs" />
