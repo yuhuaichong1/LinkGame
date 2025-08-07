@@ -22,6 +22,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         LevelSize = _buf.ReadString();
         LevelType = _buf.ReadInt();
         GoodKinds = _buf.ReadInt();
+        GoodKinds1 = _buf.ReadInt();
         MoveDic = _buf.ReadInt();
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FixedGridMap = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     FixedGridMap.Add(_k0, _v0);}}
         {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);EmptyGridMap = new System.Collections.Generic.Dictionary<string, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { string _k0;  _k0 = _buf.ReadString(); int _v0;  _v0 = _buf.ReadInt();     EmptyGridMap.Add(_k0, _v0);}}
@@ -58,6 +59,10 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
     /// 物品种类数量
     /// </summary>
     public int GoodKinds { get; protected set; }
+    /// <summary>
+    /// 物品种类数量
+    /// </summary>
+    public int GoodKinds1 { get; protected set; }
     /// <summary>
     /// 物品移动方向
     /// </summary>
@@ -125,6 +130,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         LevelSize = reloadData.LevelSize;
         LevelType = reloadData.LevelType;
         GoodKinds = reloadData.GoodKinds;
+        GoodKinds1 = reloadData.GoodKinds1;
         MoveDic = reloadData.MoveDic;
         if(FixedGridMap==null)
         {
@@ -212,6 +218,7 @@ public sealed partial class ConfLevel :  Bright.Config.BeanBase
         + "LevelSize:" + LevelSize + ","
         + "LevelType:" + LevelType + ","
         + "GoodKinds:" + GoodKinds + ","
+        + "GoodKinds1:" + GoodKinds1 + ","
         + "MoveDic:" + MoveDic + ","
         + "FixedGridMap:" + Bright.Common.StringUtil.CollectionToString(FixedGridMap) + ","
         + "EmptyGridMap:" + Bright.Common.StringUtil.CollectionToString(EmptyGridMap) + ","

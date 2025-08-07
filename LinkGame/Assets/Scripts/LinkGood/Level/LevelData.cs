@@ -84,7 +84,10 @@ public class LevelData
                 string[] size = conf.LevelSize.Split(",");
                 LevelXCount = int.Parse(size[1]) + 2;
                 LevelYCount = int.Parse(size[0]) + 2;
-                GoodKinds = conf.GoodKinds;
+                if(GameDefines.LevelDiffMode)
+                    GoodKinds = conf.GoodKinds;
+                else
+                    GoodKinds = conf.GoodKinds1;
                 levelDirEnum = dicStr;
 
                 list_constraint = SetDic(dicStr);

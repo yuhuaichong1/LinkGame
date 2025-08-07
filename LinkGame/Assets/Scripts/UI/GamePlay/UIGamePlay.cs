@@ -188,7 +188,7 @@ namespace XrCode
                     if(wType == 1)
                         mWithdrawTipText.text = LanguageModule.GetText("10012");
                     else//wType == 2
-                        mWithdrawTipText.text = LanguageModule.GetText("10012");
+                        mWithdrawTipText.text = LanguageModule.GetText("10102");
                 }
                 else
                 {
