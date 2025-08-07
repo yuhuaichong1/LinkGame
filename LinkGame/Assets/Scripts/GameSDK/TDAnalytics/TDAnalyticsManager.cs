@@ -85,7 +85,7 @@ namespace XrCode
         /// <param name="ecpm">ecpm</param>
         /// <param name="platform">广告平台</param>
         /// <param name="precision">广告精度</param>
-        public void AdStart(EAdtype adtype, EAdSource diasource, float ecpm, string platform, string precision)
+        public void AdStart(EAdtype adtype, EAdSource diasource, double ecpm, string platform, string precision)
         {
             if (!isOpenTD) return;
 
@@ -133,7 +133,7 @@ namespace XrCode
         /// <param name="ecpm">ecpm</param>
         /// <param name="platform">广告平台</param>
         /// <param name="precision">广告精度</param>
-        public void AdComplete(EAdtype adtype, EAdSource diasource, float ecpm, string platform, string precision)
+        public void AdComplete(EAdtype adtype, EAdSource diasource, double ecpm, string platform, string precision)
         {
             if (!isOpenTD) return;
 
@@ -415,7 +415,7 @@ namespace XrCode
         /// <summary>
         /// 累计广告数据
         /// </summary>
-        public void TotalAdData(float time, float revenue)
+        public void TotalAdData(float time, double revenue)
         {
             TDAnalytics.UserSetOnce(new Dictionary<string, object>()
             {

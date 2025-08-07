@@ -65,6 +65,12 @@ namespace XrSDK
         {
             base.OnLoad();
 
+            SolarEngineDefines.AdImpresslon += AdImpresslon;
+            SolarEngineDefines.AdRevenue += AdRevenue;
+            SolarEngineDefines.Times_5_Ad += Times_5_Ad;
+            SolarEngineDefines.Times_10_Ad += Times_10_Ad;
+            SolarEngineDefines.Times_15_Ad += Times_15_Ad;
+
             preInitSeSdk(appKey);
 
             SEConfig seConfig = new SEConfig();
@@ -145,48 +151,36 @@ namespace XrSDK
         //广告展示
         private void AdImpresslon()
         {
-            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
-            Dictionary<string, object> userProperties = new Dictionary<string, object>();
-            userProperties.Add("ad_impresslon", "ad_impresslon");
-
-            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+            Dictionary<string, object> customAttributes = new Dictionary<string, object>();
+            track("ad_impresslon", customAttributes);
         }
         //广告收入
         private void AdRevenue(double revenue)
         {
-            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
-            Dictionary<string, object> userProperties = new Dictionary<string, object>();
-            userProperties.Add("ad_revenue", revenue);
-
-            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+            Dictionary<string, object> customAttributes = new Dictionary<string, object>();
+            customAttributes.Add("revenue", revenue);
+            track("ad_15", customAttributes);
         }
 
         //激励+插屏合计成功展示5次
         private void Times_5_Ad()
         {
-            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
-            Dictionary<string, object> userProperties = new Dictionary<string, object>();
-            userProperties.Add("ad_5", "ad_5");
-
-            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+            Dictionary<string, object> customAttributes = new Dictionary<string, object>();
+            track("ad_5", customAttributes);
         }
+
         //激励+插屏合计成功展示10次
         private void Times_10_Ad()
         {
-            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
-            Dictionary<string, object> userProperties = new Dictionary<string, object>();
-            userProperties.Add("ad_10", "ad_10");
-
-            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+            Dictionary<string, object> customAttributes = new Dictionary<string, object>();
+            track("ad_10", customAttributes);
         }
+
         //激励+插屏合计成功展示15次
         private void Times_15_Ad()
         {
-            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
-            Dictionary<string, object> userProperties = new Dictionary<string, object>();
-            userProperties.Add("ad_15", "ad_15");
-
-            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+            Dictionary<string, object> customAttributes = new Dictionary<string, object>();
+            track("ad_15", customAttributes);
         }
     }
 }

@@ -49,7 +49,8 @@ namespace XrCode
             #region MAX激励广告
             MaxSdkDefines.OnRewardedAdDisplayedEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                SolarEngineDefines.AdImpresslon();
             };
             MaxSdkDefines.OnRewardedAdFailedToDisplayEvent = (adUnitId, ErrorInfo, AdInfo) =>
             {
@@ -61,7 +62,8 @@ namespace XrCode
             };
             MaxSdkDefines.OnRewardAdRevenuePaidEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                SolarEngineDefines.AdRevenue(AdInfo.Revenue);
 
                 currentAdwatch += 1;
                 totalAdwatch += 1;
@@ -75,7 +77,8 @@ namespace XrCode
             #region KwaiNetWork激励广告
             KwaiNetWorkDefines.KNW_OnRAdShow = () =>
             {
-                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
+                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
+                SolarEngineDefines.AdImpresslon();
             };
             KwaiNetWorkDefines.KNW_OnRAdShowFailed = (code, msg) =>
             {
@@ -87,7 +90,8 @@ namespace XrCode
             };
             KwaiNetWorkDefines.KNW_OnRAdPlayComplete = () =>
             {
-                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
+                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
+                SolarEngineDefines.AdRevenue(kwaiEcpm / 1000);
 
                 currentAdwatch += 1;
                 totalAdwatch += 1;
@@ -101,7 +105,8 @@ namespace XrCode
             #region MAX插屏广告
             MaxSdkDefines.OnInterstitialDisplayedEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdStart(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                TDAnalyticsManager.AdStart(EAdtype.Interstitial, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                SolarEngineDefines.AdImpresslon();
             };
             MaxSdkDefines.OnInterstitialFailedToDisplayEvent = (adUnitId, ErrorInfo, AdInfo) =>
             {
@@ -113,7 +118,8 @@ namespace XrCode
             };
             MaxSdkDefines.OnInterstitialRevenuePaidEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdComplete(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                TDAnalyticsManager.AdComplete(EAdtype.Interstitial, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
+                SolarEngineDefines.AdRevenue(AdInfo.Revenue);
 
                 currentAdwatch += 1;
                 totalAdwatch += 1;
@@ -180,12 +186,15 @@ namespace XrCode
             {
                 case 5:
                     TDAnalyticsManager.Times_5_Ad(totalAdRevenue);
+                    SolarEngineDefines.Times_5_Ad?.Invoke();
                     break;
                 case 10:
                     TDAnalyticsManager.Times_10_Ad(totalAdRevenue);
+                    SolarEngineDefines.Times_10_Ad?.Invoke();
                     break;
                 case 15:
                     TDAnalyticsManager.Times_15_Ad(totalAdRevenue);
+                    SolarEngineDefines.Times_15_Ad?.Invoke();
                     break;
                 case 20:
                     TDAnalyticsManager.Times_20_Ad(totalAdRevenue);
