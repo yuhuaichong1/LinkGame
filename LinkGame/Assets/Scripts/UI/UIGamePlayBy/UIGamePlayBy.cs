@@ -161,19 +161,23 @@ namespace XrCode
             float proValue = GamePlayFacade.GetRemainPCT();
             var str = LanguageModule.GetText("10011").Split("\n");
             var str3 = str[0] + ":" + str[1];
-            mCULText.text = string.Format(str3, (int)proValue) + "%";
+            var str4 = string.Format(str3, userLevel) + " ";
+            var str5 = LanguageModule.GetText("10081") + " ";
+            var str6 = string.Format(str5, (int)proValue) + "%";
+            mCULText.text = str4 + str6;
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
-
-
         }
         private void SetProcess()
         {
             int userLevel = GamePlayFacade.GetCurLevel();
             float proValue = GamePlayFacade.GetRemainPCT();
             var str = LanguageModule.GetText("10011").Split("\n");
-            var str3 = str[0] +":"+ str[1] ;
-            mCULText.text = string.Format(str3, (int)proValue) + "%";
+            var str3 = str[0] + ":" + str[1];
+            var str4 = string.Format(str3, userLevel) + " ";
+            var str5 = LanguageModule.GetText("10081") + " ";
+            var str6 = string.Format(str5, (int)proValue) + "%";
+            mCULText.text = str4 + str6;
             mCULSText.text = $"{proValue}%";
             mCULSlider.value = proValue;
         }

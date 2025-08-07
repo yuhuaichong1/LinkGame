@@ -2819,6 +2819,7 @@ namespace XrCode
                 return;
             AudioModule.PlayEffect(EAudioType.EGoodShuffle);
             _resetMap();
+            DeSelect();
         }
 
         private void ChangeTipCount(int num)
