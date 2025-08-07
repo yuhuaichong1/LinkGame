@@ -30,7 +30,8 @@ namespace XrCode
 
         protected override void OnLoad()
         {
-            //GameLoad(PlayerPrefs.GetString("accoundId"));
+            GameLoad(PlayerPrefs.GetString("accoundId"));
+            Debug.LogError("====>" + PlayerPrefs.GetInt("TDTest"));
         }
 
         //сно╥╪сть
@@ -72,6 +73,7 @@ namespace XrCode
                 {
                     { "accountId", this.accoundId }
                 });
+                TDAnalytics.EnableAutoTrack(TDAutoTrackEventType.AppEnd, new LoginOut2());
             }
 
             loginTime = DateTime.Now;
