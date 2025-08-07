@@ -108,6 +108,11 @@ namespace XrCode
         private bool ifContinue;//是否继续关卡进度
         private List<Vec2> emptyGridPositions = new List<Vec2>();
         private Dictionary<string, int> currentEmptyGridMap = new Dictionary<string, int>();
+
+        private int curAwesomeCountCheck;
+        private bool curAwesomeTimeCheck;
+        private bool CATCjustOne;
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -171,6 +176,8 @@ namespace XrCode
             check_id = new ArrayList();
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
+            curAwesomeCountCheck = GameDefines.FirstCount;
+            CATCjustOne = true;
 
             LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
@@ -305,6 +312,12 @@ namespace XrCode
                     _randomMap();
 
                 remainGood = totalGood;
+            }
+
+            if(CATCjustOne && curLevel >= 3)
+            {
+                CATCjustOne = false;
+                InterTimer();
             }
         }
 
@@ -1985,14 +1998,28 @@ namespace XrCode
             else
                 curTopNoticeCount += 1;
 
-            if (curAwesomeCount == GameDefines.Awesome_Count_Max)
+            if(GameDefines.IsOnlyConn)
             {
-                if (GameDefines.ifIAA) return;
-                curAwesomeCount = 0;
-                UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                if (curAwesomeCount >= curAwesomeCountCheck)
+                {
+                    if (GameDefines.ifIAA) return;
+
+                    curAwesomeCountCheck = GameDefines.SedCount;
+                    curAwesomeCount = 0;
+                    UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                }
+                else
+                    curAwesomeCount += 1;
             }
             else
-                curAwesomeCount += 1;
+            {
+                if(curAwesomeTimeCheck)
+                {
+                    curAwesomeTimeCheck = false;
+                    UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                    InterTimer();
+                }
+            }
 
             if (curRateCount == GameDefines.Rate_Count_Max && FacadeTimeZone.IfNextDay())
             {
@@ -3792,6 +3819,14 @@ namespace XrCode
                 SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
 
+        }
+
+        private void InterTimer()
+        {
+            STimerManager.Instance.CreateSDelay(curLevel >= GameDefines.InstLevel ? GameDefines.InstTime1 : GameDefines.InstTime2, () =>
+            {
+                curAwesomeTimeCheck = true;
+            });
         }
 
         #endregion

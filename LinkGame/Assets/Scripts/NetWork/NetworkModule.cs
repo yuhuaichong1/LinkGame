@@ -246,6 +246,27 @@ namespace XrCode
                     GameDefines.SedCount = int.Parse(sc.ToString());
                 }
 
+                //插屏界面显示条件（方式）
+                if(adDic.TryGetValue("IsOnlyConn", out object ioc))
+                {
+                    GameDefines.IsOnlyConn = bool.Parse(ioc.ToString());
+                }
+                //插屏界面显示条件（方式）
+                if (adDic.TryGetValue("InstLevel", out object il))
+                {
+                    GameDefines.InstLevel = int.Parse(il.ToString());
+                }
+                //插屏界面显示条件（方式）
+                if (adDic.TryGetValue("InstTime1", out object it1))
+                {
+                    GameDefines.InstTime1 = int.Parse(it1.ToString());
+                }
+                //插屏界面显示条件（方式）
+                if (adDic.TryGetValue("InstTime2", out object it2))
+                {
+                    GameDefines.InstTime2 = int.Parse(it2.ToString());
+                }
+
                 //是否自动刷新
                 if (adDic.TryGetValue("autoRefursh", out object ar))
                 {
