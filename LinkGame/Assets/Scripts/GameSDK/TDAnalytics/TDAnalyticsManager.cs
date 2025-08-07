@@ -84,7 +84,8 @@ namespace XrCode
         /// <param name="diasource">广告位</param>
         /// <param name="ecpm">ecpm</param>
         /// <param name="platform">广告平台</param>
-        public void AdStart(EAdtype adtype, EAdSource diasource, float ecpm, string platform)
+        /// <param name="precision">广告精度</param>
+        public void AdStart(EAdtype adtype, EAdSource diasource, float ecpm, string platform, string precision)
         {
             if (!isOpenTD) return;
 
@@ -93,6 +94,7 @@ namespace XrCode
             properties.Add("diasource", diasource.ToString());
             properties.Add("ecpm", ecpm);
             properties.Add("platform", platform);
+            properties.Add("precision", precision);
 
             //SetUserMD();
             TDAnalytics.Track("LG_AdStart", properties);
@@ -107,7 +109,8 @@ namespace XrCode
         /// <param name="diasource">广告位</param>
         /// <param name="ecpm">ecpm</param>
         /// <param name="platform">广告平台</param>
-        public void AdFail(EAdtype adtype, EAdSource diasource, string errmsg, string platform)
+        /// <param name="precision">广告精度</param>
+        public void AdFail(EAdtype adtype, EAdSource diasource, string errmsg, string platform, string precision)
         {
             if (!isOpenTD) return;
 
@@ -116,6 +119,7 @@ namespace XrCode
             properties.Add("diasource", diasource.ToString());
             properties.Add("errmsg", errmsg);
             properties.Add("platform", platform);
+            properties.Add("precision", precision);
 
             //SetUserMD();
             TDAnalytics.Track("LG_AdFail", properties);
@@ -128,7 +132,8 @@ namespace XrCode
         /// <param name="diasource">广告位</param>
         /// <param name="ecpm">ecpm</param>
         /// <param name="platform">广告平台</param>
-        public void AdComplete(EAdtype adtype, EAdSource diasource, float ecpm, string platform)
+        /// <param name="precision">广告精度</param>
+        public void AdComplete(EAdtype adtype, EAdSource diasource, float ecpm, string platform, string precision)
         {
             if (!isOpenTD) return;
 
@@ -137,13 +142,33 @@ namespace XrCode
             properties.Add("diasource", diasource.ToString());
             properties.Add("ecpm", ecpm);
             properties.Add("platform", platform);
+            properties.Add("precision", precision);
 
             //SetUserMD();
             TDAnalytics.Track("TGM_AdComplete", properties);
 
             TotalAdData((int)Math.Round((DateTime.Now - AdTime).TotalSeconds), ecpm / 1000);
+        }
 
+        /// <summary>
+        /// 广告收入发放成功
+        /// </summary>
+        /// <param name="revenue">广告收入</param>
+        /// <param name="precision">广告精度</param>
+        /// <param name="diasource">广告位</param>
+        /// <param name="platform">广告平台</param>
+        public void AdRevenuePaid(float revenue, string precision, EAdSource diasource,string platform)
+        {
+            if (!isOpenTD) return;
 
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+            properties.Add("revenue", revenue);
+            properties.Add("precision", precision);
+            properties.Add("precision", diasource);
+            properties.Add("platform", platform);
+
+            //SetUserMD();
+            TDAnalytics.Track("TGM_AdRevenuePaid", properties);
         }
 
         /// <summary>

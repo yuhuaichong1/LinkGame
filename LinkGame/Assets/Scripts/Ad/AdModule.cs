@@ -49,19 +49,19 @@ namespace XrCode
             #region MAX激励广告
             MaxSdkDefines.OnRewardedAdDisplayedEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName);
+                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
             };
             MaxSdkDefines.OnRewardedAdFailedToDisplayEvent = (adUnitId, ErrorInfo, AdInfo) =>
             {
                 string str = $"{ErrorInfo.Code} : {ErrorInfo.Message}";
                 D.Error(str);
-                TDAnalyticsManager.AdFail(EAdtype.Reward, this.eAdSource, str, AdInfo.NetworkName);
+                TDAnalyticsManager.AdFail(EAdtype.Reward, this.eAdSource, str, AdInfo.NetworkName, AdInfo.RevenuePrecision);
 
                 failedAction?.Invoke(ErrorInfo.Message);
             };
             MaxSdkDefines.OnRewardAdRevenuePaidEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName);
+                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
 
                 currentAdwatch += 1;
                 totalAdwatch += 1;
@@ -75,19 +75,19 @@ namespace XrCode
             #region KwaiNetWork激励广告
             KwaiNetWorkDefines.KNW_OnRAdShow = () =>
             {
-                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName());
+                TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
             };
             KwaiNetWorkDefines.KNW_OnRAdShowFailed = (code, msg) =>
             {
                 string str = $"{code} : {msg}";
                 D.Error(str);
-                TDAnalyticsManager.AdFail(EAdtype.Reward, this.eAdSource, str, KwaiNetWorkDefines.GetRewardedAdName());
+                TDAnalyticsManager.AdFail(EAdtype.Reward, this.eAdSource, str, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
 
                 failedAction?.Invoke(msg);
             };
             KwaiNetWorkDefines.KNW_OnRAdPlayComplete = () =>
             {
-                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName());
+                TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, (float)kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
 
                 currentAdwatch += 1;
                 totalAdwatch += 1;
@@ -101,19 +101,19 @@ namespace XrCode
             #region MAX插屏广告
             MaxSdkDefines.OnInterstitialDisplayedEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdStart(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName);
+                TDAnalyticsManager.AdStart(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
             };
             MaxSdkDefines.OnInterstitialFailedToDisplayEvent = (adUnitId, ErrorInfo, AdInfo) =>
             {
                 string str = $"{ErrorInfo.Code} : {ErrorInfo.Message}";
                 D.Error(str);
-                TDAnalyticsManager.AdFail(EAdtype.Interstitial, this.eAdSource, str, AdInfo.NetworkName);
+                TDAnalyticsManager.AdFail(EAdtype.Interstitial, this.eAdSource, str, AdInfo.NetworkName, AdInfo.RevenuePrecision);
 
                 failedAction?.Invoke(ErrorInfo.Message);
             };
             MaxSdkDefines.OnInterstitialRevenuePaidEvent = (adUnitId, AdInfo) =>
             {
-                TDAnalyticsManager.AdComplete(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName);
+                TDAnalyticsManager.AdComplete(EAdtype.Interstitial, this.eAdSource, (float)AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
 
                 currentAdwatch += 1;
                 totalAdwatch += 1;
