@@ -118,16 +118,18 @@ public abstract class GameDefines
     public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
     public static float HideAnimTime = 0.25f;                                                               //UI动画关闭持续时间
 
-    public static float IntervalTime = 60000f;                                                              //插屏间隔时间
+    public static float adtime = 60000f;                                                                    //插屏间隔时间
 
-    public static bool IsOnlyConn = true;                                                                   //插屏界面出现条件（方式）
-    public static int FirstCount = 4;                                                                       //第一次点击次数
-    public static int SedCount = 3;                                                                         //第二次点击次数
-    public static int InstLevel = 9;                                                                        //插屏出现时间关卡界限
-    public static int InstTime1 = 60;                                                                       //前部分关卡间隔时间
-    public static int InstTime2 = 30;                                                                       //后部分关卡间隔时间
+    public static int InstLevel = 9;                                                                        //插屏UI出现时间关卡界限
+    public static int InsLevelFront = 1;                                                                    //关卡界限前的关卡用模式1or模式2
+    public static int InsLevelLast = 2;                                                                     //关卡界限后的关卡用模式1or模式2
+    public static int FirstCount = 4;                                                                       //模式1：第1次点击次数
+    public static int SedCount = 3;                                                                         //模式1：第2次点击次数
+    public static int InstTime = 60;                                                                        //模式2：关卡间隔时间
+
     public static bool ifIAA = true;                                                                        //AB包切换
     public static bool IsAutoRefresh = false;                                                               //无物可消时是否刷新
+    public static bool LevelDiffMode = true;                                                                //关卡难度
 
     public static int doubleLevel = 9;                                                                      //第一个开始双倍的关卡
 }

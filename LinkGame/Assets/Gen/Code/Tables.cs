@@ -39,6 +39,7 @@ namespace cfg
 		public TBObstacleIcon TBObstacleIcon {get; private set;}
 		public TBGuidesAct TBGuidesAct {get; private set;}
 		public TBLevelAct TBLevelAct {get; private set;}
+		public TBLuckMomentAct TBLuckMomentAct {get; private set;}
 		public TBGoodWeight TBGoodWeight {get; private set;}
 
 		private Queue<string> configNames;
@@ -91,6 +92,8 @@ namespace cfg
 			tables.Add("TBGuidesAct", TBGuidesAct);
 			TBLevelAct = new TBLevelAct(loader("tblevelact")); 
 			tables.Add("TBLevelAct", TBLevelAct);
+			TBLuckMomentAct = new TBLuckMomentAct(loader("tbluckmomentact")); 
+			tables.Add("TBLuckMomentAct", TBLuckMomentAct);
 			TBGoodWeight = new TBGoodWeight(loader("tbgoodweight")); 
 			tables.Add("TBGoodWeight", TBGoodWeight);
 	
@@ -143,6 +146,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBGuidesActDataFinish);
 			configNames.Enqueue("tblevelact");
             configCbFuncs.Enqueue(OnTBLevelActDataFinish);
+			configNames.Enqueue("tbluckmomentact");
+            configCbFuncs.Enqueue(OnTBLuckMomentActDataFinish);
 			configNames.Enqueue("tbgoodweight");
             configCbFuncs.Enqueue(OnTBGoodWeightDataFinish);
 
@@ -206,6 +211,7 @@ namespace cfg
 			TBObstacleIcon.TranslateText(translator); 
 			TBGuidesAct.TranslateText(translator); 
 			TBLevelAct.TranslateText(translator); 
+			TBLuckMomentAct.TranslateText(translator); 
 			TBGoodWeight.TranslateText(translator); 
 		}
 		
@@ -233,6 +239,7 @@ namespace cfg
 			TBObstacleIcon.Resolve(tables);
 			TBGuidesAct.Resolve(tables);
 			TBLevelAct.Resolve(tables);
+			TBLuckMomentAct.Resolve(tables);
 			TBGoodWeight.Resolve(tables);
 		}
 	
@@ -301,6 +308,9 @@ namespace cfg
 					break;
 				case "TBLevelAct":
 					TBLevelAct.Reload(_loader("TBLevelAct"));
+					break;
+				case "TBLuckMomentAct":
+					TBLuckMomentAct.Reload(_loader("TBLuckMomentAct"));
 					break;
 				case "TBGoodWeight":
 					TBGoodWeight.Reload(_loader("TBGoodWeight"));
@@ -418,6 +428,11 @@ namespace cfg
 		{
 			TBLevelAct = new TBLevelAct(buf);
 			tables.Add("TBLevelAct", TBLevelAct);
+		}
+		public void OnTBLuckMomentActDataFinish(ByteBuf buf)
+		{
+			TBLuckMomentAct = new TBLuckMomentAct(buf);
+			tables.Add("TBLuckMomentAct", TBLuckMomentAct);
 		}
 		public void OnTBGoodWeightDataFinish(ByteBuf buf)
 		{

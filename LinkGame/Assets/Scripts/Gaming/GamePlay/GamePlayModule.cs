@@ -1,4 +1,5 @@
 using cfg;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,6 +113,8 @@ namespace XrCode
         private int curAwesomeCountCheck;
         private bool curAwesomeTimeCheck;
         private bool CATCjustOne;
+        private Action forntAction;
+        private Action lastAction;
 
         protected override void OnLoad()
         {
@@ -178,6 +181,24 @@ namespace XrCode
             curLevelDirection = new ArrayList();//当前关卡的方向
             curAwesomeCountCheck = GameDefines.FirstCount;
             CATCjustOne = true;
+            switch (GameDefines.InsLevelFront)
+            {
+                case 1:
+                    forntAction += InterUIShow1;
+                    break;
+                case 2:
+                    forntAction += InterUIShow2;
+                    break;
+            }
+            switch (GameDefines.InsLevelLast)
+            {
+                case 1:
+                    lastAction += InterUIShow1;
+                    break;
+                case 2:
+                    lastAction += InterUIShow2;
+                    break;
+            }
 
             LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
@@ -312,12 +333,6 @@ namespace XrCode
                     _randomMap();
 
                 remainGood = totalGood;
-            }
-
-            if(CATCjustOne && curLevel >= 3)
-            {
-                CATCjustOne = false;
-                InterTimer();
             }
         }
 
@@ -1998,27 +2013,14 @@ namespace XrCode
             else
                 curTopNoticeCount += 1;
 
-            if(GameDefines.IsOnlyConn)
-            {
-                if (curAwesomeCount >= curAwesomeCountCheck)
-                {
-                    if (GameDefines.ifIAA) return;
 
-                    curAwesomeCountCheck = GameDefines.SedCount;
-                    curAwesomeCount = 0;
-                    UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
-                }
-                else
-                    curAwesomeCount += 1;
+            if(curLevel <= GameDefines.InstLevel)
+            {
+                forntAction?.Invoke();
             }
             else
             {
-                if(curAwesomeTimeCheck)
-                {
-                    curAwesomeTimeCheck = false;
-                    UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
-                    InterTimer();
-                }
+                lastAction?.Invoke();
             }
 
             if (curRateCount == GameDefines.Rate_Count_Max && FacadeTimeZone.IfNextDay())
@@ -2618,7 +2620,7 @@ namespace XrCode
             {
                 return;
             }
-            int r = Random.Range(0, count);
+            int r = UnityEngine.Random.Range(0, count);
             if (r == count)
             {
                 r = count - 1;
@@ -3821,12 +3823,45 @@ namespace XrCode
 
         }
 
+        //倒计时显示插屏UI的计时器
         private void InterTimer()
         {
-            STimerManager.Instance.CreateSDelay(curLevel >= GameDefines.InstLevel ? GameDefines.InstTime1 : GameDefines.InstTime2, () =>
+            STimerManager.Instance.CreateSDelay(GameDefines.InstTime, () =>
             {
                 curAwesomeTimeCheck = true;
             });
+        }
+        //显示插屏UI方式1
+        private void InterUIShow1()
+        {
+            if (curAwesomeCount >= curAwesomeCountCheck)
+            {
+                if (GameDefines.ifIAA) return;
+
+                curAwesomeCountCheck = GameDefines.SedCount;
+                curAwesomeCount = 0;
+                UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+            }
+            else
+                curAwesomeCount += 1;
+        }
+        //显示插屏UI方式2
+        private void InterUIShow2()
+        {
+            if (GameDefines.ifIAA) return;
+
+            if (CATCjustOne)
+            {
+                CATCjustOne = false;
+                InterTimer();
+            }
+
+            if (curAwesomeTimeCheck)
+            {
+                curAwesomeTimeCheck = false;
+                UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                InterTimer();
+            }
         }
 
         #endregion

@@ -5,3 +5,15 @@ UserSettings
 .vs
 Packages
 AssetBundles
+LinkGame/spine-csharp.csproj
+LinkGame/spine-unity.csproj
+LinkGame/spine-unity-editor.csproj
+LinkGame/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/Assembly-CSharp-firstpass.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/IngameDebugConsole.Editor.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/IngameDebugConsole.Runtime.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/spine-csharp.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/spine-unity.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/spine-unity-editor.csproj.AssemblyReference.cache
+LinkGame/obj/Debug/ThinkingSDK.csproj.AssemblyReference.cache

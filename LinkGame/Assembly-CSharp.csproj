@@ -185,6 +185,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TagDecorator.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILoad.cs" />
     <Compile Include="Assets\Scripts\UI\Congratfulations\UICongratfulations.cs" />
+    <Compile Include="Assets\Gen\Code\ConfLuckMomentAct.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoLongTapMe.cs" />
     <Compile Include="Assets\Gen\Code\TBGoodIcon.cs" />
     <Compile Include="Assets\Scripts\UI\Effect\UIEffect.cs" />
@@ -310,7 +311,6 @@
     <Compile Include="Assets\Scripts\Task\TaskModule.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\IProtoTypeSerializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\StringUtil.cs" />
-    <Compile Include="Assets\Scripts\UI\UIGamePlayBy\UITemplate\UIGamePlay_Temp.cs" />
     <Compile Include="Assets\Scripts\UI\UIChallengeTask\UITemplate\UIChallengeTask_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UriDecorator.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ExtensibleUtil.cs" />
@@ -323,6 +323,7 @@
     <Compile Include="Assets\Scripts\MiniComponent\AutoRotation.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawalInformation\UITemplate\UIWithdrawalInformation_Temp.cs" />
     <Compile Include="Assets\Tools\LubanLib\ByteBufExtensions.cs" />
+    <Compile Include="Assets\Scripts\UI\UIGamePlayBy\UITemplate\UIGamePlayBy_Temp.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\GameExemple\RTSExample\RTSCamera.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\GridView\LoopGridItemPool.cs" />
     <Compile Include="Assets\Scripts\_Game\Game.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
     <Compile Include="Assets\Tools\PlayerPrefsMoreType\PlayerPrefHelper.cs" />
     <Compile Include="Assets\Scripts\UI\UIWithdrawalSure\UITemplate\UIWithdrawalSure_Temp.cs" />
+    <Compile Include="Assets\Gen\Code\TBLuckMomentAct.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UITemplate\UILoading_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\StringSerializer.cs" />

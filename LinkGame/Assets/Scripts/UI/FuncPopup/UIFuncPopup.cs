@@ -17,6 +17,7 @@ namespace XrCode
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
+          if (GameDefines.ifIAA )madIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath);
         }
         
         protected override void OnSetParam(params object[] args)
