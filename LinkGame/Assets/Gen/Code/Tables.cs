@@ -40,6 +40,7 @@ namespace cfg
 		public TBGuidesAct TBGuidesAct {get; private set;}
 		public TBLevelAct TBLevelAct {get; private set;}
 		public TBLuckMomentAct TBLuckMomentAct {get; private set;}
+		public TBGoodWeight TBGoodWeight {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -93,6 +94,8 @@ namespace cfg
 			tables.Add("TBLevelAct", TBLevelAct);
 			TBLuckMomentAct = new TBLuckMomentAct(loader("tbluckmomentact")); 
 			tables.Add("TBLuckMomentAct", TBLuckMomentAct);
+			TBGoodWeight = new TBGoodWeight(loader("tbgoodweight")); 
+			tables.Add("TBGoodWeight", TBGoodWeight);
 	
 			PostInit();
 			ResolveAllTable();
@@ -145,6 +148,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBLevelActDataFinish);
 			configNames.Enqueue("tbluckmomentact");
             configCbFuncs.Enqueue(OnTBLuckMomentActDataFinish);
+			configNames.Enqueue("tbgoodweight");
+            configCbFuncs.Enqueue(OnTBGoodWeightDataFinish);
 
             LoadAllConfig();
         }
@@ -207,6 +212,7 @@ namespace cfg
 			TBGuidesAct.TranslateText(translator); 
 			TBLevelAct.TranslateText(translator); 
 			TBLuckMomentAct.TranslateText(translator); 
+			TBGoodWeight.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -234,6 +240,7 @@ namespace cfg
 			TBGuidesAct.Resolve(tables);
 			TBLevelAct.Resolve(tables);
 			TBLuckMomentAct.Resolve(tables);
+			TBGoodWeight.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -304,6 +311,9 @@ namespace cfg
 					break;
 				case "TBLuckMomentAct":
 					TBLuckMomentAct.Reload(_loader("TBLuckMomentAct"));
+					break;
+				case "TBGoodWeight":
+					TBGoodWeight.Reload(_loader("TBGoodWeight"));
 					break;
 			}
 	
@@ -423,6 +433,11 @@ namespace cfg
 		{
 			TBLuckMomentAct = new TBLuckMomentAct(buf);
 			tables.Add("TBLuckMomentAct", TBLuckMomentAct);
+		}
+		public void OnTBGoodWeightDataFinish(ByteBuf buf)
+		{
+			TBGoodWeight = new TBGoodWeight(buf);
+			tables.Add("TBGoodWeight", TBGoodWeight);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()

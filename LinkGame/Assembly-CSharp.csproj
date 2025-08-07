@@ -266,7 +266,6 @@
     <Compile Include="Assets\Scripts\Task\Task.cs" />
     <Compile Include="Assets\Scripts\UI\Popup\UITemplate\UIPopup_Temp.cs" />
     <Compile Include="Assets\Scripts\Reward\RewardItem.cs" />
-    <Compile Include="Assets\Scripts\UI\GamePlay\UITemplate\UIGamePlay_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ProtoReader.cs" />
     <Compile Include="Assets\Scripts\SUIAnimLine\SUIAnimCurve.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\SubType.cs" />
@@ -282,6 +281,7 @@
     <Compile Include="Assets\Gen\Code\ConfUserLevel.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\DecimalSerializer.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Meta\RuntimeTypeModel.cs" />
+    <Compile Include="Assets\Scripts\UI\GamePlay\UITemplate\UIGamePlayBy_Temp.cs" />
     <Compile Include="Assets\Gen\Code\TBLinkLine.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\ListView\LoopListView2.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\ArrayDecorator.cs" />
@@ -355,6 +355,7 @@
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Examples\FPSExample\ImpactEffect.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Plugins\Component\EasyTouchTrigger.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\StaggeredGridItemGroup.cs" />
+    <Compile Include="Assets\Gen\Code\ConfGoodWeight.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\GlobalSuppressions.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\StaggeredGridItemPool.cs" />
     <Compile Include="Assets\Scripts\MultiLanguages\LanguageType.cs" />
@@ -394,6 +395,7 @@
     <Compile Include="Assets\Scripts\LinkGood\Level\ConstraintData.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
     <Compile Include="Assets\Tools\PlayerPrefsMoreType\PlayerPrefHelper.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWithdrawalSure\UITemplate\UIWithdrawalSure_Temp.cs" />
     <Compile Include="Assets\Gen\Code\TBLuckMomentAct.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UITemplate\UILoading_Temp.cs" />
@@ -441,10 +443,12 @@
     <Compile Include="Assets\Scripts\Scene\StartScene.cs" />
     <Compile Include="Assets\Scripts\UI\FuncPopup\UITemplate\UIFuncPopup_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt32Serializer.cs" />
+    <Compile Include="Assets\Scripts\UI\UIWithdrawalSure\UIWithdrawalSure.cs" />
     <Compile Include="Assets\Gen\Code\TBWithdrawableLevels.cs" />
     <Compile Include="Assets\Scripts\Pool\GameObjectManager.cs" />
     <Compile Include="Assets\Scripts\UI\ChallengeFailed\UITemplate\UIChallengeFailed_Temp.cs" />
     <Compile Include="Assets\Scripts\UI\GamePlay\UICurLevelItem.cs" />
+    <Compile Include="Assets\Gen\Code\TBGoodWeight.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\UInt16Serializer.cs" />
     <Compile Include="Assets\Scripts\Tools\Utils\CalcUtil.cs" />
     <Compile Include="Assets\Gen\Code\ConfGoodIcon.cs" />
