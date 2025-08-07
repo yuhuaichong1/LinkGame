@@ -1,8 +1,5 @@
 using SolarEngine;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using XrCode;
 using static SolarEngine.Analytics;
 
@@ -143,6 +140,53 @@ namespace XrSDK
         private void onInitSuccessful()
         {
 
+        }
+
+        //广告展示
+        private void AdImpresslon()
+        {
+            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
+            Dictionary<string, object> userProperties = new Dictionary<string, object>();
+            userProperties.Add("ad_impresslon", "ad_impresslon");
+
+            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+        }
+        //广告收入
+        private void AdRevenue(double revenue)
+        {
+            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
+            Dictionary<string, object> userProperties = new Dictionary<string, object>();
+            userProperties.Add("ad_revenue", revenue);
+
+            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+        }
+
+        //激励+插屏合计成功展示5次
+        private void Times_5_Ad()
+        {
+            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
+            Dictionary<string, object> userProperties = new Dictionary<string, object>();
+            userProperties.Add("ad_5", "ad_5");
+
+            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+        }
+        //激励+插屏合计成功展示10次
+        private void Times_10_Ad()
+        {
+            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
+            Dictionary<string, object> userProperties = new Dictionary<string, object>();
+            userProperties.Add("ad_10", "ad_10");
+
+            remoteConfig.SetRemoteConfigUserProperties(userProperties);
+        }
+        //激励+插屏合计成功展示15次
+        private void Times_15_Ad()
+        {
+            SESDKRemoteConfig remoteConfig = new SESDKRemoteConfig();
+            Dictionary<string, object> userProperties = new Dictionary<string, object>();
+            userProperties.Add("ad_15", "ad_15");
+
+            remoteConfig.SetRemoteConfigUserProperties(userProperties);
         }
     }
 }

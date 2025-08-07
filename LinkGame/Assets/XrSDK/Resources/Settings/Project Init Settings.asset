@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: XrSDK.FacebookPendant
   m_EditorClassIdentifier: 
   moduleName: 
-  AppId: 1592150564807720
-  Token: 25074c50b9677408f20bb7c0e83a1afe
+  AppId: 1511602563538593
+  Token: 2822a77e47ab28c6ff8fb8c1f05286df
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,14 +46,14 @@ MonoBehaviour:
   m_Name: XrSDK.KwaiNetWorkPendant
   m_EditorClassIdentifier: 
   moduleName: 
-  appId_Android: 803483
-  token_Android: jewcZn6IziPilEl
-  rewardTagId_Android: 8034836001
-  interstitialTagId_Android: 8034836002
-  appId_Ios: 803483
-  token_Ios: jewcZn6IziPilEl
-  rewardTagId_Ios: 8034836001
-  interstitialTagId_Ios: 8034836002
+  appId_Android: 803774
+  token_Android: H8kukQN7DAMEtxp
+  rewardTagId_Android: 8037746001
+  interstitialTagId_Android: 8037746002
+  appId_Ios: 803774
+  token_Ios: H8kukQN7DAMEtxp
+  rewardTagId_Ios: 8037746001
+  interstitialTagId_Ios: 8037746002
   debug: 1
 --- !u!114 &5501959019314608257
 MonoBehaviour:
@@ -68,13 +68,13 @@ MonoBehaviour:
   m_Name: XrSDK.MaxSdkModulePendant
   m_EditorClassIdentifier: 
   moduleName: 
-  MaxSdkKey: 5GiVJUyrKCPEhS9mDxTD3JFtNIph0J4ofnyHki-UHLBARNIyB2TS5TK_98pq46R4oAxhXuISI1asvPdqy1BFc0
-  InterstitialAdUnitId_Android: 839666b0da82ad1e
-  RewardedAdUnitId_Android: a36ee933b0b29e84
+  MaxSdkKey: 51B7ZCOJ8hGFXoXq1I1zoFqgAViR2fgz3sNcw4yT97DpE2I8X6gmtKUOIo_wgTJI8HxFVH8deiN6HzZbBUeGsg
+  InterstitialAdUnitId_Android: 655d3e3d7982332b
+  RewardedAdUnitId_Android: 5a4cd92a345885e9
   BannerAdUnitId_Android: 
   MRecAdUnitId_Android: 
-  InterstitialAdUnitId_Ios: b6f1480fdee026e3
-  RewardedAdUnitId_Ios: bd43c0c14a81ed3f
+  InterstitialAdUnitId_Ios: 655d3e3d7982332b
+  RewardedAdUnitId_Ios: 5a4cd92a345885e9
   BannerAdUnitId_Ios: 
   MRecAdUnitId_Ios: 
 --- !u!114 &5524535533624070907
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: XrSDK.SolarEngineModulePendant
   m_EditorClassIdentifier: 
   moduleName: 
-  AppKey: 
+  AppKey: a0515c093f0f1ac7
   IsDebugModel: 0
   LogEnabled: 0
   IsGDPRArea: 0

@@ -536,6 +536,18 @@
       <HintPath>Assets\FacebookSDK\Plugins\Android\Facebook.Unity.Android.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="solarenginewindows">
+      <HintPath>Assets\Plugins\SolarEngine\Windows\solarenginewindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MiniGameRemoteConfig">
+      <HintPath>Assets\Plugins\SolarEngine\MiniGame\MiniGameRemoteConfig.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SolarEngineMiniGames">
+      <HintPath>Assets\Plugins\SolarEngine\MiniGame\SolarEngineMiniGames.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="XInputDotNetPure">
       <HintPath>Assets\FacebookSDK\Plugins\Windows\XInputDotNetPure.dll</HintPath>
       <Private>False</Private>
@@ -552,24 +564,12 @@
       <HintPath>Assets\FacebookSDK\Plugins\Facebook.Unity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Facebook.Unity.Settings">
-      <HintPath>Assets\FacebookSDK\Plugins\Settings\Facebook.Unity.Settings.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MiniGameRemoteConfig">
-      <HintPath>Assets\Plugins\SolarEngine\MiniGame\MiniGameRemoteConfig.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SolarEngineMiniGames">
-      <HintPath>Assets\Plugins\SolarEngine\MiniGame\SolarEngineMiniGames.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="SolarEngineUnityTool">
       <HintPath>Assets\Plugins\SolarEngine\MiniGame\SolarEngineUnityTool.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="solarenginewindows">
-      <HintPath>Assets\Plugins\SolarEngine\Windows\solarenginewindows.dll</HintPath>
+    <Reference Include="Facebook.Unity.Settings">
+      <HintPath>Assets\FacebookSDK\Plugins\Settings\Facebook.Unity.Settings.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">

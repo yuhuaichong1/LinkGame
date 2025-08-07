@@ -67,7 +67,7 @@ namespace XrCode
                 totalAdwatch += 1;
                 totalAdRevenue += AdInfo.Revenue;
                 CheckAdTotalData();
-
+                
                 successfulAction?.Invoke();
             };
             #endregion
@@ -135,8 +135,8 @@ namespace XrCode
         //播放激励广告
         private void PlayRewardAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
-            successAction?.Invoke();
-            return;
+            //successAction?.Invoke();
+            //return;
 
             this.eAdSource = eAdSource;
             maxEcpm = MaxSdkDefines.GetRewardedAdRevenue();
@@ -164,8 +164,8 @@ namespace XrCode
         //播放插屏广告
         private void PlayInterAd(EAdSource eAdSource, Action successAction, Action<string> failAction = null)
         {
-            successAction?.Invoke();
-            return;
+            //successAction?.Invoke();
+            //return;
 
             this.eAdSource = eAdSource;
             successfulAction = successAction;
