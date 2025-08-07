@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using static MaxSdkBase;
 
 namespace XrCode
@@ -47,12 +48,12 @@ namespace XrCode
         private void AdCallback()
         {
             #region MAX激励广告
-            MaxSdkDefines.OnRewardedAdDisplayedEvent = (adUnitId, AdInfo) =>
+            MaxSdkDefines.OnRewardedAdDisplayedEvent += (adUnitId, AdInfo) =>
             {
                 TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
                 SolarEngineDefines.AdImpresslon();
             };
-            MaxSdkDefines.OnRewardedAdFailedToDisplayEvent = (adUnitId, ErrorInfo, AdInfo) =>
+            MaxSdkDefines.OnRewardedAdFailedToDisplayEvent += (adUnitId, ErrorInfo, AdInfo) =>
             {
                 string str = $"{ErrorInfo.Code} : {ErrorInfo.Message}";
                 D.Error(str);
@@ -60,7 +61,7 @@ namespace XrCode
 
                 failedAction?.Invoke(ErrorInfo.Message);
             };
-            MaxSdkDefines.OnRewardAdRevenuePaidEvent = (adUnitId, AdInfo) =>
+            MaxSdkDefines.OnRewardAdReceivedRewardEvent += (adUnitId, reward, AdInfo) =>
             {
                 TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
                 SolarEngineDefines.AdRevenue(AdInfo.Revenue);
@@ -72,15 +73,20 @@ namespace XrCode
                 
                 successfulAction?.Invoke();
             };
+            MaxSdkDefines.OnRewardAdRevenuePaidEvent += (adUnitId, AdInfo) => 
+            {
+                TDAnalyticsManager.AdRevenuePaid(AdInfo.Revenue, AdInfo.RevenuePrecision, this.eAdSource, AdInfo.NetworkName);
+            };
+
             #endregion
 
             #region KwaiNetWork激励广告
-            KwaiNetWorkDefines.KNW_OnRAdShow = () =>
+            KwaiNetWorkDefines.KNW_OnRAdShow += () =>
             {
                 TDAnalyticsManager.AdStart(EAdtype.Reward, this.eAdSource, kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
                 SolarEngineDefines.AdImpresslon();
             };
-            KwaiNetWorkDefines.KNW_OnRAdShowFailed = (code, msg) =>
+            KwaiNetWorkDefines.KNW_OnRAdShowFailed += (code, msg) =>
             {
                 string str = $"{code} : {msg}";
                 D.Error(str);
@@ -88,7 +94,7 @@ namespace XrCode
 
                 failedAction?.Invoke(msg);
             };
-            KwaiNetWorkDefines.KNW_OnRAdPlayComplete = () =>
+            KwaiNetWorkDefines.KNW_OnRAdPlayComplete += () =>
             {
                 TDAnalyticsManager.AdComplete(EAdtype.Reward, this.eAdSource, kwaiEcpm, KwaiNetWorkDefines.GetRewardedAdName(), "kwai");
                 SolarEngineDefines.AdRevenue(kwaiEcpm / 1000);
@@ -100,15 +106,19 @@ namespace XrCode
 
                 successfulAction?.Invoke();
             };
+            KwaiNetWorkDefines.KNW_OnRewardEarned += () => 
+            {
+                TDAnalyticsManager.AdRevenuePaid(kwaiEcpm / 1000, "kwai", this.eAdSource, KwaiNetWorkDefines.GetRewardedAdName());
+            };
             #endregion
 
             #region MAX插屏广告
-            MaxSdkDefines.OnInterstitialDisplayedEvent = (adUnitId, AdInfo) =>
+            MaxSdkDefines.OnInterstitialDisplayedEvent += (adUnitId, AdInfo) =>
             {
                 TDAnalyticsManager.AdStart(EAdtype.Interstitial, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
                 SolarEngineDefines.AdImpresslon();
             };
-            MaxSdkDefines.OnInterstitialFailedToDisplayEvent = (adUnitId, ErrorInfo, AdInfo) =>
+            MaxSdkDefines.OnInterstitialFailedToDisplayEvent += (adUnitId, ErrorInfo, AdInfo) =>
             {
                 string str = $"{ErrorInfo.Code} : {ErrorInfo.Message}";
                 D.Error(str);
@@ -116,7 +126,7 @@ namespace XrCode
 
                 failedAction?.Invoke(ErrorInfo.Message);
             };
-            MaxSdkDefines.OnInterstitialRevenuePaidEvent = (adUnitId, AdInfo) =>
+            MaxSdkDefines.OnInterstitialDismissedEvent += (adUnitId, AdInfo) =>
             {
                 TDAnalyticsManager.AdComplete(EAdtype.Interstitial, this.eAdSource, AdInfo.Revenue * 1000f, AdInfo.NetworkName, AdInfo.RevenuePrecision);
                 SolarEngineDefines.AdRevenue(AdInfo.Revenue);
@@ -127,6 +137,10 @@ namespace XrCode
                 CheckAdTotalData();
 
                 successfulAction?.Invoke();
+            };
+            MaxSdkDefines.OnInterstitialRevenuePaidEvent += (adUnitId, AdInfo) =>
+            {
+                TDAnalyticsManager.AdRevenuePaid(AdInfo.Revenue, AdInfo.RevenuePrecision, this.eAdSource, AdInfo.NetworkName);
             };
             #endregion
 

@@ -190,7 +190,7 @@ public class KwaiNetWorkModule : BaseModule
         //»ñÈ¡µ½¼¤Àø
         public void OnRewardEarned()
         {
-            KwaiNetWorkDefines.KNW_OnRewardEarned?.Invoke(KwaiNetWorkDefines.GetRewardedAdECPM());
+            KwaiNetWorkDefines.KNW_OnRewardEarned?.Invoke();
             ModuleMgr.Instance.TDAnalyticsManager.KwaiAdNameAndIncomeStart(KwaiNetWorkDefines.GetRewardedAdName(), KwaiNetWorkDefines.GetRewardedAdRevenue());
 
             KwaiNetWorkDefines.LoadRewardAd?.Invoke();

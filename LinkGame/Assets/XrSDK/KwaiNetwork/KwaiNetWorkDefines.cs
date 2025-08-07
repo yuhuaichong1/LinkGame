@@ -16,7 +16,7 @@ public static class KwaiNetWorkDefines
     public static Action KNW_OnRAdPlayComplete;                         //激励广告播放完成
     public static Action KNW_OnRAdShow;                                 //激励广告开始播放
     public static Action<int, string> KNW_OnRAdShowFailed;              //激励广告播放失败
-    public static Action<double> KNW_OnRewardEarned;                    //激励广告获取奖励
+    public static Action KNW_OnRewardEarned;                            //激励广告获取奖励
 
     public static Func<double> GetRewardedAdECPM;                       //获取激励视频的ecpm
     public static Func<float> GetRewardedAdRevenue;                    //获取激励视频的奖励

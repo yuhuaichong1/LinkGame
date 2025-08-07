@@ -26,7 +26,7 @@ public static class MaxSdkDefines
     public static Action<string, AdInfo> OnRewardAdClickedEvent;                            //激励广告被点击
     public static Action<string, AdInfo> OnRewardAdHiddenEvent;                             //激励广告被隐藏
     public static Action<string, Reward, AdInfo> OnRewardAdReceivedRewardEvent;             //激励广告展示完毕，给予奖励
-    public static Action<string, AdInfo> OnRewardAdRevenuePaidEvent;                        //激励广告奖励给予奖励完毕
+    public static Action<string, AdInfo> OnRewardAdRevenuePaidEvent;                        //激励广告奖励收入已支付
 
     public static Func<double> GetRewardedAdRevenue;                                         //获取激励视频的ecpm
     public static Action RewardAdNotReadyEvent;                                              //激励广告未准备完成回调

@@ -157,7 +157,7 @@ namespace XrCode
         /// <param name="precision">广告精度</param>
         /// <param name="diasource">广告位</param>
         /// <param name="platform">广告平台</param>
-        public void AdRevenuePaid(float revenue, string precision, EAdSource diasource,string platform)
+        public void AdRevenuePaid(double revenue, string precision, EAdSource diasource,string platform)
         {
             if (!isOpenTD) return;
 
