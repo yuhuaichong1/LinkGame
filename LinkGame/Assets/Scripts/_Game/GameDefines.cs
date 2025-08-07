@@ -127,7 +127,7 @@ public abstract class GameDefines
     public static int SedCount = 3;                                                                         //模式1：第2次点击次数
     public static int InstTime = 60;                                                                        //模式2：关卡间隔时间
 
-    public static bool ifIAA = true;                                                                        //AB包切换
+    public static bool ifIAA = false;                                                                        //AB包切换
     public static bool IsAutoRefresh = false;                                                               //无物可消时是否刷新
     public static bool LevelDiffMode = true;                                                                //关卡难度
 

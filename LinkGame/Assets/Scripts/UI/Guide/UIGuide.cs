@@ -13,14 +13,14 @@ namespace XrCode
         private Dictionary<int, int> level1GuideGoodDic;
         private Dictionary<string, RectTransform> posTrans;
 
-        protected override void OnAwake() 
+        protected override void OnAwake()
         {
             FacadeGuide.PlayGuide += PlayGuide;
             FacadeGuide.CloseGuide += CloseGuide;
         }
-        protected override void OnEnable() 
+        protected override void OnEnable()
         {
-            
+
         }
 
         //引导按钮回调
@@ -44,7 +44,7 @@ namespace XrCode
 
             ifshow = info.handPos != null;
             mHander.gameObject.SetActive(ifshow);
-            if(ifshow)
+            if (ifshow)
             {
                 mHander.transform.position = FindTrans(info.handPos).position;
                 mHand.Reset();
@@ -54,7 +54,7 @@ namespace XrCode
 
             ifshow = info.transparentPos != null;
             mHole.gameObject.SetActive(ifshow);
-            if(ifshow)
+            if (ifshow)
             {
                 mHole.transform.position = FindTrans(info.transparentPos).position;
                 mHole.sizeDelta = FindTrans(info.transparentPos).GetComponent<RectTransform>().sizeDelta;
@@ -63,9 +63,9 @@ namespace XrCode
             float autoHiddenTime = info.autohiddenTime;
             if (autoHiddenTime != 0)
             {
-                STimerManager.Instance.CreateSDelay(autoHiddenTime, () => 
-                { 
-                    FacadeGuide.NextStep(); 
+                STimerManager.Instance.CreateSDelay(autoHiddenTime, () =>
+                {
+                    FacadeGuide.NextStep();
                 });
             }
             else
@@ -79,27 +79,40 @@ namespace XrCode
                 }
             }
 
-            if(info.extra != null && info.extra.Count != 0)
+            if (info.extra != null && info.extra.Count != 0)
                 SetExtraShow(info.extra);
         }
 
         private void SetExtraShow(Dictionary<string, string> extraData)
         {
-            foreach(KeyValuePair<string, string> kvp in extraData)
+            foreach (KeyValuePair<string, string> kvp in extraData)
             {
-                switch(kvp.Key) 
+                switch (kvp.Key)
                 {
                     case "line":
                         string[] value = kvp.Value.Split('|');
 
                         bool b = int.Parse(value[0]) == 1;
-                        mCanNotLink.gameObject.SetActive(b);
-                        if(b)
+                        if (GameDefines.ifIAA) mCanNotLinkAct.gameObject.SetActive(b);
+                        else
+                        {
+                            mCanNotLink.gameObject.SetActive(b);
+                        }
+
+                        if (b)
                         {
                             Vector3 target = GameObject.Find(UIManager.Instance.GetUIPath(value[1].Split(","))).transform.position;
-                            mCanNotLink.transform.position = target;
                             float sc = GamePlayFacade.GetMapScale();
-                            mCanNotLink.transform.localScale = new Vector3(sc, sc, sc);
+                            if (GameDefines.ifIAA)
+                            {
+                                mCanNotLinkAct.transform.position = target;
+                                mCanNotLinkAct.transform.localScale = new Vector3(sc, sc, sc);
+                            }
+                            else
+                            {
+                                mCanNotLink.transform.position = target;
+                                mCanNotLink.transform.localScale = new Vector3(sc, sc, sc);
+                            }
                         }
                         break;
                 }
