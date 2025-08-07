@@ -183,6 +183,7 @@
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\TagDecorator.cs" />
     <Compile Include="Assets\Scripts\UI\Congratfulations\UICongratfulations.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\ILoad.cs" />
+    <Compile Include="Assets\Gen\Code\ConfLuckMomentAct.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouch\Example\SimpleExamples\TwoFingers\TwoLongTapMe.cs" />
     <Compile Include="Assets\Gen\Code\TBGoodIcon.cs" />
     <Compile Include="Assets\Scripts\UI\Effect\UIEffect.cs" />
@@ -393,6 +394,7 @@
     <Compile Include="Assets\Scripts\LinkGood\Level\ConstraintData.cs" />
     <Compile Include="Assets\Tools\SuperScrollView\Scripts\StaggeredGridView\LoopStaggeredGridViewItem.cs" />
     <Compile Include="Assets\Tools\PlayerPrefsMoreType\PlayerPrefHelper.cs" />
+    <Compile Include="Assets\Gen\Code\TBLuckMomentAct.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\UILoading\UITemplate\UILoading_Temp.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\Serializers\StringSerializer.cs" />

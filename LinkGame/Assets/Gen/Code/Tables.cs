@@ -39,6 +39,7 @@ namespace cfg
 		public TBObstacleIcon TBObstacleIcon {get; private set;}
 		public TBGuidesAct TBGuidesAct {get; private set;}
 		public TBLevelAct TBLevelAct {get; private set;}
+		public TBLuckMomentAct TBLuckMomentAct {get; private set;}
 
 		private Queue<string> configNames;
 		private Queue<System.Action<ByteBuf>> configCbFuncs;
@@ -90,6 +91,8 @@ namespace cfg
 			tables.Add("TBGuidesAct", TBGuidesAct);
 			TBLevelAct = new TBLevelAct(loader("tblevelact")); 
 			tables.Add("TBLevelAct", TBLevelAct);
+			TBLuckMomentAct = new TBLuckMomentAct(loader("tbluckmomentact")); 
+			tables.Add("TBLuckMomentAct", TBLuckMomentAct);
 	
 			PostInit();
 			ResolveAllTable();
@@ -140,6 +143,8 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBGuidesActDataFinish);
 			configNames.Enqueue("tblevelact");
             configCbFuncs.Enqueue(OnTBLevelActDataFinish);
+			configNames.Enqueue("tbluckmomentact");
+            configCbFuncs.Enqueue(OnTBLuckMomentActDataFinish);
 
             LoadAllConfig();
         }
@@ -201,6 +206,7 @@ namespace cfg
 			TBObstacleIcon.TranslateText(translator); 
 			TBGuidesAct.TranslateText(translator); 
 			TBLevelAct.TranslateText(translator); 
+			TBLuckMomentAct.TranslateText(translator); 
 		}
 		
 		partial void PostInit();
@@ -227,6 +233,7 @@ namespace cfg
 			TBObstacleIcon.Resolve(tables);
 			TBGuidesAct.Resolve(tables);
 			TBLevelAct.Resolve(tables);
+			TBLuckMomentAct.Resolve(tables);
 		}
 	
 		private void ReloadOneTable(string reloadTableName)
@@ -294,6 +301,9 @@ namespace cfg
 					break;
 				case "TBLevelAct":
 					TBLevelAct.Reload(_loader("TBLevelAct"));
+					break;
+				case "TBLuckMomentAct":
+					TBLuckMomentAct.Reload(_loader("TBLuckMomentAct"));
 					break;
 			}
 	
@@ -408,6 +418,11 @@ namespace cfg
 		{
 			TBLevelAct = new TBLevelAct(buf);
 			tables.Add("TBLevelAct", TBLevelAct);
+		}
+		public void OnTBLuckMomentActDataFinish(ByteBuf buf)
+		{
+			TBLuckMomentAct = new TBLuckMomentAct(buf);
+			tables.Add("TBLuckMomentAct", TBLuckMomentAct);
 		}
 		//Finish Load all table 
 		public void OnLoadTbDataFinish()
