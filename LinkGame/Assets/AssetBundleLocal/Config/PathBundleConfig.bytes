@@ -243,16 +243,16 @@ p
 UAssets/AssetBundleLocal/Prefabs/UI/WithdrawalSuccessful/UIWithdrawalSuccessful.prefabaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
 n
 /Assets/AssetBundleLocal/Font/HirukoPro_Bold.ttf;assets/assetbundlelocal/font/hirukopro_bold.ttf.assetbundle
-‘
-,Assets/UI/WithdrawalSuccessful/tixian_bg.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
+h
+,Assets/UI/WithdrawalSuccessful/tixian_bg.png8assets/ui/withdrawalsuccessful/tixian_bg.png.assetbundle
 D
 Assets/UI/Common/sidai.png&assets/ui/common/sidai.png.assetbundle
 “
 .Assets/UI/WithdrawalSuccessful/shuliang_bg.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
 <
 Assets/UI/Common/3.png"assets/ui/common/3.png.assetbundle
-
-(Assets/UI/WithdrawalSuccessful/jinbi.pngaassets/assetbundlelocal/prefabs/ui/withdrawalsuccessful/uiwithdrawalsuccessful.prefab.assetbundle
+`
+(Assets/UI/WithdrawalSuccessful/jinbi.png4assets/ui/withdrawalsuccessful/jinbi.png.assetbundle
 L
 Assets/UI/Common/btn_close.png*assets/ui/common/btn_close.png.assetbundle
 H
@@ -299,6 +299,8 @@ UAssets/AssetBundleLocal/Prefabs/UI/WithdrawableMultiple/UIWithdrawableMultiple.
 Assets/UI/Common/1.png"assets/ui/common/1.png.assetbundle
 P
  Assets/UI/Common/progress_bg.png,assets/ui/common/progress_bg.png.assetbundle
+¦
+KAssets/AssetBundleLocal/Prefabs/UI/UIWithdrawalSure/UIWithdrawalSure.prefabWassets/assetbundlelocal/prefabs/ui/uiwithdrawalsure/uiwithdrawalsure.prefab.assetbundle
 Ž
 ?Assets/AssetBundleLocal/Prefabs/UI/UIWithdraw/UIWithdraw.prefabKassets/assetbundlelocal/prefabs/ui/uiwithdraw/uiwithdraw.prefab.assetbundle
 Š

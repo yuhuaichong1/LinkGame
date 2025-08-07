@@ -54,8 +54,7 @@ namespace XrCode
         private void AddTipPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Hint_IconPath);
-            //mContent.text = LanguageModule.GetText("");
-            mContent.text = "Find title to clear";
+            mContent.text = LanguageModule.GetText("10084");
             AddEffect();
         }
 
@@ -63,8 +62,7 @@ namespace XrCode
         private void AddRefushPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Refush_IconPath);
-            //mContent.text = LanguageModule.GetText("");
-            mContent.text = "Shuffle all titles";
+            mContent.text = LanguageModule.GetText("10085");
             AddEffect();
         }
 
@@ -72,7 +70,7 @@ namespace XrCode
         private void AddRemovePlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Remove_IconPath);
-            mContent.text = LanguageModule.GetText("10056");
+            mContent.text = LanguageModule.GetText("10086");
             AddEffect();
         }
 

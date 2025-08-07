@@ -14,7 +14,8 @@ namespace XrCode
         }
         protected override void OnEnable() 
         {
-            mMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
+            int ifdouble = GamePlayFacade.GetCurLevel() > GameDefines.doubleLevel ? 2 : 1;
+            mMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney() * ifdouble);
             ShowAnim(mPlane);
         }
         	    private void OnExitBtnClickHandle()        {            CloseThisUI();        }	    private void OnConfirmBtnClickHandle()

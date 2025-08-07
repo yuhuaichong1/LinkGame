@@ -41,7 +41,16 @@ namespace XrCode
             HideAnim(mPlane, () =>
             {
                 UIManager.Instance.CloseUI(EUIType.EUIWithdrawalInformation);
-                UIManager.Instance.OpenWindowAsync<UIWithdrawalSuccessful>(EUIType.EUIWithdrawalSuccessful);
+                
+                if (GamePlayFacade.GetCurLevel() > GameDefines.doubleLevel)
+                {
+                    UIManager.Instance.OpenWindowAsync<UIWithdrawalSuccessful>(EUIType.EUIWithdrawalSuccessful);
+                }
+                else
+                {
+                    UIManager.Instance.OpenWindowAsync<UIWithdrawalSure>(EUIType.EUIWithdrawalSure);
+                }
+                
             });
         }
 

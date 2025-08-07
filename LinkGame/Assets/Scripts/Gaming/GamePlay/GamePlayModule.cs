@@ -86,7 +86,8 @@ namespace XrCode
         private int curAwesomeCount;//送钱计数
         private int curRateCount;//让评论计数
 
-        private Dictionary<int, List<int>> GoodIconRange;//图样随机区间
+        //private Dictionary<int, List<int>> GoodIconRange;//图样随机区间
+        private Dictionary<List<int>, int> GoodIconWeight;//图样权重区间
         private Dictionary<int, int> randomGoodIcon;//让图样随机的词典
 
         private Queue<int> withdrawableLevel;//可提现的关卡
@@ -107,6 +108,11 @@ namespace XrCode
         private bool ifContinue;//是否继续关卡进度
         private List<Vec2> emptyGridPositions = new List<Vec2>();
         private Dictionary<string, int> currentEmptyGridMap = new Dictionary<string, int>();
+
+        private int curAwesomeCountCheck;
+        private bool curAwesomeTimeCheck;
+        private bool CATCjustOne;
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -154,7 +160,8 @@ namespace XrCode
             AudioModule = ModuleMgr.Instance.AudioMod;
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
-            GoodIconRange = new Dictionary<int, List<int>>();
+            //GoodIconRange = new Dictionary<int, List<int>>();
+            GoodIconWeight = new Dictionary<List<int>, int>();
             randomGoodIcon = new Dictionary<int, int>();
 
             LPath = new ArrayList();
@@ -169,6 +176,8 @@ namespace XrCode
             check_id = new ArrayList();
             list_pos_need_update = new ArrayList();//当前关卡需要移动的物品集合
             curLevelDirection = new ArrayList();//当前关卡的方向
+            curAwesomeCountCheck = GameDefines.FirstCount;
+            CATCjustOne = true;
 
             LevelDefines.maxLevel = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBLevelAct.DataList.Count : ConfigModule.Instance.Tables.TBLevel.DataList.Count;
 
@@ -303,6 +312,12 @@ namespace XrCode
                     _randomMap();
 
                 remainGood = totalGood;
+            }
+
+            if(CATCjustOne && curLevel >= 3)
+            {
+                CATCjustOne = false;
+                InterTimer();
             }
         }
 
@@ -1983,14 +1998,28 @@ namespace XrCode
             else
                 curTopNoticeCount += 1;
 
-            if (curAwesomeCount == GameDefines.Awesome_Count_Max)
+            if(GameDefines.IsOnlyConn)
             {
-                if (GameDefines.ifIAA) return;
-                curAwesomeCount = 0;
-                UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                if (curAwesomeCount >= curAwesomeCountCheck)
+                {
+                    if (GameDefines.ifIAA) return;
+
+                    curAwesomeCountCheck = GameDefines.SedCount;
+                    curAwesomeCount = 0;
+                    UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                }
+                else
+                    curAwesomeCount += 1;
             }
             else
-                curAwesomeCount += 1;
+            {
+                if(curAwesomeTimeCheck)
+                {
+                    curAwesomeTimeCheck = false;
+                    UIManager.Instance.OpenWindowAsync<UIAwesome>(EUIType.EUIAwesome);
+                    InterTimer();
+                }
+            }
 
             if (curRateCount == GameDefines.Rate_Count_Max && FacadeTimeZone.IfNextDay())
             {
@@ -2821,7 +2850,7 @@ namespace XrCode
 
             if (GameDefines.ifIAA)
             {
-                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType == 1)
+                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType != 0)
                 {
                     curWLevel += 1;
                     withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
@@ -2831,7 +2860,7 @@ namespace XrCode
             }
             else
             {
-                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType == 1)
+                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType != 0)
                 {
                     curWLevel += 1;
                     withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
@@ -2974,9 +3003,6 @@ namespace XrCode
 
 
         }
-
-
-
 
 
         private void ShakeSameKindGood(int tagetId, int sourceRow, int sourceCol)
@@ -3588,15 +3614,38 @@ namespace XrCode
         //随机图片优先显示区间
         private void RandomGoodIconRange()
         {
-            Dictionary<int, ConfGoodIcon> cgis = ConfigModule.Instance.Tables.TBGoodIcon.DataMap;
+            #region
+            //Dictionary<int, ConfGoodIcon> cgis = ConfigModule.Instance.Tables.TBGoodIcon.DataMap;
 
-            foreach (KeyValuePair<int, ConfGoodIcon> item in cgis)
+            //foreach (KeyValuePair<int, ConfGoodIcon> item in cgis)
+            //{
+            //    int priority = item.Value.Priority;
+            //    if (!GoodIconRange.ContainsKey(priority))
+            //        GoodIconRange.Add(priority, new List<int>());
+            //    GoodIconRange[priority].Add(item.Key);
+            //}
+            #endregion
+
+            List<ConfGoodIcon> cgis = ConfigModule.Instance.Tables.TBGoodIcon.DataList;
+            Dictionary<int, ConfGoodWeight> cgws = ConfigModule.Instance.Tables.TBGoodWeight.DataMap;
+
+            Dictionary<int, List<int>> GoodIconRange = new Dictionary<int, List<int>>();
+
+            foreach (ConfGoodIcon item in cgis)
             {
-                int priority = item.Value.Priority;
-                if (!GoodIconRange.ContainsKey(priority))
-                    GoodIconRange.Add(priority, new List<int>());
-                GoodIconRange[priority].Add(item.Key);
+                int type = item.Type;
+                if (!GoodIconRange.ContainsKey(type))
+                    GoodIconRange.Add(type, new List<int>());
+                GoodIconRange[type].Add(item.Sn);
             }
+
+            List<int> ts = GoodIconRange.Keys.ToList();
+
+            foreach (int i in ts)
+            {
+                GoodIconWeight.Add(GoodIconRange[i], cgws[i].Weight);
+            }
+            
         }
 
         //设置随机图片
@@ -3605,61 +3654,69 @@ namespace XrCode
             if (randomGoodIcon.Count > 0) return;
 
             randomGoodIcon.Clear();
+            //
+            #region old
+            //List<int> oldIds = new List<int>();
+            //List<int> auxiliaryIds = new List<int>();
+            //oldIds.AddRange(GoodIconRange[0]);
+            //int adds = oldIds.Count;
+            //int flowIdsCount = adds;
+            //if (kinds > adds)
+            //{
+            //    int diff = kinds - adds;
+            //    for (int i = 1; i < GoodIconRange.Count; i++)
+            //    {
+            //        int curPIds = GoodIconRange[i].Count;
 
-            List<int> oldIds = new List<int>();
-            List<int> auxiliaryIds = new List<int>();
-            oldIds.AddRange(GoodIconRange[0]);
-            int adds = oldIds.Count;
-            int flowIdsCount = adds;
-            if (kinds > adds)
+            //        if (curPIds < diff)
+            //        {
+            //            oldIds.AddRange(GoodIconRange[i]);
+            //            diff -= curPIds;
+            //        }
+            //        else if (GoodIconRange[i].Count == diff)
+            //        {
+            //            flowIdsCount = kinds;
+            //            break;
+            //        }
+            //        else//GoodIconRange[i].Count > diff
+            //        {
+            //            List<int> temp = new List<int>(GoodIconRange[i]);
+            //            List<int> temp2 = new List<int>(temp);
+            //            ShuffleHelper.Shuffle(temp2);
+            //            for (int j = 0; j < diff; j++)
+            //            {
+            //                oldIds.Add(temp[j]);
+            //                auxiliaryIds.Add(temp2[j]);
+            //            }
+            //            flowIdsCount = kinds - diff;
+            //            break;
+            //        }
+            //    }
+            //}
+
+            //if (kinds > oldIds.Count)
+            //{
+            //    D.Error("种类超出了物品图片的总数");
+            //    return;
+            //}
+
+            //List<int> newIds = new List<int>(oldIds);
+            //for (int i = 0; i < auxiliaryIds.Count; i++)
+            //{
+            //    newIds[newIds.Count - 1 - i] = auxiliaryIds[i];
+            //}
+
+            //ShuffleHelper.Shuffle(newIds);
+            //for (int i = 0; i < oldIds.Count; i++)
+            //{
+            //    randomGoodIcon.Add(oldIds[i], newIds[i]);
+            //}
+            #endregion
+            List<int> targets = GetProbability.GetValuesOptimized<int>(GoodIconWeight, kinds);
+            targets.Shuffle();
+            for (int i = 0; i < targets.Count; i++)
             {
-                int diff = kinds - adds;
-                for (int i = 1; i < GoodIconRange.Count; i++)
-                {
-                    int curPIds = GoodIconRange[i].Count;
-
-                    if (curPIds < diff)
-                    {
-                        oldIds.AddRange(GoodIconRange[i]);
-                        diff -= curPIds;
-                    }
-                    else if (GoodIconRange[i].Count == diff)
-                    {
-                        flowIdsCount = kinds;
-                        break;
-                    }
-                    else//GoodIconRange[i].Count > diff
-                    {
-                        List<int> temp = new List<int>(GoodIconRange[i]);
-                        List<int> temp2 = new List<int>(temp);
-                        ShuffleHelper.Shuffle(temp2);
-                        for (int j = 0; j < diff; j++)
-                        {
-                            oldIds.Add(temp[j]);
-                            auxiliaryIds.Add(temp2[j]);
-                        }
-                        flowIdsCount = kinds - diff;
-                        break;
-                    }
-                }
-            }
-
-            if (kinds > oldIds.Count)
-            {
-                D.Error("种类超出了物品图片的总数");
-                return;
-            }
-
-            List<int> newIds = new List<int>(oldIds);
-            for (int i = 0; i < auxiliaryIds.Count; i++)
-            {
-                newIds[newIds.Count - 1 - i] = auxiliaryIds[i];
-            }
-
-            ShuffleHelper.Shuffle(newIds);
-            for (int i = 0; i < oldIds.Count; i++)
-            {
-                randomGoodIcon.Add(oldIds[i], newIds[i]);
+                randomGoodIcon.Add(i, targets[i]);
             }
 
             SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, randomGoodIcon);
@@ -3762,6 +3819,14 @@ namespace XrCode
                 SPlayerPrefs.SetInt(PlayerPrefDefines.remainGood, remainGood);
             });
 
+        }
+
+        private void InterTimer()
+        {
+            STimerManager.Instance.CreateSDelay(curLevel >= GameDefines.InstLevel ? GameDefines.InstTime1 : GameDefines.InstTime2, () =>
+            {
+                curAwesomeTimeCheck = true;
+            });
         }
 
         #endregion

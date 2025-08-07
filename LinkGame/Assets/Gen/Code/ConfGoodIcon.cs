@@ -19,7 +19,7 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     public ConfGoodIcon(ByteBuf _buf) 
     {
         Sn = _buf.ReadInt();
-        Priority = _buf.ReadInt();
+        Type = _buf.ReadInt();
         GoodPath = _buf.ReadString();
         PostInit();
     }
@@ -34,9 +34,9 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     /// </summary>
     public int Sn { get; protected set; }
     /// <summary>
-    /// 物品优先级
+    /// 物品类型
     /// </summary>
-    public int Priority { get; protected set; }
+    public int Type { get; protected set; }
     /// <summary>
     /// 物品路径
     /// </summary>
@@ -57,7 +57,7 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     public void Reload(ConfGoodIcon reloadData)
     {
         Sn = reloadData.Sn;
-        Priority = reloadData.Priority;
+        Type = reloadData.Type;
         GoodPath = reloadData.GoodPath;
     }
 
@@ -65,7 +65,7 @@ public sealed partial class ConfGoodIcon :  Bright.Config.BeanBase
     {
         return "{ "
         + "Sn:" + Sn + ","
-        + "Priority:" + Priority + ","
+        + "Type:" + Type + ","
         + "GoodPath:" + GoodPath + ","
         + "}";
     }

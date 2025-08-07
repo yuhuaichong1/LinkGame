@@ -59,6 +59,7 @@ public class RedDotModule : BaseModule
         GameDefines.Reddot_Name_Out = reddots[10001].KeyName;
         GameDefines.Reddot_Name_Daily = reddots[10002].KeyName;
         GameDefines.Reddot_Name_Challenge = reddots[10003].KeyName;
+
         GameDefines.Reddot_Name_DailyOutBy = reddots[10004].KeyName;
         GameDefines.Reddot_Name_DailyBy = reddots[10005].KeyName;
         GameDefines.Reddot_Name_ChallengeOutBy = reddots[10006].KeyName;

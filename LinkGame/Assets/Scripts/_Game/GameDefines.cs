@@ -108,10 +108,10 @@ public abstract class GameDefines
     public static string Reddot_Name_Daily;                                                                 //日常任务红点名称
     public static string Reddot_Name_Challenge;                                                             //挑战任务红点名称
 
-    public static string Reddot_Name_DailyOutBy;                                                             //外部每日任务红点名称
-    public static string Reddot_Name_DailyBy;                                                             //每日任务红点名称
-    public static string Reddot_Name_ChallengeOutBy;                                                             //外部挑战任务红点名称
-    public static string Reddot_Name_ChallengeBy;                                                             //外部挑战任务红点名称
+    public static string Reddot_Name_DailyOutBy;                                                            //外部每日任务红点名称
+    public static string Reddot_Name_DailyBy;                                                               //每日任务红点名称
+    public static string Reddot_Name_ChallengeOutBy;                                                        //外部挑战任务红点名称
+    public static string Reddot_Name_ChallengeBy;                                                           //外部挑战任务红点名称
 
     public static int firstGuideId = 10001;                                                                 //起始引导步骤序号
 
@@ -120,10 +120,16 @@ public abstract class GameDefines
 
     public static float IntervalTime = 60000f;                                                              //插屏间隔时间
 
-    public static int FirstCount = 3;                                                                       //
-    public static int SedCount = 2;                                                                         //
+    public static bool IsOnlyConn = true;                                                                   //插屏界面出现条件（方式）
+    public static int FirstCount = 4;                                                                       //第一次点击次数
+    public static int SedCount = 3;                                                                         //第二次点击次数
+    public static int InstLevel = 9;                                                                        //插屏出现时间关卡界限
+    public static int InstTime1 = 60;                                                                       //前部分关卡间隔时间
+    public static int InstTime2 = 30;                                                                       //后部分关卡间隔时间
     public static bool ifIAA = true;                                                                        //AB包切换
-    public static bool IsAutoRefresh = false;                                                                //无物可消时是否刷新
+    public static bool IsAutoRefresh = false;                                                               //无物可消时是否刷新
+
+    public static int doubleLevel = 9;                                                                      //第一个开始双倍的关卡
 }
 #endregion
 
@@ -173,7 +179,8 @@ public enum EUIType
     EUIWithdrawalSuccessful = 25,
     EUIGamePlayBy=26,
     EUIDailyTasks =27,
-    EUIChallengeTask=28
+    EUIChallengeTask=28,
+    EUIWithdrawalSure = 29,
 }
 
 public enum ESceneType : byte
