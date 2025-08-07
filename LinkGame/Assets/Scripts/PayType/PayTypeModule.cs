@@ -100,7 +100,7 @@ namespace XrCode
             }
             else
             {
-                return $"{Mathf.Round(value)}";
+                return $"{Mathf.CeilToInt(value)}";
             }
         }
 
