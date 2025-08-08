@@ -71,10 +71,13 @@ namespace XrCode
             else
             {
                 ifshow = info.clickPos != null;
-                mMask.penetrateObj = ifshow ? FindTrans(info.clickPos).GetComponent<RectTransform>() : null;
+                mMask.penetrateObjs.Clear();
                 if (ifshow)
                 {
-                    mMask.penetrateObj = FindTrans(info.clickPos).GetComponent<RectTransform>();
+                    foreach(string str in info.clickPos)
+                    {
+                        mMask.penetrateObjs.Add(FindTrans(str).GetComponent<RectTransform>());
+                    }
                     mMask.ifNext = info.ifNextPlay;
                 }
             }
@@ -114,6 +117,8 @@ namespace XrCode
                                 mCanNotLink.transform.localScale = new Vector3(sc, sc, sc);
                             }
                         }
+                        break;
+                    case "extraClick":
                         break;
                 }
             }
