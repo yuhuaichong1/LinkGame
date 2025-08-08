@@ -213,7 +213,9 @@ namespace XrCode
 
         private void CheckLinkCount(int count)
         {
-            int target = ConfigModule.Instance.Tables.TBTask.Get(curDailyRDId).Target;
+            ConfTask ct = ConfigModule.Instance.Tables.TBTask.GetOrDefault(curDailyRDId);
+            if (ct == null) return;
+            int target = ct.Target;
             if (count >= target)
             {
                 SetDailyTaskRecive(curDailyRDId);
@@ -224,7 +226,9 @@ namespace XrCode
 
         private void CheckLevelPass(int level)
         {
-            int target = ConfigModule.Instance.Tables.TBTask.Get(curChallengeRDId).Target;
+            ConfTask ct = ConfigModule.Instance.Tables.TBTask.GetOrDefault(curChallengeRDId);
+            if (ct == null) return;
+            int target = ct.Target;
             if (level >= target)
             {
                 SetDailyTaskRecive(curChallengeRDId);

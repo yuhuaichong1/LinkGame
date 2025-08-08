@@ -28,18 +28,18 @@ namespace XrCode
             int curLevel = GamePlayFacade.GetCurLevel();
             if (curLevel <= GameDefines.withdrawLevel)
             {
-                mGoalTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.withdrawLevel}";
-                mLevelTitle.text = $"{LanguageModule.GetText("10031")} {1}";
+                mLevelTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.withdrawLevel}";
+                mGoalTitle.text = $"{LanguageModule.GetText("10031")} {1}";
             }
             else if(curLevel <= GameDefines.doubleLevel) 
             {
-                mGoalTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.doubleLevel}";
-                mLevelTitle.text = $"{LanguageModule.GetText("10031")} {2}";
+                mLevelTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.doubleLevel}";
+                mGoalTitle.text = $"{LanguageModule.GetText("10031")} {2}";
             }
             else
             {
-                mGoalTitle.text = $"{LanguageModule.GetText("10049")} {ConfigModule.Instance.Tables.TBLevel.DataList.Count}";
-                mLevelTitle.text = $"{LanguageModule.GetText("10031")} {3}";
+                mLevelTitle.text = $"{LanguageModule.GetText("10049")} {ConfigModule.Instance.Tables.TBLevel.DataList.Count}";
+                mGoalTitle.text = $"{LanguageModule.GetText("10031")} {3}";
             }
 
             mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());

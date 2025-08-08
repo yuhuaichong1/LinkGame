@@ -280,6 +280,7 @@ MonoBehaviour:
   ProgressText: {fileID: 8160230766257612802}
   ReceiveBtn: {fileID: 5330965092606704873}
   InProgress: {fileID: 6003555701448463184}
+  ReceiveIcon: {fileID: 0}
   TaskType: 0
   TaskId: 0
 --- !u!1 &407571750157184221
@@ -827,7 +828,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1424673000668353711
 CanvasRenderer:
@@ -2933,7 +2934,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2883865370161038336
 CanvasRenderer:
@@ -2976,7 +2977,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 999/999
+  m_Text: 9999/9999
 --- !u!114 &1518407660009419090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4561,6 +4562,7 @@ MonoBehaviour:
   ProgressText: {fileID: 4283782584748152987}
   ReceiveBtn: {fileID: 2702286758391526258}
   InProgress: {fileID: 6827081185257021120}
+  ReceiveIcon: {fileID: 0}
   TaskType: 0
   TaskId: 0
 --- !u!1 &8183767409285407791

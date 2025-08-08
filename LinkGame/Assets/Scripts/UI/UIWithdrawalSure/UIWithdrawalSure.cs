@@ -10,7 +10,7 @@ namespace XrCode
     {
         protected override void OnAwake()
         {
-                                                                            
+            mSuccessText.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10101"), GameDefines.doubleLevel);
         }
         protected override void OnEnable() 
         {

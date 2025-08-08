@@ -217,6 +217,7 @@ namespace XrCode
             {
                 mLevelTarget.gameObject.SetActive(false);
                 targetAction?.Invoke();
+                return;
             }
 
             if (curLevel <= GameDefines.withdrawLevel)

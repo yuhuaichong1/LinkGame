@@ -325,22 +325,9 @@ namespace XrCode
 
             if (GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
             {
-                //GamePlayFacade.RemoveFunc?.Invoke();
                 GamePlayFacade.RemoveFunc3();
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
-
-                #region old(转向功能)
-                    //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
-                    //GamePlayFacade.ChangeRemoveCount.Invoke(-1);
-                    //ChangeFuncRemoveCount();
-
-                    //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
-                    //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
-                    //mCurDir.sprite = curLevelDicIcon;
-                    //mCurDir.gameObject.SetActive(false);
-                    //TMDTipShow();
-                    #endregion 
             }
             else
             {
@@ -513,6 +500,7 @@ namespace XrCode
         //指明方向特效以及UI生成
         private void TMDTipShow()
         {
+            Debug.LogError("123123123123");
             if (!ifDicEffectShow)
             {
                 TMDTipShow2();
@@ -527,7 +515,7 @@ namespace XrCode
         }
         private void TMDTipShow2()
         {
-            mCurDir.gameObject.SetActive(true);
+            mCurDir.gameObject.SetActive(ifDicEffectShow);
             mGamePlayMask.gameObject.SetActive(false);
             FacadeEffect.PlayRewardNoticeEffect();
         }
