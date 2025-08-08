@@ -2689,7 +2689,7 @@ namespace XrCode
         {
             if (ifHintFunc)
                 RemoveHint();
-
+            DeSelect();
             Dictionary<int, List<Good>> goodsDic = new Dictionary<int, List<Good>>();
             List<int> randomKey = new List<int>();
             for (int i1 = 1; i1 < row - 1; i1++)
