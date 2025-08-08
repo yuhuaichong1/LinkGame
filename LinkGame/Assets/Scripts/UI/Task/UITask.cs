@@ -35,7 +35,7 @@ namespace XrCode
         protected override void OnEnable()        {
             mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
 
-            mDailyTasksToggle.isOn = true;            mDailyScroll.gameObject.SetActive(true);            mChallengeTaskToggle.isOn = false;            mChallengeScroll.gameObject.SetActive(false);        }        private void GetTaskInfo()
+            mDailyTasksToggle.isOn = true;            mDailyScroll.gameObject.SetActive(true);            mChallengeTaskToggle.isOn = false;            mChallengeScroll.gameObject.SetActive(false);            RefreshDailyTask();            RefreshChallageTask();        }        private void GetTaskInfo()
         {
             DailyTasks = FacadeTask.GetDailyTask();
             ChallageTasks = FacadeTask.GetChallageTask();
