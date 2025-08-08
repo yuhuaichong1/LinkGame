@@ -37,8 +37,16 @@ namespace XrCode
                 VibrationSMTShow(vibration);
             });
         }
-        	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
-                UIManager.Instance.CloseUI(EUIType.EUISetting);            });        }	    private void OnUserLvDetailsBtnClickHandle()
+        
+	    private void OnExitBtnClickHandle()
+        {
+            HideAnim(mPlane, () => 
+            {
+                UIManager.Instance.CloseUI(EUIType.EUISetting);
+            });
+        }
+
+	    private void OnUserLvDetailsBtnClickHandle()
         {
             UIManager.Instance.OpenWindowAsync<UIUserLevel>(EUIType.EUIUserLevel);
         }

@@ -80,7 +80,8 @@ namespace XrCode
 
             ShowAnim(mPlane);
         }
-                private string GetLMDesc(int type, int reward, float count)
+        
+        private string GetLMDesc(int type, int reward, float count)
         {
             
             switch (type)
@@ -113,8 +114,15 @@ namespace XrCode
             }
         }
 
-        private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
-                UIManager.Instance.CloseUI(EUIType.EUILuckMoment);            });        }	    private void OnSpinBtnClickHandle()
+        private void OnExitBtnClickHandle()
+        {
+            HideAnim(mPlane, () => 
+            {
+                UIManager.Instance.CloseUI(EUIType.EUILuckMoment);
+            });
+        }
+
+	    private void OnSpinBtnClickHandle()
         {
             mExitBtn.gameObject.SetActive(false);
             SpinBtnActive(false);

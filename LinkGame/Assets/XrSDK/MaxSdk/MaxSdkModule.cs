@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using XrCode;
 using ThinkingData.Analytics;
-using static MaxSdkBase;
+
 
 namespace XrSDK
 {
