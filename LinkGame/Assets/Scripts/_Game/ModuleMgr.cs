@@ -81,6 +81,7 @@ namespace XrCode
         public void Start()
         {
             languageMod.LoadCache();
+            payTypeModule.Load();
             isLoaded = true;
             notifyMod.Load();
             userMod.Load();
@@ -93,7 +94,7 @@ namespace XrCode
             sceneMod.Load();
             adModule.Load();
             playerModule.Load();
-            payTypeModule.Load();
+            
             taskModule.Load();
             guideModule.Load();
             sceneMod.LoadScene(ESceneType.MainScene);

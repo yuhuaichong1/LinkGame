@@ -435,6 +435,11 @@ namespace XrCode
         {
             TDAnalytics.UserSetOnce(msg);
         }
+
+        public string GetAccoundId()
+        {
+            return accoundId;
+        }
     }
 
     public class LoginOut2 : TDAutoTrackEventHandler
@@ -447,11 +452,6 @@ namespace XrCode
             {
                 {"AutoTrackEventProperty", DateTime.Today}
             };
-        }
-
-        public string GetAccoundId()
-        {
-            return accoundId;
         }
     }
 }
