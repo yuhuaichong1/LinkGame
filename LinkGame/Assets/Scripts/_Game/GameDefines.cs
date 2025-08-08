@@ -47,11 +47,11 @@ public abstract class GameDefines
     public const string Func_Remove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                              //下三功能“移除”图片                        （*）
     public const string Func_Shift_IconPath = "UI/FuncIcon/icon_shift.png";                                 //下三功能“换向”图片                        （*）
 
-    public const int GetFunc_Hint_Num = 3;                                                                  //能获取的“提示”功能的数量
-    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“刷新”功能的数量
+    public const int GetFunc_Hint_Num = 2;                                                                  //能获取的“提示”功能的数量
+    public const int GetFunc_Refresh_Num = 1;                                                               //能获取的“刷新”功能的数量
     public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“转向”功能的数量
     public const int GetFunc_Remove_Num = 2;                                                                //能获取的“移除”功能的数量
-    public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(1, 10);                                      //获取功能时额外获取的金钱的数量
+    public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(4, 10);                                      //获取功能时额外获取的金钱的数量
 
     public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";                              //老虎机未激活块背景路径
     public const string LuckMomentActivatedBg = "UI/LuckMoment/LMABg.png";                                  //老虎机激活块背景路径

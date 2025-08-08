@@ -2074,7 +2074,7 @@ namespace XrCode
                     //resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, true);
                     //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
                     //GameStatic.endGame();
-                    float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
+                    float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + 0.5f;
                     STimerManager.Instance.CreateSDelay(delayTime, () =>
                     {
                         UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
@@ -2087,7 +2087,7 @@ namespace XrCode
                 }
                 else
                 {
-                    float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
+                    float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + 0.5f;
                     STimerManager.Instance.CreateSDelay(delayTime, () =>
                     {
                         UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
