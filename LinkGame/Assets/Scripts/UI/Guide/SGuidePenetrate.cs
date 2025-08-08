@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,25 +6,29 @@ using UnityEngine.UI;
 public class SGuidePenetrate : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     private Image mask;
-    public RectTransform penetrateObj;
+    public List<RectTransform> penetrateObjs;
     public bool ifNext;
 
     void Awake()
     {
+        penetrateObjs = new List<RectTransform>();
         mask = GetComponent<Image>();
     }
 
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (RectTransformUtility.RectangleContainsScreenPoint(penetrateObj, eventData.position, eventData.pressEventCamera))
+        foreach (var penetrateObj in penetrateObjs)
         {
-            // 如果点击在目标区域内，则传递事件
-            ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerClickHandler);
+            if (RectTransformUtility.RectangleContainsScreenPoint(penetrateObj, eventData.position, eventData.pressEventCamera))
+            {
+                // 如果点击在目标区域内，则传递事件
+                ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerClickHandler);
 
-            FacadeGuide.NextStep();
+                FacadeGuide.NextStep();
 
-            return;
+                return;
+            }
         }
 
         // 其他区域保持原有行为
@@ -35,17 +40,24 @@ public class SGuidePenetrate : MonoBehaviour, IPointerClickHandler, IPointerDown
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (RectTransformUtility.RectangleContainsScreenPoint(penetrateObj, eventData.position, eventData.pressEventCamera))
+        foreach (var penetrateObj in penetrateObjs)
         {
-            ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerDownHandler);
+            if (RectTransformUtility.RectangleContainsScreenPoint(penetrateObj, eventData.position, eventData.pressEventCamera))
+            {
+                ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerDownHandler);
+            }
         }
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (RectTransformUtility.RectangleContainsScreenPoint(penetrateObj, eventData.position, eventData.pressEventCamera))
+        foreach (var penetrateObj in penetrateObjs)
         {
-            ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerUpHandler);
+            if (RectTransformUtility.RectangleContainsScreenPoint(penetrateObj, eventData.position, eventData.pressEventCamera))
+            {
+                ExecuteEvents.Execute(penetrateObj.gameObject, eventData, ExecuteEvents.pointerUpHandler);
+            }
         }
     }
 

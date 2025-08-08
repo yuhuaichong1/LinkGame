@@ -148,17 +148,26 @@ public class GuideModule : BaseModule
     /// <param name="pathData">路径（可能是其他类型）</param>
     /// <param name="item">当前引导项目</param>
     /// <returns>目标路径</returns>
-    private string GetClickRectTrans(string pathData)
+    private List<string> GetClickRectTrans(string pathData)
     {
-        switch (pathData)
+        List<string> paths = new List<string>();
+        string[] temp = pathData.Split(';');
+        foreach(string value in temp) 
         {
-            case "handPos":
-                return curGuideItems.handPos;
-            case "transparentPos":
-                return curGuideItems.transparentPos;
-            default:
-                return GetUIRectTrans(pathData);
+            switch (value)
+            {
+                case "handPos":
+                    paths.Add(curGuideItems.handPos);
+                    break;
+                case "transparentPos":
+                    paths.Add(curGuideItems.transparentPos);
+                    break;
+                default:
+                    paths.Add(GetUIRectTrans(value));
+                    break;
+            }
         }
+        return paths;
     }
 
     private GuideItem GetCurGuideItems()
