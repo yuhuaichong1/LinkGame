@@ -24,8 +24,7 @@ namespace XrCode
 
         public bool isContent;
         public bool ifCheckNetwork; //是否将网络请求加入加载队列
-        public bool ifIAA= true; //是否开启A包
-
+        public bool ifIAA; //是否开启A包
         void Awake()
         {
             Instance = this;
