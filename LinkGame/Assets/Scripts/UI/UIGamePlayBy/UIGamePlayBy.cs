@@ -204,12 +204,6 @@ namespace XrCode
         //提示功能按钮点击
         private void OnTipBtnClickHandle()
         {
-            if (GamePlayFacade.GetNumberGoodCanEat() == 0)
-            {
-                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Tip);
-                UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
-                return;
-            }
             if (GamePlayFacade.GetIfHintFunc())
             {
                 UIManager.Instance.OpenNotice(LanguageModule.GetText("10093"));
@@ -218,6 +212,12 @@ namespace XrCode
 
             if (GamePlayFacade.GetTipCount?.Invoke() > 0)
             {
+                if (GamePlayFacade.GetNumberGoodCanEat() == 0)
+                {
+                    UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
+                    return;
+                }
+
                 GamePlayFacade.TipFunc?.Invoke();
                 GamePlayFacade.ChangeTipCount?.Invoke(-1);
                 ChangeFuncTipCount();
