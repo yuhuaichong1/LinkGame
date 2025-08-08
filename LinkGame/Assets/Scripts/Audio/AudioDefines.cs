@@ -23,4 +23,8 @@ public enum EAudioType : int
     ElinkRemove,
     EGoodShuffle,
     EGoodMove,
+    ELuckmount,
+    EMoney,
+    EReward,
+    EWin,
 }

@@ -64,6 +64,8 @@ namespace XrCode
                 FacadeGuide.PlayGuide();
                 FacadeGuide.SetWithdrawableUIcheck(true);
             }
+
+            AudioDefines.PlayEffect(EAudioType.EWin);
         }
 
         private void OnWithdrawBtnClickHandle()

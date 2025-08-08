@@ -838,6 +838,7 @@ namespace XrCode
                 return;
             MAP[row][col] = type;
             GameObject obj = GameObject.Instantiate(goodPrefab);
+            obj.tag = "item";
             Good good = obj.GetComponent<Good>();
             good.setOnlineId(online_id);
             good.setInfo(type, row, col, POS[row][col], CELL_WIDH, CELL_HEIGHT, mapTrans);
@@ -2506,7 +2507,6 @@ namespace XrCode
         //开始重置地图
         IEnumerator StartResetMap()
         {
-            AudioModule.PlayEffect(EAudioType.EGoodShuffle);
             isReseting = true;
             yield return new WaitForSeconds(Time.deltaTime + 0.05f);
             RandomMap();
@@ -2827,7 +2827,6 @@ namespace XrCode
         {
             if (curMapState == EMapState.Eating)
                 return;
-            AudioModule.PlayEffect(EAudioType.EGoodShuffle);
             _resetMap();
             DeSelect();
         }

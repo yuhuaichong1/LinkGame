@@ -170,7 +170,7 @@ namespace XrCode
 
             sTimer = STimerManager.Instance.CreateSTimer(wheelStayTime[curTime], movTimes, true, true, () =>
             {
-                AudioDefines.PlayEffect(EAudioType.EButton);
+                AudioDefines.PlayEffect(EAudioType.ELuckmount);
 
                 curImage.sprite = NotActivatedBg;
                 curIcon += 1;

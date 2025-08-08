@@ -106,6 +106,7 @@ namespace XrCode
         /// <param name="refushAction">刷新功能执行方法</param>
         private void PlayCloudEffect(Action refushAction)
         {
+            AudioDefines.PlayEffect(EAudioType.EGoodShuffle);
             mMask.gameObject.SetActive(true);
             DG.Tweening.Sequence sequence = DOTween.Sequence();
             sequence.Append(mLeftCloud.DOLocalMoveX(LeftCloudMovePosX, 1).SetEase(Ease.OutBack));
@@ -247,6 +248,8 @@ namespace XrCode
         /// <param name="delayTime">动画延迟播放时间</param>
         private void PlayFlyMoneyEffect(Transform orginPos, Transform targetPos, float delayTime)
         {
+            AudioDefines.PlayEffect(EAudioType.EReward);
+
             GameObject obj = flyMoneyPool.Count != 0 ? flyMoneyPool.Pop() : GameObject.Instantiate(flyMoneyObj, mFlyIconParent);
             obj.SetActive(true);
             obj.transform.position = orginPos.position;
@@ -268,12 +271,18 @@ namespace XrCode
             GameObject obj = flyMoneyPool.Count != 0 ? flyMoneyPool.Pop() : GameObject.Instantiate(flyMoneyObj, mFlyIconParent);
             obj.SetActive(true);
             obj.transform.position = orginPos;
+
+            
+
             obj.transform.DOMove(targetPos.position, GameDefines.FlyMoney_ObjTime).OnComplete(() =>
             {
                 obj.gameObject.SetActive(false);
                 flyMoneyPool.Push(obj);
                 BtnScale();
-            }).SetDelay(delayTime);
+            }).SetDelay(delayTime).OnStart(() => 
+            {
+                AudioDefines.PlayEffect(EAudioType.EReward);
+            });
         }
 
         /// <summary>
@@ -282,6 +291,7 @@ namespace XrCode
         /// <param name="money">显示金额</param>
         private void PlayGetMoneyTipEffect(float money)
         {
+            AudioDefines.PlayEffect(EAudioType.EMoney);
             GameObject obj = flyMoneyTipPool.Count != 0 ? flyMoneyTipPool.Pop() : GameObject.Instantiate(flyMoneyTipObj, mFlyIconParent);
             obj.SetActive(true);
             GetMoneyTipItem getMoneyTipItem = obj.GetComponent<GetMoneyTipItem>();

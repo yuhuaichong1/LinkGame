@@ -81,6 +81,7 @@ namespace XrCode
                 }
                 else
                 {
+                    Debug.LogError(eventData.selectedObject.name);
                     if (eventData.selectedObject.tag != "item")
                         PlayButtonSound();
                 }
