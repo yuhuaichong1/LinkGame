@@ -2087,6 +2087,16 @@ namespace XrCode
                     //resultBar.showResult(timeBar.getNumStar(), logicLevel.getScore(), GameStatic.currentLevel, true);
                     //GameStatic.logLevel(GameStatic.currentMode, ItemController.getNumHintItem(), ItemController.getNumRandomItem(), GameStatic.currentLevel, 1, GameStatic.currentScore, false);
                     //GameStatic.endGame();
+                    float delayTime = GameDefines.FlyEffect_Start_Delay + GameDefines.FlyMoney_Effect_LinkCount * GameDefines.FlyMoney_ObjTime + GameDefines.FlyMoneyTip_ObjTime;
+                    STimerManager.Instance.CreateSDelay(delayTime, () =>
+                    {
+                        UIManager.Instance.CloseUI(EUIType.EUIGamePlay);
+                        UIManager.Instance.OpenAsync<UIChallengeSuccessful>(EUIType.EUIChallengeSuccessful);
+
+                        FacadeTask.CheckLevelPass(curLevel);
+
+                        NextLevel();
+                    });
                 }
                 else
                 {
@@ -2844,34 +2854,40 @@ namespace XrCode
         {
             return curLevel;
         }
-
         /// <summary>
-        /// 前进1关
+        /// 前进到下一关（若当前已是最后一关，则保持不变）
         /// </summary>
         private void NextLevel()
         {
+            // 1. 更新世界关卡
+            curWLevel = (curLevel == LevelDefines.maxLevel) ? LevelDefines.maxLevel : curWLevel + 1;
 
-            if (GameDefines.ifIAA)
+            if (curLevel < LevelDefines.maxLevel)
             {
-                if (ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel).WithdrawType != 0)
+                bool isWithdrawable = false;
+                if (GameDefines.ifIAA)
                 {
-                    curWLevel += 1;
-                    withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
-                    SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
-                    SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                    var levelActData = ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel);
+                    isWithdrawable = levelActData != null && levelActData.WithdrawType != 0;
                 }
-            }
-            else
-            {
-                if (ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType != 0)
+                else
                 {
-                    curWLevel += 1;
-                    withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel).Level);
-                    SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
-                    SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                    var levelData = ConfigModule.Instance.Tables.TBLevel.Get(curLevel);
+                    isWithdrawable = levelData != null && levelData.WithdrawType != 0;
                 }
+                if (isWithdrawable)
+                {
+                    var withdrawableData = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel);
+                    if (withdrawableData != null)
+                    {
+                        withdrawableLevel.Enqueue(withdrawableData.Level);
+                        SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
+                        SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
+                    }
+                }
+                curLevel++;
             }
-            curLevel += 1;
+
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, curLevel);
         }
 
