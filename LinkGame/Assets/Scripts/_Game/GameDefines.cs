@@ -342,6 +342,7 @@ public enum EAdSource
     FuncPopup_Hint,//获取提示道具界面
     FuncPopup_Refresh,//获取刷新道具界面
     FuncPopup_Remove,//获取移除道具界面
+    TimerInter,//计时器插屏广告
 }
 
 #endregion

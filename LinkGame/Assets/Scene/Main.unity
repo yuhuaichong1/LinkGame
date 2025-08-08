@@ -746,6 +746,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &849989357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 140519541975778224, guid: 624bae8a425d58c4ea16945db4331c20, type: 3}
+  m_PrefabInstance: {fileID: 1780686784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1070600905
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,6 +795,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070600905}
   m_CullTransparentMesh: 1
+--- !u!114 &1282356152 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4876412377023769538, guid: 624bae8a425d58c4ea16945db4331c20, type: 3}
+  m_PrefabInstance: {fileID: 1780686784}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b11dbacf7eed74c87728c7a96b5844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1310997639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,8 +1062,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ifJarSwitch: 0
-  netObj: {fileID: 0}
-  tips: {fileID: 0}
+  netObj: {fileID: 849989357}
+  tips: {fileID: 1282356152}
   isContent: 0
   ifCheckNetwork: 1
   ifIAA: 0

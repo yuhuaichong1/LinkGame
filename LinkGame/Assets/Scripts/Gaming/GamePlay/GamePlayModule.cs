@@ -113,6 +113,9 @@ namespace XrCode
         private Action forntAction;
         private Action lastAction;
         public int CurLevel { get { return curLevel; } }
+
+        private bool sixtyTimeAdjustOne;
+
         protected override void OnLoad()
         {
             base.OnLoad();
@@ -176,6 +179,7 @@ namespace XrCode
             curLevelDirection = new ArrayList();//当前关卡的方向
             curAwesomeCountCheck = GameDefines.FirstCount;
             CATCjustOne = true;
+            sixtyTimeAdjustOne = true;
             switch (GameDefines.InsLevelFront)
             {
                 case 1:
@@ -319,6 +323,15 @@ namespace XrCode
                     _randomMap();
 
                 remainGood = totalGood;
+            }
+
+            if(sixtyTimeAdjustOne && curLevel >= 3)
+            {
+                sixtyTimeAdjustOne = false;
+                STimerManager.Instance.CreateSTimer(GameDefines.adtime, -1, true, true, () =>
+                {
+                    FacadeAd.PlayInterAd(EAdSource.TimerInter, null, null);
+                });
             }
         }
 
