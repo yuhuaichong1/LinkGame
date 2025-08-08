@@ -637,7 +637,7 @@ namespace XrCode
             D.Log("::::Fixed MAP::::");
             curMapState = EMapState.None;
 
-            if (curLevelData.levelDirEnum == 0&&GameDefines.ifIAA)
+            if (curLevelData.levelDirEnum == 0 && GameDefines.ifIAA)
             {
                 var conf = ConfigModule.Instance.Tables.TBLevelAct.GetOrDefault(curLevel);
                 if (conf != null && conf.EmptyGridMap != null)
@@ -2001,7 +2001,7 @@ namespace XrCode
                 curTopNoticeCount += 1;
 
 
-            if(curLevel <= GameDefines.InstLevel)
+            if (curLevel <= GameDefines.InstLevel)
             {
                 forntAction?.Invoke();
             }
@@ -2709,7 +2709,7 @@ namespace XrCode
                     }
                 }
             }
-
+            if (randomKey.Count <= 0 || randomKey == null) return;
             int targetId = randomKey[UnityEngine.Random.Range(0, randomKey.Count)];
             List<Good> goods = goodsDic[targetId];
             goods.Shuffle();
@@ -3634,7 +3634,7 @@ namespace XrCode
             {
                 GoodIconWeight.Add(GoodIconRange[i], cgws[i].Weight);
             }
-            
+
         }
 
         //…Ë÷√ÀÊª˙Õº∆¨
