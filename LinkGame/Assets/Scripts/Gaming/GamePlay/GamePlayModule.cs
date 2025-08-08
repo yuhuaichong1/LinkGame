@@ -115,7 +115,7 @@ namespace XrCode
         private bool CATCjustOne;
         private Action forntAction;
         private Action lastAction;
-
+        public int CurLevel { get { return curLevel; } }
         protected override void OnLoad()
         {
             base.OnLoad();
