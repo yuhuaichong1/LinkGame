@@ -463,6 +463,7 @@
     <Compile Include="Assets\Scripts\UI\ChallengeFailed\UIChallengeFailed.cs" />
     <Compile Include="Assets\Tools\EasyTouchBundle\EasyTouchControls\Plugins\ETCTouchPad.cs" />
     <Compile Include="Assets\Scripts\Framework\_Interface\IDispose.cs" />
+    <Compile Include="Assets\Scripts\UI\NetworkErrorTips.cs" />
     <Compile Include="Assets\Scripts\PayType\PayItem.cs" />
     <Compile Include="Assets\Scripts\UI\WithdrawableMultiple\WithdrawMItem.cs" />
     <Compile Include="Assets\Tools\Plugins\protobuf-net\ImplicitFields.cs" />

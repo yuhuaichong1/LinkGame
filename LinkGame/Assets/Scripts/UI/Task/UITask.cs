@@ -38,9 +38,9 @@ namespace XrCode
             mDailyTasksToggle.isOn = true;            mDailyScroll.gameObject.SetActive(true);            mChallengeTaskToggle.isOn = false;            mChallengeScroll.gameObject.SetActive(false);            RefreshDailyTask();            RefreshChallageTask();        }        private void GetTaskInfo()
         {
             DailyTasks = FacadeTask.GetDailyTask();
-            ChallageTasks = FacadeTask.GetChallageTask();
-
             mDailyScroll.InitGridView(DailyTasks.Count, DailyTaskCallBack);
+
+            ChallageTasks = FacadeTask.GetChallageTask();
             mChallengeScroll.InitGridView(ChallageTasks.Count, ChallageTaskCallBack);
         }	    private void OnExitBtnClickHandle()
         {
@@ -67,8 +67,9 @@ namespace XrCode
             LoopGridViewItem item = mDailyScroll.NewListViewItem("DailyTaskItem");
             Task task = DailyTasks[index];
             TaskItemData dataMono = item.GetComponent<TaskItemData>();
-            dataMono.SetProgress(GamePlayFacade.GetCurTotalLinkCount(), task.Target);
             dataMono.SetMsg(task.Content, task.Id, task.Type, task.Target);
+            dataMono.SetProgress(GamePlayFacade.GetCurTotalLinkCount(), task.Target);
+  
             dataMono.ReceiveBtn.onClick.AddListener(() => 
             {
                 FacadeTask.GetDailyTask().Remove(task);
