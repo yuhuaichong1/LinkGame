@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 //音频定义类
-public class AudioDefines
+public static class AudioDefines
 {
-    
+    public static Action PlayBgm;
+    public static Action StopBgm;
+    public static Action<EAudioType> PlayEffect;
 }
 
 //音频类型

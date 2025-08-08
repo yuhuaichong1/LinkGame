@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isContent: 0
-  ifCheckNetwork: 1
+  ifCheckNetwork: 0
 --- !u!4 &1511088869
 Transform:
   m_ObjectHideFlags: 0

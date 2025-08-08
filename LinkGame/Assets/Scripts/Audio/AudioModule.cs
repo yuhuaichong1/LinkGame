@@ -25,6 +25,10 @@ namespace XrCode
 
         protected override void OnLoad()
         {
+            AudioDefines.PlayBgm += PlayBgm;
+            AudioDefines.StopBgm += StopBgm;
+            AudioDefines.PlayEffect += PlayEffect;
+
             gameObject = new GameObject("AudioModule");
             GameObject.DontDestroyOnLoad(gameObject);
             musicSource = gameObject.AddComponent<AudioSource>();
@@ -43,7 +47,7 @@ namespace XrCode
         //获取音频数据
         private void LoadMusicData()
         {
-            float value = SPlayerPrefs.GetFloat(PlayerPrefDefines.musicToggle);
+            float value = SPlayerPrefs.GetBool(PlayerPrefDefines.musicToggle)? 1 : 0;
             musicVolume = value;
             effectsVolume = value;
         }
@@ -57,7 +61,7 @@ namespace XrCode
         // 统一处理按钮事件
         private void RedirectButton()
         {
-            //typeof(ExecuteEvents).GetField("s_PointerClickHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerClickHandler>(OnPointerClick));
+            typeof(ExecuteEvents).GetField("s_PointerClickHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerClickHandler>(OnPointerClick));
 
             //typeof(ExecuteEvents).GetField("s_PointerDownHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerDownHandler>(OnPointerDown));
             //typeof(ExecuteEvents).GetField("s_PointerUpHandler", BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, new ExecuteEvents.EventFunction<IPointerUpHandler>(OnPointerUp));
@@ -73,11 +77,12 @@ namespace XrCode
 
                 if (eventData.selectedObject == null)
                 {
-                    PlayButtonSound();
+                    
                 }
                 else
                 {
-                    
+                    if (eventData.selectedObject.tag != "item")
+                        PlayButtonSound();
                 }
                 handler.OnPointerClick(pointerEventData);
                 enableBtn = false;
@@ -166,7 +171,7 @@ namespace XrCode
 
         private void PlayButtonSound()
         {
-            D.Log("统一播放按钮音效");
+            D.Log("统一播放按钮音效" + effectsVolume);
             AudioClip clip = GetAudioClip(EAudioType.EButton);
             if (clip == null) return;
             AudioSource source = GetAvailableAudioSource();

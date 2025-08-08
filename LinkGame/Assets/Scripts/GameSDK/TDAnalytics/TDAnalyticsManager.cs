@@ -284,5 +284,10 @@ namespace XrCode
 
             //TDAnalytics.Track("LG_ButtonClick", properties);
         }
+
+        public string GetAccoundId()
+        {
+            return accoundId;
+        }
     }
 }
