@@ -11,12 +11,15 @@ namespace XrCode
         protected override void OnLoad()
         {
             //UIManager.Instance.OpenAsync<UIMainCity>(EUIType.EUIMainCity);
-            UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, (BaseUI) =>
-            {
-                ModuleMgr.Instance.TDAnalyticsManager.EnterMainUI();
-                ModuleMgr.Instance.TDAnalyticsManager.LoginSuccess();
-                CheckZeroTime();
-            });
+            if (!GameDefines.ifIAA)
+                UIManager.Instance.OpenAsync<UIGamePlay>(EUIType.EUIGamePlay, _ =>
+                {
+                    ModuleMgr.Instance.TDAnalyticsManager.EnterMainUI();
+                    ModuleMgr.Instance.TDAnalyticsManager.LoginSuccess();
+                    CheckZeroTime();
+                });
+            else
+                UIManager.Instance.OpenAsync<UIGamePlayBy>(EUIType.EUIGamePlayBy, _ => { });
         }
 
         //检测是否跨0点

@@ -25,37 +25,45 @@ namespace XrCode
         }
         protected override void OnEnable()
         {
-            int curWLevel = GamePlayFacade.GetCurWLevel();
-            Stack<int> withQueue = new Stack<int>(GamePlayFacade.GetWithdrawableLevel().ToArray());
-            int count = withQueue.Count;
-            mPreLevelPlane.gameObject.SetActive(count >= 2);
-            mPrePreLevelPlane.gameObject.SetActive(count >= 3);
-            for(int i = 0; i < count; i++)
+            int curLevel = GamePlayFacade.GetCurLevel();
+            if (curLevel <= GameDefines.withdrawLevel)
             {
-                wItems[i].SetInfo(withQueue.Pop(), curWLevel - i);
-                //if(i == 0)
-                //{
-                //    mTargetText.text = string.Format(LanguageModule.GetText("10014"), curWLevel - i);
-                //}
+                mLevelTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.withdrawLevel}";
+                mGoalTitle.text = $"{LanguageModule.GetText("10031")} {1}";
+                int diff = GameDefines.withdrawLevel - GamePlayFacade.GetCurLevel();
+                if (diff == 0)
+                {
+                    mTargetText.text = LanguageModule.GetText("10012");
+                }
+                else
+                {
+                    mTargetText.text = string.Format(LanguageModule.GetText("10013"), diff + 1);
+                }
+                
             }
+            else if(curLevel <= GameDefines.doubleLevel) 
+            {
+                mLevelTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.doubleLevel}";
+                mGoalTitle.text = $"{LanguageModule.GetText("10031")} {2}";
+                int diff = GameDefines.doubleLevel - GamePlayFacade.GetCurLevel();
+                if(diff == 0)
+                {
+                    mTargetText.text = LanguageModule.GetText("10102");
+                }
+                else
+                {
+                    mTargetText.text = string.Format(LanguageModule.GetText("10100"), diff + 1);
+                }
+                
+            }
+            else
+            {
+                mLevelTitle.text = $"{LanguageModule.GetText("10049")} {ConfigModule.Instance.Tables.TBLevel.DataList.Count}";
+                mGoalTitle.text = $"{LanguageModule.GetText("10031")} {3}";
+                mTargetText.text = "";
+            }
+
             mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
-
-            #region old
-            //mLevelTitle.text = string.Format(LanguageModule.GetText(""), 1);
-            //mGoalTitle.text = string.Format(LanguageModule.GetText(""), 1);
-            //mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
-
-            //if (withQueue.Count > 1)
-            //{
-            //    mPreLevelTitle.text = string.Format(LanguageModule.GetText(""), 2);
-            //    mPregoalTitle.text = string.Format(LanguageModule.GetText(""), 2);
-            //}
-            //if(withQueue.Count > 2)
-            //{
-            //    mPrePreLevelTitle.text = string.Format(LanguageModule.GetText(""), 12);
-            //    mPrePregoalTitle.text = string.Format(LanguageModule.GetText(""), 12);
-            //}
-            #endregion
 
             DateTime currentDate = DateTime.Now;
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Month, currentDate.Day, currentDate.Year);
@@ -95,10 +103,10 @@ namespace XrCode
             switch(curLevel) 
             {
                 case 1:
-                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.Single_Link_Money * 6);
+                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money * 6);
                     break;
                 case 2:
-                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.Single_Link_Money * 12);
+                    ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * 50, 1, GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money * 12);
                     break;
                 default:
                     ShowNoticeInfo2(FacadeTimeZone.GetCurZTime() * UnityEngine.Random.Range(20, 26), UnityEngine.Random.Range(2, 6), UnityEngine.Random.Range(3f, 10f));

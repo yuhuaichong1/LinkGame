@@ -35,12 +35,12 @@ namespace XrCode
         protected override void OnEnable()        {
             mCurMoneyText.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
 
-            mDailyTasksToggle.isOn = true;            mDailyScroll.gameObject.SetActive(true);            mChallengeTaskToggle.isOn = false;            mChallengeScroll.gameObject.SetActive(false);        }        private void GetTaskInfo()
+            mDailyTasksToggle.isOn = true;            mDailyScroll.gameObject.SetActive(true);            mChallengeTaskToggle.isOn = false;            mChallengeScroll.gameObject.SetActive(false);            RefreshDailyTask();            RefreshChallageTask();        }        private void GetTaskInfo()
         {
             DailyTasks = FacadeTask.GetDailyTask();
-            ChallageTasks = FacadeTask.GetChallageTask();
-
             mDailyScroll.InitGridView(DailyTasks.Count, DailyTaskCallBack);
+
+            ChallageTasks = FacadeTask.GetChallageTask();
             mChallengeScroll.InitGridView(ChallageTasks.Count, ChallageTaskCallBack);
         }	    private void OnExitBtnClickHandle()
         {
@@ -67,8 +67,9 @@ namespace XrCode
             LoopGridViewItem item = mDailyScroll.NewListViewItem("DailyTaskItem");
             Task task = DailyTasks[index];
             TaskItemData dataMono = item.GetComponent<TaskItemData>();
+            dataMono.SetMsg(task.Content, task.Id, task.Type, task.Target);
             dataMono.SetProgress(GamePlayFacade.GetCurTotalLinkCount(), task.Target);
-            dataMono.SetMsg(task.Content, task.Id, task.Type);
+  
             dataMono.ReceiveBtn.onClick.AddListener(() => 
             {
                 FacadeTask.GetDailyTask().Remove(task);
@@ -82,17 +83,15 @@ namespace XrCode
             try 
             {
                 LoopGridViewItem item = mChallengeScroll.NewListViewItem("ChallengeTaskItem");
-                Debug.LogError("一般Id是：" + index + "  " + ChallageTasks.Count);
                 Task task = ChallageTasks[index];
                 TaskItemData dataMono = item.GetComponent<TaskItemData>();
                 dataMono.SetProgress(GamePlayFacade.GetCurLevel() - 1, task.Target);
-                dataMono.SetMsg(task.Content, task.Id, task.Type);
+                dataMono.SetMsg(task.Content, task.Id, task.Type, task.Target);
 
                 return item;
             }
             catch 
             {
-                Debug.LogError("错误的Id是：" + index);
                 return null;
             }
         }

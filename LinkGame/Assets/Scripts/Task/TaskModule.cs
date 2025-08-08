@@ -41,7 +41,7 @@ namespace XrCode
         private void GetTaskData()
         {
             taskStatus = SPlayerPrefs.GetDictionary<int, int>(PlayerPrefDefines.taskStatus);
-            if (taskStatus != null) 
+            if (taskStatus != null)
             {
                 foreach (KeyValuePair<int, int> status in taskStatus)
                 {
@@ -60,13 +60,19 @@ namespace XrCode
                     {
                         DailyTask.Add(temp.Sn, task);
                         if (task.taskStatus == ETaskStatus.Receive)
+                        {
                             FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
+                            FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_DailyBy, 1);
+                        }
                     }
                     else
                     {
                         ChallengeTask.Add(temp.Sn, task);
                         if (task.taskStatus == ETaskStatus.Receive)
+                        {
                             FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
+                            FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_ChallengeBy, 1);
+                        }
                     }
 
                     curDailyRDId = SPlayerPrefs.GetInt(PlayerPrefDefines.curDailyRDId);
@@ -95,7 +101,7 @@ namespace XrCode
                     if (task.Type == 0)
                     {
                         DailyTask.Add(task.Sn, item);
-                        if(firstDSn) 
+                        if (firstDSn)
                         {
                             firstDSn = false;
                             curDailyRDId = task.Sn;
@@ -104,12 +110,12 @@ namespace XrCode
                     else
                     {
                         ChallengeTask.Add(task.Sn, item);
-                        if(firstCSn)
+                        if (firstCSn)
                         {
                             firstCSn = false;
                             curChallengeRDId = task.Sn;
                         }
-                    }   
+                    }
                 }
 
                 SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.taskStatus, taskStatus);
@@ -145,12 +151,14 @@ namespace XrCode
             if (re_taskType == 0)
             {
                 DailyTask.Remove(re_taskId);
+                FacadeRedDot.ReduceRDNode_ByName(GameDefines.Reddot_Name_DailyBy, 1);
                 FacadeRedDot.ReduceRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
                 FacadeTask.RefreshDailyTask();
             }
             else
             {
                 ChallengeTask.Remove(re_taskId);
+                FacadeRedDot.ReduceRDNode_ByName(GameDefines.Reddot_Name_ChallengeBy, 1);
                 FacadeRedDot.ReduceRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
                 FacadeTask.RefreshChallageTask();
             }
@@ -193,9 +201,11 @@ namespace XrCode
             {
                 case 0:
                     FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Daily, 1);
+                    FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_DailyBy, 1);
                     break;
                 case 1:
                     FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_Challenge, 1);
+                    FacadeRedDot.AddRDNode_ByName(GameDefines.Reddot_Name_ChallengeBy, 1);
                     break;
             }
             SPlayerPrefs.SetDictionary(PlayerPrefDefines.taskStatus, taskStatus);
@@ -203,8 +213,10 @@ namespace XrCode
 
         private void CheckLinkCount(int count)
         {
-            int target = ConfigModule.Instance.Tables.TBTask.Get(curDailyRDId).Target;
-            if(count >= target)
+            ConfTask ct = ConfigModule.Instance.Tables.TBTask.GetOrDefault(curDailyRDId);
+            if (ct == null) return;
+            int target = ct.Target;
+            if (count >= target)
             {
                 SetDailyTaskRecive(curDailyRDId);
                 curDailyRDId += 1;
@@ -214,7 +226,9 @@ namespace XrCode
 
         private void CheckLevelPass(int level)
         {
-            int target = ConfigModule.Instance.Tables.TBTask.Get(curChallengeRDId).Target;
+            ConfTask ct = ConfigModule.Instance.Tables.TBTask.GetOrDefault(curChallengeRDId);
+            if (ct == null) return;
+            int target = ct.Target;
             if (level >= target)
             {
                 SetDailyTaskRecive(curChallengeRDId);

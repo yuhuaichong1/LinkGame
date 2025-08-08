@@ -404,9 +404,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 36
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 24
+    m_MaxSize: 36
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -796,7 +796,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4378364566640946932}
   - component: {fileID: 9118218864529026348}
-  - component: {fileID: 1222974480375452138}
+  - component: {fileID: 7069545258628048476}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -831,7 +831,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078733867674690911}
   m_CullTransparentMesh: 1
---- !u!114 &1222974480375452138
+--- !u!114 &7069545258628048476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -840,7 +840,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078733867674690911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -860,15 +860,11 @@ MonoBehaviour:
     m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 0
+    m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdraw
-  m_languageId: 10015
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
 --- !u!1 &1165183059148334584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1276,6 +1272,7 @@ MonoBehaviour:
   finishIcon: {fileID: 5599174302106241682}
   curLevelText: {fileID: 1429471682965263789}
   wTip: {fileID: 350699158830064923}
+  wText: {fileID: 4370776363648297545}
 --- !u!1 &1773650861823934634
 GameObject:
   m_ObjectHideFlags: 0
@@ -2046,7 +2043,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Randomly remove a group of Mahjong
   m_languageId: 10086
   m_editorText: 
   isArabicText: 0
@@ -3180,7 +3177,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Remove
   m_languageId: 10087
   m_editorText: 
   isArabicText: 0
@@ -4521,6 +4518,7 @@ MonoBehaviour:
   finishIcon: {fileID: 4520153516664963501}
   curLevelText: {fileID: 6935162570425004503}
   wTip: {fileID: 3226918200526678783}
+  wText: {fileID: 7069545258628048476}
 --- !u!1 &5485780941564523809
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,6 +4756,7 @@ MonoBehaviour:
   finishIcon: {fileID: 6725822769476874595}
   curLevelText: {fileID: 5645304592875610832}
   wTip: {fileID: 7472233255828392489}
+  wText: {fileID: 7085171327991802102}
 --- !u!1 &5572660927428079094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4768,7 +4767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2033237285413136166}
   - component: {fileID: 2307610705489640798}
-  - component: {fileID: 8942688221722496828}
+  - component: {fileID: 23421762579939804}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -4803,7 +4802,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5572660927428079094}
   m_CullTransparentMesh: 1
---- !u!114 &8942688221722496828
+--- !u!114 &23421762579939804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4812,7 +4811,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5572660927428079094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -4832,15 +4831,11 @@ MonoBehaviour:
     m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 0
+    m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdraw
-  m_languageId: 10015
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
 --- !u!1 &5585989983851515998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4919,7 +4914,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Refresh to rearrange all tiles
   m_languageId: 10085
   m_editorText: 
   isArabicText: 0
@@ -5243,6 +5238,7 @@ MonoBehaviour:
   finishIcon: {fileID: 746404529871758812}
   curLevelText: {fileID: 5179482897530948998}
   wTip: {fileID: 1859749532383092212}
+  wText: {fileID: 23421762579939804}
 --- !u!1 &5860148193260388526
 GameObject:
   m_ObjectHideFlags: 0
@@ -5760,7 +5756,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: 'Hint: connectable tiles'
   m_languageId: 10084
   m_editorText: 
   isArabicText: 0
@@ -5775,7 +5771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2237313950082210469}
   - component: {fileID: 8128444112425916429}
-  - component: {fileID: 7097039603967785267}
+  - component: {fileID: 4289125820709359765}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5810,7 +5806,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6355904294485576356}
   m_CullTransparentMesh: 1
---- !u!114 &7097039603967785267
+--- !u!114 &4289125820709359765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5819,7 +5815,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6355904294485576356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -5839,15 +5835,11 @@ MonoBehaviour:
     m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 0
+    m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdraw
-  m_languageId: 10015
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
 --- !u!1 &6356165222070527506
 GameObject:
   m_ObjectHideFlags: 0
@@ -5933,7 +5925,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7756557964406637038}
   - component: {fileID: 5006523521592491851}
-  - component: {fileID: 8252892277210173436}
+  - component: {fileID: 4370776363648297545}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5968,7 +5960,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6471416969339010724}
   m_CullTransparentMesh: 1
---- !u!114 &8252892277210173436
+--- !u!114 &4370776363648297545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5977,7 +5969,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6471416969339010724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -5997,15 +5989,11 @@ MonoBehaviour:
     m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
-    m_RichText: 0
+    m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdraw
-  m_languageId: 10015
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
 --- !u!1 &6473362440891305884
 GameObject:
   m_ObjectHideFlags: 0
@@ -6259,7 +6247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4206529575768788880}
   - component: {fileID: 3973013941663709149}
-  - component: {fileID: 6094827374358800584}
+  - component: {fileID: 7085171327991802102}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6294,7 +6282,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6926376993239807237}
   m_CullTransparentMesh: 1
---- !u!114 &6094827374358800584
+--- !u!114 &7085171327991802102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6303,7 +6291,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6926376993239807237}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6318,9 +6306,9 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 16
+    m_MaxSize: 24
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -6328,10 +6316,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Withdraw
-  m_languageId: 10015
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
 --- !u!1 &7126614375981748663
 GameObject:
   m_ObjectHideFlags: 0
@@ -7339,6 +7323,7 @@ MonoBehaviour:
   finishIcon: {fileID: 9127994822847958081}
   curLevelText: {fileID: 6672984015615582208}
   wTip: {fileID: 2832287978634101496}
+  wText: {fileID: 4289125820709359765}
 --- !u!1 &8702011425284801203
 GameObject:
   m_ObjectHideFlags: 0

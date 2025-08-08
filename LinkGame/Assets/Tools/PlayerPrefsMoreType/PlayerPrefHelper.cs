@@ -51,10 +51,16 @@ public static class SPlayerPrefs
     /// 读取Bool
     /// </summary>
     /// <param name="key">Key</param>
+    /// <param name="defaultValue">当键不存在时的默认值</param>
     /// <returns>Bool值</returns>
-    public static bool GetBool(string key) 
+    public static bool GetBool(string key, bool defaultValue = true)
     {
-        return PlayerPrefs.GetInt(key) == 1;
+        if (PlayerPrefs.HasKey(key))
+        {
+            return PlayerPrefs.GetInt(key) == 1;
+        }
+        // 键不存在时返回默认值（默认为true）
+        return defaultValue;
     }
 
     /// <summary>

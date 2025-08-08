@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //[AddComponentMenu("SimpleUI/SMovingToggle", 30)]
 public class SMovingToggle : MonoBehaviour, IPointerDownHandler
 {
-    private bool _isOn;//开关状态
+    private bool _isOn=true;//开关状态
     public bool isOn
     {
         set 

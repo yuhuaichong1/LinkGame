@@ -17,6 +17,6 @@ public class GuideItem
     public string handPos;                   //手位置
     public bool ifMask;                         //是否有黑色遮罩
     public string transparentPos;            //透明框位置
-    public string clickPos;                  //教程可点击部分
+    public List<string> clickPos;                  //教程可点击部分
     public Dictionary<string, string> extra;    //额外字段
 }

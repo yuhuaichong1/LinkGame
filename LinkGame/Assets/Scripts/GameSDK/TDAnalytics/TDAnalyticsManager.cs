@@ -448,5 +448,10 @@ namespace XrCode
                 {"AutoTrackEventProperty", DateTime.Today}
             };
         }
+
+        public string GetAccoundId()
+        {
+            return accoundId;
+        }
     }
 }

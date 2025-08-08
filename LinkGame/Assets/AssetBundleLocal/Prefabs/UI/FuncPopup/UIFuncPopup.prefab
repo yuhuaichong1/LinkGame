@@ -509,7 +509,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 354.3, y: -73}
-  m_SizeDelta: {x: 0, y: 73.22}
+  m_SizeDelta: {x: 145, y: 73.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &863327905487969139
 CanvasRenderer:
@@ -1087,8 +1087,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Cash
-  m_languageId: 
+  m_Text: "\u914D\u7F6E\u9519\u8BEF\uFF1A\u591A\u8BED\u8A00\u8868\u4E2Did: 10103
+    \u4E0D\u5B58\u5728"
+  m_languageId: 10103
   m_editorText: 
   isArabicText: 0
   m_bAutoArabicByText: 1

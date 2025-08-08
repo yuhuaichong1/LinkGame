@@ -27,7 +27,7 @@ public class GuideModule : BaseModule
         FacadeGuide.SetWithdrawableUIcheck += SetWithdrawableUIcheck;
         FacadeGuide.CheckWithdrawableUI += CheckWithdrawableUI;
 
-        LanguageModule = new LanguageModule();
+        LanguageModule = ModuleMgr.Instance.LanguageMod;
 
         curGuideItems = new GuideItem();
 
@@ -37,41 +37,58 @@ public class GuideModule : BaseModule
     private void GetData()
     {
         curStep = SPlayerPrefs.GetInt(PlayerPrefDefines.curStep);
-        if (curStep == 0) 
-        {
-            curStep = GameDefines.firstGuideId;
-        }
+        if (curStep == 0) curStep = GameDefines.firstGuideId;
         else
         {
-            int backStep = ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
+            var backStep = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep).BackStep : ConfigModule.Instance.Tables.TBGuides.Get(curStep).BackStep;
             curStep = backStep != 0 ? backStep : curStep;
         }
 
         SetGuide(curStep);
-
         withdrawableUIcheck = SPlayerPrefs.GetBool(PlayerPrefDefines.withdrawableUIcheck);
     }
 
     private void SetGuide(int step)
     {
         curStep = step;
-
-        ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
-        curGuideItems.step = step;
-        curGuideItems.nextStep = guideData.NextStep;
-        curGuideItems.note = guideData.Notes;
-        curGuideItems.backStep = guideData.BackStep;
-        curGuideItems.ifBackPlay = guideData.IfBackPlay;
-        curGuideItems.ifNextStep = guideData.IfNextStep;
-        curGuideItems.ifNextPlay = guideData.IfNextPlay;
-        curGuideItems.autohiddenTime = guideData.AutohiddenTime;
-        curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId.ToString());
-        curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
-        curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
-        curGuideItems.ifMask = guideData.IfMask;
-        curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
-        curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
-        curGuideItems.extra = guideData.Extra;
+        if (!GameDefines.ifIAA)
+        {
+            ConfGuides guideData = ConfigModule.Instance.Tables.TBGuides.Get(step);
+            curGuideItems.step = step;
+            curGuideItems.nextStep = guideData.NextStep;
+            curGuideItems.note = guideData.Notes;
+            curGuideItems.backStep = guideData.BackStep;
+            curGuideItems.ifBackPlay = guideData.IfBackPlay;
+            curGuideItems.ifNextStep = guideData.IfNextStep;
+            curGuideItems.ifNextPlay = guideData.IfNextPlay;
+            curGuideItems.autohiddenTime = guideData.AutohiddenTime;
+            curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId.ToString());
+            curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
+            curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
+            curGuideItems.ifMask = guideData.IfMask;
+            curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
+            curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
+            curGuideItems.extra = guideData.Extra;
+        }
+        else
+        {
+            ConfGuidesAct guideData = ConfigModule.Instance.Tables.TBGuidesAct.Get(step);
+            curGuideItems.step = step;
+            curGuideItems.nextStep = guideData.NextStep;
+            curGuideItems.note = guideData.Notes;
+            curGuideItems.backStep = guideData.BackStep;
+            curGuideItems.ifBackPlay = guideData.IfBackPlay;
+            curGuideItems.ifNextStep = guideData.IfNextStep;
+            curGuideItems.ifNextPlay = guideData.IfNextPlay;
+            curGuideItems.autohiddenTime = guideData.AutohiddenTime;
+            curGuideItems.diglogContent = LanguageModule.GetText(guideData.DiglogContentId.ToString());
+            curGuideItems.diglogPos = GetUIRectTrans(guideData.DiglogPos);
+            curGuideItems.handPos = GetUIRectTrans(guideData.HandPos);
+            curGuideItems.ifMask = guideData.IfMask;
+            curGuideItems.transparentPos = GetUIRectTrans(guideData.TransparentPos);
+            curGuideItems.clickPos = GetClickRectTrans(guideData.ClickPos);
+            curGuideItems.extra = guideData.Extra;
+        }
     }
 
     /// <summary>
@@ -79,12 +96,12 @@ public class GuideModule : BaseModule
     /// </summary>
     private void NextStep()
     {
-        if(curGuideItems.ifNextStep && !CheckGuideEnd())
+        if (curGuideItems.ifNextStep && !CheckGuideEnd())
         {
             bool orginBool = curGuideItems.ifNextPlay;
             curStep = curGuideItems.nextStep;
             SetGuide(curStep);
-            if (orginBool) 
+            if (orginBool)
             {
                 FacadeGuide.PlayGuide();
             }
@@ -131,17 +148,26 @@ public class GuideModule : BaseModule
     /// <param name="pathData">路径（可能是其他类型）</param>
     /// <param name="item">当前引导项目</param>
     /// <returns>目标路径</returns>
-    private string GetClickRectTrans(string pathData) 
-    { 
-        switch(pathData) 
+    private List<string> GetClickRectTrans(string pathData)
+    {
+        List<string> paths = new List<string>();
+        string[] temp = pathData.Split(';');
+        foreach(string value in temp) 
         {
-            case "handPos":
-                return curGuideItems.handPos;
-            case "transparentPos":
-                return curGuideItems.transparentPos;
-            default:
-                return GetUIRectTrans(pathData);
+            switch (value)
+            {
+                case "handPos":
+                    paths.Add(curGuideItems.handPos);
+                    break;
+                case "transparentPos":
+                    paths.Add(curGuideItems.transparentPos);
+                    break;
+                default:
+                    paths.Add(GetUIRectTrans(value));
+                    break;
+            }
         }
+        return paths;
     }
 
     private GuideItem GetCurGuideItems()
@@ -149,7 +175,7 @@ public class GuideModule : BaseModule
         return curGuideItems;
     }
 
-    private int GetCurStep() 
+    private int GetCurStep()
     {
         return curStep;
     }
@@ -181,12 +207,13 @@ public class GuideModule : BaseModule
     /// <returns>引导是否结束</returns>
     private bool CheckGuideEnd()
     {
-        bool temp = ConfigModule.Instance.Tables.TBGuides.Get(curStep).NextStep == 0;
-        if (temp)
+        var nextStep = GameDefines.ifIAA ? ConfigModule.Instance.Tables.TBGuidesAct.Get(curStep)?.NextStep ?? 0 : ConfigModule.Instance.Tables.TBGuides.Get(curStep)?.NextStep ?? 0;
+        var isEnd = nextStep == 0;
+        if (isEnd)
         {
             D.Error("Guide End");
             GamePlayFacade.SetIsTutorial(false);
         }
-        return temp;
+        return isEnd;
     }
 }

@@ -43,8 +43,6 @@ public static class GamePlayFacade
     public static Func<int> GetCurTotalLinkCount;         //获得总消除次数
     public static Func<int> GetCurLuckMomentCount;        //获得幸老虎机累计消除次数
     public static Action<int> SetCurLuckMomentCount;      //设置幸老虎机累计消除次数（一般用作归0）
-    public static Func<Queue<int>> GetWithdrawableLevel;  //获取兑现目标关卡数
-    public static Func<int> GetCurWLevel;                 //获取当前兑现目标关卡
     public static Func<bool> GetIsTutorial;               //获取当前是否为新手引导进程
     public static Action<bool> SetIsTutorial;             //设置是否为新手引导进程
     public static Func<float> GetMapScale;                //获得屏幕缩放
@@ -57,6 +55,7 @@ public static class GamePlayFacade
 
     public static Func<int> GetNumberGoodCanEat;            //获取剩余可消除物品对数
     public static Func<float> GetRemainPCT;                //获取关卡进度
+    public static Action GetRemainPCTBack;                //获取关卡回调
 }
 
 

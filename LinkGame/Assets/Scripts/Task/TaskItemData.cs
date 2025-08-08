@@ -13,15 +13,17 @@ public class TaskItemData : MonoBehaviour
     public Text ProgressText;             //任务进度文字
     public Button ReceiveBtn;             //领取按钮
     public GameObject InProgress;         //未完成图样
+    public Image ReceiveIcon;
 
     public int TaskType;                  //任务类型
     public int TaskId;                    //任务Id
 
     private string errMsg;                //错误信息
-
+    private string DescTxt;
     void Awake()
     {
         ReceiveBtn.onClick.AddListener(OnReceiveBtnClick);
+
 
         errMsg = ModuleMgr.Instance.LanguageMod.GetText("");
     }
@@ -49,11 +51,13 @@ public class TaskItemData : MonoBehaviour
     /// </summary>
     /// <param name="desc">任务介绍</param>
     /// <param name="taskId">任务Id</param>
-    public void SetMsg(string desc, int taskId, int taskType)
+    public void SetMsg(string desc, int taskId, int taskType, int Target)
     {
-        Desc.text = desc;
+        //Desc.text = desc;
+        Desc.text = string.Format(desc, Target);
         TaskId = taskId;
         TaskType = taskType;
+        if (GameDefines.ifIAA) { ReceiveIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath); };
     }
 
     private void OnReceiveBtnClick()

@@ -18,6 +18,7 @@ namespace XrCode
             LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
 
             LanguageModule = ModuleMgr.Instance.LanguageMod;
+            if (GameDefines.ifIAA) mMoney.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamondBox_IconPath);         mMoney.SetNativeSize();
         }
 
         protected override void OnSetParam(params object[] args)

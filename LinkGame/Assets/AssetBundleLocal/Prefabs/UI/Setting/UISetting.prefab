@@ -1531,13 +1531,13 @@ MonoBehaviour:
     - {fileID: 4584123859172507235}
   - m_Target: {fileID: 8202768005503798389}
     m_ComponentList:
-    - {fileID: 5282853222593749413}
+    - {fileID: 654479384346425960}
   - m_Target: {fileID: 2744494726048210663}
     m_ComponentList:
     - {fileID: 4181375664318428156}
   - m_Target: {fileID: 5984919698174255563}
     m_ComponentList:
-    - {fileID: 2717727372306740240}
+    - {fileID: 4612594188203210396}
   - m_Target: {fileID: 464604910189411737}
     m_ComponentList:
     - {fileID: 2028041930322286614}
@@ -1926,7 +1926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4792956034445973366}
   - component: {fileID: 2826452066862762616}
-  - component: {fileID: 2717727372306740240}
+  - component: {fileID: 4612594188203210396}
   m_Layer: 5
   m_Name: VSMTLabel
   m_TagString: Untagged
@@ -1961,7 +1961,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5984919698174255563}
   m_CullTransparentMesh: 1
---- !u!114 &2717727372306740240
+--- !u!114 &4612594188203210396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5984919698174255563}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1985,20 +1985,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 26
+    m_MaxSize: 32
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On
-  m_languageId: 
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
+  m_Text: 
 --- !u!1 &6108818108690890954
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,7 +2358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1233414260913027574}
   - component: {fileID: 267983872529098767}
-  - component: {fileID: 5282853222593749413}
+  - component: {fileID: 654479384346425960}
   m_Layer: 5
   m_Name: MSMTLabel
   m_TagString: Untagged
@@ -2397,7 +2393,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8202768005503798389}
   m_CullTransparentMesh: 1
---- !u!114 &5282853222593749413
+--- !u!114 &654479384346425960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2406,7 +2402,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8202768005503798389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2421,20 +2417,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 19e8e78bde90af5438e71395b58d4094, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 26
+    m_MaxSize: 32
     m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: On
-  m_languageId: 
-  m_editorText: 
-  isArabicText: 0
-  m_bAutoArabicByText: 1
+  m_Text: 
 --- !u!1 &8922204451283902134
 GameObject:
   m_ObjectHideFlags: 0

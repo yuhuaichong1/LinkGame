@@ -232,24 +232,50 @@ namespace XrCode
                 // 插屏广告间隔时间
                 if (adDic.TryGetValue("adtime", out object at))
                 {
-                    GameDefines.IntervalTime = int.Parse(at.ToString());
+                    GameDefines.adtime = int.Parse(at.ToString());
                 }
-                //第一次拒绝广告次数
+
+                //是否自动刷新
+                if (adDic.TryGetValue("isAutoRefursh", out object ar))
+                {
+                    GameDefines.IsAutoRefresh = bool.Parse(ar.ToString());
+                }
+
+                //关卡难度
+                if (adDic.TryGetValue("LevelDiffMode", out object ldm))
+                {
+                    GameDefines.LevelDiffMode = bool.Parse(ldm.ToString());
+                }
+
+                //插屏UI出现时间关卡界限
+                if (adDic.TryGetValue("InstLevel", out object il))
+                {
+                    GameDefines.InstLevel = int.Parse(il.ToString());
+                }
+                //关卡界限 前 的关卡用模式1or模式2
+                if (adDic.TryGetValue("InstLevelFront", out object ilf))
+                {
+                    GameDefines.InsLevelFront = int.Parse(ilf.ToString());
+                }
+                //关卡界限 后 的关卡用模式1or模式2
+                if (adDic.TryGetValue("InstLevelLast", out object ill))
+                {
+                    GameDefines.InsLevelLast = int.Parse(ill.ToString());
+                }
+                //模式1：第1次点击次数
                 if (adDic.TryGetValue("firstCount", out object fc))
                 {
                     GameDefines.FirstCount = int.Parse(fc.ToString());
                 }
-
-                //第二次拒绝（含）之后广告次数
+                //模式1：第2次点击次数
                 if (adDic.TryGetValue("sedCount", out object sc))
                 {
                     GameDefines.SedCount = int.Parse(sc.ToString());
                 }
-
-                //是否自动刷新
-                if (adDic.TryGetValue("autoRefursh", out object ar))
+                //模式2：关卡间隔时间
+                if (adDic.TryGetValue("InstTime", out object it1))
                 {
-                    GameDefines.IsAutoRefresh = bool.Parse(ar.ToString());
+                    GameDefines.InstTime = int.Parse(it1.ToString());
                 }
             }
         }

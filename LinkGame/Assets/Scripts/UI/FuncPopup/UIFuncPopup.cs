@@ -17,6 +17,7 @@ namespace XrCode
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(mCSFText);
+          if (GameDefines.ifIAA )madIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Reward_FuncDiamond_IconPath);
         }
         
         protected override void OnSetParam(params object[] args)
@@ -53,8 +54,7 @@ namespace XrCode
         private void AddTipPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Hint_IconPath);
-            //mContent.text = LanguageModule.GetText("");
-            mContent.text = "Find title to clear";
+            mContent.text = LanguageModule.GetText("10084");
             AddEffect();
         }
 
@@ -62,8 +62,7 @@ namespace XrCode
         private void AddRefushPlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Refush_IconPath);
-            //mContent.text = LanguageModule.GetText("");
-            mContent.text = "Shuffle all titles";
+            mContent.text = LanguageModule.GetText("10085");
             AddEffect();
         }
 
@@ -71,7 +70,7 @@ namespace XrCode
         private void AddRemovePlane()
         {
             mIcon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.Func_Remove_IconPath);
-            mContent.text = LanguageModule.GetText("10056");
+            mContent.text = LanguageModule.GetText("10086");
             AddEffect();
         }
 

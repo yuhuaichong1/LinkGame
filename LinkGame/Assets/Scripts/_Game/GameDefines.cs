@@ -32,7 +32,8 @@ public abstract class GameDefines
 
     public static bool ifWithdrawal = true;                                                                 //是否提现
 
-    public const float Single_Link_Money = 0.01f;                                                            //单次消除金额
+    public const float Single_Link_Money = 0.01f;                                                           //单次消除金额
+    public const float Single_Link_Diamond = 10;                                                            //单次消除钻石数
 
     public const string Default_Channels = "0";                                                             //默认支付方式
     public const string Default_Mark = "$";                                                                 //默认货币符号
@@ -46,11 +47,11 @@ public abstract class GameDefines
     public const string Func_Remove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                              //下三功能“移除”图片                        （*）
     public const string Func_Shift_IconPath = "UI/FuncIcon/icon_shift.png";                                 //下三功能“换向”图片                        （*）
 
-    public const int GetFunc_Hint_Num = 3;                                                                  //能获取的“提示”功能的数量
-    public const int GetFunc_Refresh_Num = 2;                                                               //能获取的“刷新”功能的数量
+    public const int GetFunc_Hint_Num = 2;                                                                  //能获取的“提示”功能的数量
+    public const int GetFunc_Refresh_Num = 1;                                                               //能获取的“刷新”功能的数量
     public const int GetFunc_Shift_Num = 2;                                                                 //能获取的“转向”功能的数量
     public const int GetFunc_Remove_Num = 2;                                                                //能获取的“移除”功能的数量
-    public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(1, 10);                                      //获取功能时额外获取的金钱的数量
+    public static Vector2 GetFunc_ExtraMoney_Num = new Vector2(4, 10);                                      //获取功能时额外获取的金钱的数量
 
     public const string LuckMomentNotActivatedBg = "UI/LuckMoment/LMNABg.png";                              //老虎机未激活块背景路径
     public const string LuckMomentActivatedBg = "UI/LuckMoment/LMABg.png";                                  //老虎机激活块背景路径
@@ -77,24 +78,25 @@ public abstract class GameDefines
     public const int FlyMoney_Effect_LinkCount = 3;                                                         //消除飞钱特效（总计生成数量 * 2个飞钱）
     public const int FlyMoney_Effect_RewardCount = 8;                                                       //奖励飞钱特效数量
     public const string FlyFunc_ObjPath = "Prefabs/Effect/FlyFunc.prefab";                                  //飞功能特效预制体
+    public const string FlyDiamond_ObjPath = "Prefabs/Effect/FlyDiamond.prefab";                                //飞钻石特效预制体
     public const float FlyFunc_ObjTime = 0.25f;                                                             //飞功能特效持续时间（非特殊情况请保持和FlyMoney_ObjTime一致）
     public const string FlyMoneyTip_ObjPath = "Prefabs/Effect/GetMoneyTip.prefab";                          //飞钱奖励提示的预制体
     public const float FlyMoneyTip_ObjTime = 2f;                                                            //飞钱奖励提示特效持续时间
     public const string HidBreak_ObjPath = "Prefabs/Effect/HidBreak.prefab";                                //隐藏物体破除特效
-
+    public const string FlyDiamondTip_ObjPath = "Prefabs/Effect/GetDiamondTip.prefab";                          //飞钻石奖励提示的预制体
     public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
     public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
 
-    public const float Reward_StayTime = 3f;                                                                //奖励特效滞留时间
+    public const float Reward_StayTime = 1.5f;                                                                //奖励特效滞留时间
     public const string RibbonRewardItem_ObjPath = "Prefabs/Effect/RibbonRewardItem.prefab";                //奖励特效上的预制体
     public const string Reward_Money_IconPath = "UI/LuckMoment/icon_qian.png";                              //奖励特效物体三叠钱的图片                    （*）
     public const string Reward_FuncHint_IconPath = "UI/FuncIcon/icon_hint.png";                             //奖励特效消除功能图片                        （*）
     public const string Reward_FuncRefresh_IconPath = "UI/FuncIcon/icon_re.png";                            //奖励特效刷新功能图片                        （*）
     public const string Reward_FuncShift_IconPath = "UI/FuncIcon/icon_shift.png";                           //奖励特效换向功能图片                        （*）
     public const string Reward_FuncRemove_IconPath = "UI/FuncIcon/icon_xiaochu.png";                           //奖励特效换向功能图片                        （*）
-
+    public const string Reward_FuncDiamond_IconPath = "UI/LuckMoment/diamond.png";
     public const float GoodShowTime = 0.1f;                                                                 //物品显示动画时间间隔
-
+    public const string Reward_FuncDiamondBox_IconPath = "UI/LuckMoment/diamondBox.png";                           //奖励钻石                    （*）
     public const int LuckMoment_Count_Max = 30;                                                             //可用老虎机的最大值
     public const int TopNotice_Count_Max = 12;                                                              //顶部提示展示的最大值
     public const int Awesome_Count_Max = 8;                                                                 //得钱UI展示的最大值
@@ -106,17 +108,32 @@ public abstract class GameDefines
     public static string Reddot_Name_Daily;                                                                 //日常任务红点名称
     public static string Reddot_Name_Challenge;                                                             //挑战任务红点名称
 
+    public static string Reddot_Name_DailyOutBy;                                                            //外部每日任务红点名称
+    public static string Reddot_Name_DailyBy;                                                               //每日任务红点名称
+    public static string Reddot_Name_ChallengeOutBy;                                                        //外部挑战任务红点名称
+    public static string Reddot_Name_ChallengeBy;                                                           //外部挑战任务红点名称
+
     public static int firstGuideId = 10001;                                                                 //起始引导步骤序号
 
     public static float ShowAnimTime = 0.25f;                                                               //UI动画打开持续时间
     public static float HideAnimTime = 0.25f;                                                               //UI动画关闭持续时间
 
-    public static float IntervalTime = 60000f;                                                              //插屏间隔时间
+    public static float adtime = 60000f;                                                                    //插屏间隔时间
 
-    public static int FirstCount = 3;                                                                       //
-    public static int SedCount = 2;                                                                         //
+    public static int InstLevel = 9;                                                                        //插屏UI出现时间关卡界限
+    public static int InsLevelFront = 1;                                                                    //关卡界限前的关卡用模式1or模式2
+    public static int InsLevelLast = 2;                                                                     //关卡界限后的关卡用模式1or模式2
+    public static int FirstCount = 4;                                                                       //模式1：第1次点击次数
+    public static int SedCount = 3;                                                                         //模式1：第2次点击次数
+    public static int InstTime = 60;                                                                        //模式2：关卡间隔时间
+
     public static bool ifIAA = true;                                                                        //AB包切换
-    public static bool IsAutoRefresh = true;                                                                //无物可消时是否刷新
+    public static bool IsAutoRefresh = false;                                                               //无物可消时是否刷新
+    public static bool LevelDiffMode = true;                                                                //关卡难度
+
+    public static int withdrawLevel = 9;                                                                    //开始提现的关卡
+    public static int doubleLevel = 19;                                                                     //开始双倍的关卡
+
 }
 #endregion
 
@@ -164,6 +181,10 @@ public enum EUIType
     EUIChallengeFailed = 23,
     EUICongratfulations = 24,
     EUIWithdrawalSuccessful = 25,
+    EUIGamePlayBy=26,
+    EUIDailyTasks =27,
+    EUIChallengeTask=28,
+    EUIWithdrawalSure = 29,
 }
 
 public enum ESceneType : byte

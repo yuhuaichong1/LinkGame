@@ -31,10 +31,13 @@ namespace XrCode
 
         public bool isContent;
         public bool ifCheckNetwork; //是否将网络请求加入加载队列
-
+        public bool ifIAA; //是否开启A包
         void Awake()
         {
             Instance = this;
+#if UNITY_EDITOR
+            GameDefines.ifIAA = ifIAA;
+#endif
             gameState = EGameState.Load;
 #if UNITY_EDITOR
             Load();
@@ -83,7 +86,7 @@ namespace XrCode
                 AppConfig.LoadAssetWithServer = false;
             }
 
-            if(ifCheckNetwork)
+            if (ifCheckNetwork)
                 RegistPreloadFunc(out NetworkModule.Instance.OnFinished);
             RegistPreloadFunc(out AssetBundleMod.Instance.OnFinished);
             RegistPreloadFunc(out ConfigModule.Instance.OnFinished);

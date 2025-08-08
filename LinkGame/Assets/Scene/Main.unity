@@ -1305,6 +1305,7 @@ MonoBehaviour:
   ifJarSwitch: 0
   isContent: 0
   ifCheckNetwork: 1
+  ifIAA: 0
 --- !u!4 &1511088869
 Transform:
   m_ObjectHideFlags: 0

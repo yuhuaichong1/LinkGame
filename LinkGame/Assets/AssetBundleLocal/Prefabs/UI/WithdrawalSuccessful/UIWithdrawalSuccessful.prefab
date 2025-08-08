@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7164126031303228458}
   - component: {fileID: 6730575555779046184}
-  - component: {fileID: 6015022163572151520}
+  - component: {fileID: 6512647907453749435}
   m_Layer: 5
   m_Name: successText
   m_TagString: Untagged
@@ -436,7 +436,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2381606991445778429}
   m_CullTransparentMesh: 1
---- !u!114 &6015022163572151520
+--- !u!114 &6512647907453749435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -445,11 +445,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2381606991445778429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: e36f42dd8121dec4792e6c65f42c5a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -469,7 +469,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Withdrawal request initiated, will be processed immediately upon approval
+  m_Text: Withdrawal requested. It will be processed once approved.
+  m_languageId: 10077
+  m_editorText: 
+  isArabicText: 0
+  m_bAutoArabicByText: 1
 --- !u!1 &2566903715611047264
 GameObject:
   m_ObjectHideFlags: 0

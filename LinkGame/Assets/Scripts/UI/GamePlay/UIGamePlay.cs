@@ -1,12 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Windows;
-using System.IO;
 using System.Collections.Generic;
 using cfg;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 namespace XrCode
 {
@@ -31,7 +27,7 @@ namespace XrCode
 
         private float mapScale;
 
-        protected override void OnAwake() 
+        protected override void OnAwake()
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
@@ -49,7 +45,7 @@ namespace XrCode
             funcTips = new Dictionary<int, ShakeRotateLeftRight>
             {
                 {0, mTipFuncTip},
-                {1, mRefushFuncTip}, 
+                {1, mRefushFuncTip},
                 {2, mRemoveFuncTip},
             };
 
@@ -60,10 +56,10 @@ namespace XrCode
             //根据屏幕宽高比以及物体排布数量控制物体缩放大小
             float screenScale = Screen.width * 1f / Screen.height;
             mapScale = -3.3507f * screenScale + 2.8858f;
-            
+
             lastLevelId = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
             secondLastLevelId = lastLevelId - 1;
-            sliderDic = new Dictionary<int, float>() 
+            sliderDic = new Dictionary<int, float>()
             {
                 {1, 0},
                 {2, 0.25f},
@@ -73,7 +69,7 @@ namespace XrCode
 
             UIManager.Instance.OpenWindowAsync<UIEffect>(EUIType.EUIEffect);
 
-            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Out, (kind, num) => 
+            FacadeRedDot.SetRDNodeAction_ByName(GameDefines.Reddot_Name_Out, (kind, num) =>
             {
                 mReddotText.text = num.ToString();
                 mReddot.gameObject.SetActive(num != 0);
@@ -92,16 +88,16 @@ namespace XrCode
 
             SetTipInfo();
 
-            if(GamePlayFacade.GetIsTutorial())
+            if (GamePlayFacade.GetIsTutorial())
             {
                 mTipFuncTip.gameObject.SetActive(false);
                 mRefushFuncTip.gameObject.SetActive(false);
                 mRemoveFuncTip.gameObject.SetActive(false);
 
-                GoodShowOneByOne(() => 
+                GoodShowOneByOne(() =>
                 {
                     mGamePlayMask.gameObject.SetActive(false);
-                    
+
                     UIManager.Instance.OpenWindowAsync<UIGuide>(EUIType.EUIGuide, (baseUI) =>
                     {
                         if (FacadeGuide.GetCurGuideItems().ifBackPlay)
@@ -109,7 +105,7 @@ namespace XrCode
                         else
                             FacadeGuide.CloseGuide();
                     });
-                        
+
                 });
             }
             else
@@ -125,14 +121,14 @@ namespace XrCode
                 }
                 else
                 {
-                    GoodShowOneByOne(() => 
+                    GoodShowOneByOne(() =>
                     {
                         if (GamePlayFacade.GetNumberGoodCanEat() == 0)
                         {
                             if (!GameDefines.IsAutoRefresh)
                             {
                                 UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
-                                
+
                             }
                             else
                             {
@@ -144,7 +140,7 @@ namespace XrCode
                             STimerManager.Instance.CreateSDelay(1, () => { FacadeEffect.PlayRewardNoticeEffect(); });
                         }
                     });
-                    
+
                 }
             }
 
@@ -165,28 +161,68 @@ namespace XrCode
                 mCurDir.sprite = curLevelDicIcon;
             }
 
-            //关卡进度物体显示
-            //兑现所有的目标关卡提示
+            SetSlider();
+        }
+
+        private void SetSlider()
+        {
+            //关卡进度物体显示     
             int[] levels;
+
+            int withdrawLevel = GameDefines.withdrawLevel;
+            int doubleLevel = GameDefines.doubleLevel;
+
             if (curLevel == 1 || curLevel == 2)//前2关
             {
-                int fsTLevel = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(3).Level;
-                levels = new int[5] { 1, 2, 3, 4, fsTLevel };
+                levels = new int[5] { 1, 2, 3, 4, withdrawLevel };
                 mWithdrawTipText.text = LanguageModule.GetText("10012");
             }
-            else if(curLevel == secondLastLevelId || curLevel == lastLevelId)//倒数2关
+            else if (curLevel == secondLastLevelId || curLevel == lastLevelId)//倒数2关
             {
                 levels = new int[5] { secondLastLevelId - 3, secondLastLevelId - 2, secondLastLevelId - 1, secondLastLevelId, lastLevelId };
             }
             else
             {
-                int target = GetNextTarget(curLevel);
-                levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, target};
-                if (WLevels.Contains(curLevel))
-                    mWithdrawTipText.text = LanguageModule.GetText("10012");
+                if (curLevel <= GameDefines.withdrawLevel)//小于withdrawLevel关
+                {
+                    if (curLevel == GameDefines.withdrawLevel - 1)
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), 2);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, GameDefines.withdrawLevel, doubleLevel };
+                    }
+                    else if (curLevel == GameDefines.withdrawLevel)
+                    {
+                        mWithdrawTipText.text = LanguageModule.GetText("10012");
+                        levels = new int[5] { curLevel - 2, curLevel - 1, GameDefines.withdrawLevel, GameDefines.withdrawLevel + 1, doubleLevel };
+                    }
+                    else
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), GameDefines.withdrawLevel - curLevel + 1);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, GameDefines.withdrawLevel };
+                    }
+                }
+                else if (curLevel <= GameDefines.doubleLevel)
+                {
+                    if (curLevel == GameDefines.doubleLevel - 1)
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10100"), 2);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, GameDefines.doubleLevel, lastLevelId };
+                    }
+                    else if (curLevel == GameDefines.doubleLevel)
+                    {
+                        mWithdrawTipText.text = LanguageModule.GetText("10102");
+                        levels = new int[5] { curLevel - 2, curLevel - 1, GameDefines.doubleLevel, GameDefines.doubleLevel + 1, lastLevelId };
+                    }
+                    else
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10100"), GameDefines.doubleLevel - curLevel + 1);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, GameDefines.doubleLevel };
+                    }
+                }
                 else
-                    mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
-                    
+                {
+                    levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, lastLevelId };
+                }
             }
             mCurLevelItem1.SetCurLevelInfo(levels[0]);
             mCurLevelItem2.SetCurLevelInfo(levels[1]);
@@ -199,8 +235,6 @@ namespace XrCode
                 mSlider.value = sliderDic[curLevel];
             else
                 mSlider.value = 0.5f;
-
-
         }
 
         //兑现按钮点击
@@ -208,7 +242,7 @@ namespace XrCode
         {
             FacadeGuide.SetWithdrawableUIcheck(false);
 
-            if(PlayerFacade.GetPayType() == 0)
+            if (PlayerFacade.GetPayType() == 0)
             {
                 UIManager.Instance.OpenWindowAsync<UIEnterInfo>(EUIType.EUIEnterInfo);
             }
@@ -235,18 +269,19 @@ namespace XrCode
         //提示功能按钮点击
         private void OnTipBtnClickHandle()
         {
-            if(GamePlayFacade.GetNumberGoodCanEat() == 0)
+            if (GamePlayFacade.GetNumberGoodCanEat() == 0)
             {
+                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Tip);
                 UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
                 return;
             }
-            if(GamePlayFacade.GetIfHintFunc())
+            if (GamePlayFacade.GetIfHintFunc())
             {
                 UIManager.Instance.OpenNotice(LanguageModule.GetText("10093"));
                 return;
             }
 
-            if(GamePlayFacade.GetTipCount?.Invoke() > 0)
+            if (GamePlayFacade.GetTipCount?.Invoke() > 0)
             {
                 GamePlayFacade.TipFunc?.Invoke();
                 GamePlayFacade.ChangeTipCount?.Invoke(-1);
@@ -256,14 +291,14 @@ namespace XrCode
             {
                 UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Tip);
             }
-            
+
         }
         //刷新功能按钮点击
         private void OnRefushBtnClickHandle()
         {
-            if(GamePlayFacade.GetRefushCount?.Invoke() > 0)
+            if (GamePlayFacade.GetRefushCount?.Invoke() > 0)
             {
-                FacadeEffect.PlayCloudEffect(() => 
+                FacadeEffect.PlayCloudEffect(() =>
                 {
                     GamePlayFacade.RefushFunc?.Invoke();
                     GamePlayFacade.ChangeRefushCount?.Invoke(-1);
@@ -284,24 +319,11 @@ namespace XrCode
                 return;
             }
 
-            if (GamePlayFacade.GetRemoveCount?.Invoke() > 0) 
+            if (GamePlayFacade.GetRemoveCount?.Invoke() > 0)
             {
-                //GamePlayFacade.RemoveFunc?.Invoke();
                 GamePlayFacade.RemoveFunc3();
                 GamePlayFacade.ChangeRemoveCount.Invoke(-1);
                 ChangeFuncRemoveCount();
-
-                #region old(转向功能)
-                    //EGoodMoveDic newDic = GamePlayFacade.ChangeDirection.Invoke();
-                    //GamePlayFacade.ChangeRemoveCount.Invoke(-1);
-                    //ChangeFuncRemoveCount();
-
-                    //string path = ConfigModule.Instance.Tables.TBLevelDicIcon.Get((int)newDic).Path;
-                    //curLevelDicIcon = ResourceMod.Instance.SyncLoad<Sprite>(path);
-                    //mCurDir.sprite = curLevelDicIcon;
-                    //mCurDir.gameObject.SetActive(false);
-                    //TMDTipShow();
-                    #endregion 
             }
             else
             {
@@ -322,7 +344,7 @@ namespace XrCode
         //改变提示功能的剩余数量
         private void ChangeFuncTipCount()
         {
-            mTipCountText.text = GetCountText(GamePlayFacade.GetTipCount.Invoke()) ;
+            mTipCountText.text = GetCountText(GamePlayFacade.GetTipCount.Invoke());
         }
         //改变刷新功能的剩余数量
         private void ChangeFuncRefushCount()
@@ -356,8 +378,8 @@ namespace XrCode
 
         private Transform GetFuncTarget(EFuncType type)
         {
-            switch (type) 
-            { 
+            switch (type)
+            {
                 case EFuncType.Tip:
                     return mTipFuncIcon.transform;
                 case EFuncType.Refush:
@@ -382,23 +404,23 @@ namespace XrCode
             mTipFuncTip.gameObject.SetActive(false);
             mRefushFuncTip.gameObject.SetActive(false);
             mRemoveFuncTip.gameObject.SetActive(false);
-            
+
             if (loopDelay == null)
             {
-                loopDelay = STimerManager.Instance.CreateSTimer(GameDefines.Default_FuncLoopTipDelay * 2, -1, true, false, null, null, new timingActions 
+                loopDelay = STimerManager.Instance.CreateSTimer(GameDefines.Default_FuncLoopTipDelay * 2, -1, true, false, null, null, new timingActions
                 {
                     timing = GameDefines.Default_FuncLoopTipDelay,
-                    clockAction = (time) => 
+                    clockAction = (time) =>
                     {
                         curFuncTip = funcTips[UnityEngine.Random.Range(0, 3)];
                         curFuncTip.gameObject.SetActive(true);
                     },
                     clockActionType = ClockActionType.Once
 
-                }, new timingActions 
+                }, new timingActions
                 {
                     timing = GameDefines.Default_FuncLoopTipDelay * 2,
-                    clockAction = (time) => 
+                    clockAction = (time) =>
                     {
                         curFuncTip.gameObject.SetActive(false);
                     },
@@ -410,11 +432,11 @@ namespace XrCode
                 loopDelay.Stop();
             }
 
-            if(showDelay != null)
+            if (showDelay != null)
             {
                 showDelay = null;
             }
-            showDelay = STimerManager.Instance.CreateSDelay(GameDefines.Default_FuncShowTipDelay, () => 
+            showDelay = STimerManager.Instance.CreateSDelay(GameDefines.Default_FuncShowTipDelay, () =>
             {
                 loopDelay.Start();
             });
@@ -427,11 +449,11 @@ namespace XrCode
 
             GameObject[][] goods = GamePlayFacade.GetMAPGoods();
 
-            foreach(GameObject[] goodsRow in goods) 
-            { 
-                foreach(GameObject obj in goodsRow)
+            foreach (GameObject[] goodsRow in goods)
+            {
+                foreach (GameObject obj in goodsRow)
                 {
-                    if(obj != null)
+                    if (obj != null)
                     {
                         obj.gameObject.SetActive(false);
                         obj.GetComponent<Good>().mIcon.transform.localScale = Vector3.zero;
@@ -443,7 +465,7 @@ namespace XrCode
             for (int i = 0; i < goods.Length; i++)
             {
                 int currentIndex = i;
-                sequence.AppendCallback(() => 
+                sequence.AppendCallback(() =>
                 {
                     foreach (GameObject obj in goods[currentIndex])
                     {
@@ -457,15 +479,16 @@ namespace XrCode
                 sequence.AppendInterval(GameDefines.GoodShowTime);
             }
 
-            sequence.Play().OnComplete(()=> { successAction?.Invoke(); });
+            sequence.Play().OnComplete(() => { successAction?.Invoke(); });
         }
 
         //提现目标特效以及UI生成
         private void WithdrawTipShow()
         {
-            FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () => 
+            FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () =>
             {
-                mWithdrawTip.gameObject.SetActive(true);
+                if (curLevel <= GameDefines.doubleLevel)
+                    mWithdrawTip.gameObject.SetActive(true);
                 TMDTipShow();
             });
         }
@@ -487,7 +510,7 @@ namespace XrCode
         }
         private void TMDTipShow2()
         {
-            mCurDir.gameObject.SetActive(true);
+            mCurDir.gameObject.SetActive(ifDicEffectShow);
             mGamePlayMask.gameObject.SetActive(false);
             FacadeEffect.PlayRewardNoticeEffect();
         }
@@ -497,44 +520,12 @@ namespace XrCode
         }
 
         protected override void OnDisable()
-        { 
-            
+        {
+
         }
         protected override void OnDispose()
         {
-        
-        }
 
-
-
-
-
-        private List<int> WLevels = new List<int>();
-        private int GetNextTarget(int curLevel)
-        {
-            List<ConfWithdrawableLevels> WLevelsData = ConfigModule.Instance.Tables.TBWithdrawableLevels.DataList;
-            foreach (var item in WLevelsData)
-            {
-                int lv = item.Level;
-                WLevels.Add(lv);
-            }
-
-            int target = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
-
-            for (int i = 0; i < WLevels.Count; i++) 
-            {
-                if (WLevels[i] >= curLevel)
-                {
-                    if (WLevels[i] == curLevel + 1)
-                        target = WLevels[i + 1];
-                    else
-                        target = WLevels[i];
-
-                    break;
-                }
-            }
-
-            return target;
         }
     }
 }

@@ -93,7 +93,7 @@ namespace XrCode
         //将值以汇率的方式显示
         private string RegionalChange(float value)
         {
-            if (GameDefines.ifWithdrawal)
+            if (!GameDefines.ifIAA)
             {
                 value *= exchangeRate;
                 string deci = $"F{decimals}";
@@ -102,7 +102,7 @@ namespace XrCode
             }
             else
             {
-                return $"{Mathf.Round(value * 10)}";
+                return $"{Mathf.CeilToInt(value)}";
             }
         }
 
