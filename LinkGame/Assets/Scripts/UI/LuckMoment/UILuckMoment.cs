@@ -27,7 +27,7 @@ namespace XrCode
 
         private Dictionary<int, int> proDic;
 
-        protected override void OnAwake()
+        protected override void OnAwake() 
         {
             LanguageModule = ModuleMgr.Instance.LanguageMod;
 
@@ -49,35 +49,24 @@ namespace XrCode
             NotActivatedBg = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.LuckMomentNotActivatedBg);
             ActivatedBg = ResourceMod.Instance.SyncLoad<Sprite>(GameDefines.LuckMomentActivatedBg);
 
-            if (curImage != null)
+            if(curImage != null)
                 curImage.sprite = NotActivatedBg;
 
-            if (GameDefines.ifIAA)
+            List<ConfLuckMoment> LMdata = ConfigModule.Instance.Tables.TBLuckMoment.DataList;
+            foreach(ConfLuckMoment LM in LMdata)
             {
-                List<ConfLuckMomentAct> LMdata = ConfigModule.Instance.Tables.TBLuckMomentAct.DataList;
-                foreach (ConfLuckMomentAct LM in LMdata)
-                {
-                    wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
-                    wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
-                    wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
-                    proDic.Add(LM.Sn, LM.Probability);
-                }
+                wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
+                wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
+                wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
+
+                proDic.Add(LM.Sn, LM.Probability);
             }
-            else
-            {
-                List<ConfLuckMoment> LMdata = ConfigModule.Instance.Tables.TBLuckMoment.DataList;
-                foreach (ConfLuckMoment LM in LMdata)
-                {
-                    wheelDic[LM.Sn].Icon.sprite = ResourceMod.Instance.SyncLoad<Sprite>(LM.Icon);
-                    wheelDic[LM.Sn].maxObj.SetActive(LM.IfMax);
-                    wheelDic[LM.Sn].Desc.text = GetLMDesc(LM.Type, LM.Extra, LM.Count);
-                    proDic.Add(LM.Sn, LM.Probability);
-                }
-            }
+
             preRewardId = -1;
+
             proDic = new Dictionary<int, int>();
         }
-        protected override void OnEnable()
+        protected override void OnEnable() 
         {
             mExitBtn.gameObject.SetActive(true);
 
@@ -91,10 +80,10 @@ namespace XrCode
 
             ShowAnim(mPlane);
         }
-
+        
         private string GetLMDesc(int type, int reward, float count)
         {
-
+            
             switch (type)
             {
                 case 1:
@@ -116,20 +105,24 @@ namespace XrCode
                             str = "10087";
                             break;
                     }
-                    return LanguageModule.GetText(str);
+                    return LanguageModule.GetText(str); 
                 case 3:
                     return "Withdraw";
-                //return LanguageModule.GetText("Withdraw");
+                    //return LanguageModule.GetText("Withdraw");
                 default:
                     return "";
             }
         }
 
-        private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>
+        private void OnExitBtnClickHandle()
+        {
+            HideAnim(mPlane, () => 
             {
-                UIManager.Instance.CloseUI(EUIType.EUILuckMoment);            });        }
+                UIManager.Instance.CloseUI(EUIType.EUILuckMoment);
+            });
+        }
 
-        private void OnSpinBtnClickHandle()
+	    private void OnSpinBtnClickHandle()
         {
             mExitBtn.gameObject.SetActive(false);
             SpinBtnActive(false);
@@ -145,17 +138,17 @@ namespace XrCode
             wheelStayTime.Clear();
 
             int j = 0;
-            for (int i = 0; i < movTimes; i++)
+            for(int i = 0; i < movTimes; i++)
             {
-                if (i < GameDefines.Default_LM_Accelerate_Times)
+                if(i < GameDefines.Default_LM_Accelerate_Times)
                 {
                     wheelStayTime.Add(i, 0.25f - i * Aadd);
                 }
-                else if (i >= lastSome)
+                else if(i >= lastSome)
                 {
                     wheelStayTime.Add(i, GameDefines.Default_LM_Uniform_Speed + j * Madd);
                     j += 1;
-                }
+                }  
                 else
                 {
                     wheelStayTime.Add(i, GameDefines.Default_LM_Uniform_Speed);
@@ -168,10 +161,8 @@ namespace XrCode
             curTime = 0;
             curIcon = 0;
 
-            sTimer = STimerManager.Instance.CreateSTimer(wheelStayTime[curTime], movTimes, true, true, () =>
+            sTimer = STimerManager.Instance.CreateSTimer(wheelStayTime[curTime], movTimes, true, true, () => 
             {
-                AudioDefines.PlayEffect(EAudioType.ELuckmount);
-
                 curImage.sprite = NotActivatedBg;
                 curIcon += 1;
                 if (curIcon >= 8)
@@ -179,7 +170,7 @@ namespace XrCode
                 curImage = wheelDic[curIcon].Bg;
                 curImage.sprite = ActivatedBg;
 
-                if (wheelStayTime.ContainsKey(curTime))
+                if(wheelStayTime.ContainsKey(curTime))
                 {
                     sTimer.targetTime = wheelStayTime[curTime];
                     curTime += 1;
@@ -189,11 +180,11 @@ namespace XrCode
                     GamePlayFacade.SetCurLuckMomentCount(0);
                     D.Error($"发放奖励：{random}");
                     preRewardId = random;
-                    STimerManager.Instance.CreateSDelay(1, () =>
+                    STimerManager.Instance.CreateSDelay(1, () => 
                     {
                         ConfLuckMoment confLuckMoment = ConfigModule.Instance.Tables.TBLuckMoment.Get(random);
                         ERewardType type = (ERewardType)confLuckMoment.Type;
-                        switch (type)
+                        switch (type) 
                         {
                             case ERewardType.Money:
                                 //float Mcount = UnityEngine.Random.Range(1, confLuckMoment.Count);
@@ -206,7 +197,7 @@ namespace XrCode
                                         type = ERewardType.Money,
                                         count = Mcount
                                     }
-                                }, () =>
+                                }, () => 
                                 {
                                     GamePlayFacade.ChangeMoneyShow();
                                 });
@@ -215,7 +206,7 @@ namespace XrCode
                                 int Fcount = (int)confLuckMoment.Count;
                                 int funcTypeId = confLuckMoment.Extra;
                                 switch ((EFuncType)funcTypeId)
-                                {
+                                { 
                                     case EFuncType.Tip:
                                         GamePlayFacade.ChangeTipCount(Fcount);
                                         break;

@@ -20,9 +20,7 @@ namespace XrCode
 
             OnText = LanguageModule.GetText("10088");
             OffText = LanguageModule.GetText("10089");
-            string id = ModuleMgr.Instance.TDAnalyticsManager.GetAccoundId();
-            if (id == null || id == "") { id = "0000000"; };
-            mIDText.text = $"{LanguageModule.GetText("10048")}{id}";
+            mIDText.text = $"{LanguageModule.GetText("10048")}{148857948}";
         }
         protected override void OnEnable() 
         {
@@ -39,8 +37,16 @@ namespace XrCode
                 VibrationSMTShow(vibration);
             });
         }
-        	    private void OnExitBtnClickHandle()        {            HideAnim(mPlane, () =>             {
-                UIManager.Instance.CloseUI(EUIType.EUISetting);            });        }	    private void OnUserLvDetailsBtnClickHandle()
+        
+	    private void OnExitBtnClickHandle()
+        {
+            HideAnim(mPlane, () => 
+            {
+                UIManager.Instance.CloseUI(EUIType.EUISetting);
+            });
+        }
+
+	    private void OnUserLvDetailsBtnClickHandle()
         {
             UIManager.Instance.OpenWindowAsync<UIUserLevel>(EUIType.EUIUserLevel);
         }
@@ -53,7 +59,7 @@ namespace XrCode
         private void MusicSMTShow(bool b)
         {
             mMSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
-            mMSMTLabel.text = b ? OnText : OffText;
+            mMSMTLabel.text = LanguageModule.GetText(b ? OnText : OffText);
         }
 
         private void OnVibrationSMTChange(bool b)
@@ -64,7 +70,7 @@ namespace XrCode
         private void VibrationSMTShow(bool b)
         {
             mVSMTLabel.alignment = b ? TextAnchor.MiddleRight : TextAnchor.MiddleLeft;
-            mVSMTLabel.text = b ? OnText : OffText;
+            mVSMTLabel.text = LanguageModule.GetText(b ? OnText : OffText);
         }
 
 
