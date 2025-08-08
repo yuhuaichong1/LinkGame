@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System;
+using XrCode;
 
 namespace XrCode
 {
@@ -12,6 +13,12 @@ namespace XrCode
         private EGameState gameState;
         private int preloadCount = 0;
         private Queue<Action> startup;
+
+        [HideInInspector]
+        public bool ifJarSwitch;//是否等到了jar包结果
+        private float jarWaitTime;//总等待时间
+        private float jarReptTime;//间隔时间
+        private float jarcurTime;//当前等待时间
 
         public EGameState GameState
         {
@@ -29,7 +36,38 @@ namespace XrCode
         {
             Instance = this;
             gameState = EGameState.Load;
+#if UNITY_EDITOR
             Load();
+#elif UNITY_ANDROID
+            ifJarSwitch = false;
+            jarWaitTime = 5;
+            jarReptTime = 0.5f;
+            jarcurTime = 0;
+            Jar();
+            InvokeRepeating("JarSwitch", 0, jarReptTime);
+#endif
+        }
+
+        private void JarSwitch()
+        {
+            if(ifJarSwitch)
+            {
+                CancelInvoke("JarSwitch");
+                Load();
+            }
+            jarcurTime += jarReptTime;
+            if(jarcurTime >= jarWaitTime) 
+            { 
+                
+            }
+        }
+
+        private void Jar()
+        {
+            AndroidJavaClass loginClass = new AndroidJavaClass("com.gg.user.Login");
+            AndroidJavaObject loginObject =
+                loginClass.CallStatic<AndroidJavaObject>("getInstance", null, new AndroidCallback());
+            loginObject.Call("go");
         }
 
         public void Load()
@@ -132,6 +170,32 @@ namespace XrCode
             SQLiteHelper.Instance.Dispose();
         }
 
+    }
+}
+
+public class AndroidCallback : AndroidJavaProxy
+{
+    public AndroidCallback() : base("com.gg.user.Callback") { }
+
+    public void onSuccess(AndroidJavaObject obj)
+    {
+        bool go = bool.Parse(obj.Call<string>("toString"));
+        // 处理成功逻辑
+        Debug.LogError($"Success");
+    }
+
+
+    public void onSuccess(bool b)
+    {
+        D.Error($"Success get jar return: {b}");
+        GameDefines.ifIAA = b;
+        Game.Instance.ifJarSwitch = true;
+        
+    }
+
+    public void onFailed(int code, string msg)
+    {
+        D.Error($"Fail get jar return: code: {code}, msg: {msg}");
     }
 }
 

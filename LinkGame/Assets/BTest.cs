@@ -16,18 +16,6 @@ public class BTest : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             //Debug.LogError(FacadeGuide.GetCurStep());
-            Debug.LogError("调用");
-            //AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            //AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            //currentActivity.Call("com.gg.user.Login.getInstance", null);
-
-
-            Test();
-
-
-            //AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            //AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            //currentActivity.Call("com.gg.user.Login.getInstance", null);
         }
     }
 
@@ -62,25 +50,27 @@ public class BTest : MonoBehaviour
     }
 }
 
-public class AndroidCallback : AndroidJavaProxy
-{
-    public AndroidCallback() : base("com.gg.user.Callback") { }
+//public class AndroidCallback : AndroidJavaProxy
+//{
+//    public AndroidCallback() : base("com.gg.user.Callback") { }
 
-    //public void onSuccess(AndroidJavaObject obj)
-    //{
-    //    bool go = bool.Parse(obj.Call<string>("toString"));
-    //    // 处理成功逻辑
-    //    Debug.LogError($"Success");
-    //}
-    public void onSuccess(bool b)
-    {
-        // 处理成功逻辑
-        Debug.LogError($"Success" + b);
-    }
+//    public void onSuccess(AndroidJavaObject obj)
+//    {
+//        bool go = bool.Parse(obj.Call<string>("toString"));
+//        // 处理成功逻辑
+//        Debug.LogError($"Success");
+//    }
 
-    public void onFailed(int code, string msg)
-    {
-        Debug.LogError($"code: {code}, msg: {msg}");
-        // 处理失败逻辑
-    }
-}
+
+//    public void onSuccess(bool b)
+//    {
+//        // 处理成功逻辑
+//        Debug.LogError($"Success" + b);
+//    }
+
+//    public void onFailed(int code, string msg)
+//    {
+//        Debug.LogError($"code: {code}, msg: {msg}");
+//        // 处理失败逻辑
+//    }
+//}
