@@ -85,7 +85,7 @@ public abstract class GameDefines
     public const string HidBreak_ObjPath = "Prefabs/Effect/HidBreak.prefab";                                //隐藏物体破除特效
     public const string FlyDiamondTip_ObjPath = "Prefabs/Effect/GetDiamondTip.prefab";                          //飞钻石奖励提示的预制体
     public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
-    public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
+    public const float TMDIcon_MoveTime = 0.7f;                                                                //指明移动方向移动时间 
 
     public const float Reward_StayTime = 1.5f;                                                                //奖励特效滞留时间
     public const string RibbonRewardItem_ObjPath = "Prefabs/Effect/RibbonRewardItem.prefab";                //奖励特效上的预制体
