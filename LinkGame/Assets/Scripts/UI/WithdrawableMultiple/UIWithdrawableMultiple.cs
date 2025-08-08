@@ -30,16 +30,37 @@ namespace XrCode
             {
                 mLevelTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.withdrawLevel}";
                 mGoalTitle.text = $"{LanguageModule.GetText("10031")} {1}";
+                int diff = GameDefines.withdrawLevel - GamePlayFacade.GetCurLevel();
+                if (diff == 0)
+                {
+                    mTargetText.text = LanguageModule.GetText("10012");
+                }
+                else
+                {
+                    mTargetText.text = string.Format(LanguageModule.GetText("10013"), diff + 1);
+                }
+                
             }
             else if(curLevel <= GameDefines.doubleLevel) 
             {
                 mLevelTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.doubleLevel}";
                 mGoalTitle.text = $"{LanguageModule.GetText("10031")} {2}";
+                int diff = GameDefines.doubleLevel - GamePlayFacade.GetCurLevel();
+                if(diff == 0)
+                {
+                    mTargetText.text = LanguageModule.GetText("10102");
+                }
+                else
+                {
+                    mTargetText.text = string.Format(LanguageModule.GetText("10100"), diff + 1);
+                }
+                
             }
             else
             {
                 mLevelTitle.text = $"{LanguageModule.GetText("10049")} {ConfigModule.Instance.Tables.TBLevel.DataList.Count}";
                 mGoalTitle.text = $"{LanguageModule.GetText("10031")} {3}";
+                mTargetText.text = "";
             }
 
             mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());

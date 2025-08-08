@@ -35,6 +35,7 @@ namespace XrCode
             mDailyScroll.gameObject.SetActive(false);
             mChallengeTaskToggle.isOn = true;
             mChallengeScroll.gameObject.SetActive(true);
+            RefreshChallageTask();
         }
 
         private void GetTaskInfo()
