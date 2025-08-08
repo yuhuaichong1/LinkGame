@@ -10,14 +10,14 @@ public class BTest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            currentLevel = ModuleMgr.Instance.GamePlayMod.CurLevel;
+            currentLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
             SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, ++currentLevel);
             Debug.LogError("设置关卡++:" + currentLevel);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            currentLevel = ModuleMgr.Instance.GamePlayMod.CurLevel;
-            SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, --currentLevel);
+            currentLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.curLevel);
+            SPlayerPrefs.SetInt(PlayerPrefDefines.curLevel, ++currentLevel);
             Debug.LogError("设置关卡--:" + currentLevel);
         }
         if (Input.GetKeyDown(KeyCode.E))
@@ -27,7 +27,7 @@ public class BTest : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GamePlayFacade.ChangeRemoveCount(10000);
+            GamePlayFacade.ChangeRemoveCount(999999);
             Debug.LogError("设置次数:");
         }
 
