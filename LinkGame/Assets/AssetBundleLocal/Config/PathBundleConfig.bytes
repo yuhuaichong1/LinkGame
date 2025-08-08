@@ -579,7 +579,15 @@ j
 -Assets/AssetBundleLocal/Audio/goodshuffle.wav9assets/assetbundlelocal/audio/goodshuffle.wav.assetbundle
 h
 ,Assets/AssetBundleLocal/Audio/linkRemove.wav8assets/assetbundlelocal/audio/linkremove.wav.assetbundle
+f
++Assets/AssetBundleLocal/Audio/luckmount.wav7assets/assetbundlelocal/audio/luckmount.wav.assetbundle
+^
+'Assets/AssetBundleLocal/Audio/money.wav3assets/assetbundlelocal/audio/money.wav.assetbundle
 l
 .Assets/AssetBundleLocal/Audio/removeEffect.wav:assets/assetbundlelocal/audio/removeeffect.wav.assetbundle
 `
+(Assets/AssetBundleLocal/Audio/reward.wav4assets/assetbundlelocal/audio/reward.wav.assetbundle
+`
 (Assets/AssetBundleLocal/Audio/select.wav4assets/assetbundlelocal/audio/select.wav.assetbundle
+Z
+%Assets/AssetBundleLocal/Audio/win.wav1assets/assetbundlelocal/audio/win.wav.assetbundle

@@ -209,11 +209,27 @@ namespace XrCode
         /// <param name="targetAction">移动完成后的回调</param>
         private void PlayLevelTargetEffect(Transform targetTrans, Action targetAction)
         {
-            int diff = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(GamePlayFacade.GetCurWLevel()).Level - GamePlayFacade.GetCurLevel();
-            if(GamePlayFacade.GetCurLevel() < GameDefines.doubleLevel)
+            
+            int diff = 0;
+            int curLevel = GamePlayFacade.GetCurLevel();
+
+            if (curLevel > GameDefines.doubleLevel) 
+            {
+                mLevelTarget.gameObject.SetActive(false);
+                targetAction?.Invoke();
+            }
+
+            if (curLevel <= GameDefines.withdrawLevel)
+            {
+                diff = GameDefines.withdrawLevel - curLevel;
                 mLevelTargetText.text = diff == 0 ? LanguageModule.GetText("10012") : string.Format(LanguageModule.GetText("10013"), diff + 1);
+            }
             else
+            {
+                diff = GameDefines.doubleLevel - curLevel;
                 mLevelTargetText.text = diff == 0 ? LanguageModule.GetText("10102") : string.Format(LanguageModule.GetText("10100"), diff + 1);
+            }
+                
             mLevelTarget.localScale = Vector3.one;
             mLevelTarget.anchoredPosition = new Vector2(-mLevelTarget.rect.width, 0);
 

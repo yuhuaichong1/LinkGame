@@ -87,7 +87,7 @@ public abstract class GameDefines
     public const float TMDIcon_RoteTime = 1;                                                                //指明移动方向旋转时间 
     public const float TMDIcon_MoveTime = 1;                                                                //指明移动方向移动时间 
 
-    public const float Reward_StayTime = 3f;                                                                //奖励特效滞留时间
+    public const float Reward_StayTime = 1.5f;                                                                //奖励特效滞留时间
     public const string RibbonRewardItem_ObjPath = "Prefabs/Effect/RibbonRewardItem.prefab";                //奖励特效上的预制体
     public const string Reward_Money_IconPath = "UI/LuckMoment/icon_qian.png";                              //奖励特效物体三叠钱的图片                    （*）
     public const string Reward_FuncHint_IconPath = "UI/FuncIcon/icon_hint.png";                             //奖励特效消除功能图片                        （*）
@@ -131,7 +131,9 @@ public abstract class GameDefines
     public static bool IsAutoRefresh = false;                                                               //无物可消时是否刷新
     public static bool LevelDiffMode = true;                                                                //关卡难度
 
-    public static int doubleLevel = 9;                                                                      //第一个开始双倍的关卡
+    public static int withdrawLevel = 9;                                                                    //开始提现的关卡
+    public static int doubleLevel = 19;                                                                     //开始双倍的关卡
+
 }
 #endregion
 

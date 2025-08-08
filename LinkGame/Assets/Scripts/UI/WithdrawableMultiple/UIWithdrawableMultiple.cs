@@ -25,37 +25,24 @@ namespace XrCode
         }
         protected override void OnEnable()
         {
-            int curWLevel = GamePlayFacade.GetCurWLevel();
-            Stack<int> withQueue = new Stack<int>(GamePlayFacade.GetWithdrawableLevel().ToArray());
-            int count = withQueue.Count;
-            mPreLevelPlane.gameObject.SetActive(count >= 2);
-            mPrePreLevelPlane.gameObject.SetActive(count >= 3);
-            for(int i = 0; i < count; i++)
+            int curLevel = GamePlayFacade.GetCurLevel();
+            if (curLevel <= GameDefines.withdrawLevel)
             {
-                wItems[i].SetInfo(withQueue.Pop(), curWLevel - i);
-                //if(i == 0)
-                //{
-                //    mTargetText.text = string.Format(LanguageModule.GetText("10014"), curWLevel - i);
-                //}
+                mGoalTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.withdrawLevel}";
+                mLevelTitle.text = $"{LanguageModule.GetText("10031")} {1}";
             }
+            else if(curLevel <= GameDefines.doubleLevel) 
+            {
+                mGoalTitle.text = $"{LanguageModule.GetText("10049")} {GameDefines.doubleLevel}";
+                mLevelTitle.text = $"{LanguageModule.GetText("10031")} {2}";
+            }
+            else
+            {
+                mGoalTitle.text = $"{LanguageModule.GetText("10049")} {ConfigModule.Instance.Tables.TBLevel.DataList.Count}";
+                mLevelTitle.text = $"{LanguageModule.GetText("10031")} {3}";
+            }
+
             mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
-
-            #region old
-            //mLevelTitle.text = string.Format(LanguageModule.GetText(""), 1);
-            //mGoalTitle.text = string.Format(LanguageModule.GetText(""), 1);
-            //mCurWMoney.text = FacadePayType.RegionalChange(PlayerFacade.GetWMoney());
-
-            //if (withQueue.Count > 1)
-            //{
-            //    mPreLevelTitle.text = string.Format(LanguageModule.GetText(""), 2);
-            //    mPregoalTitle.text = string.Format(LanguageModule.GetText(""), 2);
-            //}
-            //if(withQueue.Count > 2)
-            //{
-            //    mPrePreLevelTitle.text = string.Format(LanguageModule.GetText(""), 12);
-            //    mPrePregoalTitle.text = string.Format(LanguageModule.GetText(""), 12);
-            //}
-            #endregion
 
             DateTime currentDate = DateTime.Now;
             mDNTitle.text = string.Format(ModuleMgr.Instance.LanguageMod.GetText("10027"), currentDate.Month, currentDate.Day, currentDate.Year);

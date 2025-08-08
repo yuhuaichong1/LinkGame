@@ -91,9 +91,6 @@ namespace XrCode
         private Dictionary<List<int>, int> GoodIconWeight;//图样权重区间
         private Dictionary<int, int> randomGoodIcon;//让图样随机的词典
 
-        private Queue<int> withdrawableLevel;//可提现的关卡
-        private int curWLevel;//当前提现关卡Id
-
         private int ifkindShake;//是否全同类物体震动（判断是否快速双击）
         private STimer ifKSTimer;//是否全同类物体震动双击间隔计算器
 
@@ -151,8 +148,6 @@ namespace XrCode
             GamePlayFacade.GetCurTotalLinkCount += GetCurTotalLinkCount;
             GamePlayFacade.GetCurLuckMomentCount += GetCurLuckMomentCount;
             GamePlayFacade.SetCurLuckMomentCount += SetCurLuckMomentCount;
-            GamePlayFacade.GetWithdrawableLevel += GetWithdrawableLevel;
-            GamePlayFacade.GetCurWLevel += GetCurWLevel;
             GamePlayFacade.GetIsTutorial += GetIsTutorial;
             GamePlayFacade.SetIsTutorial += SetIsTutorial;
             GamePlayFacade.GetNumberGoodCanEat += GetNumberGoodCanEat;
@@ -233,15 +228,6 @@ namespace XrCode
             curLuckMomentCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curLuckMomentCount);
             //curTopNoticeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curTopNoticeCount);
             //curAwesomeCount = SPlayerPrefs.GetInt(PlayerPrefDefines.curAwesomeCount);
-
-            withdrawableLevel = SPlayerPrefs.GetQueue<int>(PlayerPrefDefines.withdrawableLevel, true);
-            if (withdrawableLevel.Count == 0)
-            {
-                withdrawableLevel.Enqueue(ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(1).Level);
-                curWLevel = 1;
-            }
-            else
-                curWLevel = SPlayerPrefs.GetInt(PlayerPrefDefines.curWLevel);
 
             if (curLevel == 0)
             {
@@ -2859,30 +2845,15 @@ namespace XrCode
         private void NextLevel()
         {
             // 1. 更新世界关卡
-            curWLevel = (curLevel == LevelDefines.maxLevel) ? LevelDefines.maxLevel : curWLevel + 1;
-
             if (curLevel < LevelDefines.maxLevel)
             {
-                bool isWithdrawable = false;
                 if (GameDefines.ifIAA)
                 {
                     var levelActData = ConfigModule.Instance.Tables.TBLevelAct.Get(curLevel);
-                    isWithdrawable = levelActData != null && levelActData.WithdrawType != 0;
                 }
                 else
                 {
                     var levelData = ConfigModule.Instance.Tables.TBLevel.Get(curLevel);
-                    isWithdrawable = levelData != null && levelData.WithdrawType != 0;
-                }
-                if (isWithdrawable)
-                {
-                    var withdrawableData = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(curWLevel);
-                    if (withdrawableData != null)
-                    {
-                        withdrawableLevel.Enqueue(withdrawableData.Level);
-                        SPlayerPrefs.SetInt(PlayerPrefDefines.curWLevel, curWLevel);
-                        SPlayerPrefs.SetQueue<int>(PlayerPrefDefines.withdrawableLevel, withdrawableLevel);
-                    }
                 }
                 curLevel++;
             }
@@ -3738,16 +3709,6 @@ namespace XrCode
             }
 
             SPlayerPrefs.SetDictionary<int, int>(PlayerPrefDefines.randomGoodIcon, randomGoodIcon);
-        }
-
-        private Queue<int> GetWithdrawableLevel()
-        {
-            return withdrawableLevel;
-        }
-
-        private int GetCurWLevel()
-        {
-            return curWLevel;
         }
 
         private bool GetIsTutorial()

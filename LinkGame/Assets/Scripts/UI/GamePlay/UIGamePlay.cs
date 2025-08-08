@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using cfg;
 using DG.Tweening;
 using Unity.VisualScripting;
+using static UnityEngine.GraphicsBuffer;
 
 namespace XrCode
 {
@@ -165,37 +166,67 @@ namespace XrCode
                 mCurDir.sprite = curLevelDicIcon;
             }
 
-            //关卡进度物体显示
-            //兑现所有的目标关卡提示
+            SetSlider();
+        }
+
+        private void SetSlider()
+        {
+            //关卡进度物体显示     
             int[] levels;
+
+            int withdrawLevel = GameDefines.withdrawLevel;
+            int doubleLevel = GameDefines.doubleLevel;
+
             if (curLevel == 1 || curLevel == 2)//前2关
             {
-                int fsTLevel = ConfigModule.Instance.Tables.TBWithdrawableLevels.Get(3).Level;
-                levels = new int[5] { 1, 2, 3, 4, fsTLevel };
+                levels = new int[5] { 1, 2, 3, 4, withdrawLevel };
                 mWithdrawTipText.text = LanguageModule.GetText("10012");
             }
-            else if(curLevel == secondLastLevelId || curLevel == lastLevelId)//倒数2关
+            else if (curLevel == secondLastLevelId || curLevel == lastLevelId)//倒数2关
             {
                 levels = new int[5] { secondLastLevelId - 3, secondLastLevelId - 2, secondLastLevelId - 1, secondLastLevelId, lastLevelId };
             }
             else
             {
-                int target = GetNextTarget(curLevel);
-                levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, target};
-                int wType = ConfigModule.Instance.Tables.TBLevel.Get(curLevel).WithdrawType;
-                if (WLevels.Contains(curLevel))
+                if (curLevel <= GameDefines.withdrawLevel)//小于withdrawLevel关
                 {
-                    if(wType == 1)
+                    if (curLevel == GameDefines.withdrawLevel - 1)
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), 2);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, GameDefines.withdrawLevel, doubleLevel };
+                    }
+                    else if (curLevel == GameDefines.withdrawLevel)
+                    {
                         mWithdrawTipText.text = LanguageModule.GetText("10012");
-                    else//wType == 2
+                        levels = new int[5] { curLevel - 2, curLevel - 1, GameDefines.withdrawLevel, GameDefines.withdrawLevel + 1, doubleLevel };
+                    }
+                    else
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), GameDefines.withdrawLevel - curLevel + 1);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, GameDefines.withdrawLevel };
+                    }
+                }
+                else if(curLevel <= GameDefines.doubleLevel)
+                {
+                    if (curLevel == GameDefines.doubleLevel - 1)
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10100"), 2);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, GameDefines.doubleLevel, lastLevelId };
+                    }
+                    else if (curLevel == GameDefines.doubleLevel)
+                    {
                         mWithdrawTipText.text = LanguageModule.GetText("10102");
+                        levels = new int[5] { curLevel - 2, curLevel - 1, GameDefines.doubleLevel, GameDefines.doubleLevel + 1, lastLevelId };
+                    }
+                    else
+                    {
+                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10100"), GameDefines.doubleLevel - curLevel + 1);
+                        levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, GameDefines.doubleLevel };
+                    }
                 }
                 else
                 {
-                    if (wType == 1)
-                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10013"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
-                    else//wType == 2
-                        mWithdrawTipText.text = string.Format(LanguageModule.GetText("10100"), WLevels.Contains(curLevel + 1) ? 2 : target - curLevel + 1);
+                    levels = new int[5] { curLevel - 2, curLevel - 1, curLevel, curLevel + 1, lastLevelId };
                 }
             }
             mCurLevelItem1.SetCurLevelInfo(levels[0]);
@@ -209,8 +240,6 @@ namespace XrCode
                 mSlider.value = sliderDic[curLevel];
             else
                 mSlider.value = 0.5f;
-
-
         }
 
         //兑现按钮点击
@@ -475,7 +504,8 @@ namespace XrCode
         {
             FacadeEffect.PlayLevelTargetEffect(mWithdrawTip.transform, () => 
             {
-                mWithdrawTip.gameObject.SetActive(true);
+                if(curLevel <= GameDefines.doubleLevel)
+                    mWithdrawTip.gameObject.SetActive(true);
                 TMDTipShow();
             });
         }
@@ -513,38 +543,6 @@ namespace XrCode
         protected override void OnDispose()
         {
         
-        }
-
-
-
-
-
-        private List<int> WLevels = new List<int>();
-        private int GetNextTarget(int curLevel)
-        {
-            List<ConfWithdrawableLevels> WLevelsData = ConfigModule.Instance.Tables.TBWithdrawableLevels.DataList;
-            foreach (var item in WLevelsData)
-            {
-                int lv = item.Level;
-                WLevels.Add(lv);
-            }
-
-            int target = ConfigModule.Instance.Tables.TBLevel.DataList.Count;
-
-            for (int i = 0; i < WLevels.Count; i++) 
-            {
-                if (WLevels[i] > curLevel)
-                {
-                    if (WLevels[i] == curLevel + 1)
-                        target = WLevels[i + 1];
-                    else
-                        target = WLevels[i];
-
-                    break;
-                }
-            }
-
-            return target;
         }
     }
 }

@@ -35,7 +35,6 @@ namespace cfg
 		public TBLuckMoment TBLuckMoment {get; private set;}
 		public TBLevelDicIcon TBLevelDicIcon {get; private set;}
 		public TBReddot TBReddot {get; private set;}
-		public TBWithdrawableLevels TBWithdrawableLevels {get; private set;}
 		public TBObstacleIcon TBObstacleIcon {get; private set;}
 		public TBGuidesAct TBGuidesAct {get; private set;}
 		public TBLevelAct TBLevelAct {get; private set;}
@@ -84,8 +83,6 @@ namespace cfg
 			tables.Add("TBLevelDicIcon", TBLevelDicIcon);
 			TBReddot = new TBReddot(loader("tbreddot")); 
 			tables.Add("TBReddot", TBReddot);
-			TBWithdrawableLevels = new TBWithdrawableLevels(loader("tbwithdrawablelevels")); 
-			tables.Add("TBWithdrawableLevels", TBWithdrawableLevels);
 			TBObstacleIcon = new TBObstacleIcon(loader("tbobstacleicon")); 
 			tables.Add("TBObstacleIcon", TBObstacleIcon);
 			TBGuidesAct = new TBGuidesAct(loader("tbguidesact")); 
@@ -138,8 +135,6 @@ namespace cfg
             configCbFuncs.Enqueue(OnTBLevelDicIconDataFinish);
 			configNames.Enqueue("tbreddot");
             configCbFuncs.Enqueue(OnTBReddotDataFinish);
-			configNames.Enqueue("tbwithdrawablelevels");
-            configCbFuncs.Enqueue(OnTBWithdrawableLevelsDataFinish);
 			configNames.Enqueue("tbobstacleicon");
             configCbFuncs.Enqueue(OnTBObstacleIconDataFinish);
 			configNames.Enqueue("tbguidesact");
@@ -207,7 +202,6 @@ namespace cfg
 			TBLuckMoment.TranslateText(translator); 
 			TBLevelDicIcon.TranslateText(translator); 
 			TBReddot.TranslateText(translator); 
-			TBWithdrawableLevels.TranslateText(translator); 
 			TBObstacleIcon.TranslateText(translator); 
 			TBGuidesAct.TranslateText(translator); 
 			TBLevelAct.TranslateText(translator); 
@@ -235,7 +229,6 @@ namespace cfg
 			TBLuckMoment.Resolve(tables);
 			TBLevelDicIcon.Resolve(tables);
 			TBReddot.Resolve(tables);
-			TBWithdrawableLevels.Resolve(tables);
 			TBObstacleIcon.Resolve(tables);
 			TBGuidesAct.Resolve(tables);
 			TBLevelAct.Resolve(tables);
@@ -296,9 +289,6 @@ namespace cfg
 					break;
 				case "TBReddot":
 					TBReddot.Reload(_loader("TBReddot"));
-					break;
-				case "TBWithdrawableLevels":
-					TBWithdrawableLevels.Reload(_loader("TBWithdrawableLevels"));
 					break;
 				case "TBObstacleIcon":
 					TBObstacleIcon.Reload(_loader("TBObstacleIcon"));
@@ -408,11 +398,6 @@ namespace cfg
 		{
 			TBReddot = new TBReddot(buf);
 			tables.Add("TBReddot", TBReddot);
-		}
-		public void OnTBWithdrawableLevelsDataFinish(ByteBuf buf)
-		{
-			TBWithdrawableLevels = new TBWithdrawableLevels(buf);
-			tables.Add("TBWithdrawableLevels", TBWithdrawableLevels);
 		}
 		public void OnTBObstacleIconDataFinish(ByteBuf buf)
 		{
