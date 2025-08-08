@@ -1,13 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Windows;
-using System.IO;
 using System.Collections.Generic;
 using cfg;
 using DG.Tweening;
-using Unity.VisualScripting;
-using static UnityEngine.GraphicsBuffer;
 
 namespace XrCode
 {

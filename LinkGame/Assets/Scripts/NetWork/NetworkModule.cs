@@ -236,7 +236,7 @@ namespace XrCode
                 }
 
                 //是否自动刷新
-                if (adDic.TryGetValue("autoRefursh", out object ar))
+                if (adDic.TryGetValue("isAutoRefursh", out object ar))
                 {
                     GameDefines.IsAutoRefresh = bool.Parse(ar.ToString());
                 }

@@ -89,13 +89,13 @@ namespace XrCode
             redDotModule.Load();
             //gameSDKManger.Load();
             audioMod.Load();
-            guideModule.Load();
             tDAnalyticsManager.Load();
             sceneMod.Load();
             adModule.Load();
-            taskModule.Load();
             playerModule.Load();
             payTypeModule.Load();
+            taskModule.Load();
+            guideModule.Load();
             sceneMod.LoadScene(ESceneType.MainScene);
         }
 
