@@ -1925,6 +1925,8 @@ namespace XrCode
         //震动两个物体
         private void ShakeTwoGood()
         {
+            AudioModule.PlayVibrate();
+
             Good good1 = GetGood(POS1.R, POS1.C).GetComponent<Good>();
             Good good2 = GetGood(POS2.R, POS2.C).GetComponent<Good>();
             good1.Hint2();
@@ -1972,8 +1974,6 @@ namespace XrCode
                 PlayerFacade.AddWMoney(GameDefines.ifIAA ? GameDefines.Single_Link_Diamond : GameDefines.Single_Link_Money);
                 GamePlayFacade.ChangeMoneyShow();
             });
-
-            AudioModule.PlayVibrate();
         }
 
         //消除数累计添加及其回调
