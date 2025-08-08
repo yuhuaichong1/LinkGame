@@ -253,12 +253,12 @@ namespace XrCode
                     GameDefines.InstLevel = int.Parse(il.ToString());
                 }
                 //关卡界限 前 的关卡用模式1or模式2
-                if (adDic.TryGetValue("InsLevelFront", out object ilf))
+                if (adDic.TryGetValue("InstLevelFront", out object ilf))
                 {
                     GameDefines.InsLevelFront = int.Parse(ilf.ToString());
                 }
                 //关卡界限 后 的关卡用模式1or模式2
-                if (adDic.TryGetValue("InsLevelLast", out object ill))
+                if (adDic.TryGetValue("InstLevelLast", out object ill))
                 {
                     GameDefines.InsLevelLast = int.Parse(ill.ToString());
                 }
