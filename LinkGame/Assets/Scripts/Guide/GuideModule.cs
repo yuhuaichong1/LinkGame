@@ -27,7 +27,7 @@ public class GuideModule : BaseModule
         FacadeGuide.SetWithdrawableUIcheck += SetWithdrawableUIcheck;
         FacadeGuide.CheckWithdrawableUI += CheckWithdrawableUI;
 
-        LanguageModule = new LanguageModule();
+        LanguageModule = ModuleMgr.Instance.LanguageMod;
 
         curGuideItems = new GuideItem();
 
