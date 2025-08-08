@@ -206,6 +206,7 @@ namespace XrCode
         {
             if (GamePlayFacade.GetNumberGoodCanEat() == 0)
             {
+                UIManager.Instance.OpenWindowAsync<UIFuncPopup>(EUIType.EUIFuncPopup, null, EFuncType.Tip);
                 UIManager.Instance.OpenNotice(LanguageModule.GetText("10094"));
                 return;
             }
