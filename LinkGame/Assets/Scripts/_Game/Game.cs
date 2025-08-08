@@ -20,6 +20,9 @@ namespace XrCode
         private float jarReptTime;//间隔时间
         private float jarcurTime;//当前等待时间
 
+        public GameObject netObj;
+        public NetworkErrorTips tips;
+
         public EGameState GameState
         {
             get { return gameState; }
@@ -35,11 +38,9 @@ namespace XrCode
         void Awake()
         {
             Instance = this;
-#if UNITY_EDITOR
-            GameDefines.ifIAA = ifIAA;
-#endif
             gameState = EGameState.Load;
 #if UNITY_EDITOR
+            GameDefines.ifIAA = ifIAA;
             Load();
 #elif UNITY_ANDROID
             ifJarSwitch = false;
@@ -55,13 +56,15 @@ namespace XrCode
         {
             if(ifJarSwitch)
             {
-                CancelInvoke("JarSwitch");
+                netObj.SetActive(false);
                 Load();
+                CancelInvoke("JarSwitch");
             }
             jarcurTime += jarReptTime;
             if(jarcurTime >= jarWaitTime) 
-            { 
-                
+            {
+                netObj.SetActive(true);
+                tips.ChangeSyb();
             }
         }
 
@@ -179,14 +182,6 @@ namespace XrCode
 public class AndroidCallback : AndroidJavaProxy
 {
     public AndroidCallback() : base("com.gg.user.Callback") { }
-
-    public void onSuccess(AndroidJavaObject obj)
-    {
-        bool go = bool.Parse(obj.Call<string>("toString"));
-        // 处理成功逻辑
-        Debug.LogError($"Success");
-    }
-
 
     public void onSuccess(bool b)
     {
